@@ -3,8 +3,8 @@ const tokens = {
   admin: {
     token: 'admin-token'
   },
-  editor: {
-    token: 'editor-token'
+  test: {
+    token: 'test-token'
   }
 }
 
@@ -15,18 +15,18 @@ const users = {
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Super Admin'
   },
-  'editor-token': {
-    roles: ['editor'],
-    introduction: 'I am an editor',
+  'test-token': {
+    roles: ['normal'],
+    introduction: 'I am an tester',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal Editor'
+    name: 'Normal Tester'
   }
 }
 
 export default [
   // user login
   {
-    url: '/vue-admin-template/user/login',
+    url: '/auth/login',
     type: 'post',
     response: config => {
       const { username } = config.body
@@ -35,49 +35,47 @@ export default [
       // mock error
       if (!token) {
         return {
-          code: 60204,
+          code: 401,
           message: 'Account and password are incorrect.'
         }
       }
-
-      return {
-        code: 20000,
-        data: token
+      const result = {
+        'token': token.token,
+        'tokenHead': 'Bearer'
       }
+
+      return result
     }
   },
 
   // get user info
   {
-    url: '/vue-admin-template/user/info\.*',
+    url: '/auth/info\.*',
     type: 'get',
     response: config => {
-      const { token } = config.query
+      var { token } = config.query
+      token = token.substr(6)
       const info = users[token]
 
       // mock error
       if (!info) {
         return {
-          code: 50008,
+          code: 401,
           message: 'Login failed, unable to get user details.'
         }
       }
 
-      return {
-        code: 20000,
-        data: info
-      }
+      return info
     }
   },
 
   // user logout
   {
-    url: '/vue-admin-template/user/logout',
+    url: '/auth/logout',
     type: 'post',
     response: _ => {
       return {
-        code: 20000,
-        data: 'success'
+        code: 200
       }
     }
   }

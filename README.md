@@ -1,4 +1,5 @@
 # zhishe-cms-web
+[![Build Status](https://travis-ci.com/EyesCMS/zhishe-cms-web.svg?branch=master)](https://travis-ci.com/EyesCMS/zhishe-cms-web)
 :art: frontend code for zhishe
 
 ## Build Setup

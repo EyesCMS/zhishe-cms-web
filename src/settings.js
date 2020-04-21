@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: 'Zhishe CMS Web',
 
   /**
    * @type {boolean} true | false
