@@ -23,18 +23,3 @@ export function logout() {
   })
 }
 
-export function getMemberList(query) {
-  return request({
-    url: '/auth/members',
-    method: 'get',
-    params: { query }
-  })
-}
-
-export function getMemberDetail(query) {
-  return request({
-    url: '/auth/details',
-    method: 'get',
-    params: { query }
-  })
-}

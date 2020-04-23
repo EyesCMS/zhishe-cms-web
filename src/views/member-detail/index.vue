@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { getMemberDetail } from '@/api/user'
+import { getMemberDetail } from '@/api/club'
 export default {
   name: 'MemberDetail',
   data() {

@@ -71,7 +71,7 @@ export const constantRoutes = [
     ]
   },
 
-  {   
+  {
     path: '/redirect',
     component: Layout,
     hidden: true,
