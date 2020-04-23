@@ -95,18 +95,18 @@ export const constantRoutes = [
   //   ]
   // },
 
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/form',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Form', icon: 'form' }
+      }
+    ]
+  },
 
   // {
   //   path: '/nested',
@@ -248,7 +248,64 @@ export const asyncRoutes = [
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/404', hidden: true },
+
+  // 社员侧边栏路由
+
+  // 社团风采
+  {
+    path: '/clubstyle',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'ClubStyle',
+    meta:
+    {
+      title: '社团风采',
+      icon: 'fengcai',
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/mem_club_style/index.vue'),
+        meta: { title: '社团风采', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/clubmember',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'ClubMember',
+        component: () => import('@/views/club-member/index.vue'),
+        meta: { title: '社团成员', icon: 'peoples', roles: ['admin'] }
+      }
+    ]
+  }
+  // 社团成员
+  // {
+  //   path: '/clubmember',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: 'ClubMember',
+  //   meta:
+  //   {
+  //     title: '社团成员',
+  //     icon: 'peoples',
+  //     roles: ['admin']
+  //   },
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'index',
+  //       component: () => import('@/views/club-member/index.vue'),
+  //       meta: { title: '社团成员', noCache: true }
+  //     }
+  //   ]
+  // }
 ]
 
 const createRouter = () => new Router({
