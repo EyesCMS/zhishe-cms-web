@@ -31,7 +31,47 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
+
   {
+    path: '/home_page',
+    component: Layout,
+    children: [
+      {
+        path: 'homepage',
+        name: 'HomePage',
+        component: () => import('@/views/home_page/homepage'),
+        meta: { title: '首页', icon: 'component' }
+      }
+    ]
+  },
+
+  {
+    path: '/clubs',
+    component: Layout,
+    children: [
+      {
+        path: 'clubs',
+        name: 'Clubs',
+        component: () => import('@/views/clubs/clubs'),
+        meta: { title: '所有社团', icon: 'search' }
+      }
+    ]
+  },
+
+  {
+    path: '/forum',
+    component: Layout,
+    children: [
+      {
+        path: 'forum',
+        name: 'Forum',
+        component: () => import('@/views/forum/forum'),
+        meta: { title: '活动论坛', icon: 'message' }
+      }
+    ]
+  },
+
+  {   
     path: '/redirect',
     component: Layout,
     hidden: true,
@@ -98,6 +138,7 @@ export const constantRoutes = [
   {
     path: '/form',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',
@@ -169,6 +210,7 @@ export const constantRoutes = [
   {
     path: 'external-link',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
@@ -183,6 +225,51 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+
+  {
+    path: '/myclub',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'MyClub',
+    meta: { title: '我的社团', icon: 'peoples' },
+    children: [
+      {
+        path: 'joinclub',
+        name: 'JoinClub',
+        component: () => import('@/views/myclub/joinclub'),
+        meta: { title: '我加入的社团', noCache: true }
+      },
+      {
+        path: 'manageclub',
+        name: 'ManageClub',
+        component: () => import('@/views/myclub/manageclub'),
+        meta: { title: '我管理的社团', noCache: true }
+      }
+    ]
+  },
+
+  {
+    path: '/applications',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'Applications',
+    meta: { title: '申请结果', icon: 'email' },
+    children: [
+      {
+        path: 'creation',
+        name: 'Creation',
+        component: () => import('@/views/applications/creation'),
+        meta: { title: '加入社团', noCache: true }
+      },
+      {
+        path: 'join',
+        name: 'Join',
+        component: () => import('@/views/applications/join'),
+        meta: { title: '创建社团', noCache: true }
+      }
+    ]
+  },
+
   {
     path: '/permission',
     component: Layout,
