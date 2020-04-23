@@ -30,3 +30,11 @@ export function getMemberList(query) {
     params: { query }
   })
 }
+
+export function getMemberDetail(query) {
+  return request({
+    url: '/auth/details',
+    method: 'get',
+    params: { query }
+  })
+}

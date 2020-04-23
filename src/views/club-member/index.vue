@@ -82,7 +82,7 @@ export default {
     },
     // 跳转到成员信息详细页面
     pushToDetail(userId) {
-      this.$router.push({ path: '/detail?userId=userId' })
+      this.$router.push({ path: '/detail', query: { userid: userId }})
     }
   }
 }

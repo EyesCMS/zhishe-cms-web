@@ -116,5 +116,27 @@ export default [
         data: pageList
       }
     }
+  },
+
+  // get member detail
+  {
+    url: '/auth/details',
+    type: 'get',
+    response: config => {
+      return {
+        status: 200,
+        data: {
+          nickname: '@cname',
+          slogan: '我只是一个测试的',
+          position: '社员',
+          major: '数计学院软件工程',
+          phone: '1231254125',
+          email: '1195669260@qq.com',
+          address: '@string',
+          credit: 100,
+          honor: '龙王'
+        }
+      }
+    }
   }
 ]

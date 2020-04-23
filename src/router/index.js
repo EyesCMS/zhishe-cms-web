@@ -282,6 +282,12 @@ export const asyncRoutes = [
         name: 'ClubMember',
         component: () => import('@/views/club-member/index.vue'),
         meta: { title: '社团成员', icon: 'peoples', roles: ['admin'] }
+      },
+      {
+        path: '/detail',
+        name: 'MemberDetail',
+        component: () => import('@/views/member-detail/index.vue'),
+        hidden: true
       }
     ]
   }
