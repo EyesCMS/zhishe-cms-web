@@ -48,10 +48,17 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'clubs',
+        path: 'index',
         name: 'Clubs',
-        component: () => import('@/views/clubs/clubs'),
+        component: () => import('@/views/clubs/index'),
         meta: { title: '所有社团', icon: 'search' }
+      },
+      {
+        path: '/clubDetail',
+        name: 'ClubDetail',
+        component: () => import('@/views/club-detail/index.vue'),
+        meta: { title: '社团详情', noCache: true },
+        hidden: true
       }
     ]
   },
@@ -363,11 +370,12 @@ export const asyncRoutes = [
       {
         path: 'index',
         name: 'index',
-        component: () => import('@/views/mem_club_style/index.vue'),
+        component: () => import('@/views/club-style/index.vue'),
         meta: { title: '社团风采', noCache: true }
       }
     ]
   },
+  // 社团成员
   {
     path: '/clubmember',
     component: Layout,
@@ -383,6 +391,34 @@ export const asyncRoutes = [
         name: 'MemberDetail',
         component: () => import('@/views/member-detail/index.vue'),
         hidden: true
+      }
+    ]
+  },
+
+  // 活动论坛（社员界面）
+  {
+    path: '/activityforum',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'ActivityForum',
+        component: () => import('@/views/activity-forum/index.vue'),
+        meta: { title: '活动论坛', icon: 'message', roles: ['admin'] }
+      }
+    ]
+  },
+
+  // 活动论坛（社员界面）
+  {
+    path: '/announcement',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Announcement',
+        component: () => import('@/views/club-announcement/index.vue'),
+        meta: { title: '社团公告', icon: 'message', roles: ['admin'] }
       }
     ]
   }

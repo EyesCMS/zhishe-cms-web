@@ -5,8 +5,9 @@ import user from './user'
 import table from './table'
 import role from './role'
 import club from './club'
+import forum from './forum'
 
-const mocks = [...user, ...role, ...table, ...club]
+const mocks = [...user, ...role, ...table, ...club, ...forum]
 
 // for front mock
 // please use it cautiously, it will redefine XMLHttpRequest,

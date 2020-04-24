@@ -44,25 +44,27 @@ export default {
   data() {
     return {
       listLoading: true,
+      clubId: 0,
       queryInfo: {
-        query: '',
-        pagenum: 1,
-        pagesize: 5
+        page: 1,
+        limit: 5
       },
       total: 0,
       membersList: []
     }
   },
   created() {
+    this.clubId = localStorage.getItem('clubid')
     this.getMembersList()
   },
   methods: {
     getMembersList() {
       this.listLoading = true
-      getMemberList(this.queryInfo).then(response => {
+      getMemberList(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
-          this.$message.success('获取成员列表成功')
+          // this.$message.success('获取成员列表成功')
           this.membersList = response.data
+          this.total = response.total
         } else {
           return this.$message.error('获取成员列表失败')
         }
@@ -72,13 +74,14 @@ export default {
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       console.log(newSize)
-      this.queryInfo.pagesize = newSize
+      this.queryInfo.limit = newSize
       this.getMembersList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       console.log(newPage)
-      this.queryInfo.pagenum = newPage
+      this.queryInfo.page = newPage
+      this.getMembersList()
     },
     // 跳转到成员信息详细页面
     pushToDetail(userId) {
