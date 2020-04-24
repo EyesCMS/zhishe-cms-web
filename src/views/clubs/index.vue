@@ -3,7 +3,7 @@
     <el-input v-model="search" placeholder="请输入社团名称" class="input-with-select">
       <el-button slot="append" icon="el-icon-search" @click="Search()" />
     </el-input>
-    <el-button type="primary">创建社团</el-button>
+    <el-button type="primary" @click="ApplyToCreate()">创建社团</el-button>
 
     <!-- 社团列表 -->
     <el-table :data="clubsList" stripe border>
@@ -87,6 +87,9 @@ export default {
     // 跳转到成员信息详细页面
     LookForDetail(cID) {
       this.$router.push({ path: '/clubDetail', query: { cid: cID }})
+    },
+    ApplyToCreate() {
+      this.$router.replace('/createClub')
     }
   }
 }

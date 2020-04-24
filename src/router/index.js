@@ -61,6 +61,13 @@ export const constantRoutes = [
         component: () => import('@/views/club-detail/index.vue'),
         meta: { title: '社团详情', noCache: true },
         hidden: true
+      },
+      {
+        path: '/createClub',
+        name: 'CreateClub',
+        component: () => import('@/views/club-create/index.vue'),
+        meta: { title: '创建社团', noCache: true },
+        hidden: true
       }
     ]
   },

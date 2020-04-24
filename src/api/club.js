@@ -48,10 +48,3 @@ export function getClubsList(query) {
   })
 }
 
-export function getClubDetails(query) {
-  return request({
-    url: `/clubs`,
-    method: 'get',
-    params: query
-  })
-}
