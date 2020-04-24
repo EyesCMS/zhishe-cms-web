@@ -42,18 +42,20 @@ export default {
   name: 'MemberDetail',
   data() {
     return {
+      clubId: 0,
       userId: '',
       memberInfo: {}
     }
   },
   created() {
     this.getMemberDetails()
+    this.clubId = localStorage.getItem('clubid')
   },
   methods: {
     getMemberDetails() {
       this.userId = this.$route.query.userid
       console.log(this.userId)
-      getMemberDetail(this.userId).then(response => {
+      getMemberDetail(this.clubId, this.userId).then(response => {
         if (response.status === 200) {
           // this.$message.success('获取成员列表成功')
           this.memberInfo = response.data

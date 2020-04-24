@@ -1,17 +1,41 @@
 import request from '@/utils/request'
 
-export function getMemberList(query) {
+export function getMemberList(clubid, query) {
   return request({
-    url: '/club/:club/members',
+    url: `/club/${clubid}/members`,
     method: 'get',
     params: { query }
   })
 }
 
-export function getMemberDetail(query) {
+export function getMemberDetail(clubid, userid) {
   return request({
-    url: '/clubs/:club/members/:userid',
+    url: `/clubs/${clubid}/members/${userid}`,
     method: 'get',
-    params: { query }
+    params: { clubid, userid }
+  })
+}
+
+export function getBulletinList(clubid) {
+  return request({
+    url: `/clubs/${clubid}/bulletins`,
+    method: 'get',
+    params: { clubid }
+  })
+}
+
+export function getBulletinDetail(clubid, bulletinid) {
+  return request({
+    url: `/clubs/${clubid}/bulletins/${bulletinid}`,
+    method: 'get',
+    params: { clubid, bulletinid }
+  })
+}
+
+export function getClubDetail(clubid) {
+  return request({
+    url: `/clubs/${clubid}`,
+    method: 'get',
+    params: { clubid }
   })
 }

@@ -355,11 +355,12 @@ export const asyncRoutes = [
       {
         path: 'index',
         name: 'index',
-        component: () => import('@/views/mem_club_style/index.vue'),
+        component: () => import('@/views/club-style/index.vue'),
         meta: { title: '社团风采', noCache: true }
       }
     ]
   },
+  // 社团成员
   {
     path: '/clubmember',
     component: Layout,
@@ -375,6 +376,20 @@ export const asyncRoutes = [
         name: 'MemberDetail',
         component: () => import('@/views/member-detail/index.vue'),
         hidden: true
+      }
+    ]
+  },
+
+  // 活动论坛（社员界面）
+  {
+    path: '/activityforum',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'ActivityForum',
+        component: () => import('@/views/activity-forum/index.vue'),
+        meta: { title: '活动论坛', icon: 'message', roles: ['admin'] }
       }
     ]
   }

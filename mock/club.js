@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 const membersList = []
 for (let i = 0; i < 100; i++) {
   membersList.push(Mock.mock({
-    userid: '@string',
+    'userid|+1': 0,
     username: '@string',
     nickname: '@cname',
     'honor|1': ['龙王', '潜水'],
@@ -14,7 +14,7 @@ for (let i = 0; i < 100; i++) {
 export default [
   // get member
   {
-    url: '/club/:club/members',
+    url: '/club/[0-9]/members',
     type: 'get',
     response: config => {
       const {
@@ -46,7 +46,7 @@ export default [
 
   // get member detail
   {
-    url: '/clubs/:club/members/:userid',
+    url: '/clubs/[0-9]/members/[0-9]',
     type: 'get',
     response: config => {
       return {
@@ -64,5 +64,61 @@ export default [
         }
       }
     }
+  },
+  // get bulletin detail
+  {
+    url: '/clubs/[0-9]/bulletins/[0-9]',
+    type: 'get',
+    response: config => {
+      return {
+        status: 200,
+        data: {
+          title: '关于第六届社团纳新活动的说明',
+          content: '我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团',
+          create_at: '2018-04-19 18:14:12',
+          update_at: '2018-04-19 19:14:12'
+        }
+      }
+    }
+  },
+
+  // get bulletin list
+  {
+    url: '/clubs/[0-9]/bulletins',
+    type: 'get',
+    response: config => {
+      return {
+        status: 200,
+        'data|10': [{
+          'id|+1': 0,
+          title: '@string',
+          content: '@string',
+          create_at: Mock.Random.date(),
+          update_at: Mock.Random.date()
+        }]
+      }
+    }
+  },
+
+  // get club detail
+  {
+    url: '/clubs/[0-9]',
+    type: 'get',
+    response: config => {
+      return {
+        status: 200,
+        data: {
+          cid: 2,
+          name: '篮球社',
+          chief_id: 2,
+          chief_name: '微微笑',
+          avatar_url: 'http://xx/xxxx.png',
+          slogan: 'XX社是一个非常非常厉害的社团XX社是一个非常非常厉害的社团XX社是一个非常非常厉害的社团XX社是一个非常非常厉害的社团',
+          member_count: 500,
+          qq_group: '312512512'
+        }
+      }
+    }
   }
+
 ]

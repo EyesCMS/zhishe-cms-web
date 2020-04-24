@@ -44,6 +44,7 @@ export default {
   data() {
     return {
       listLoading: true,
+      clubId: 0,
       queryInfo: {
         query: '',
         pagenum: 1,
@@ -54,12 +55,13 @@ export default {
     }
   },
   created() {
+    this.clubId = localStorage.getItem('clubid')
     this.getMembersList()
   },
   methods: {
     getMembersList() {
       this.listLoading = true
-      getMemberList(this.queryInfo).then(response => {
+      getMemberList(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取成员列表成功')
           this.membersList = response.data
