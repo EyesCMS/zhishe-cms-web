@@ -54,6 +54,13 @@ export const constantRoutes = [
         name: 'Clubs',
         component: () => import('@/views/clubs/index'),
         meta: { title: '所有社团', icon: 'search' }
+      },
+      {
+        path: '/clubDetail',
+        name: 'ClubDetail',
+        component: () => import('@/views/club-detail/index.vue'),
+        meta: { title: '社团详情', noCache: true },
+        hidden: true
       }
     ]
   },

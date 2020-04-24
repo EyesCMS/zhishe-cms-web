@@ -85,8 +85,8 @@ export default {
       this.getClubsList()
     },
     // 跳转到成员信息详细页面
-    LookForDetail(name) {
-      // this.$router.push({ path: '/detail', query: { userid: userId }})
+    LookForDetail(cID) {
+      this.$router.push({ path: '/clubDetail', query: { cid: cID }})
     }
   }
 }

@@ -47,3 +47,11 @@ export function getClubsList(query) {
     params: query
   })
 }
+
+export function getClubDetails(query) {
+  return request({
+    url: `/clubs`,
+    method: 'get',
+    params: query
+  })
+}
