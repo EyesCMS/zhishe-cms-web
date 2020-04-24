@@ -11,35 +11,30 @@ for (let i = 0; i < 100; i++) {
     avatar_url: '@string'
   }))
 }
+const bulletinsList = []
+for (let i = 0; i < 100; i++) {
+  bulletinsList.push(Mock.mock({
+    'id|+1': 0,
+    title: '@string',
+    content: '@string',
+    create_at: Mock.Random.date(),
+    update_at: Mock.Random.date()
+  }))
+}
 export default [
   // get member
   {
     url: '/club/[0-9]/members',
     type: 'get',
     response: config => {
-      const {
-        importance,
-        type,
-        title,
-        pagenum = 1,
-        pagesize = 5,
-        sort
-      } = config.query
+      const { page, limit } = config.query
       console.log(config.query)
-      let mockList = membersList.filter(item => {
-        if (importance && item.importance !== +importance) return false
-        if (type && item.type !== type) return false
-        if (title && item.title.indexOf(title) < 0) return false
-        return true
-      })
 
-      if (sort === '-id') {
-        mockList = mockList.reverse()
-      }
-      const pageList = mockList.filter((item, index) => index < pagesize * pagenum && index >= pagesize * (pagenum - 1))
+      const pageList = membersList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
       return {
         status: 200,
-        data: pageList
+        data: pageList,
+        total: membersList.length
       }
     }
   },
@@ -87,15 +82,12 @@ export default [
     url: '/clubs/[0-9]/bulletins',
     type: 'get',
     response: config => {
+      console.log(config.query.page)
+      const { page, limit } = config.query
       return {
         status: 200,
-        'data|10': [{
-          'id|+1': 0,
-          title: '@string',
-          content: '@string',
-          create_at: Mock.Random.date(),
-          update_at: Mock.Random.date()
-        }]
+        data: bulletinsList.filter((item, index) => index < limit * page && index >= limit * (page - 1)),
+        total: bulletinsList.length
       }
     }
   },

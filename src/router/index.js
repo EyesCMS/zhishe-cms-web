@@ -392,6 +392,20 @@ export const asyncRoutes = [
         meta: { title: '活动论坛', icon: 'message', roles: ['admin'] }
       }
     ]
+  },
+
+  // 活动论坛（社员界面）
+  {
+    path: '/announcement',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Announcement',
+        component: () => import('@/views/club-announcement/index.vue'),
+        meta: { title: '社团公告', icon: 'message', roles: ['admin'] }
+      }
+    ]
   }
   // 社团成员
   // {

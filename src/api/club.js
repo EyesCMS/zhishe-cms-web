@@ -4,7 +4,7 @@ export function getMemberList(clubid, query) {
   return request({
     url: `/club/${clubid}/members`,
     method: 'get',
-    params: { query }
+    params: query
   })
 }
 
@@ -16,11 +16,11 @@ export function getMemberDetail(clubid, userid) {
   })
 }
 
-export function getBulletinList(clubid) {
+export function getBulletinList(clubid, queryInfo) {
   return request({
     url: `/clubs/${clubid}/bulletins`,
     method: 'get',
-    params: { clubid }
+    params: queryInfo
   })
 }
 
