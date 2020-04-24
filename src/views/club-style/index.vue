@@ -70,6 +70,12 @@ export default {
   data() {
     return {
       clubid: 0,
+      queryInfo: {
+        page: 1,
+        limit: 10,
+        sort: 'update_at',
+        order: 'desc'
+      },
       // 公告列表
       bulletinsList: [],
       // 帖子列表
@@ -91,7 +97,7 @@ export default {
   },
   methods: {
     getBulletinsList() {
-      getBulletinList(this.clubid).then(response => {
+      getBulletinList(this.clubid, this.queryInfo).then(response => {
         console.log(response)
         if (response.status === 200) {
           // this.$message.success('获取成员列表成功')
