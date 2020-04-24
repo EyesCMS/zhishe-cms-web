@@ -39,3 +39,11 @@ export function getClubDetail(clubid) {
     params: { clubid }
   })
 }
+
+export function quitClub(param) {
+  return request({
+    url: '/clubs/quit',
+    method: 'post',
+    params: param
+  })
+}
