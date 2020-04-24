@@ -50,9 +50,9 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'clubs',
+        path: 'index',
         name: 'Clubs',
-        component: () => import('@/views/clubs/clubs'),
+        component: () => import('@/views/clubs/index'),
         meta: { title: '所有社团', icon: 'search' }
       }
     ]

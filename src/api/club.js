@@ -39,3 +39,11 @@ export function getClubDetail(clubid) {
     params: { clubid }
   })
 }
+
+export function getClubsList(query) {
+  return request({
+    url: `/clubs`,
+    method: 'get',
+    params: query
+  })
+}
