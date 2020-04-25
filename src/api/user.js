@@ -8,6 +8,14 @@ export function login(data) {
   })
 }
 
+export function register(data) {
+  console.log(data)
+  return request({
+    url: '/auth/register',
+    method: 'post',
+    data
+  })
+}
 export function getInfo(token) {
   return request({
     url: '/auth/info',
@@ -22,4 +30,3 @@ export function logout() {
     method: 'post'
   })
 }
-

@@ -31,7 +31,6 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
-
   {
     path: '/home_page',
     component: Layout,
@@ -44,16 +43,29 @@ export const constantRoutes = [
       }
     ]
   },
-
   {
     path: '/clubs',
     component: Layout,
     children: [
       {
-        path: 'clubs',
+        path: 'index',
         name: 'Clubs',
-        component: () => import('@/views/clubs/clubs'),
+        component: () => import('@/views/clubs/index'),
         meta: { title: '所有社团', icon: 'search' }
+      },
+      {
+        path: '/clubDetail',
+        name: 'ClubDetail',
+        component: () => import('@/views/club-detail/index.vue'),
+        meta: { title: '社团详情', noCache: true },
+        hidden: true
+      },
+      {
+        path: '/createClub',
+        name: 'CreateClub',
+        component: () => import('@/views/club-create/index.vue'),
+        meta: { title: '创建社团', noCache: true },
+        hidden: true
       }
     ]
   },
@@ -85,6 +97,16 @@ export const constantRoutes = [
   },
 
   {
+    path: '/register',
+    component: () => import('@/views/register/index'),
+    hidden: true
+  },
+  {
+    path: '/forget',
+    component: () => import('@/views/login/forget'),
+    hidden: true
+  },
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -105,12 +127,14 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-    }]
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      }
+    ]
   },
 
   // {
@@ -225,7 +249,6 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-
   {
     path: '/myclub',
     component: Layout,
@@ -345,8 +368,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'ClubStyle',
-    meta:
-    {
+    meta: {
       title: '社团风采',
       icon: 'fengcai',
       roles: ['admin']
@@ -430,11 +452,12 @@ export const asyncRoutes = [
   // }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 

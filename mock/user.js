@@ -14,13 +14,15 @@ const users = {
   'admin-token': {
     roles: ['admin'],
     introduction: 'I am a super administrator',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar:
+      'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Super Admin'
   },
   'test-token': {
     roles: ['normal'],
     introduction: 'I am an tester',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar:
+      'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Normal Tester'
   }
 }
@@ -42,17 +44,47 @@ export default [
         }
       }
       const result = {
-        'token': token.token,
-        'tokenHead': 'Bearer'
+        token: token.token,
+        tokenHead: 'Bearer'
       }
 
       return result
     }
   },
 
+  // user register
+  {
+    url: '/auth/register',
+    type: 'post',
+    response: config => {
+      if (!tokens[config.body.name]) {
+        tokens[config.body.name] = { token: 'test-token' }
+        console.log(tokens)
+        return {
+          status: 201
+        }
+      } else {
+        return {
+          status: 409
+        }
+      }
+    }
+  },
+  // GET /users/:uid/question
+  {
+    url: '/users/:uid/question',
+    type: 'get',
+    response: () => {
+      return {
+        Status: 200,
+        login_problem: 'what is your name?'
+      }
+    }
+  },
+
   // get user info
   {
-    url: '/auth/info\.*',
+    url: '/auth/info.*',
     type: 'get',
     response: config => {
       var { token } = config.query

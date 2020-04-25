@@ -21,6 +21,15 @@ for (let i = 0; i < 100; i++) {
     update_at: Mock.Random.date()
   }))
 }
+const clubsList = []
+for (let i = 0; i < 100; i++) {
+  clubsList.push(Mock.mock({
+    'cid|+1': 0,
+    avatar_url: '@string',
+    name: '@string',
+    chief_name: '@string'
+  }))
+}
 export default [
   // get member
   {
@@ -119,6 +128,22 @@ export default [
     response: config => {
       return {
         status: 201
+      }
+    }
+  },
+  // get clubs
+  {
+    url: '/clubs',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(config.query)
+
+      const pageList = clubsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        data: pageList,
+        total: clubsList.length
       }
     }
   }

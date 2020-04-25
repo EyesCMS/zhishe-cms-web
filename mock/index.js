@@ -7,13 +7,7 @@ import role from './role'
 import club from './club'
 import forum from './forum'
 
-const mocks = [
-  ...user,
-  ...role,
-  ...table,
-  ...club,
-  ...forum
-]
+const mocks = [...user, ...role, ...table, ...club, ...forum]
 
 // for front mock
 // please use it cautiously, it will redefine XMLHttpRequest,
@@ -52,7 +46,11 @@ export function mockXHR() {
   }
 
   for (const i of mocks) {
-    Mock.mock(new RegExp(i.url), i.type || 'get', XHR2ExpressReqWrap(i.response))
+    Mock.mock(
+      new RegExp(i.url),
+      i.type || 'get',
+      XHR2ExpressReqWrap(i.response)
+    )
   }
 }
 
@@ -63,7 +61,9 @@ const responseFake = (url, type, respond) => {
     type: type || 'get',
     response(req, res) {
       console.log('request invoke:' + req.path)
-      res.json(Mock.mock(respond instanceof Function ? respond(req, res) : respond))
+      res.json(
+        Mock.mock(respond instanceof Function ? respond(req, res) : respond)
+      )
     }
   }
 }
