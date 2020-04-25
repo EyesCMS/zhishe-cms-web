@@ -3,14 +3,13 @@
     <!-- 卡片视图区 -->
     <el-card>
 
-      <!-- 社团创建申请列表 -->
-      <el-table :data="createApplyList" stripe border>
+      <!-- 社团认证申请列表 -->
+      <el-table :data="identifyApplyList" stripe border>
         <el-table-column type="index" label="#" />
         <el-table-column label="社团名称" prop="club_name" />
-        <el-table-column label="申请时间" prop="create_at" />
         <el-table-column label="申请人" prop="applicant" />
-        <el-table-column label="申请原因" prop="reason" />
         <el-table-column label="附件" prop="accessory_url" />
+        <el-table-column label="申请时间" prop="create_at" />
         <el-table-column label="" width="200px">
           <template slot-scope="scope">
             <el-button type="primary" @click="pushToAgree(scope)">批准</el-button>
@@ -34,9 +33,9 @@
 </template>
 
 <script>
-import { getCreateApplyList, pushToCreateApply } from '@/api/club'
+import { getIdentifyApplyList, pushToIdentifyApply } from '@/api/club'
 export default {
-  name: 'CreateApply',
+  name: 'IdentifyApply',
   data() {
     return {
       listLoading: true,
@@ -46,38 +45,38 @@ export default {
         limit: 5
       },
       total: 0,
-      createApplyList: []
+      identifyApplyList: []
     }
   },
   created() {
     this.clubId = localStorage.getItem('clubid')
-    this.getCreateApplyList()
+    this.getIdentifyApplyList()
   },
   methods: {
-    getCreateApplyList() {
+    getIdentifyApplyList() {
       this.listLoading = true
-      getCreateApplyList(this.clubId, this.queryInfo).then(response => {
+      getIdentifyApplyList(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
-          this.$message.success('获取社团创建申请成功')
-          this.createApplyList = response.data
+          this.$message.success('获取社团认证申请成功')
+          this.identifyApplyList = response.data
           this.total = response.total
         } else {
-          return this.$message.error('获取社团创建申请失败')
+          return this.$message.error('获取社团认证申请失败')
         }
-        console.log(this.createApplyList)
+        console.log(this.identifyApplyList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       console.log(newSize)
       this.queryInfo.limit = newSize
-      this.getCreateApplyList()
+      this.getIdentifyApplyList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       console.log(newPage)
       this.queryInfo.page = newPage
-      this.getCreateApplyList()
+      this.getIdentifyApplyList()
     },
     // 修改申请状态
     pushToAgree({ $index, row }) {
@@ -85,13 +84,13 @@ export default {
         id: row.id,
         state: 1
       }
-      pushToCreateApply(data).then(response => {
+      pushToIdentifyApply(data).then(response => {
         if (response.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.createApplyList.splice($index, 1)
+        this.identifyApplyList.splice($index, 1)
       })
     },
     pushToRefuse({ $index, row }) {
@@ -99,13 +98,13 @@ export default {
         id: row.id,
         state: 2
       }
-      pushToCreateApply(data).then(response => {
+      pushToIdentifyApply(data).then(response => {
         if (response.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.createApplyList.splice($index, 1)
+        this.identifyApplyList.splice($index, 1)
       })
     }
   }

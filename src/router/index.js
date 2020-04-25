@@ -334,7 +334,67 @@ export const asyncRoutes = [
       }
     ]
   },
-
+  // 管理员菜单
+  {
+    path: '/admin/check',
+    component: Layout,
+    redirect: '/admin/check/createApply',
+    alwaysShow: true, // will always show the root menu
+    name: 'check',
+    meta: {
+      title: '审核申请',
+      icon: 'form',
+      roles: ['admin', 'normal'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'createApply',
+        component: () => import('@/views/admin/check/createApply'),
+        name: 'createApply',
+        meta: {
+          title: '社团创建申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'dismissApply',
+        component: () => import('@/views/admin/check/dismissApply'),
+        name: 'dismissApply',
+        meta: {
+          title: '社团解散申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'activityApply',
+        component: () => import('@/views/admin/check/activityApply'),
+        name: 'activityApply',
+        meta: {
+          title: '社团活动申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'changeApply',
+        component: () => import('@/views/admin/check/changeApply'),
+        name: 'changeApply',
+        meta: {
+          title: '社长换届申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'identifyApply',
+        component: () => import('@/views/admin/check/identifyApply'),
+        name: 'identifyApply',
+        meta: {
+          title: '社团认证申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
+  // 结束
   {
     path: '/error',
     component: Layout,

@@ -30,6 +30,72 @@ for (let i = 0; i < 100; i++) {
     chief_name: '@string'
   }))
 }
+// 创建社团申请
+const createApplyList = []
+for (let i = 0; i < 100; i++) {
+  createApplyList.push(Mock.mock({
+    'id': '@id',
+    club_name: '@string',
+    create_at: '@datetime',
+    applicant: '@cname',
+    reason: '@string',
+    state: 0,
+    accessory_url: '@string'
+  }))
+}
+// 解散社团申请
+const dismissApplyList = []
+for (let i = 0; i < 100; i++) {
+  dismissApplyList.push(Mock.mock({
+    id: '@id',
+    club_name: '@string',
+    create_at: '@datetime',
+    applicant: '@cname',
+    reason: '@string',
+    state: 0
+  }))
+}
+// 社长换届申请
+const changeApplyList = []
+for (let i = 0; i < 100; i++) {
+  changeApplyList.push(Mock.mock({
+    id: '@id',
+    club_name: '@string',
+    old_chief_name: '@cname',
+    new_chief_name: '@cname',
+    create_at: '@datetime',
+    state: 0
+  }))
+}
+// 社团认证申请
+const identifyApplyList = []
+for (let i = 0; i < 100; i++) {
+  identifyApplyList.push(Mock.mock({
+    id: '@id',
+    club_name: '@string',
+    applicant: '@cname',
+    accessory_url: '@string',
+    create_at: '@datetime',
+    state: 0
+  }))
+}
+// 社团活动申请
+const activityApplyList = []
+for (let i = 0; i < 100; i++) {
+  activityApplyList.push(Mock.mock({
+    id: '@id',
+    club_name: '@string',
+    name: '@string',
+    title: '@string',
+    content: '@string',
+    start_date: '@datetime',
+    end_date: '@datetime',
+    location: '@string',
+    accessory_url: '@string',
+    state: 0
+  }))
+}
+//
 export default [
   // get member
   {
@@ -100,6 +166,166 @@ export default [
       }
     }
   },
+  
+  // 社团创建申请
+  {
+    url: '/clubs/creations/audit',
+    type: 'put',
+    response: data => {
+      const { id, state } = data
+      console.log(data)
+      for (let j = 0; j < createApplyList.length; j++) {
+        if (changeApplyList[j].id === id) {
+          createApplyList[j].state = state
+        }
+      }
+      return {
+        status: 204
+      }
+    }
+  },
+  {
+    url: '/clubs/creations',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = createApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        data: pageList,
+        total: createApplyList.length
+      }
+    }
+  },
+
+  // 社团解散申请
+  {
+    url: '/clubs/dissolution/audit',
+    type: 'put',
+    response: data => {
+      const { id, state } = data
+      // console.log(data)
+      for (let j = 0; j < dismissApplyList.length; j++) {
+        if (changeApplyList[j].id === id) {
+          dismissApplyList[j].state = state
+        }
+      }
+      return {
+        status: 204
+      }
+    }
+  },
+  {
+    url: '/clubs/dissolutions',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = dismissApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        data: pageList,
+        total: dismissApplyList.length
+      }
+    }
+  },
+
+  // 社长换届申请
+  {
+    url: '/clubs/leader/changes',
+    type: 'put',
+    response: data => {
+      const { id, state } = data
+      // console.log(data)
+      for (let j = 0; j < changeApplyList.length; j++) {
+        if (changeApplyList[j].id === id) {
+          changeApplyList[j].state = state
+        }
+      }
+      return {
+        status: 204
+      }
+    }
+  },
+  {
+    url: '/clubs/leader/changes',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = changeApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        data: pageList,
+        total: changeApplyList.length
+      }
+    }
+  },
+
+  // 社团认证申请
+  {
+    url: '/clubs/certifications',
+    type: 'put',
+    response: data => {
+      const { id, state } = data
+      // console.log(data)
+      for (let j = 0; j < identifyApplyList.length; j++) {
+        if (changeApplyList[j].id === id) {
+          identifyApplyList[j].state = state
+        }
+      }
+      return {
+        status: 204
+      }
+    }
+  },
+  {
+    url: '/clubs/certifications',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = identifyApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        data: pageList,
+        total: identifyApplyList.length
+      }
+    }
+  },
+
+  // 社团活动申请
+  {
+    url: '/clubs/activities/audit',
+    type: 'put',
+    response: data => {
+      const { id, state } = data
+      for (let j = 0; j < activityApplyList.length; j++) {
+        if (activityApplyList[j].id === id) {
+          activityApplyList[j].state = state
+        }
+      }
+      return {
+        status: 204
+      }
+    }
+  },
+  {
+    url: '/clubs/activities',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = activityApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        data: pageList,
+        total: activityApplyList.length
+      }
+    }
+  },
+  //
 
   // get club detail
   {

@@ -3,13 +3,16 @@
     <!-- 卡片视图区 -->
     <el-card>
 
-      <!-- 社团创建申请列表 -->
-      <el-table :data="createApplyList" stripe border>
+      <!-- 社团活动申请列表 -->
+      <el-table :data="activityApplyList" stripe border>
         <el-table-column type="index" label="#" />
         <el-table-column label="社团名称" prop="club_name" />
-        <el-table-column label="申请时间" prop="create_at" />
-        <el-table-column label="申请人" prop="applicant" />
-        <el-table-column label="申请原因" prop="reason" />
+        <el-table-column label="活动名称" prop="name" />
+        <el-table-column label="活动标题" prop="title" />
+        <el-table-column label="活动内容" prop="content" />
+        <el-table-column label="开始时间" prop="start_date" />
+        <el-table-column label="结束时间" prop="end_date" />
+        <el-table-column label="活动场地" prop="location" />
         <el-table-column label="附件" prop="accessory_url" />
         <el-table-column label="" width="200px">
           <template slot-scope="scope">
@@ -34,9 +37,9 @@
 </template>
 
 <script>
-import { getCreateApplyList, pushToCreateApply } from '@/api/club'
+import { getActivityApplyList, pushToActivityApply } from '@/api/club'
 export default {
-  name: 'CreateApply',
+  name: 'ActivityApply',
   data() {
     return {
       listLoading: true,
@@ -46,38 +49,38 @@ export default {
         limit: 5
       },
       total: 0,
-      createApplyList: []
+      activityApplyList: []
     }
   },
   created() {
     this.clubId = localStorage.getItem('clubid')
-    this.getCreateApplyList()
+    this.getActivityApplyList()
   },
   methods: {
-    getCreateApplyList() {
+    getActivityApplyList() {
       this.listLoading = true
-      getCreateApplyList(this.clubId, this.queryInfo).then(response => {
+      getActivityApplyList(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
-          this.$message.success('获取社团创建申请成功')
-          this.createApplyList = response.data
+          this.$message.success('获取社团活动申请成功')
+          this.activityApplyList = response.data
           this.total = response.total
         } else {
-          return this.$message.error('获取社团创建申请失败')
+          return this.$message.error('获取社团活动申请失败')
         }
-        console.log(this.createApplyList)
+        console.log(this.activityApplyList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       console.log(newSize)
       this.queryInfo.limit = newSize
-      this.getCreateApplyList()
+      this.getActivityApplyList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       console.log(newPage)
       this.queryInfo.page = newPage
-      this.getCreateApplyList()
+      this.getActivityApplyList()
     },
     // 修改申请状态
     pushToAgree({ $index, row }) {
@@ -85,13 +88,13 @@ export default {
         id: row.id,
         state: 1
       }
-      pushToCreateApply(data).then(response => {
+      pushToActivityApply(data).then(response => {
         if (response.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.createApplyList.splice($index, 1)
+        this.activityApplyList.splice($index, 1)
       })
     },
     pushToRefuse({ $index, row }) {
@@ -99,13 +102,13 @@ export default {
         id: row.id,
         state: 2
       }
-      pushToCreateApply(data).then(response => {
+      pushToActivityApply(data).then(response => {
         if (response.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.createApplyList.splice($index, 1)
+        this.activityApplyList.splice($index, 1)
       })
     }
   }
