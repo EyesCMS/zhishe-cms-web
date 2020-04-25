@@ -42,24 +42,25 @@ export default {
   name: 'MemberDetail',
   data() {
     return {
-      clubId: 0,
-      userId: '',
+      clubId: 1,
+      userId: 1,
       memberInfo: {}
     }
   },
   created() {
     this.getMemberDetails()
-    this.clubId = localStorage.getItem('clubid')
+    // this.clubId = localStorage.getItem('clubid')
   },
   methods: {
     getMemberDetails() {
       this.userId = this.$route.query.userid
-      console.log(this.userId)
+      console.log('UserId' + this.userId)
+      // console.log(this.userId)
       getMemberDetail(this.clubId, this.userId).then(response => {
         if (response.status === 200) {
           // this.$message.success('获取成员列表成功')
           this.memberInfo = response.data
-          console.log(response.data)
+          console.log(this.memberInfo)
         } else {
           return this.$message.error('获取成员信息失败')
         }

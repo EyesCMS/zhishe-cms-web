@@ -33,7 +33,7 @@ for (let i = 0; i < 100; i++) {
 export default [
   // get member
   {
-    url: '/club/[0-9]/members',
+    url: '/clubs/[0-9]/members',
     type: 'get',
     response: config => {
       const { page, limit } = config.query

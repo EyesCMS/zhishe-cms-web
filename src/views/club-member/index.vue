@@ -54,7 +54,7 @@ export default {
     }
   },
   created() {
-    this.clubId = localStorage.getItem('clubid')
+    // this.clubId = localStorage.getItem('clubid')
     this.getMembersList()
   },
   methods: {
