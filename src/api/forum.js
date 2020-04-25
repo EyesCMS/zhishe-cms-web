@@ -17,11 +17,3 @@ export function getInvitationDetail(id, queryInfo) {
   })
 }
 
-export function publishRemark(id, param) {
-  return request({
-    url: `/forum/posts/${id}/remarks`,
-    method: 'post',
-    params: param
-  })
-}
-
