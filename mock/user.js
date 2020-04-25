@@ -70,9 +70,9 @@ export default [
       }
     }
   },
-  // GET /users/:uid/question
+  // GET /users/:username/question
   {
-    url: '/users/:uid/question',
+    url: '/users/username/question',
     type: 'get',
     response: () => {
       return {
@@ -82,6 +82,34 @@ export default [
     }
   },
 
+  // Get /users/newpassword
+  {
+    url: '/users/newpassword',
+    type: 'post',
+    response: data => {
+      console.log(data)
+      return {
+        status: 200
+      }
+    }
+  },
+  // POST /users/:uid/anwser
+  {
+    url: '/users/answer',
+    type: 'post',
+    response: config => {
+      console.log(config)
+      if (config) {
+        return {
+          status: 204
+        }
+      } else {
+        return {
+          status: 403
+        }
+      }
+    }
+  },
   // get user info
   {
     url: '/auth/info.*',
