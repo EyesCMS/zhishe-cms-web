@@ -3,10 +3,11 @@
     <!-- 卡片视图 -->
     <el-card>
       <el-input
+        v-model="queryInfo.keyword"
         placeholder="请输入公告标题关键字"
         class="input-with-select"
       >
-        <el-button slot="append" icon="el-icon-search" />
+        <el-button slot="append" icon="el-icon-search" @click="queryAnnouncementList" />
       </el-input>
       <p>共搜索到100条相关公告</p>
       <div v-for="(item, index) in bulletinsList" :key="index">
@@ -56,6 +57,7 @@ export default {
     return {
       clubId: 0,
       queryInfo: {
+        keyword: '',
         page: 1,
         limit: 5,
         sort: 'create_at',
@@ -114,6 +116,12 @@ export default {
         // console.log(this.memberInfo)
       })
       this.bulletinDetailDialogVisible = true
+    },
+
+    // 根据公告标题关键字搜索公告
+    queryAnnouncementList() {
+      this.getBulletinsList()
+      this.queryInfo.keyword = ''
     }
   }
 }

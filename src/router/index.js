@@ -484,6 +484,7 @@ export const asyncRoutes = [
         path: 'detail',
         name: 'ActivityDetail',
         component: () => import('@/views/activity-forum/detail.vue'),
+        meta: { title: '帖子详情', icon: 'message', roles: ['admin'] },
         hidden: true
       }
     ]

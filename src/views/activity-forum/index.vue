@@ -2,10 +2,11 @@
   <div>
     <el-card>
       <el-input
+        v-model="queryInfo.keyword"
         placeholder="请输入文章标题关键字"
         class="input-with-select"
       >
-        <el-button slot="append" icon="el-icon-search" />
+        <el-button slot="append" icon="el-icon-search" @click="queryInvitation" />
       </el-input>
       <h4>共搜索到 {{ total }} 条记录</h4>
       <el-card v-for="(item, index) in invitationsList" :key="index" style="margin-top:20px">
@@ -50,6 +51,7 @@ export default {
     return {
       clubId: 0,
       queryInfo: {
+        keyword: '',
         page: 1,
         limit: 5,
         sort: 'created_at',
@@ -93,6 +95,10 @@ export default {
     // 跳转到帖子详情页面
     pushToDetail(id) {
       this.$router.push({ path: 'detail', query: { id: id }})
+    },
+    queryInvitation() {
+      this.getInvitationsList()
+      this.queryInfo.keyword = ''
     }
   }
 }
