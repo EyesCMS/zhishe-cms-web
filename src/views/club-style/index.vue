@@ -121,27 +121,15 @@ export default {
   methods: {
     getBulletinsList() {
       getBulletinList(this.clubId, this.queryInfo).then(response => {
-        console.log(response)
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.bulletinsList = response.data
-          console.log(this.bulletinsList)
-        } else {
-          return this.$message.error('获取公告列表失败')
-        }
+        this.bulletinsList = response.items
+        console.log(this.bulletinsList)
         // console.log(this.memberInfo)
       })
     },
     getInvitationsList() {
       getInvitationList(this.clubId, this.queryInfo).then(response => {
-        console.log(response)
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.invitationList = response.data
-          console.log(this.invitationList)
-        } else {
-          return this.$message.error('获取帖子列表失败')
-        }
+        this.invitationList = response.items
+        console.log(this.invitationList)
         // console.log(this.memberInfo)
       })
     },

@@ -33,7 +33,7 @@ for (let i = 0; i < 20; i++) {
   }))
 }
 export default [
-  // get invitation list
+  // get one club invitation list
   {
     url: '/forum/[0-9]/posts',
     type: 'get',
@@ -44,6 +44,26 @@ export default [
       return {
         items: pageList,
         total_count: invitationsList.length
+      }
+    }
+  },
+  // get invitation detail
+  {
+    url: '/forum/posts/[0-9]',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      // console.log('123')
+      return {
+        items: {
+          title: '@string',
+          content: '@string',
+          club_name: 'XX社',
+          create_at: '2018-04-19 18:14:12',
+          img_url: '131231241241.jpg',
+          avator_url: 'e312312312312.jpg',
+          remarks: remarksList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+        }
       }
     }
   },
@@ -62,7 +82,7 @@ export default [
       }
     }
   },
-  // get all clubs invitation deatils
+  // get all clubs invitation details
   {
     url: '/forum/posts',
     type: 'get',
@@ -71,26 +91,6 @@ export default [
       return {
         status: 200,
         data: {
-          title: '@string',
-          content: '@string',
-          club_name: 'XX社',
-          create_at: '2018-04-19 18:14:12',
-          img_url: '131231241241.jpg',
-          avator_url: 'e312312312312.jpg',
-          remarks: remarksList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
-        }
-      }
-    }
-  },
-
-  // get invitation detail
-  {
-    url: '/forum/posts/[0-9]',
-    type: 'get',
-    response: config => {
-      const { page, limit } = config.query
-      return {
-        items: {
           title: '@string',
           content: '@string',
           club_name: 'XX社',
