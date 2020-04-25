@@ -30,6 +30,25 @@ for (let i = 0; i < 100; i++) {
     chief_name: '@string'
   }))
 }
+const JoinApplicationsList = []
+for (let i = 0; i < 100; i++) {
+  JoinApplicationsList.push(Mock.mock({
+    'cid|+1': 0,
+    club_id: '@id',
+    reason: '@string',
+    'state|1': ['待审核', '已通过', '未通过']
+  }))
+}
+const getCreateApplicationsList = []
+for (let i = 0; i < 100; i++) {
+  getCreateApplicationsList.push(Mock.mock({
+    'cid|+1': 0,
+    club_name: '@string',
+    'club_type|1': ['文艺', '休闲', '运动', '其他'],
+    reason: '@string',
+    'state|1': ['待审核', '已通过', '未通过']
+  }))
+}
 // 创建社团申请
 const createApplyList = []
 for (let i = 0; i < 100; i++) {
@@ -97,6 +116,34 @@ for (let i = 0; i < 100; i++) {
 }
 //
 export default [
+  // 查看加入社团申请列表
+  {
+    url: '/clubs/join/[0-9]',
+    type: 'get',
+    response: config => {
+      console.log(config.query.page)
+      const { page, limit } = config.query
+      return {
+        status: 200,
+        data: JoinApplicationsList.filter((item, index) => index < limit * page && index >= limit * (page - 1)),
+        total: JoinApplicationsList.length
+      }
+    }
+  },
+  // 查看创建社团申请列表
+  {
+    url: '/clubs/creations/[0-9]',
+    type: 'get',
+    response: config => {
+      console.log(config.query.page)
+      const { page, limit } = config.query
+      return {
+        status: 200,
+        data: getCreateApplicationsList.filter((item, index) => index < limit * page && index >= limit * (page - 1)),
+        total: getCreateApplicationsList.length
+      }
+    }
+  },
   // get member
   {
     url: '/clubs/[0-9]/members',
@@ -325,7 +372,6 @@ export default [
       }
     }
   },
-  //
 
   // get club detail
   {

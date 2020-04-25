@@ -296,13 +296,13 @@ export const asyncRoutes = [
         path: 'creation',
         name: 'Creation',
         component: () => import('@/views/applications/creation'),
-        meta: { title: '加入社团', noCache: true }
+        meta: { title: '创建社团', noCache: true }
       },
       {
         path: 'join',
         name: 'Join',
         component: () => import('@/views/applications/join'),
-        meta: { title: '创建社团', noCache: true }
+        meta: { title: '加入社团', noCache: true }
       }
     ]
   },

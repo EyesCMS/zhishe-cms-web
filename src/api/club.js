@@ -130,6 +130,22 @@ export function quitClub(param) {
   })
 }
 
+export function getJoinApplicationsList(userid, query) {
+  return request({
+    url: `/clubs/join/${userid}`,
+    method: 'get',
+    params: query
+  })
+}
+
+export function getCreateApplicationsList(userid, query) {
+  return request({
+    url: `/clubs/creations/${userid}`,
+    method: 'get',
+    params: query
+  })
+}
+
 export function ApplyToJoin(query) {
   return request({
     url: '/clubs/join',
@@ -153,3 +169,4 @@ export function getClubsList(query) {
     params: query
   })
 }
+
