@@ -2,6 +2,7 @@ import Mock from 'mockjs'
 const invitationsList = []
 for (let i = 0; i < 100; i++) {
   invitationsList.push(Mock.mock({
+    'id|+1': 1,
     title: '@string',
     content: '@string',
     club_name: 'XX社',
