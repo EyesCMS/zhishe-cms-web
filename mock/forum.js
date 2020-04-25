@@ -2,6 +2,7 @@ import Mock from 'mockjs'
 const invitationsList = []
 for (let i = 0; i < 100; i++) {
   invitationsList.push(Mock.mock({
+    'id|+1': 1,
     title: '@string',
     content: '@string',
     club_name: 'XX社',
@@ -54,6 +55,17 @@ export default [
           avator_url: 'e312312312312.jpg',
           remarks: remarksList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
         }
+      }
+    }
+  },
+
+  // post remark
+  {
+    url: '/forum/posts/[0-9]/remarks',
+    type: 'post',
+    response: config => {
+      return {
+        status: 201
       }
     }
   }

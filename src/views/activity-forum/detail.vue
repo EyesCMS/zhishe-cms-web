@@ -21,12 +21,12 @@
         <div style="text-align:center">
           <el-link type="primary" @click="showMoreRemarks">查看更多评论</el-link>
         </div>
-        <el-input
-          placeholder="请发表评论"
-          class="input-with-select"
-        >
-          <el-button slot="append" icon="el-icon-search" />
-        </el-input>
+        <el-form style="margin-top:10px">
+          <el-form-item label="发表评论">
+            <el-input v-model="remark" type="textarea" />
+          </el-form-item>
+          <el-button type="primary" style="display:block;margin:0 auto" @click="publishRemark()">发表</el-button>
+        </el-form>
       </el-card>
     </el-card>
   </div>
@@ -34,11 +34,13 @@
 
 <script>
 import { getInvitationDetail } from '@/api/forum'
+import { publishRemark } from '@/api/forum'
 export default {
   name: 'ActivityDetail',
   data() {
     return {
       id: 1,
+      userId: 1,
       queryInfo: {
         page: 1,
         limit: 5,
@@ -46,7 +48,8 @@ export default {
         order: 'desc'
       },
       detailInfo: {},
-      clubAvator: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+      clubAvator: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      remark: ''
     }
   },
   created() {
@@ -68,6 +71,21 @@ export default {
     showMoreRemarks() {
       this.queryInfo.limit += 5
       this.getInvitationDetail()
+    },
+    publishRemark() {
+      if (this.remark === '') {
+        return this.$message.error('评论不可为空')
+      }
+      publishRemark(this.id, {
+        uid: this.userId,
+        pid: this.id,
+        content: this.remark
+      }).then(response => {
+        if (response.status === 201) {
+          this.remark = ''
+          return this.$message.success('发表成功')
+        }
+      })
     }
   }
 }
