@@ -59,8 +59,8 @@ export default {
       getCreateApplyList(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团创建申请成功')
-          this.createApplyList = response.data
-          this.total = response.total
+          this.createApplyList = response.items
+          this.total = response.total_count
         } else {
           return this.$message.error('获取社团创建申请失败')
         }

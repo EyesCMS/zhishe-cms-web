@@ -193,8 +193,8 @@ export default [
       const pageList = createApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
       return {
         status: 200,
-        data: pageList,
-        total: createApplyList.length
+        items: pageList,
+        total_count: createApplyList.length
       }
     }
   },
@@ -225,8 +225,8 @@ export default [
       const pageList = dismissApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
       return {
         status: 200,
-        data: pageList,
-        total: dismissApplyList.length
+        items: pageList,
+        total_count: dismissApplyList.length
       }
     }
   },
@@ -257,8 +257,8 @@ export default [
       const pageList = changeApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
       return {
         status: 200,
-        data: pageList,
-        total: changeApplyList.length
+        items: pageList,
+        total_count: changeApplyList.length
       }
     }
   },
@@ -289,8 +289,8 @@ export default [
       const pageList = identifyApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
       return {
         status: 200,
-        data: pageList,
-        total: identifyApplyList.length
+        items: pageList,
+        total_count: identifyApplyList.length
       }
     }
   },
@@ -320,8 +320,8 @@ export default [
       const pageList = activityApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
       return {
         status: 200,
-        data: pageList,
-        total: activityApplyList.length
+        items: pageList,
+        total_count: activityApplyList.length
       }
     }
   },
