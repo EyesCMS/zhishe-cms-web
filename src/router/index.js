@@ -31,6 +31,7 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  // homepage
   {
     path: '/home-page',
     component: Layout,
@@ -109,38 +110,41 @@ export const constantRoutes = [
       }
     ]
   },
-
+  // register
   {
     path: '/register',
     component: () => import('@/views/register/index'),
     hidden: true
   },
+  // forget
   {
     path: '/forget',
     component: () => import('@/views/login/forget'),
     hidden: true
   },
+  // login
   {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
+  // 404
   {
     path: '/404',
     component: () => import('@/views/error-page/404'),
     hidden: true
   },
+  // 401
   {
     path: '/401',
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
-
+  // /
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/homepage',
     children: [
       {
         path: 'dashboard',
@@ -259,10 +263,51 @@ export const constantRoutes = [
 ]
 
 /**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
+ * studentRoutes
+ * 普通学生界面的组件
  */
-export const asyncRoutes = [
+export const studentRoutes = [
+  // clbus
+  {
+    path: '/clubs',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Clubs',
+        component: () => import('@/views/clubs/index'),
+        meta: { title: '所有社团', icon: 'search' }
+      },
+      {
+        path: '/clubDetail',
+        name: 'ClubDetail',
+        component: () => import('@/views/club-detail/index.vue'),
+        meta: { title: '社团详情', noCache: true },
+        hidden: true
+      },
+      {
+        path: '/createClub',
+        name: 'CreateClub',
+        component: () => import('@/views/club-create/index.vue'),
+        meta: { title: '创建社团', noCache: true },
+        hidden: true
+      }
+    ]
+  },
+  // 活动论坛
+  {
+    path: '/forum',
+    component: Layout,
+    children: [
+      {
+        path: 'forum',
+        name: 'Forum',
+        component: () => import('@/views/forum/forum'),
+        meta: { title: '活动论坛', icon: 'message' }
+      }
+    ]
+  },
+  // 我的社团
   {
     path: '/myclub',
     component: Layout,
@@ -284,7 +329,188 @@ export const asyncRoutes = [
       }
     ]
   },
+  // 申请中心
+  {
+    path: '/applications',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'Applications',
+    meta: { title: '申请结果', icon: 'email' },
+    children: [
+      {
+        path: 'creation',
+        name: 'Creation',
+        component: () => import('@/views/applications/creation'),
+        meta: { title: '加入社团', noCache: true }
+      },
+      {
+        path: 'join',
+        name: 'Join',
+        component: () => import('@/views/applications/join'),
+        meta: { title: '创建社团', noCache: true }
+      }
+    ]
+  }
+]
 
+/**
+ * clubMenberRouter
+ * 社员界面的组件
+ */
+export const clubMenberRouter = [
+  // 社团风采
+  {
+    path: '/clubstyle',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'ClubStyle',
+    meta: {
+      title: '社团风采',
+      icon: 'fengcai',
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/club-style/index.vue'),
+        meta: { title: '社团风采', noCache: true }
+      }
+    ]
+  },
+  // 社团成员
+  {
+    path: '/clubmember',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'ClubMember',
+        component: () => import('@/views/club-member/index.vue'),
+        meta: { title: '社团成员', icon: 'peoples', roles: ['admin'] }
+      },
+      {
+        path: 'detail',
+        name: 'MemberDetail',
+        component: () => import('@/views/member-detail/index.vue'),
+        hidden: true
+      }
+    ]
+  },
+  // 活动论坛（社员界面）
+  {
+    path: '/activityforum',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'ActivityForum',
+        component: () => import('@/views/activity-forum/index.vue'),
+        meta: { title: '活动论坛', icon: 'message', roles: ['admin'] }
+      },
+      {
+        path: 'detail',
+        name: 'ActivityDetail',
+        component: () => import('@/views/activity-forum/detail.vue'),
+        hidden: true
+      }
+    ]
+  },
+  // 社团公告（社员界面）
+  {
+    path: '/announcement',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Announcement',
+        component: () => import('@/views/club-announcement/index.vue'),
+        meta: { title: '社团公告', icon: 'message', roles: ['admin'] }
+      }
+    ]
+  }
+]
+
+/**
+ * clubChiefRouter
+ * 社长界面的组件
+ */
+export const clubChiefRouter = [
+  // 社团风采
+  {
+    path: '/clubstyle',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'ClubStyle',
+    meta: {
+      title: '社团风采',
+      icon: 'fengcai',
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/club-style/index.vue'),
+        meta: { title: '社团风采', noCache: true }
+      }
+    ]
+  },
+  // 社团成员
+  {
+    path: '/clubmember',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'ClubMember',
+        component: () => import('@/views/club-member/index.vue'),
+        meta: { title: '社团成员', icon: 'peoples', roles: ['admin'] }
+      },
+      {
+        path: 'detail',
+        name: 'MemberDetail',
+        component: () => import('@/views/member-detail/index.vue'),
+        hidden: true
+      }
+    ]
+  }
+]
+
+/**
+ * adminRouter
+ * 管理员界面的组件
+ */
+export const adminRouter = []
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
+  // 我的社团
+  {
+    path: '/myclub',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'MyClub',
+    meta: { title: '我的社团', icon: 'peoples' },
+    children: [
+      {
+        path: 'joinclub',
+        name: 'JoinClub',
+        component: () => import('@/views/myclub/joinclub'),
+        meta: { title: '我加入的社团', noCache: true }
+      },
+      {
+        path: 'manageclub',
+        name: 'ManageClub',
+        component: () => import('@/views/myclub/manageclub'),
+        meta: { title: '我管理的社团', noCache: true }
+      }
+    ]
+  },
+  // 申请结果
   {
     path: '/applications',
     component: Layout,
@@ -306,7 +532,7 @@ export const asyncRoutes = [
       }
     ]
   },
-
+  // permission
   {
     path: '/permission',
     component: Layout,
@@ -532,7 +758,6 @@ export const asyncRoutes = [
   //   ]
   // }
 ]
-
 const createRouter = () =>
   new Router({
     // mode: 'history', // require service support
