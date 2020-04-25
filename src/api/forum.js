@@ -9,3 +9,11 @@ export function getInvitationList(clubid, queryInfo) {
   })
 }
 
+export function getInvitationDetail(id, queryInfo) {
+  return request({
+    url: `/forum/posts/${id}`,
+    method: 'get',
+    params: queryInfo
+  })
+}
+

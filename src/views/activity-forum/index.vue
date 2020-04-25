@@ -10,7 +10,7 @@
       <h4>共搜索到 {{ total }} 条记录</h4>
       <el-card v-for="(item, index) in invitationsList" :key="index" style="margin-top:20px">
         <el-row>
-          <el-avatar style="float:left" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" size="number" />
+          <el-avatar style="float:left" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
           <p style="float: left">{{ item.club_name }}</p>
         </el-row>
         <el-row :gutter="20">
@@ -22,7 +22,7 @@
               <h2 style="text-align:center">{{ item.title }}</h2>
               <p>{{ item.content }}</p>
               <p>{{ item.create_at }}</p>
-              <el-button type="primary" style="display:block;margin:10 auto;">查看详情</el-button>
+              <el-button type="primary" style="display:block;margin:10 auto;" @click="pushToDetail(item.id)">查看详情</el-button>
             </el-card>
           </el-col>
         </el-row>
@@ -88,6 +88,11 @@ export default {
       console.log(newPage)
       this.queryInfo.page = newPage
       this.getInvitationsList()
+    },
+
+    // 跳转到帖子详情页面
+    pushToDetail(id) {
+      this.$router.push({ path: 'detail', query: { id: id }})
     }
   }
 }
