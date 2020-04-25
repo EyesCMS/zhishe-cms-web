@@ -16,6 +16,32 @@ export function register(data) {
     data
   })
 }
+
+export function question() {
+  return request({
+    url: '/users/username/question',
+    method: 'get'
+  })
+}
+
+export function answer(data) {
+  console.log(data)
+  return request({
+    url: '/users/answer',
+    method: 'post',
+    data
+  })
+}
+
+export function newpassword(data) {
+  console.log(data)
+  return request({
+    url: '/users/newpassword',
+    method: 'post',
+    data
+  })
+}
+
 export function getInfo(token) {
   return request({
     url: '/auth/info',

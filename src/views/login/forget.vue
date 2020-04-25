@@ -1,120 +1,120 @@
 <template>
   <div>
-    <el-form
-      ref="ruleForm"
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      label-width="100px"
-      class="demo-ruleForm"
+    <el-steps
+      :active="name"
+      finish-status="success"
+      simple
+      style="margin-top: 20px"
     >
-      <el-form-item
-        label="密码"
-        prop="pass"
-      >
-        <el-input
-          v-model="ruleForm.pass"
-          type="password"
-          autocomplete="off"
-        />
-      </el-form-item>
-      <el-form-item
-        label="确认密码"
-        prop="checkPass"
-      >
-        <el-input
-          v-model="ruleForm.checkPass"
-          type="password"
-          autocomplete="off"
-        />
-      </el-form-item>
-      <el-form-item
-        label="年龄"
-        prop="age"
-      >
-        <el-input v-model.number="ruleForm.age" />
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          @click="submitForm('ruleForm')"
-        >提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
-</template>
+      <el-step title=" 填写用户名" />
+      <el-step title="填写答案" />
+      <el-step title="修改密码" />
+    </el-steps>
+    <el-tabs
+      v-model="activeName"
+      disabled="false"
+    >
+      <el-tab-pane name="1">
+        <el-form>
+          <el-form-item label="用户名">
+            <el-input v-model="form1.username" />
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="handleClick(2)">下一步</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane name="2">
+        <el-form :model="form2">
+          <el-form-item label="保密问题">
+            <el-input v-model="form2.login_question" />
+          </el-form-item>
+          <el-form-item label="保密回答">
+            <el-input v-model="form2.login_aswer" />
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="handleClick(3)">下一步</el-button>
+            <el-button @click="back(1)">上一步</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane name="3">
+        <el-form>
+          <el-form-item label="输入新密码">
+            <el-input
+              v-model="form3.newpassword"
+              type="password"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="handleClick()">提交</el-button>
+            <el-button @click="back(2)">上一步</el-button>
 
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
+
+</template>
 <script>
+import { question } from '../../api/user'
+import { answer } from '../../api/user'
+import { newpassword } from '../../api/user'
 export default {
   data() {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('年龄不能为空'))
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error('请输入数字值'))
-        } else {
-          if (value < 18) {
-            callback(new Error('必须年满18岁'))
-          } else {
-            callback()
-          }
-        }
-      }, 1000)
-    }
-    var validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass')
-        }
-        callback()
-      }
-    }
-    var validatePass2 = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请再次输入密码'))
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error('两次输入密码不一致!'))
-      } else {
-        callback()
-      }
-    }
     return {
-      ruleForm: {
-        pass: '',
-        checkPass: '',
-        age: ''
+      form1: {
+        username: 'test'
       },
-      rules: {
-        pass: [
-          { validator: validatePass, trigger: 'blur' }
-        ],
-        checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
-        ],
-        age: [
-          { validator: checkAge, trigger: 'blur' }
-        ]
-      }
+      form2: {
+        login_question: 'test',
+        login_aswer: 'test'
+      },
+      form3: {
+        newpassword: 'test'
+      },
+      activeName: '1',
+      name: 1
     }
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
+    async handleClick(i) {
+      if (i === 2) {
+        const result = await question()
+        console.log(result)
+        if (result.Status === 200) {
+          this.form2.login_question = result.login_problem
+          this.activeName = i.toString()
+          this.name = i
+        } else this.$message.error('获取问题失败！')
+      } else if (i === 3) {
+        const data = {
+          username: this.form1.username,
+          answer: this.form2.login_aswer
         }
-      })
+        const result = await answer(data)
+        console.log(result)
+        if (result.status === 204) {
+          this.activeName = i.toString()
+          this.name = i
+        } else this.$message.error('回答错误！')
+      } else {
+        const data = {
+          username: this.form1.username,
+          password: this.form3.newpassword
+        }
+        const result = await newpassword(data)
+        console.log(result)
+        if (result.status === 200) {
+          this.$message.success('修改成功！')
+          this.$router.push('/login')
+        } else this.$message.error('修改失败！')
+      }
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
+    back(i) {
+      this.activeName = i.toString()
+      this.name = i
     }
   }
 }
