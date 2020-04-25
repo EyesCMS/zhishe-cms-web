@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getMemberList(clubid, query) {
   return request({
-    url: `/club/${clubid}/members`,
+    url: `/clubs/${clubid}/members`,
     method: 'get',
     params: query
   })
