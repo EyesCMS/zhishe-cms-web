@@ -121,6 +121,16 @@ export default [
       }
     }
   },
+
+  {
+    url: '/clubs/quit',
+    type: 'post',
+    response: config => {
+      return {
+        status: 201
+      }
+    }
+  },
   // get clubs
   {
     url: '/clubs',

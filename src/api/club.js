@@ -40,6 +40,13 @@ export function getClubDetail(clubid) {
   })
 }
 
+export function quitClub(param) {
+  return request({
+    url: '/clubs/quit',
+    method: 'post',
+    params: param
+  })
+}
 export function getClubsList(query) {
   return request({
     url: `/clubs`,

@@ -38,6 +38,7 @@
             <h4>qq群：{{ clubDetail.qq_group }}</h4>
             <h4>简介：{{ clubDetail.slogan }}</h4>
           </el-card>
+          <el-button style="display:block;margin:15px auto" type="info" @click="quitClubDialog()">退出社团</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -57,6 +58,24 @@
         <el-button type="primary" @click="bulletinDetailDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+
+    <!-- 退社申请对话框 -->
+    <el-dialog
+      title="退社申请"
+      :visible.sync="quitClubDialogVisible"
+      width="70%"
+      center
+      modal
+    >
+      <el-form>
+        <el-form-item label="退社理由">
+          <el-input v-model="quitReason" type="textarea">1</el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="quitClubConfirm">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -65,11 +84,13 @@ import { getBulletinList } from '@/api/club'
 import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
+import { quitClub } from '@/api/club'
 export default {
   name: 'MemClubStyle',
   data() {
     return {
-      clubid: 0,
+      userId: 0,
+      clubId: 0,
       queryInfo: {
         page: 1,
         limit: 10,
@@ -83,12 +104,14 @@ export default {
       bulletin: {},
       // 社团详情
       clubDetail: {},
-      bulletinDetailDialogVisible: false
+      bulletinDetailDialogVisible: false,
+      quitClubDialogVisible: false,
+      quitReason: ''
     }
   },
   created() {
     if (this.$route.params.clubid) {
-      this.clubid = this.$route.params.clubid
+      this.clubId = this.$route.params.clubid
     }
     localStorage.setItem('clubid', this.clubid)
     this.getBulletinsList()
@@ -97,7 +120,7 @@ export default {
   },
   methods: {
     getBulletinsList() {
-      getBulletinList(this.clubid, this.queryInfo).then(response => {
+      getBulletinList(this.clubId, this.queryInfo).then(response => {
         console.log(response)
         if (response.status === 200) {
           // this.$message.success('获取成员列表成功')
@@ -110,7 +133,7 @@ export default {
       })
     },
     getInvitationsList() {
-      getInvitationList(this.clubid).then(response => {
+      getInvitationList(this.clubId).then(response => {
         console.log(response)
         if (response.status === 200) {
           // this.$message.success('获取成员列表成功')
@@ -125,7 +148,7 @@ export default {
 
     // 获取社团详情
     getClubDetail() {
-      getClubDetail(this.clubid).then(response => {
+      getClubDetail(this.clubId).then(response => {
         console.log(response)
         if (response.status === 200) {
           // this.$message.success('获取成员列表成功')
@@ -140,7 +163,7 @@ export default {
     // 弹出公告详情对话框
     openBulletinDetailDiaglog(id) {
       // 发起查询公告详情请求
-      getBulletinDetail(this.clubid, id).then(response => {
+      getBulletinDetail(this.clubId, id).then(response => {
         console.log(response)
         if (response.status === 200) {
           // this.$message.success('获取成员列表成功')
@@ -153,6 +176,31 @@ export default {
         // console.log(this.memberInfo)
       })
       this.bulletinDetailDialogVisible = true
+    },
+
+    // 退社申请对话框
+    quitClubDialog() {
+      this.quitClubDialogVisible = true
+    },
+
+    // 退出社团
+    quitClubConfirm() {
+      const param = {
+        user_id: this.userId,
+        club_id: this.clubId,
+        reason: this.quitReason
+      }
+      quitClub(param).then(response => {
+        if (response.status === 201) {
+          this.$message.success('退出社团成功')
+          // console.log('123' + response.data)
+          // console.log('公告是' + this.bulletin)
+        } else {
+          return this.$message.error('退出社团失败')
+        }
+      })
+      this.quitClubDialogVisible = false
+      // 跳转到其他页面
     }
   }
 }
