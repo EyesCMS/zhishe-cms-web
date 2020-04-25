@@ -6,6 +6,9 @@
 
 <script>
 export default {
+  mounted: function () {
+    console.log(this.$store.getters)
+  }
 }
 </script>
 

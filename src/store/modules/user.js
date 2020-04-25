@@ -5,7 +5,9 @@ import router, { resetRouter } from '@/router'
 const getDefaultState = () => {
   return {
     token: getToken(),
-    name: '',
+    username: '',
+    nickname: '',
+    userid: '',
     avatar: '',
     roles: []
   }
@@ -14,14 +16,20 @@ const getDefaultState = () => {
 const state = getDefaultState()
 
 const mutations = {
-  RESET_STATE: (state) => {
+  RESET_STATE: state => {
     Object.assign(state, getDefaultState())
   },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_USERNAME: (state, username) => {
+    state.username = username
+  },
+  SET_NICKNAME: (state, nickname) => {
+    state.nickname = nickname
+  },
+  SET_USERID: (state, userid) => {
+    state.userid = userid
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
@@ -36,55 +44,61 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { token, tokenHead } = response
-        const tokenStr = tokenHead + token
-        commit('SET_TOKEN', tokenStr)
-        setToken(tokenStr)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      login({ username: username.trim(), password: password })
+        .then(response => {
+          const { token, tokenHead } = response
+          const tokenStr = tokenHead + token
+          commit('SET_TOKEN', tokenStr)
+          setToken(tokenStr)
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   },
 
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const data = response
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        const { roles, username, avatar } = data
-
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', username)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
+      getInfo(state.token)
+        .then(response => {
+          const data = response
+          if (!data) {
+            reject('Verification failed, please Login again.')
+          }
+          const { roles, avatar } = data
+          commit('SET_ROLES', roles)
+          commit('SET_USERNAME', data.username)
+          commit('SET_NICKNAME', data.nickname)
+          commit('SET_USERID', data.userid)
+          commit('SET_AVATAR', avatar)
+          resolve(data)
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   },
 
   // user logout
   logout({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
+      logout(state.token)
+        .then(() => {
+          removeToken() // must remove  token  first
+          resetRouter()
 
-        // reset visited views and cached views
-        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
-        dispatch('tagsView/delAllViews', null, { root: true })
+          // reset visited views and cached views
+          // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
+          dispatch('tagsView/delAllViews', null, { root: true })
 
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+          commit('RESET_STATE')
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   },
 
@@ -112,7 +126,9 @@ const actions = {
 
       commit('SET_ROLES', roles)
       // generate accessible routes map based on roles
-      const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+      const accessRoutes = await dispatch('permission/generateRoutes', roles, {
+        root: true
+      })
 
       // dynamically add accessible routes
       router.addRoutes(accessRoutes)

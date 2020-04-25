@@ -14,16 +14,20 @@ const users = {
   'admin-token': {
     roles: ['admin'],
     introduction: 'I am a super administrator',
+    nickname: 'nickname',
+    userid: 'userid',
     avatar:
       'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Super Admin'
+    username: 'Super Admin'
   },
   'test-token': {
     roles: ['normal'],
     introduction: 'I am an tester',
+    nickname: 'nickname',
+    userid: 'userid',
     avatar:
       'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal Tester'
+    username: 'Normal Tester'
   }
 }
 
@@ -47,7 +51,6 @@ export default [
         token: token.token,
         tokenHead: 'Bearer'
       }
-
       return result
     }
   },
