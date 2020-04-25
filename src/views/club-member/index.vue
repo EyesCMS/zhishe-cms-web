@@ -62,13 +62,8 @@ export default {
       this.listLoading = true
       getMemberList(this.clubId, this.queryInfo).then(response => {
         console.log('response为' + response.status)
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.membersList = response.data
-          this.total = response.total
-        } else {
-          return this.$message.error('获取成员列表失败')
-        }
+        this.membersList = response.items
+        this.total = response.total_count
         console.log(this.membersList)
       })
     },

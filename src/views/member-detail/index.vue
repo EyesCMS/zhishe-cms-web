@@ -53,17 +53,12 @@ export default {
   },
   methods: {
     getMemberDetails() {
-      this.userId = this.$route.query.userid
+      // this.userId = this.$route.query.userid
       console.log('UserId' + this.userId)
       // console.log(this.userId)
       getMemberDetail(this.clubId, this.userId).then(response => {
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.memberInfo = response.data
-          console.log(this.memberInfo)
-        } else {
-          return this.$message.error('获取成员信息失败')
-        }
+        this.memberInfo = response.items
+        console.log(this.memberInfo)
         console.log(this.memberInfo)
       })
     }

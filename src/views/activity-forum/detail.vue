@@ -58,11 +58,9 @@ export default {
     // 获取帖子详情
     getInvitationDetail() {
       getInvitationDetail(this.id, this.queryInfo).then(response => {
-        if (response.status === 200) {
-          this.detailInfo = response.data
-          console.log(this.detailInfo)
-          // console.log(132)
-        }
+        this.detailInfo = response.items
+        console.log(this.detailInfo)
+        // console.log(132)
       })
     },
     showMoreRemarks() {

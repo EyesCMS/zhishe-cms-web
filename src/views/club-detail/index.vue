@@ -36,12 +36,8 @@ export default {
       this.userId = this.$route.query.userid
       console.log(this.userId)
       getClubDetail(this.clubId).then(response => {
-        if (response.status === 200) {
-          this.clubInfo = response.data
-          console.log(response.data)
-        } else {
-          return this.$message.error('获取社团信息失败')
-        }
+        this.clubInfo = response.items
+        console.log(response.data)
         console.log(this.clubInfo)
       })
     }

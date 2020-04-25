@@ -42,9 +42,8 @@ export default [
       console.log(config.query)
       const pageList = invitationsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
       return {
-        status: 200,
-        data: pageList,
-        total: invitationsList.length
+        items: pageList,
+        total_count: invitationsList.length
       }
     }
   },
@@ -91,8 +90,7 @@ export default [
     response: config => {
       const { page, limit } = config.query
       return {
-        status: 200,
-        data: {
+        items: {
           title: '@string',
           content: '@string',
           club_name: 'XX社',

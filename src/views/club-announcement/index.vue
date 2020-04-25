@@ -77,14 +77,9 @@ export default {
     getBulletinsList() {
       getBulletinList(this.clubId, this.queryInfo).then(response => {
         // console.log(response.clubId)
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.bulletinsList = response.data
-          this.total = response.total
-          console.log(this.bulletinsList)
-        } else {
-          return this.$message.error('获取公告列表失败')
-        }
+        this.bulletinsList = response.items
+        this.total = response.total_count
+        console.log(this.bulletinsList)
         // console.log(this.memberInfo)
       })
     },
@@ -105,14 +100,9 @@ export default {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
         console.log(response)
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.bulletin = response.data
-          // console.log('123' + response.data)
-          // console.log('公告是' + this.bulletin)
-        } else {
-          return this.$message.error('获取公告列表失败')
-        }
+        this.bulletin = response.items
+        // console.log('123' + response.data)
+        // console.log('公告是' + this.bulletin)
         // console.log(this.memberInfo)
       })
       this.bulletinDetailDialogVisible = true

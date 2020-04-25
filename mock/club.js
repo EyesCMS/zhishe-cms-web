@@ -154,10 +154,9 @@ export default [
 
       const pageList = membersList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
       return {
-        status: 200,
-        data: pageList,
+        items: pageList,
         // pageList,
-        total: membersList.length
+        total_count: membersList.length
       }
     }
   },
@@ -168,8 +167,7 @@ export default [
     type: 'get',
     response: config => {
       return {
-        status: 200,
-        data: {
+        items: {
           nickname: '@cname',
           slogan: '我只是一个测试的',
           position: '社员',
@@ -189,8 +187,7 @@ export default [
     type: 'get',
     response: config => {
       return {
-        status: 200,
-        data: {
+        items: {
           title: '关于第六届社团纳新活动的说明',
           content: '我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团',
           create_at: '2018-04-19 18:14:12',
@@ -208,9 +205,8 @@ export default [
       console.log(config.query.page)
       const { page, limit } = config.query
       return {
-        status: 200,
-        data: bulletinsList.filter((item, index) => index < limit * page && index >= limit * (page - 1)),
-        total: bulletinsList.length
+        items: bulletinsList.filter((item, index) => index < limit * page && index >= limit * (page - 1)),
+        total_count: bulletinsList.length
       }
     }
   },

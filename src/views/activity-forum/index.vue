@@ -70,14 +70,9 @@ export default {
     getInvitationsList() {
       getInvitationList(this.clubId, this.queryInfo).then(response => {
         console.log(response)
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.invitationsList = response.data
-          this.total = response.total
-          console.log(this.invitationsList)
-        } else {
-          return this.$message.error('获取帖子列表失败')
-        }
+        this.invitationsList = response.items
+        this.total = response.total_count
+        console.log(this.invitationsList)
         // console.log(this.memberInfo)
       })
     },
