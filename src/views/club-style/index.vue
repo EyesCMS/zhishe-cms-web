@@ -133,7 +133,7 @@ export default {
       })
     },
     getInvitationsList() {
-      getInvitationList(this.clubId).then(response => {
+      getInvitationList(this.clubId, this.queryInfo).then(response => {
         console.log(response)
         if (response.status === 200) {
           // this.$message.success('获取成员列表成功')

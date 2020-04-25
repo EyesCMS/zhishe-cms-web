@@ -1,0 +1,14 @@
+<template>
+  <div>
+    详情
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'ActivityDetail'
+}
+</script>
+
+<style lang="scss" scoped>
+</style>

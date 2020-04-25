@@ -394,7 +394,7 @@ export const asyncRoutes = [
         meta: { title: '社团成员', icon: 'peoples', roles: ['admin'] }
       },
       {
-        path: '/detail',
+        path: 'detail',
         name: 'MemberDetail',
         component: () => import('@/views/member-detail/index.vue'),
         hidden: true
@@ -412,11 +412,17 @@ export const asyncRoutes = [
         name: 'ActivityForum',
         component: () => import('@/views/activity-forum/index.vue'),
         meta: { title: '活动论坛', icon: 'message', roles: ['admin'] }
+      },
+      {
+        path: 'detail',
+        name: 'ActivityDetail',
+        component: () => import('@/views/activity-forum/detail.vue'),
+        hidden: true
       }
     ]
   },
 
-  // 活动论坛（社员界面）
+  // 社团公告（社员界面）
   {
     path: '/announcement',
     component: Layout,
