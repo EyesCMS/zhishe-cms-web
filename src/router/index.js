@@ -32,13 +32,13 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: '/home_page',
+    path: '/home-page',
     component: Layout,
     children: [
       {
-        path: 'homepage',
+        path: 'index',
         name: 'HomePage',
-        component: () => import('@/views/home_page/homepage'),
+        component: () => import('@/views/home-page/index'),
         meta: { title: '首页', icon: 'component' }
       }
     ]
@@ -65,6 +65,13 @@ export const constantRoutes = [
         name: 'CreateClub',
         component: () => import('@/views/club-create/index.vue'),
         meta: { title: '创建社团', noCache: true },
+        hidden: true
+      },
+      {
+        path: '/joinClub',
+        name: 'JoinClub',
+        component: () => import('@/views/club-join/index.vue'),
+        meta: { title: '申请加入社团', noCache: true },
         hidden: true
       }
     ]

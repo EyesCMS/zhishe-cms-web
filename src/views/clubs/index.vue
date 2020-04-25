@@ -14,7 +14,7 @@
       <el-table-column label="操作" width="200px">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="LookForDetail(scope.row.cid)">查看详情</el-button>
-          <el-button type="primary" size="mini" @click="ApplyToJoin(scope.row.cid)">申请加入</el-button>
+          <el-button type="primary" size="mini" @click="ApplyToJoin(scope.row.name)">申请加入</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,12 +84,16 @@ export default {
       this.queryInfo.page = newPage
       this.getClubsList()
     },
-    // 跳转到成员信息详细页面
-    LookForDetail(cID) {
-      this.$router.push({ path: '/clubDetail', query: { cid: cID }})
+    // 跳转到社团信息详细页面
+    LookForDetail(cid) {
+      this.$router.push({ path: '/clubDetail', query: { cid: cid }})
     },
     ApplyToCreate() {
       this.$router.replace('/createClub')
+    },
+    // 申请加入社团
+    ApplyToJoin(name) {
+      this.$router.push({ path: '/joinClub', query: { name: name }})
     }
   }
 }

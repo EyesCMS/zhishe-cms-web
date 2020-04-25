@@ -129,6 +129,23 @@ export function quitClub(param) {
     params: param
   })
 }
+
+export function ApplyToJoin(query) {
+  return request({
+    url: '/clubs/join',
+    method: 'post',
+    params: query
+  })
+}
+
+export function postSubmit(query) {
+  return request({
+    url: `/clubs/creations`,
+    method: 'post',
+    params: query
+  })
+}
+
 export function getClubsList(query) {
   return request({
     url: `/clubs`,
@@ -136,4 +153,3 @@ export function getClubsList(query) {
     params: query
   })
 }
-

@@ -357,6 +357,26 @@ export default [
       }
     }
   },
+  // create club
+  {
+    url: '/clubs/creations',
+    type: 'post',
+    response: config => {
+      return {
+        status: 201
+      }
+    }
+  },
+  // join club
+  {
+    url: '/clubs/join',
+    type: 'post',
+    response: config => {
+      return {
+        status: 201
+      }
+    }
+  },
   // get clubs
   {
     url: '/clubs',
