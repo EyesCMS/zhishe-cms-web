@@ -16,10 +16,6 @@
       type="primary"
       @click="admin"
     >切换到admin</el-button>
-    <el-button
-      type="primary"
-      @click="normal"
-    >切换到normal</el-button>
   </div>
 </template>
 
@@ -31,9 +27,6 @@ export default {
     },
     admin: function () {
       this.$store.dispatch('user/changeRoles', 'admin')
-    },
-    normal: function () {
-      this.$store.dispatch('user/changeRoles', 'normal')
     },
     student: function () {
       this.$store.dispatch('user/changeRoles', 'student')
