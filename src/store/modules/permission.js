@@ -1,4 +1,11 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import {
+  asyncRoutes,
+  constantRoutes,
+  clubMenberRouter,
+  studentRoutes,
+  clubChiefRouter,
+  adminRouter
+} from '@/router'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -51,9 +58,16 @@ const actions = {
     return new Promise(resolve => {
       let accessedRoutes
       if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
+        accessedRoutes = adminRouter || []
+      } else if (roles.includes('chief')) {
+        accessedRoutes = clubChiefRouter || []
+      } else if (roles.includes('student')) {
+        accessedRoutes = studentRoutes || []
+      } else if (roles.includes('menber')) {
+        accessedRoutes = clubMenberRouter || []
       } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+        accessedRoutes = []
+        // accessedRoutes = []
       }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
