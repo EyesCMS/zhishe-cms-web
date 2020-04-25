@@ -7,15 +7,6 @@ const tokens = {
   },
   test: {
     token: 'test-token'
-  },
-  chief: {
-    token: 'chief-token'
-  },
-  student: {
-    token: 'student-token'
-  },
-  menber: {
-    token: 'menber-token'
   }
 }
 
@@ -37,33 +28,6 @@ const users = {
     avatar:
       'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     username: 'Normal Tester'
-  },
-  'chief-token': {
-    roles: ['chief'],
-    introduction: 'I am an chief',
-    nickname: 'nickname',
-    userid: 'userid',
-    avatar:
-      'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    username: 'Chief'
-  },
-  'student-token': {
-    roles: ['student'],
-    introduction: 'I am an chief',
-    nickname: 'nickname',
-    userid: 'userid',
-    avatar:
-      'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    username: 'student'
-  },
-  'menber-token': {
-    roles: ['menber'],
-    introduction: 'I am an chief',
-    nickname: 'nickname',
-    userid: 'userid',
-    avatar:
-      'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    username: 'member'
   }
 }
 
