@@ -11,6 +11,17 @@ for (let i = 0; i < 100; i++) {
     avator_url: 'e312312312312.jpg'
   }))
 }
+const AllinvitationsList = []
+for (let i = 0; i < 100; i++) {
+  AllinvitationsList.push(Mock.mock({
+    title: '@string',
+    content: '@string',
+    club_name: 'XX社',
+    create_at: '2018-04-19 18:14:12',
+    img_url: '131231241241.jpg',
+    avator_url: 'e312312312312.jpg'
+  }))
+}
 const remarksList = []
 for (let i = 0; i < 20; i++) {
   remarksList.push(Mock.mock({
@@ -34,6 +45,41 @@ export default [
         status: 200,
         data: pageList,
         total: invitationsList.length
+      }
+    }
+  },
+  // get all invitation list
+  {
+    url: '/forum/posts',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = AllinvitationsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        data: pageList,
+        total: AllinvitationsList.length
+      }
+    }
+  },
+  // get all clubs invitation deatils
+  {
+    url: '/forum/posts',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      return {
+        status: 200,
+        data: {
+          title: '@string',
+          content: '@string',
+          club_name: 'XX社',
+          create_at: '2018-04-19 18:14:12',
+          img_url: '131231241241.jpg',
+          avator_url: 'e312312312312.jpg',
+          remarks: remarksList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+        }
       }
     }
   },

@@ -167,7 +167,6 @@ export default [
       }
     }
   },
-  
   // 社团创建申请
   {
     url: '/clubs/creations/audit',

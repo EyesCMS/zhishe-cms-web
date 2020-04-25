@@ -82,10 +82,17 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'forum',
+        path: 'index',
         name: 'Forum',
-        component: () => import('@/views/forum/forum'),
+        component: () => import('@/views/forum/index.vue'),
         meta: { title: '活动论坛', icon: 'message' }
+      },
+      {
+        path: 'invitationdetail',
+        name: 'InvitationDetail',
+        component: () => import('@/views/forum/detail.vue'),
+        meta: { title: '帖子详情', noCache: true },
+        hidden: true
       }
     ]
   },
