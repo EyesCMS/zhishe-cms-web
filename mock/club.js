@@ -1,121 +1,158 @@
 import Mock from 'mockjs'
 const membersList = []
 for (let i = 0; i < 100; i++) {
-  membersList.push(Mock.mock({
-    'userid|+1': 0,
-    username: '@string',
-    nickname: '@cname',
-    'honor|1': ['龙王', '潜水'],
-    'role|1': ['社长', '副社长', '游客', '管理员'],
-    'credit|1-100': 1,
-    avatar_url: '@string'
-  }))
+  membersList.push(
+    Mock.mock({
+      'userid|+1': 0,
+      username: '@string',
+      nickname: '@cname',
+      'honor|1': ['龙王', '潜水'],
+      'role|1': ['社长', '副社长', '游客', '管理员'],
+      'credit|1-100': 1,
+      avatar_url: '@string'
+    })
+  )
 }
 const bulletinsList = []
 for (let i = 0; i < 100; i++) {
-  bulletinsList.push(Mock.mock({
-    'id|+1': 0,
-    title: '@string',
-    content: '@string',
-    create_at: Mock.Random.date(),
-    update_at: Mock.Random.date()
-  }))
+  bulletinsList.push(
+    Mock.mock({
+      'id|+1': 0,
+      title: '@string',
+      content: '@string',
+      create_at: Mock.Random.date(),
+      update_at: Mock.Random.date()
+    })
+  )
 }
 const clubsList = []
 for (let i = 0; i < 100; i++) {
-  clubsList.push(Mock.mock({
-    'cid|+1': 0,
-    avatar_url: '@string',
-    name: '@string',
-    chief_name: '@string'
-  }))
+  clubsList.push(
+    Mock.mock({
+      'cid|+1': 0,
+      avatar_url: '@string',
+      name: '@string',
+      chief_name: '@string'
+    })
+  )
 }
 const JoinApplicationsList = []
 for (let i = 0; i < 100; i++) {
-  JoinApplicationsList.push(Mock.mock({
-    'cid|+1': 0,
-    club_id: '@id',
-    reason: '@string',
-    'state|1': ['待审核', '已通过', '未通过']
-  }))
+  JoinApplicationsList.push(
+    Mock.mock({
+      'cid|+1': 0,
+      club_id: '@id',
+      reason: '@string',
+      'state|1': ['待审核', '已通过', '未通过']
+    })
+  )
 }
 const getCreateApplicationsList = []
 for (let i = 0; i < 100; i++) {
-  getCreateApplicationsList.push(Mock.mock({
-    'cid|+1': 0,
-    club_name: '@string',
-    'club_type|1': ['文艺', '休闲', '运动', '其他'],
-    reason: '@string',
-    'state|1': ['待审核', '已通过', '未通过']
-  }))
+  getCreateApplicationsList.push(
+    Mock.mock({
+      'cid|+1': 0,
+      club_name: '@string',
+      'club_type|1': ['文艺', '休闲', '运动', '其他'],
+      reason: '@string',
+      'state|1': ['待审核', '已通过', '未通过']
+    })
+  )
 }
 // 创建社团申请
 const createApplyList = []
 for (let i = 0; i < 100; i++) {
-  createApplyList.push(Mock.mock({
-    'id': '@id',
-    club_name: '@string',
-    create_at: '@datetime',
-    applicant: '@cname',
-    reason: '@string',
-    state: 0,
-    accessory_url: '@string'
-  }))
+  createApplyList.push(
+    Mock.mock({
+      id: '@id',
+      club_name: '@string',
+      create_at: '@datetime',
+      applicant: '@cname',
+      reason: '@string',
+      state: 0,
+      accessory_url: '@string'
+    })
+  )
 }
 // 解散社团申请
 const dismissApplyList = []
 for (let i = 0; i < 100; i++) {
-  dismissApplyList.push(Mock.mock({
-    id: '@id',
-    club_name: '@string',
-    create_at: '@datetime',
-    applicant: '@cname',
-    reason: '@string',
-    state: 0
-  }))
+  dismissApplyList.push(
+    Mock.mock({
+      id: '@id',
+      club_name: '@string',
+      create_at: '@datetime',
+      applicant: '@cname',
+      reason: '@string',
+      state: 0
+    })
+  )
 }
 // 社长换届申请
 const changeApplyList = []
 for (let i = 0; i < 100; i++) {
-  changeApplyList.push(Mock.mock({
-    id: '@id',
-    club_name: '@string',
-    old_chief_name: '@cname',
-    new_chief_name: '@cname',
-    create_at: '@datetime',
-    state: 0
-  }))
+  changeApplyList.push(
+    Mock.mock({
+      id: '@id',
+      club_name: '@string',
+      old_chief_name: '@cname',
+      new_chief_name: '@cname',
+      create_at: '@datetime',
+      state: 0
+    })
+  )
 }
 // 社团认证申请
 const identifyApplyList = []
 for (let i = 0; i < 100; i++) {
-  identifyApplyList.push(Mock.mock({
-    id: '@id',
-    club_name: '@string',
-    applicant: '@cname',
-    accessory_url: '@string',
-    create_at: '@datetime',
-    state: 0
-  }))
+  identifyApplyList.push(
+    Mock.mock({
+      id: '@id',
+      club_name: '@string',
+      applicant: '@cname',
+      accessory_url: '@string',
+      create_at: '@datetime',
+      state: 0
+    })
+  )
 }
 // 社团活动申请
 const activityApplyList = []
 for (let i = 0; i < 100; i++) {
-  activityApplyList.push(Mock.mock({
-    id: '@id',
-    club_name: '@string',
-    name: '@string',
-    title: '@string',
-    content: '@string',
-    start_date: '@datetime',
-    end_date: '@datetime',
-    location: '@string',
-    accessory_url: '@string',
-    state: 0
-  }))
+  activityApplyList.push(
+    Mock.mock({
+      id: '@id',
+      club_name: '@string',
+      name: '@string',
+      title: '@string',
+      content: '@string',
+      start_date: '@datetime',
+      end_date: '@datetime',
+      location: '@string',
+      accessory_url: '@string',
+      state: 0
+    })
+  )
 }
 //
 export default [
+  // GET /clubs/recommended
+  {
+    url: '/clubs/recommended',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(page)
+      console.log(limit)
+      const pageList = clubsList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
+      return {
+        Status: 200,
+        pageList
+      }
+    }
+  },
   // 查看加入社团申请列表
   {
     url: '/clubs/join/[0-9]',
@@ -125,7 +162,9 @@ export default [
       const { page, limit } = config.query
       return {
         status: 200,
-        data: JoinApplicationsList.filter((item, index) => index < limit * page && index >= limit * (page - 1)),
+        data: JoinApplicationsList.filter(
+          (item, index) => index < limit * page && index >= limit * (page - 1)
+        ),
         total: JoinApplicationsList.length
       }
     }
@@ -139,7 +178,9 @@ export default [
       const { page, limit } = config.query
       return {
         status: 200,
-        data: getCreateApplicationsList.filter((item, index) => index < limit * page && index >= limit * (page - 1)),
+        data: getCreateApplicationsList.filter(
+          (item, index) => index < limit * page && index >= limit * (page - 1)
+        ),
         total: getCreateApplicationsList.length
       }
     }
@@ -152,7 +193,9 @@ export default [
       const { page, limit } = config.query
       console.log(config.query)
 
-      const pageList = membersList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = membersList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         items: pageList,
         // pageList,
@@ -189,7 +232,8 @@ export default [
       return {
         items: {
           title: '关于第六届社团纳新活动的说明',
-          content: '我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团',
+          content:
+            '我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团我们是一个很优秀的社团',
           create_at: '2018-04-19 18:14:12',
           update_at: '2018-04-19 19:14:12'
         }
@@ -205,7 +249,9 @@ export default [
       console.log(config.query.page)
       const { page, limit } = config.query
       return {
-        items: bulletinsList.filter((item, index) => index < limit * page && index >= limit * (page - 1)),
+        items: bulletinsList.filter(
+          (item, index) => index < limit * page && index >= limit * (page - 1)
+        ),
         total_count: bulletinsList.length
       }
     }
@@ -233,7 +279,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = createApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = createApplyList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         status: 200,
         items: pageList,
@@ -265,7 +313,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = dismissApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = dismissApplyList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         status: 200,
         items: pageList,
@@ -297,7 +347,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = changeApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = changeApplyList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         status: 200,
         items: pageList,
@@ -329,7 +381,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = identifyApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = identifyApplyList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         status: 200,
         items: pageList,
@@ -360,7 +414,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = activityApplyList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = activityApplyList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         status: 200,
         items: pageList,
@@ -382,7 +438,8 @@ export default [
           chief_id: 2,
           chief_name: '微微笑',
           avatar_url: 'http://xx/xxxx.png',
-          slogan: 'XX社是一个非常非常厉害的社团XX社是一个非常非常厉害的社团XX社是一个非常非常厉害的社团XX社是一个非常非常厉害的社团',
+          slogan:
+            'XX社是一个非常非常厉害的社团XX社是一个非常非常厉害的社团XX社是一个非常非常厉害的社团XX社是一个非常非常厉害的社团',
           member_count: 500,
           qq_group: '312512512'
         }
@@ -427,7 +484,9 @@ export default [
       const { page, limit } = config.query
       console.log(config.query)
 
-      const pageList = clubsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = clubsList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         status: 200,
         data: pageList,
@@ -435,5 +494,4 @@ export default [
       }
     }
   }
-
 ]

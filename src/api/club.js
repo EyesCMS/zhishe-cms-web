@@ -7,7 +7,14 @@ export function getMemberList(clubid, query) {
     params: query
   })
 }
-
+export function recommended(query) {
+  console.log('api' + query)
+  return request({
+    url: `/clubs/recommended`,
+    method: 'get',
+    params: query
+  })
+}
 export function getMemberDetail(clubid, userid) {
   return request({
     url: `/clubs/${clubid}/members/${userid}`,
@@ -169,4 +176,3 @@ export function getClubsList(query) {
     params: query
   })
 }
-
