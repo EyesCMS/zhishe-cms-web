@@ -3,14 +3,23 @@
     <div v-if="user">
       <el-row :gutter="20">
 
-        <el-col :span="6" :xs="24">
+        <el-col
+          :span="6"
+          :xs="24"
+        >
           <user-card :user="user" />
         </el-col>
 
-        <el-col :span="18" :xs="24">
+        <el-col
+          :span="18"
+          :xs="24"
+        >
           <el-card>
             <el-tabs v-model="activeTab">
-              <el-tab-pane label="个人信息" name="account">
+              <el-tab-pane
+                label="个人信杯"
+                name="account"
+              >
                 <account :user="user" />
               </el-tab-pane>
             </el-tabs>
@@ -58,7 +67,8 @@ export default {
         email: this.$store.getters.email,
         avatar: this.$store.getters.avatar,
         major: this.$store.getters.major,
-        phone: this.$store.getters.phone
+        phone: this.$store.getters.phone,
+        slogan: this.$store.getters.slogan
       }
     }
   }

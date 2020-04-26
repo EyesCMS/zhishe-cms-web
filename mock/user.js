@@ -27,7 +27,11 @@ const users = {
     userid: 'userid',
     avatar:
       'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    username: 'Super Admin'
+    username: 'Super Admin',
+    email: '这是一个邮箱',
+    phone: '12345678910',
+    slogan: '这是一条个性签名',
+    major: '大数据'
   },
   'test-token': {
     roles: ['normal'],
@@ -36,7 +40,11 @@ const users = {
     userid: 'userid',
     avatar:
       'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    username: 'Normal Tester'
+    username: 'Normal Tester',
+    email: '这是一个邮箱',
+    phone: '12345678910',
+    slogan: '这是一条个性签名',
+    major: '大数据'
   },
   'chief-token': {
     roles: ['chief'],
@@ -45,7 +53,11 @@ const users = {
     userid: 'userid',
     avatar:
       'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    username: 'Chief'
+    username: 'Chief',
+    email: '这是一个邮箱',
+    phone: '12345678910',
+    slogan: '这是一条个性签名',
+    major: '大数据'
   },
   'student-token': {
     roles: ['student'],
@@ -54,7 +66,11 @@ const users = {
     userid: 'userid',
     avatar:
       'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    username: 'student'
+    username: 'student',
+    email: '这是一个邮箱',
+    phone: '12345678910',
+    slogan: '这是一条个性签名',
+    major: '大数据'
   },
   'menber-token': {
     roles: ['menber'],
@@ -63,7 +79,11 @@ const users = {
     userid: 'userid',
     avatar:
       'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    username: 'member'
+    username: 'member',
+    email: '这是一个邮箱',
+    phone: '12345678910',
+    slogan: '这是一条个性签名',
+    major: '大数据'
   }
 }
 

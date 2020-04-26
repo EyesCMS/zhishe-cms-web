@@ -8,6 +8,10 @@ const getDefaultState = () => {
     username: '',
     nickname: '',
     userid: '',
+    phone: '',
+    major: '',
+    slogan: '',
+    email: '',
     avatar: '',
     roles: []
   }
@@ -36,6 +40,18 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_PHONE: (state, phone) => {
+    state.phone = phone
+  },
+  SET_EMAIL: (state, email) => {
+    state.email = email
+  },
+  SET_SLOGAN: (state, slogan) => {
+    state.slogan = slogan
+  },
+  SET_MAJOR: (state, major) => {
+    state.major = major
   }
 }
 
@@ -71,6 +87,10 @@ const actions = {
           commit('SET_ROLES', roles)
           commit('SET_USERNAME', data.username)
           commit('SET_NICKNAME', data.nickname)
+          commit('SET_PHONE', data.phone)
+          commit('SET_EMAIL', data.email)
+          commit('SET_SLOGAN', data.slogan)
+          commit('SET_MAJOR', data.major)
           commit('SET_USERID', data.userid)
           commit('SET_AVATAR', avatar)
           resolve(data)

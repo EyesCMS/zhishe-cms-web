@@ -17,7 +17,10 @@
     </el-form-item>
     <div style="text-align:center">
       <el-form-item>
-        <el-button type="primary" @click="submit">修改</el-button>
+        <el-button
+          type="primary"
+          @click="submit"
+        >修改</el-button>
       </el-form-item>
     </div>
   </el-form>
