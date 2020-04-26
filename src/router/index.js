@@ -343,6 +343,21 @@ export const clubChiefRouter = [
         meta: { title: '成员退出通知', icon: 'memberquit', roles: ['admin'] }
       }
     ]
+  },
+
+  // 社团活动管理
+  {
+    path: '/activitymanage',
+    component: Layout,
+    name: 'ActivityManage',
+    children: [
+      {
+        path: 'list',
+        name: 'ActivityList',
+        component: () => import('@/views/club-member/index.vue'),
+        meta: { title: '社团活动管理', icon: 'people', roles: ['admin'] }
+      }
+    ]
   }
 ]
 
@@ -611,7 +626,7 @@ const createRouter = () =>
   new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes.concat(studentRoutes)
+    routes: constantRoutes.concat(studentRoutes, clubChiefRouter)
   })
 
 const router = createRouter()

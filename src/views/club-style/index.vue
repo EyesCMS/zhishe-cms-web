@@ -153,15 +153,7 @@ export default {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
         console.log(response)
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.bulletin = response.data
-          // console.log('123' + response.data)
-          // console.log('公告是' + this.bulletin)
-        } else {
-          return this.$message.error('获取公告列表失败')
-        }
-        // console.log(this.memberInfo)
+        this.bulletin = response.items
       })
       this.bulletinDetailDialogVisible = true
     },
