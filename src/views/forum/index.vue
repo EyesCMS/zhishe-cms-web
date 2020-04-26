@@ -89,7 +89,7 @@ export default {
 
     // 跳转到帖子详情页面
     pushToDetail(id) {
-      this.$router.push({ path: 'invitationdetail', query: { id: id }})
+      this.$router.push({ path: 'studentforum', query: { id: id }})
     }
   }
 }

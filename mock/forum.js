@@ -84,7 +84,7 @@ export default [
   },
   // get all clubs invitation details
   {
-    url: '/forum/posts',
+    url: '/forum/posts/[0-9]',
     type: 'get',
     response: config => {
       const { page, limit } = config.query

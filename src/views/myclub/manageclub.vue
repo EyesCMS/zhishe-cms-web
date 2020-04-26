@@ -1,10 +1,96 @@
 <template>
-  <div>管理社团组件</div>
+  <div style="margin-top: 15px;text-align:center;">
+
+    <!-- 社团列表 -->
+    <el-table :data="ManageclubsList" stripe border>
+      <el-table-column label="社团ID" prop="cid" />
+      <el-table-column label="社团头像" prop="avatar_url" />
+      <el-table-column label="社团名称" prop="name" />
+      <el-table-column label="社长名称" prop="chief_name" />
+      <el-table-column label="操作" width="200px">
+        <template>
+          <!--<template slot-scope="scope">-->
+          <!--scope.row.name -->
+          <el-button type="primary" size="mini" @click="EnterToClub()">进入社团</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <!-- 分页区域 -->
+    <el-pagination
+      :current-page="queryInfo.pagenum"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="queryInfo.pagesize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+  </div>
 </template>
 
+<style>
+.el-input {
+  width: 600px;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+</style>
 <script>
+import { getManageclubsList } from '@/api/club'
 export default {
+  name: 'ManageClubs',
+  data() {
+    return {
+      search: '',
+      listLoading: true,
+      queryInfo: {
+        page: 1,
+        limit: 5
+      },
+      total: 0,
+      // userid: this.$store.getters.name,
+      userid: 0,
+      ManageclubsList: []
+    }
+  },
+  created() {
+    this.getManageclubsList()
+  },
+  methods: {
+    getManageclubsList() {
+      this.listLoading = true
+      getManageclubsList(this.userid, this.queryInfo).then(response => {
+        if (response.status === 200) {
+          this.ManageclubsList = response.data
+          this.total = response.total
+        } else {
+          return this.$message.error('获取社团列表失败')
+        }
+        console.log(this.ManageclubsList)
+      })
+    },
+    // 监听pagesize改变的事件
+    handleSizeChange(newSize) {
+      console.log(newSize)
+      this.queryInfo.limit = newSize
+      this.getManageclubsList()
+    },
+    // 监听页码值改变的事件
+    handleCurrentChange(newPage) {
+      console.log(newPage)
+      this.queryInfo.page = newPage
+      this.getManageclubsList()
+    },
+    // 跳转到社团成员页面
+    EnterToClub() {
+      this.$store.dispatch('user/changeRoles', 'menber')
+    },
+    // 设置cookie,我不知道这样写对不对...
+    setCookie: function (cid, userid) {
+      document.cookie = 'cid=' + cid + ';' + 'userid=' + userid + ';' + 'secure'
+    }
+  }
 }
 </script>
-
-<style lang="stylus" scoped></style>

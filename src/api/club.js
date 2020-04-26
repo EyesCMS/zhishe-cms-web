@@ -205,3 +205,12 @@ export function joinAudit(input) {
     params: input
   })
 }
+// 获取学生加入的社团列表
+export function getJoinclubsList(userid, query) {
+  return request({
+    url: `/clubs/users/${userid}`,
+    method: 'get',
+    params: query
+  })
+}
+

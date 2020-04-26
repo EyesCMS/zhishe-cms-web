@@ -35,7 +35,7 @@
 <script>
 import { getAllInvitationDetail } from '@/api/forum'
 export default {
-  name: 'ClubActivityDetail',
+  name: 'AllActivityDetail',
   data() {
     return {
       id: 1,
@@ -50,6 +50,7 @@ export default {
     }
   },
   created() {
+    // this.id = this.$route.query.id
     console.log(this.id)
     this.getAllInvitationDetail()
   },
@@ -57,10 +58,9 @@ export default {
     // 获取帖子详情
     getAllInvitationDetail() {
       getAllInvitationDetail(this.id, this.queryInfo).then(response => {
-        if (response.status === 200) {
-          this.detailInfo = response.data
-          console.log(this.detailInfo)
-        }
+        this.detailInfo = response.items
+        console.log(this.detailInfo)
+        // console.log(132)
       })
     },
     showMoreRemarks() {

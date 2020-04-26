@@ -17,9 +17,9 @@ export function getInvitationList(clubid, queryInfo) {
   })
 }
 
-export function getAllInvitationDetail(queryInfo) {
+export function getAllInvitationDetail(id, queryInfo) {
   return request({
-    url: `/forum/posts`,
+    url: `/forum/posts/${id}`,
     method: 'get',
     params: queryInfo
   })

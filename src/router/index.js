@@ -122,7 +122,7 @@ export const studentRoutes = [
       }
     ]
   },
-  // 活动论坛
+  // 活动论坛（学生页面）
   {
     path: '/forum',
     component: Layout,
@@ -132,6 +132,13 @@ export const studentRoutes = [
         name: 'Forum',
         component: () => import('@/views/forum/index'),
         meta: { title: '活动论坛', icon: 'message' }
+      },
+      {
+        path: 'studentforum',
+        name: 'StudentForm',
+        component: () => import('@/views/forum/detail'),
+        meta: { title: '帖子详情', noCache: true },
+        hidden: true
       }
     ]
   },
@@ -597,7 +604,7 @@ const createRouter = () =>
   new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
+    routes: constantRoutes.concat(studentRoutes)
   })
 
 const router = createRouter()

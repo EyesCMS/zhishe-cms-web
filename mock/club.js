@@ -27,14 +27,21 @@ for (let i = 0; i < 100; i++) {
 }
 const clubsList = []
 for (let i = 0; i < 100; i++) {
-  clubsList.push(
-    Mock.mock({
-      'cid|+1': 0,
-      avatar_url: '@string',
-      name: '@string',
-      chief_name: '@string'
-    })
-  )
+  clubsList.push(Mock.mock({
+    cid: '@string',
+    avatar_url: '@string',
+    name: '@string',
+    chief_name: '@cname'
+  }))
+}
+const JoinclubsList = []
+for (let i = 0; i < 100; i++) {
+  JoinclubsList.push(Mock.mock({
+    'cid|+1': 0,
+    avatar_url: '@string',
+    name: '@string',
+    chief_name: '@cname'
+  }))
 }
 const JoinApplicationsList = []
 for (let i = 0; i < 100; i++) {
@@ -494,7 +501,21 @@ export default [
       }
     }
   },
-
+  // 获取学生已加入社团列表
+  {
+    url: '/clubs/users/[0-9]',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = JoinclubsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        data: pageList,
+        total: JoinclubsList.length
+      }
+    }
+  },
   // get club detail
   {
     url: '/clubs/[0-9]',
