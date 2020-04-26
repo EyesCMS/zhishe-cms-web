@@ -114,6 +114,16 @@ for (let i = 0; i < 100; i++) {
     state: 0
   }))
 }
+// 退社通知
+const quitList = []
+for (let i = 0; i < 50; i++) {
+  quitList.push(Mock.mock({
+    applicant: '@cname',
+    reason: '@string',
+    createAt: '@datetime'
+  }))
+}
+//
 const addList = []
 for (let i = 0; i < 50; i++) {
   addList.push(Mock.mock({
@@ -126,6 +136,22 @@ for (let i = 0; i < 50; i++) {
 }
 //
 export default [
+  // 查看退社通知列表
+  {
+    url: '/clubs/[0-9]/quit',
+    type: 'get',
+    response: config => {
+      console.log(config.query.page)
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = quitList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        items: pageList,
+        total_count: quitList.length
+      }
+    }
+  },
   {
     url: '/clubs/[0-9]/joins',
     type: 'get',

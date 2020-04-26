@@ -443,7 +443,7 @@ export const clubChiefRouter = [
       {
         path: 'quit',
         name: 'MemberQuit',
-        component: () => import('@/views/club-member/index.vue'),
+        component: () => import('@/views/member-quit/index.vue'),
         meta: { title: '成员退出通知', icon: 'memberquit', roles: ['admin'] }
       }
     ]

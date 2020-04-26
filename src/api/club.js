@@ -163,6 +163,16 @@ export function postSubmit(query) {
   })
 }
 
+// 获取退社通知
+export function getQuitList(clubid, query) {
+  console.log(clubid)
+  return request({
+    url: `/clubs/${clubid}/quit`,
+    method: 'get',
+    params: query
+  })
+}
+
 export function getClubsList(query) {
   return request({
     url: `/clubs`,
