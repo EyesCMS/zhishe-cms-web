@@ -86,6 +86,7 @@ export default {
     // 跳转到社团成员页面
     EnterToClub() {
       this.$store.dispatch('user/changeRoles', 'menber')
+      this.$router.replace('/clubstyle/index')
     },
     // 设置cookie,我不知道这样写对不对...
     setCookie: function (cid, userid) {

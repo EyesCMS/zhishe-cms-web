@@ -212,3 +212,12 @@ export function getJoinclubsList(userid, query) {
   })
 }
 
+// 获取学生作为社长管理的社团列表
+export function getManageclubsList(userid, query) {
+  return request({
+    url: `/clubs/manager/${userid}`,
+    method: 'get',
+    params: query
+  })
+}
+

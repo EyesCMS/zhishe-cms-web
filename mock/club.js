@@ -43,6 +43,15 @@ for (let i = 0; i < 100; i++) {
     chief_name: '@cname'
   }))
 }
+const ManageclubsList = []
+for (let i = 0; i < 100; i++) {
+  ManageclubsList.push(Mock.mock({
+    'cid|+1': 0,
+    avatar_url: '@string',
+    name: '@string',
+    chief_name: '@cname'
+  }))
+}
 const JoinApplicationsList = []
 for (let i = 0; i < 100; i++) {
   JoinApplicationsList.push(
@@ -280,7 +289,6 @@ export default [
       }
     }
   },
-
   // get member detail
   {
     url: '/clubs/[0-9]/members/[0-9]',
@@ -366,7 +374,6 @@ export default [
       }
     }
   },
-
   // 社团解散申请
   {
     url: '/clubs/dissolution/audit',
@@ -513,6 +520,21 @@ export default [
         status: 200,
         data: pageList,
         total: JoinclubsList.length
+      }
+    }
+  },
+  // 获取学生管理社团列表
+  {
+    url: '/clubs/manager/[0-9]',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = ManageclubsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        status: 200,
+        data: pageList,
+        total: ManageclubsList.length
       }
     }
   },
