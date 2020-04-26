@@ -179,3 +179,12 @@ export function getAddList(clubid, query) {
     params: query
   })
 }
+
+// 审核入社申请
+export function joinAudit(input) {
+  return request({
+    url: '/clubs/joins/audit',
+    method: 'put',
+    params: input
+  })
+}

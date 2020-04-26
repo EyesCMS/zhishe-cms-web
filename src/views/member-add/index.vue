@@ -4,7 +4,7 @@
       <!-- 用户列表 -->
       <el-table :data="addList" stripe border>
         <el-table-column type="index" label="#" />
-        <el-table-column label="昵称" prop="nickname" width="150px" />
+        <el-table-column label="昵称" prop="applicant" width="150px" />
         <el-table-column label="申请理由" prop="reason" />
         <el-table-column label="申请时间" prop="create_at" width="200px" />
         <el-table-column label="状态" width="150px">
@@ -16,8 +16,8 @@
         </el-table-column>
         <el-table-column label="操作" width="220px">
           <template slot-scope="scope">
-            <el-button type="primary" :disabled="isDisabled(scope.row.state)" @click="pushToDetail(scope.row.userid)">同意</el-button>
-            <el-button type="danger" :disabled="isDisabled(scope.row.state)" @click="pushToDetail(scope.row.userid)">拒绝</el-button>
+            <el-button type="primary" :disabled="isDisabled(scope.row.state)" @click="joinAudit(scope.row.id, 1)">同意</el-button>
+            <el-button type="danger" :disabled="isDisabled(scope.row.state)" @click="joinAudit(scope.row.id, 2)">拒绝</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -37,6 +37,7 @@
 
 <script>
 import { getAddList } from '@/api/club'
+import { joinAudit } from '@/api/club'
 export default {
   name: 'MemberAdd',
   filters: {
@@ -104,6 +105,16 @@ export default {
     handleCurrentChange(newPage) {
       console.log(newPage)
       this.queryInfo.page = newPage
+      this.getAddsList()
+    },
+    joinAudit(id, state) {
+      const input = {
+        id: id,
+        state: state
+      }
+      joinAudit(input).then(response => {
+        this.$message.success('已审批')
+      })
       this.getAddsList()
     }
   }

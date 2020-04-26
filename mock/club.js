@@ -117,8 +117,8 @@ for (let i = 0; i < 100; i++) {
 const addList = []
 for (let i = 0; i < 50; i++) {
   addList.push(Mock.mock({
-    'userid|+1': 1,
-    nickname: '@cname',
+    'id|+1': 1,
+    applicant: '@cname',
     reason: '@string',
     create_at: '@datetime',
     'state|1': [0, 1, 2]
@@ -137,6 +137,18 @@ export default [
       return {
         items: pageList,
         total_count: addList.length
+      }
+    }
+  },
+  {
+    url: '/clubs/joins/audit',
+    type: 'put',
+    response: config => {
+      const { id, state } = config.query
+      for (let i = 0; i < addList.length; ++i) {
+        if (addList[i].id === id) {
+          addList[i].state = state
+        }
       }
     }
   },
