@@ -1,5 +1,5 @@
 import {
-  asyncRoutes,
+  // asyncRoutes,
   constantRoutes,
   clubMenberRouter,
   studentRoutes,

@@ -403,21 +403,48 @@ export const clubChiefRouter = [
     ]
   },
   // 社团成员
+  // {
+  //   path: '/clubmember',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'ClubMember',
+  //       component: () => import('@/views/club-member/index.vue'),
+  //       meta: { title: '社团成员', icon: 'peoples', roles: ['admin'] }
+  //     },
+  //     {
+  //       path: 'detail',
+  //       name: 'MemberDetail',
+  //       component: () => import('@/views/member-detail/index.vue'),
+  //       hidden: true
+  //     }
+  //   ]
+  // },
+  // 社团成员管理
   {
-    path: '/clubmember',
+    path: '/membermanage',
     component: Layout,
+    name: 'MemberManage',
+    meta: { title: '社团成员管理', icon: 'membermanage', roles: ['amdin'] },
     children: [
       {
-        path: 'index',
-        name: 'ClubMember',
+        path: 'list',
+        name: 'MemberList',
         component: () => import('@/views/club-member/index.vue'),
-        meta: { title: '社团成员', icon: 'peoples', roles: ['admin'] }
+        meta: { title: '查看所有成员', icon: 'people', roles: ['admin'] }
       },
       {
-        path: 'detail',
-        name: 'MemberDetail',
-        component: () => import('@/views/member-detail/index.vue'),
-        hidden: true
+        path: 'add',
+        name: 'MemberAdd',
+        component: () => import('@/views/club-member/index.vue'),
+        meta: { title: '审核加入申请', icon: 'applyadd', roles: ['admin'] }
+      },
+      {
+        path: 'quit',
+        name: 'MemberQuit',
+        component: () => import('@/views/club-member/index.vue'),
+        meta: { title: '成员退出通知', icon: 'memberquit', roles: ['admin'] }
       }
     ]
   }
@@ -683,27 +710,6 @@ export const asyncRoutes = [
       }
     ]
   }
-  // 社团成员
-  // {
-  //   path: '/clubmember',
-  //   component: Layout,
-  //   redirect: 'noRedirect',
-  //   name: 'ClubMember',
-  //   meta:
-  //   {
-  //     title: '社团成员',
-  //     icon: 'peoples',
-  //     roles: ['admin']
-  //   },
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'index',
-  //       component: () => import('@/views/club-member/index.vue'),
-  //       meta: { title: '社团成员', noCache: true }
-  //     }
-  //   ]
-  // }
 ]
 const createRouter = () =>
   new Router({
