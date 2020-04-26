@@ -1,7 +1,7 @@
 <template>
   <el-form>
     <el-form-item label="姓名">
-      <el-input v-model.trim="user.name" />
+      <el-input v-model.trim="user.nickname" />
     </el-form-item>
     <el-form-item label="专业">
       <el-input v-model.trim="user.major" />
@@ -15,9 +15,11 @@
     <el-form-item label="联系方式">
       <el-input v-model.trim="user.phone" />
     </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submit">修改</el-button>
-    </el-form-item>
+    <div style="text-align:center">
+      <el-form-item>
+        <el-button type="primary" @click="submit">修改</el-button>
+      </el-form-item>
+    </div>
   </el-form>
 </template>
 

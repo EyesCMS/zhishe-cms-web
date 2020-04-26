@@ -22,7 +22,7 @@
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>Education</span></div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            JS in Computer Science from the University of Technology
+            还不知道写什么后面一定要记得提醒我改但是到底写什么写什么凑字数凑字数凑字数
           </div>
         </div>
       </div>
@@ -36,14 +36,18 @@
           </div>
           <div class="progress-item">
             <span>JavaScript</span>
-            <el-progress :percentage="18" />
+            <el-progress :percentage="62" />
           </div>
           <div class="progress-item">
             <span>Css</span>
-            <el-progress :percentage="12" />
+            <el-progress :percentage="72" />
           </div>
           <div class="progress-item">
             <span>ESLint</span>
+            <el-progress :percentage="80" />
+          </div>
+          <div class="progress-item">
+            <span>Spring Boot</span>
             <el-progress :percentage="100" status="success" />
           </div>
         </div>

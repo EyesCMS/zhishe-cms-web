@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'name',
+      'nickname',
       'avatar',
       'major',
       'slogan',
@@ -52,7 +52,8 @@ export default {
   methods: {
     getUser() {
       this.user = {
-        name: this.$store.getters.nickname,
+        name: this.$store.getters.name,
+        nickname: this.$store.getters.nickname,
         role: this.$store.getters.roles,
         email: this.$store.getters.email,
         avatar: this.$store.getters.avatar,
