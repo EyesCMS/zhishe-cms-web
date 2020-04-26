@@ -119,6 +119,13 @@ export const studentRoutes = [
         component: () => import('@/views/club-create/index'),
         meta: { title: '创建社团', noCache: true },
         hidden: true
+      },
+      {
+        path: '/joinClub',
+        name: 'JoinClub',
+        component: () => import('@/views/club-join/index'),
+        meta: { title: '加入社团申请', noCache: true },
+        hidden: true
       }
     ]
   },

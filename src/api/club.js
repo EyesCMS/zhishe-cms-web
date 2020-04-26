@@ -120,7 +120,13 @@ export function getActivityApplyList(clubid, query) {
   })
 }
 
-//
+export function ApplyToJoin(query) {
+  return request({
+    url: '/clubs/join',
+    method: 'post',
+    params: query
+  })
+}
 
 export function getClubDetail(clubid) {
   return request({
@@ -150,14 +156,6 @@ export function getCreateApplicationsList(userid, query) {
   return request({
     url: `/clubs/creations/${userid}`,
     method: 'get',
-    params: query
-  })
-}
-
-export function ApplyToJoin(query) {
-  return request({
-    url: '/clubs/join',
-    method: 'post',
     params: query
   })
 }
