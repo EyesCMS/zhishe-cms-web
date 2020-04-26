@@ -119,6 +119,7 @@ export function getActivityApplyList(clubid, query) {
     params: query
   })
 }
+
 //
 
 export function getClubDetail(clubid) {
@@ -169,10 +170,38 @@ export function postSubmit(query) {
   })
 }
 
+// 获取退社通知
+export function getQuitList(clubid, query) {
+  console.log(clubid)
+  return request({
+    url: `/clubs/${clubid}/quit`,
+    method: 'get',
+    params: query
+  })
+}
+
 export function getClubsList(query) {
   return request({
     url: `/clubs`,
     method: 'get',
     params: query
+  })
+}
+// 获取申请加入列表
+export function getAddList(clubid, query) {
+  console.log(1234)
+  return request({
+    url: `/clubs/${clubid}/joins`,
+    method: 'get',
+    params: query
+  })
+}
+
+// 审核入社申请
+export function joinAudit(input) {
+  return request({
+    url: '/clubs/joins/audit',
+    method: 'put',
+    params: input
   })
 }

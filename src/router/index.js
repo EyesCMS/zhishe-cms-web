@@ -319,13 +319,13 @@ export const clubChiefRouter = [
       {
         path: 'add',
         name: 'MemberAdd',
-        component: () => import('@/views/club-member/index.vue'),
+        component: () => import('@/views/member-add/index.vue'),
         meta: { title: '审核加入申请', icon: 'applyadd', roles: ['admin'] }
       },
       {
         path: 'quit',
         name: 'MemberQuit',
-        component: () => import('@/views/club-member/index.vue'),
+        component: () => import('@/views/member-quit/index.vue'),
         meta: { title: '成员退出通知', icon: 'memberquit', roles: ['admin'] }
       }
     ]

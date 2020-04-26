@@ -134,6 +134,30 @@ for (let i = 0; i < 100; i++) {
     })
   )
 }
+// 退社通知
+const quitList = []
+for (let i = 0; i < 50; i++) {
+  quitList.push(
+    Mock.mock({
+      applicant: '@cname',
+      reason: '@string',
+      createAt: '@datetime'
+    })
+  )
+}
+//
+const addList = []
+for (let i = 0; i < 50; i++) {
+  addList.push(
+    Mock.mock({
+      'id|+1': 1,
+      applicant: '@cname',
+      reason: '@string',
+      create_at: '@datetime',
+      'state|1': [0, 1, 2]
+    })
+  )
+}
 //
 export default [
   // GET /clubs/recommended
@@ -150,6 +174,52 @@ export default [
       return {
         Status: 200,
         pageList
+      }
+    }
+  },
+  // 查看退社通知列表
+  {
+    url: '/clubs/[0-9]/quit',
+    type: 'get',
+    response: config => {
+      console.log(config.query.page)
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = quitList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
+      return {
+        status: 200,
+        items: pageList,
+        total_count: quitList.length
+      }
+    }
+  },
+  {
+    url: '/clubs/[0-9]/joins',
+    type: 'get',
+    response: config => {
+      console.log(456)
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = addList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
+      return {
+        items: pageList,
+        total_count: addList.length
+      }
+    }
+  },
+  {
+    url: '/clubs/joins/audit',
+    type: 'put',
+    response: config => {
+      const { id, state } = config.query
+      for (let i = 0; i < addList.length; ++i) {
+        if (addList[i].id === id) {
+          addList[i].state = state
+        }
       }
     }
   },
