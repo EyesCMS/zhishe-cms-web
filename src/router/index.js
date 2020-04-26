@@ -437,7 +437,7 @@ export const clubChiefRouter = [
       {
         path: 'add',
         name: 'MemberAdd',
-        component: () => import('@/views/club-member/index.vue'),
+        component: () => import('@/views/member-add/index.vue'),
         meta: { title: '审核加入申请', icon: 'applyadd', roles: ['admin'] }
       },
       {

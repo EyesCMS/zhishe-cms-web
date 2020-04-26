@@ -114,8 +114,32 @@ for (let i = 0; i < 100; i++) {
     state: 0
   }))
 }
+const addList = []
+for (let i = 0; i < 50; i++) {
+  addList.push(Mock.mock({
+    'userid|+1': 1,
+    nickname: '@cname',
+    reason: '@string',
+    create_at: '@datetime',
+    'state|1': [0, 1, 2]
+  }))
+}
 //
 export default [
+  {
+    url: '/clubs/[0-9]/joins',
+    type: 'get',
+    response: config => {
+      console.log(456)
+      const { page, limit } = config.query
+      console.log(config.query)
+      const pageList = addList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return {
+        items: pageList,
+        total_count: addList.length
+      }
+    }
+  },
   // 查看加入社团申请列表
   {
     url: '/clubs/join/[0-9]',
@@ -426,7 +450,7 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-
+      console.log(789)
       const pageList = clubsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
       return {
         status: 200,

@@ -112,6 +112,7 @@ export function getActivityApplyList(clubid, query) {
     params: query
   })
 }
+
 //
 
 export function getClubDetail(clubid) {
@@ -169,4 +170,12 @@ export function getClubsList(query) {
     params: query
   })
 }
-
+// 获取申请加入列表
+export function getAddList(clubid, query) {
+  console.log(1234)
+  return request({
+    url: `/clubs/${clubid}/joins`,
+    method: 'get',
+    params: query
+  })
+}
