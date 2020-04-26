@@ -1,9 +1,8 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
+    <el-button type="primary" style="float:left;margin-top:10px" size="mini" @click="pushToHomePage">首页</el-button>
     <breadcrumb class="breadcrumb-container" />
-
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -54,6 +53,10 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    pushToHomePage() {
+      this.$store.dispatch('user/changeRoles', 'student')
+      this.$router.replace('/home-page/index')
     }
   }
 }
