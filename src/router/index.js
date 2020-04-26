@@ -44,6 +44,21 @@ export const constantRoutes = [
       }
     ]
   },
+  // 个人中心
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: '个人中心', icon: 'user', noCache: true }
+      }
+    ]
+  },
   // register
   {
     path: '/register',
