@@ -57,3 +57,10 @@ export function logout() {
   })
 }
 
+export function submitProfile(input) {
+  return request({
+    url: '/user/info',
+    method: 'put',
+    params: input
+  })
+}

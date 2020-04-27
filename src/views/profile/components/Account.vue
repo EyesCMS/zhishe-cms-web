@@ -19,7 +19,7 @@
       <el-form-item>
         <el-button
           type="primary"
-          @click="submit"
+          @click="submitProfile"
         >修改</el-button>
       </el-form-item>
     </div>
@@ -27,13 +27,14 @@
 </template>
 
 <script>
+import { submitProfile } from '@/api/user'
 export default {
   props: {
     user: {
       type: Object,
       default: () => {
         return {
-          name: '',
+          nickname: '',
           major: '',
           email: '',
           slogan: '',
@@ -43,11 +44,18 @@ export default {
     }
   },
   methods: {
-    submit() {
-      this.$message({
-        message: '修改成功',
-        type: 'success',
-        duration: 5 * 1000
+    submitProfile(nickname, major, email, slogan, phone) {
+      const input = {
+        nickname: nickname,
+        major: major,
+        email: email,
+        slogan: slogan,
+        phone: phone
+      }
+      submitProfile(input).then(response => {
+        if (response.status === 204) {
+          this.$message.success('修改成功')
+        }
       })
     }
   }

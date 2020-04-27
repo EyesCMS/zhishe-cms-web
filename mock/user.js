@@ -199,5 +199,20 @@ export default [
         code: 200
       }
     }
+  },
+  {
+    url: '/user/info',
+    type: 'put',
+    response: config => {
+      const { nickname, major, email, slogan, phone } = config.query
+      users.nickname = nickname
+      users.major = major
+      users.email = email
+      users.slogan = slogan
+      users.phone = phone
+      return {
+        status: 204
+      }
+    }
   }
 ]
