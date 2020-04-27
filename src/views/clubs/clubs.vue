@@ -22,6 +22,7 @@
       <el-button
         slot="append"
         icon="el-icon-search"
+        @click="searchClub"
       />
     </el-input>
     <el-button type="primary">创建社团</el-button>
