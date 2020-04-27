@@ -208,6 +208,14 @@ export default [
       }
     }
   },
+  // POST /clubs/activities
+  {
+    url: '/clubs/activities',
+    type: 'post',
+    response: config => {
+      return {}
+    }
+  },
   // PUT /clubs/activities/state
   {
     url: '/clubs/activities/state',

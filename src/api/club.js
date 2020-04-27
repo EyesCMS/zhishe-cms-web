@@ -244,3 +244,11 @@ export function deleteActivity(id) {
   })
 }
 
+export function publishApply(input) {
+  return request({
+    url: '/clubs/activities',
+    method: 'post',
+    params: input
+  })
+}
+
