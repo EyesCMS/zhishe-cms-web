@@ -18,8 +18,8 @@ export function recommended(query) {
 export function getMemberDetail(clubid, userid) {
   return request({
     url: `/clubs/${clubid}/members/${userid}`,
-    method: 'get',
-    params: { clubid, userid }
+    method: 'get'
+    // params: { clubid, userid }
   })
 }
 

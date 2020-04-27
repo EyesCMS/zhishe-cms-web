@@ -250,6 +250,7 @@ export const clubMenberRouter = [
         path: 'detail',
         name: 'MemberDetail',
         component: () => import('@/views/member-detail/index.vue'),
+        meta: { title: '成员详情' },
         hidden: true
       }
     ]

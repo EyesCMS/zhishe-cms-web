@@ -327,6 +327,27 @@ export default [
       }
     }
   },
+  // get member detail
+  {
+    url: '/clubs/[0-9]/members/[0-9]',
+    type: 'get',
+    response: config => {
+      // console.log('yse')
+      return {
+        items: {
+          nickname: '@cname',
+          slogan: '我只是一个测试的',
+          position: '社员',
+          major: '数计学院软件工程',
+          phone: '1231254125',
+          email: '1195669260@qq.com',
+          address: '@string',
+          credit: 100,
+          honor: '龙王'
+        }
+      }
+    }
+  },
   // get member
   {
     url: '/clubs/[0-9]/members',
@@ -342,26 +363,6 @@ export default [
         items: pageList,
         // pageList,
         total_count: membersList.length
-      }
-    }
-  },
-  // get member detail
-  {
-    url: '/clubs/[0-9]/members/[0-9]',
-    type: 'get',
-    response: config => {
-      return {
-        items: {
-          nickname: '@cname',
-          slogan: '我只是一个测试的',
-          position: '社员',
-          major: '数计学院软件工程',
-          phone: '1231254125',
-          email: '1195669260@qq.com',
-          address: '@string',
-          credit: 100,
-          honor: '龙王'
-        }
       }
     }
   },
