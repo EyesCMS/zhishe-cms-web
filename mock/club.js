@@ -27,30 +27,36 @@ for (let i = 0; i < 100; i++) {
 }
 const clubsList = []
 for (let i = 0; i < 100; i++) {
-  clubsList.push(Mock.mock({
-    cid: '@string',
-    avatar_url: '@string',
-    name: '@string',
-    chief_name: '@cname'
-  }))
+  clubsList.push(
+    Mock.mock({
+      cid: '@string',
+      avatar_url: '@string',
+      name: '@string',
+      chief_name: '@cname'
+    })
+  )
 }
 const JoinclubsList = []
 for (let i = 0; i < 100; i++) {
-  JoinclubsList.push(Mock.mock({
-    'cid|+1': 0,
-    avatar_url: '@string',
-    name: '@string',
-    chief_name: '@cname'
-  }))
+  JoinclubsList.push(
+    Mock.mock({
+      'cid|+1': 0,
+      avatar_url: '@string',
+      name: '@string',
+      chief_name: '@cname'
+    })
+  )
 }
 const ManageclubsList = []
 for (let i = 0; i < 100; i++) {
-  ManageclubsList.push(Mock.mock({
-    'cid|+1': 0,
-    avatar_url: '@string',
-    name: '@string',
-    chief_name: '@cname'
-  }))
+  ManageclubsList.push(
+    Mock.mock({
+      'cid|+1': 0,
+      avatar_url: '@string',
+      name: '@string',
+      chief_name: '@cname'
+    })
+  )
 }
 const JoinApplicationsList = []
 for (let i = 0; i < 100; i++) {
@@ -190,6 +196,26 @@ export default [
       return {
         Status: 200,
         pageList
+      }
+    }
+  },
+  // POST /clubs/dissolution
+  {
+    url: '/clubs/dissolution',
+    type: 'post',
+    response: () => {
+      return {
+        Status: 201
+      }
+    }
+  },
+  // POST /clubs/leader/change
+  {
+    url: '/clubs/leader/change',
+    type: 'post',
+    response: () => {
+      return {
+        Status: 201
       }
     }
   },
@@ -515,7 +541,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = JoinclubsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = JoinclubsList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         status: 200,
         data: pageList,
@@ -530,7 +558,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = ManageclubsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = ManageclubsList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         status: 200,
         data: pageList,

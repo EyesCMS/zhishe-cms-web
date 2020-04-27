@@ -373,6 +373,48 @@ export const clubChiefRouter = [
         meta: { title: '社团活动管理', icon: 'people', roles: ['admin'] }
       }
     ]
+  },
+  // 社团简介管理
+  {
+    path: '/Detailmanage',
+    component: Layout,
+    name: 'Detail',
+    children: [
+      {
+        path: 'Detail',
+        name: 'Detailmanage',
+        component: () => import('@/views/club-detail/index'),
+        meta: { title: '简介管理', icon: 'message', roles: ['admin'] }
+      }
+    ]
+  },
+  // 社团解散管理
+  {
+    path: '/dissolution',
+    component: Layout,
+    name: 'Dissolution',
+    children: [
+      {
+        path: 'dissolution',
+        name: 'dissolution',
+        component: () => import('@/views/club-dissolution/index'),
+        meta: { title: '解散社团', icon: 'message', roles: ['admin'] }
+      }
+    ]
+  },
+  // 社团换届管理
+  {
+    path: '/chiefChange',
+    component: Layout,
+    name: 'chiefChange',
+    children: [
+      {
+        path: 'chiefChange',
+        name: 'chiefChange',
+        component: () => import('@/views/chief-change/index'),
+        meta: { title: '换届管理', icon: 'message', roles: ['admin'] }
+      }
+    ]
   }
 ]
 

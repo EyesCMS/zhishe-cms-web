@@ -1,4 +1,18 @@
 import request from '@/utils/request'
+export function dissolution(data) {
+  return request({
+    url: `/clubs/dissolution`,
+    method: 'post',
+    data
+  })
+}
+export function leaderchange(data) {
+  return request({
+    url: `/clubs/leader/change`,
+    method: 'post',
+    data
+  })
+}
 
 export function getMemberList(clubid, query) {
   return request({
@@ -220,4 +234,3 @@ export function getManageclubsList(userid, query) {
     params: query
   })
 }
-

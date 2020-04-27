@@ -4,42 +4,45 @@
       <el-row>
         <el-col>
           <div>
-            <h3>社团简介管理</h3>
-            <!-- 社团简介表单显示 -->
+            <h3>社团解散申请</h3>
+            <!-- 社团解散表单显示 -->
             <el-form
-              :model="clubInfo"
+              ref="Form"
+              :model="dissolution"
+              :rules="rules"
               label-width="100px"
             >
               <!-- 社团名称 -->
-              <el-form-item label="社团名称">
-                <el-input
-                  v-show="change"
-                  v-model="clubInfo.name"
-                  disabled
-                />
+              <el-form-item
+                prop="clubName"
+                label="社团名称"
+              >
+                <el-input v-model="dissolution.clubName" />
               </el-form-item>
-              <!-- 社长 -->
-              <el-form-item label="社长">
-                <el-input v-model="clubInfo.chief_name" />
+              <!-- 申请人 -->
+              <el-form-item
+                prop="applicant"
+                label="申请人"
+              >
+                <el-input v-model="dissolution.applicant" />
               </el-form-item>
-              <!-- 社团人数 -->
-              <el-form-item label="社团人数">
-                <el-input v-model="clubInfo.member_count" />
+              <!-- 附件 -->
+              <el-form-item label="附件">
+                <el-input v-model="dissolution.accessoryUrl" />
               </el-form-item>
-              <!-- 社团qq群 -->
-              <el-form-item label="社团QQ群">
-                <el-input v-model="clubInfo.qq_group" />
-              </el-form-item>
-              <!-- 社团简介 -->
-              <el-form-item label="简介">
+              <!-- 换届原因 -->
+              <el-form-item label="原因">
                 <textarea
-                  v-model="clubInfo.slogan"
-                  style="margin: 0px; width: 697px; height: 161px;"
-                >社团介绍</textarea>
+                  v-model="dissolution.reason"
+                  style="margin: 0px; width: 65%; height: 200px;"
+                >解散原因</textarea>
               </el-form-item>
               <!-- 提交按钮 -->
               <el-form-item>
-                <el-button type="primary">提交</el-button>
+                <el-button
+                  type="primary"
+                  @click="submitForm"
+                >提交</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -51,12 +54,10 @@
 </template>
 
 <script>
-import { getClubDetail, dissolution } from '@/api/club'
+import { dissolution } from '@/api/club'
 export default {
   data() {
     return {
-      clubInfo: {},
-      change: 'false',
       dissolution: {
         clubName: '这是社团名字',
         clubId: 'club_id',
@@ -74,19 +75,6 @@ export default {
         ]
       }
     }
-  },
-  created() {
-    getClubDetail(2).then(response => {
-      console.log(response)
-      if (response.status === 200) {
-        // this.$message.success('获取成员列表成功')
-        this.clubInfo = response.data
-        console.log('detile=' + this.clubInfo)
-      } else {
-        return this.$message.error('获取社团详情失败')
-      }
-      // console.log(this.memberInfo)
-    })
   },
   methods: {
     submitForm() {
