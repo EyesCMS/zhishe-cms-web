@@ -8,7 +8,7 @@
         <el-button slot="append" icon="el-icon-search" />
       </el-input>
       <el-row style="margin-top:20px">
-        <el-button type="primary">申请活动</el-button>
+        <el-button type="primary" @click="applyActivity()">申请活动</el-button>
       </el-row>
       <!-- 活动申请列表 -->
       <el-table :data="activitiesList" stripe border>
@@ -34,8 +34,8 @@
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
             <el-button type="primary" @click="pushToDetail(scope.row.userid)">查看</el-button>
-            <el-button v-if="scope.row.state === 0" type="danger" @click="pushToDetail(scope.row.userid)">撤销</el-button>
-            <el-button v-else-if="scope.row.state === 1" type="success" @click="pushToDetail(scope.row.userid)">发布</el-button>
+            <el-button v-if="scope.row.state === 0" type="danger" @click="deleteActivity(scope.row.id)">撤销</el-button>
+            <el-button v-else-if="scope.row.state === 1" type="success" @click="publishActivity(scope.row.id, 2)">发布</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -56,6 +56,8 @@
 
 <script>
 import { getActivitiesList } from '@/api/club'
+import { reviseActivityState } from '@/api/club'
+import { deleteActivity } from '@/api/club'
 export default {
   name: 'ActivityManage',
   filters: {
@@ -99,6 +101,20 @@ export default {
         console.log(this.activitiesList)
       })
     },
+    publishActivity(id, state_id) {
+      const input = {
+        id: id,
+        state_id: state_id
+      }
+      reviseActivityState(input).then(response => {
+        this.$message.success('发布成功')
+      })
+    },
+    deleteActivity(id) {
+      deleteActivity(id).then(response => {
+        this.$message.success('撤销成功')
+      })
+    },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       console.log(newSize)
@@ -110,6 +126,8 @@ export default {
       console.log(newPage)
       this.queryInfo.page = newPage
       this.getActivitiesList()
+    },
+    applyActivity() {
     }
   }
 }

@@ -229,3 +229,18 @@ export function getActivitiesList(clubid, query) {
   })
 }
 
+export function reviseActivityState(input) {
+  return request({
+    url: '/clubs/activities/state',
+    method: 'put',
+    params: input
+  })
+}
+
+export function deleteActivity(id) {
+  return request({
+    url: `/clubs/activities/${id}`,
+    method: 'delete'
+  })
+}
+

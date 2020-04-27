@@ -208,6 +208,22 @@ export default [
       }
     }
   },
+  // PUT /clubs/activities/state
+  {
+    url: '/clubs/activities/state',
+    type: 'put',
+    response: config => {
+      return {}
+    }
+  },
+  // DELETE /clubs/activities/:id
+  {
+    url: '/clubs/activities/[0-9]',
+    type: 'delete',
+    response: config => {
+      return {}
+    }
+  },
   // GET /clubs/recommended
   {
     url: '/clubs/recommended',
