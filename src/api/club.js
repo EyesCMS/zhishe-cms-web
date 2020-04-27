@@ -221,3 +221,11 @@ export function getManageclubsList(userid, query) {
   })
 }
 
+export function getActivitiesList(clubid, query) {
+  return request({
+    url: `/clubs/${clubid}/activities`,
+    method: 'get',
+    params: query
+  })
+}
+

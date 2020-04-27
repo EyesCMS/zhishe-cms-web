@@ -161,7 +161,7 @@ for (let i = 0; i < 50; i++) {
     })
   )
 }
-//
+// 申请加入列表
 const addList = []
 for (let i = 0; i < 50; i++) {
   addList.push(
@@ -174,8 +174,40 @@ for (let i = 0; i < 50; i++) {
     })
   )
 }
+// 活动申请列表
+const activitiesList = []
+for (let i = 0; i < 50; i++) {
+  activitiesList.push(
+    Mock.mock({
+      'id|+1': 1,
+      name: '@string',
+      location: '@string',
+      content: '@string',
+      member_count: 255,
+      start_date: '@datetime',
+      end_date: '@datetime',
+      'state|1': [0, 1, 2, 3, 4]
+    })
+  )
+}
 //
 export default [
+  {
+    url: '/clubs/[0-9]/activities',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(page)
+      console.log(limit)
+      const pageList = activitiesList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
+      return {
+        total_count: activitiesList.length,
+        items: pageList
+      }
+    }
+  },
   // GET /clubs/recommended
   {
     url: '/clubs/recommended',
