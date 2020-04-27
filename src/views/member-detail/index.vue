@@ -54,11 +54,10 @@ export default {
   methods: {
     getMemberDetails() {
       // this.userId = this.$route.query.userid
-      console.log('UserId' + this.userId)
+      // console.log('UserId' + this.userId)
       // console.log(this.userId)
       getMemberDetail(this.clubId, this.userId).then(response => {
         this.memberInfo = response.items
-        console.log(this.memberInfo)
         console.log(this.memberInfo)
       })
     }

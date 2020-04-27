@@ -167,7 +167,7 @@ for (let i = 0; i < 50; i++) {
     })
   )
 }
-//
+// 申请加入列表
 const addList = []
 for (let i = 0; i < 50; i++) {
   addList.push(
@@ -180,8 +180,64 @@ for (let i = 0; i < 50; i++) {
     })
   )
 }
+// 活动申请列表
+const activitiesList = []
+for (let i = 0; i < 50; i++) {
+  activitiesList.push(
+    Mock.mock({
+      'id|+1': 1,
+      name: '@string',
+      location: '@string',
+      content: '@string',
+      member_count: 255,
+      start_date: '@datetime',
+      end_date: '@datetime',
+      'state|1': [0, 1, 2, 3, 4]
+    })
+  )
+}
 //
 export default [
+  {
+    url: '/clubs/[0-9]/activities',
+    type: 'get',
+    response: config => {
+      const { page, limit } = config.query
+      console.log(page)
+      console.log(limit)
+      const pageList = activitiesList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
+      return {
+        total_count: activitiesList.length,
+        items: pageList
+      }
+    }
+  },
+  // POST /clubs/activities
+  {
+    url: '/clubs/activities',
+    type: 'post',
+    response: config => {
+      return {}
+    }
+  },
+  // PUT /clubs/activities/state
+  {
+    url: '/clubs/activities/state',
+    type: 'put',
+    response: config => {
+      return {}
+    }
+  },
+  // DELETE /clubs/activities/:id
+  {
+    url: '/clubs/activities/[0-9]',
+    type: 'delete',
+    response: config => {
+      return {}
+    }
+  },
   // GET /clubs/recommended
   {
     url: '/clubs/recommended',
@@ -297,6 +353,27 @@ export default [
       }
     }
   },
+  // get member detail
+  {
+    url: '/clubs/[0-9]/members/[0-9]',
+    type: 'get',
+    response: config => {
+      // console.log('yse')
+      return {
+        items: {
+          nickname: '@cname',
+          slogan: '我只是一个测试的',
+          position: '社员',
+          major: '数计学院软件工程',
+          phone: '1231254125',
+          email: '1195669260@qq.com',
+          address: '@string',
+          credit: 100,
+          honor: '龙王'
+        }
+      }
+    }
+  },
   // get member
   {
     url: '/clubs/[0-9]/members',
@@ -312,26 +389,6 @@ export default [
         items: pageList,
         // pageList,
         total_count: membersList.length
-      }
-    }
-  },
-  // get member detail
-  {
-    url: '/clubs/[0-9]/members/[0-9]',
-    type: 'get',
-    response: config => {
-      return {
-        items: {
-          nickname: '@cname',
-          slogan: '我只是一个测试的',
-          position: '社员',
-          major: '数计学院软件工程',
-          phone: '1231254125',
-          email: '1195669260@qq.com',
-          address: '@string',
-          credit: 100,
-          honor: '龙王'
-        }
       }
     }
   },

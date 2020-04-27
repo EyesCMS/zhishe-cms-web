@@ -25,7 +25,7 @@
           <div v-for="(item, i) in invitationList" id="bulletin" :key="i">
             <el-tag type="warning">{{ i + 1 }}</el-tag>
             <p style="display:inline;">{{ item.title }}</p>
-            <el-link type="primary" @click="openBulletinDetailDiaglog(item.id)">详情</el-link>
+            <el-link type="primary" @click="pushToActivityDetail(item.id)">详情</el-link>
           </div>
         </el-col>
         <el-col :span="8">
@@ -181,6 +181,9 @@ export default {
       })
       this.quitClubDialogVisible = false
       // 跳转到其他页面
+    },
+    pushToActivityDetail(id) {
+      this.$router.push({ path: '/activityforum/detail', query: { id: id }})
     }
   }
 }

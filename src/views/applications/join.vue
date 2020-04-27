@@ -6,11 +6,6 @@
       <el-table-column label="社团ID" prop="club_id" />
       <el-table-column label="申请原因" prop="reason" />
       <el-table-column label="申请状态" prop="state" />
-      <el-table-column label="操作" width="200px">
-        <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="Back(scope.row.user_id)">撤销</el-button>
-        </template>
-      </el-table-column>
     </el-table>
 
     <!-- 分页区域 -->

@@ -250,6 +250,7 @@ export const clubMenberRouter = [
         path: 'detail',
         name: 'MemberDetail',
         component: () => import('@/views/member-detail/index.vue'),
+        meta: { title: '成员详情' },
         hidden: true
       }
     ]
@@ -369,7 +370,7 @@ export const clubChiefRouter = [
       {
         path: 'list',
         name: 'ActivityList',
-        component: () => import('@/views/club-member/index.vue'),
+        component: () => import('@/views/activity-manage/index.vue'),
         meta: { title: '社团活动管理', icon: 'people', roles: ['admin'] }
       }
     ]

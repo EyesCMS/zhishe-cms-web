@@ -32,8 +32,8 @@ export function recommended(query) {
 export function getMemberDetail(clubid, userid) {
   return request({
     url: `/clubs/${clubid}/members/${userid}`,
-    method: 'get',
-    params: { clubid, userid }
+    method: 'get'
+    // params: { clubid, userid }
   })
 }
 
@@ -232,5 +232,36 @@ export function getManageclubsList(userid, query) {
     url: `/clubs/manager/${userid}`,
     method: 'get',
     params: query
+  })
+}
+
+export function getActivitiesList(clubid, query) {
+  return request({
+    url: `/clubs/${clubid}/activities`,
+    method: 'get',
+    params: query
+  })
+}
+
+export function reviseActivityState(input) {
+  return request({
+    url: '/clubs/activities/state',
+    method: 'put',
+    params: input
+  })
+}
+
+export function deleteActivity(id) {
+  return request({
+    url: `/clubs/activities/${id}`,
+    method: 'delete'
+  })
+}
+
+export function publishApply(input) {
+  return request({
+    url: '/clubs/activities',
+    method: 'post',
+    params: input
   })
 }
