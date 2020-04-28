@@ -118,11 +118,11 @@ export function getActivityApplyList(clubid, query) {
   })
 }
 
-export function ApplyToJoin(query) {
+export function ApplyToJoin(data) {
   return request({
     url: '/clubs/join',
     method: 'post',
-    params: query
+    data
   })
 }
 
@@ -157,20 +157,20 @@ export function getCreateApplicationsList(userid, query) {
   })
 }
 
-export function postSubmit(query) {
+export function postSubmit(data) {
   return request({
     url: `/clubs/creations`,
     method: 'post',
-    params: query
+    data
   })
 }
 
-export function postIdentifyApply(query) {
-  console.log(query)
+export function postIdentifyApply(data) {
+  console.log(data)
   return request({
     url: `/clubs/certifications`,
     method: 'post',
-    params: query
+    data
   })
 }
 
