@@ -6,8 +6,8 @@
       <!-- 社团解散申请列表 -->
       <el-table :data="dismissApplyList" stripe border>
         <el-table-column type="index" label="#" />
-        <el-table-column label="社团名称" prop="club_name" />
-        <el-table-column label="申请时间" prop="create_at" />
+        <el-table-column label="社团名称" prop="clubName" />
+        <el-table-column label="申请时间" prop="createAt" />
         <el-table-column label="申请人" prop="applicant" />
         <el-table-column label="申请原因" prop="reason" />
         <el-table-column label="" width="200px">

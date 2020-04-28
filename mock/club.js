@@ -81,12 +81,12 @@ for (let i = 0; i < 100; i++) {
   createApplyList.push(
     Mock.mock({
       id: '@id',
-      club_name: '@string',
-      create_at: '@datetime',
+      clubName: '@string',
+      createAt: '@datetime',
       applicant: '@cname',
       reason: '@string',
       state: 0,
-      accessory_url: '@string'
+      accessoryUrl: '@string'
     })
   )
 }
@@ -96,8 +96,8 @@ for (let i = 0; i < 100; i++) {
   dismissApplyList.push(
     Mock.mock({
       id: '@id',
-      club_name: '@string',
-      create_at: '@datetime',
+      clubName: '@string',
+      createAt: '@datetime',
       applicant: '@cname',
       reason: '@string',
       state: 0
@@ -110,10 +110,10 @@ for (let i = 0; i < 100; i++) {
   changeApplyList.push(
     Mock.mock({
       id: '@id',
-      club_name: '@string',
-      old_chief_name: '@cname',
-      new_chief_name: '@cname',
-      create_at: '@datetime',
+      clubName: '@string',
+      oldChiefName: '@cname',
+      newChiefName: '@cname',
+      createAt: '@datetime',
       state: 0
     })
   )
@@ -124,10 +124,10 @@ for (let i = 0; i < 100; i++) {
   identifyApplyList.push(
     Mock.mock({
       id: '@id',
-      club_name: '@string',
+      clubName: '@string',
       applicant: '@cname',
-      accessory_url: '@string',
-      create_at: '@datetime',
+      accessoryUrl: '@string',
+      createAt: '@datetime',
       state: 0
     })
   )
@@ -138,14 +138,14 @@ for (let i = 0; i < 100; i++) {
   activityApplyList.push(
     Mock.mock({
       id: '@id',
-      club_name: '@string',
+      clubName: '@string',
       name: '@string',
       title: '@string',
       content: '@string',
-      start_date: '@datetime',
-      end_date: '@datetime',
+      startDate: '@datetime',
+      endDate: '@datetime',
       location: '@string',
-      accessory_url: '@string',
+      accessoryUrl: '@string',
       state: 0
     })
   )
