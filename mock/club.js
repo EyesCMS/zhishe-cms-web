@@ -85,8 +85,7 @@ for (let i = 0; i < 100; i++) {
       createAt: '@datetime',
       applicant: '@cname',
       reason: '@string',
-      state: 0,
-      accessoryUrl: '@string'
+      state: 0
     })
   )
 }
@@ -125,7 +124,6 @@ for (let i = 0; i < 100; i++) {
     Mock.mock({
       id: '@id',
       clubName: '@string',
-      accessoryUrl: '@string',
       createAt: '@datetime',
       reason: '@string',
       state: 0
@@ -145,7 +143,6 @@ for (let i = 0; i < 100; i++) {
       startDate: '@datetime',
       endDate: '@datetime',
       location: '@string',
-      accessoryUrl: '@string',
       state: 0
     })
   )

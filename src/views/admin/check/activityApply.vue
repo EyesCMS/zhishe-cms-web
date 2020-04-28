@@ -13,7 +13,6 @@
         <el-table-column label="开始时间" prop="startDate" />
         <el-table-column label="结束时间" prop="endDate" />
         <el-table-column label="活动场地" prop="location" />
-        <el-table-column label="附件" prop="accessoryUrl" />
         <el-table-column label="" width="200px">
           <template slot-scope="scope">
             <el-button type="primary" @click="pushToAgree(scope)">批准</el-button>
