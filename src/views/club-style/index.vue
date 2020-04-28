@@ -137,6 +137,7 @@ export default {
     // 获取社团详情
     getClubDetail() {
       getClubDetail(this.clubId).then(response => {
+        console.log(123)
         console.log(response)
         this.clubDetail = response.items
         console.log(this.clubDetail)

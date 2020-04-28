@@ -21,12 +21,17 @@
         <div style="text-align:center">
           <el-link type="primary" @click="showMoreRemarks">查看更多评论</el-link>
         </div>
-        <el-input
-          placeholder="请发表评论"
-          class="input-with-select"
-        >
-          <el-button slot="append" icon="el-icon-search" />
-        </el-input>
+        <el-row style="margin-top:15px">
+          <el-input
+            v-model="comment"
+            type="textarea"
+            placeholder="请发表评论"
+            class="input-with-select"
+          />
+        </el-row>
+        <el-row style="margin-top:15px">
+          <el-button id="postButton" type="primary" @click="postComment">发表</el-button>
+        </el-row>
       </el-card>
     </el-card>
   </div>
@@ -35,11 +40,13 @@
 <script>
 import { getInvitationDetail } from '@/api/forum'
 import { getRemarksList } from '@/api/forum'
+import { postComment } from '@/api/forum'
 export default {
   name: 'ActivityDetail',
   data() {
     return {
       id: 1,
+      uid: 1,
       queryInfo: {
         page: 1,
         limit: 5,
@@ -49,7 +56,8 @@ export default {
       detailInfo: {},
       remarksList: [],
       ramarksTotal: 0,
-      clubAvator: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+      clubAvator: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      comment: ''
     }
   },
   created() {
@@ -71,11 +79,24 @@ export default {
       getRemarksList(1, this.queryInfo).then(response => {
         this.remarksList = response.items
         this.ramarksTotal = response.total_count
-        console.log(this.detailInfo)
+        console.log(this.remarksList)
       })
     },
     showMoreRemarks() {
       this.queryInfo.limit += 5
+      this.getRemarksList()
+    },
+    postComment() {
+      const data = {
+        uid: this.uid,
+        pid: this.id,
+        content: this.comment
+      }
+      postComment(this.id, data).then(response => {
+        console.log(response)
+        this.$message.success('发表成功')
+      })
+      this.comment = ''
       this.getRemarksList()
     }
   }
@@ -83,4 +104,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-input {
+  margin-bottom: 15px;
+}
+#postButton {
+  display: block;
+  margin: 0 auto
+}
 </style>

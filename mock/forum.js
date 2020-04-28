@@ -5,10 +5,10 @@ for (let i = 0; i < 100; i++) {
     'id|+1': 1,
     title: '@string',
     content: '@string',
-    club_name: 'XX社',
-    create_at: '2018-04-19 18:14:12',
-    img_url: '131231241241.jpg',
-    avator_url: 'e312312312312.jpg'
+    clubName: 'XX社',
+    createAt: '2018-04-19 18:14:12',
+    imgUrl: '131231241241.jpg',
+    avatarUrl: 'e312312312312.jpg'
   }))
 }
 const AllinvitationsList = []
@@ -45,6 +45,14 @@ export default [
         items: pageList,
         total_count: remarksList.length
       }
+    }
+  },
+  // POST /forum/posts/:id/remarks
+  {
+    url: '/forum/posts/[0-9]/remarks',
+    type: 'post',
+    response: data => {
+      console.log(data)
     }
   },
   // get one club invitation list

@@ -40,3 +40,11 @@ export function getRemarksList(actId, query) {
   })
 }
 
+export function postComment(actId, data) {
+  return request({
+    url: `/forum/posts/${actId}/remarks`,
+    method: 'post',
+    data
+  })
+}
+
