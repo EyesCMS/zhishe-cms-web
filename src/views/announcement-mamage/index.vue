@@ -127,7 +127,7 @@
             <span class="dialog-footer">
               <el-button
                 type="primary"
-                @click="changeBulletinDetail(bulletin.id)"
+                @click="changeBulletinDetail"
               >确 定</el-button>
             </span>
           </el-form-item>
@@ -186,7 +186,7 @@ export default {
     this.getBulletinsList()
   },
   methods: {
-    // 发布公告
+    // 发布公告test
     publishBulletin() {
       this.$refs.publishFormRef.validate(valid => {
         if (valid) {
@@ -270,8 +270,10 @@ export default {
           const cid = this.clubId
           this.bulletin.update_at = new Date().toLocaleString()
           changeBulletinDetail(cid, this.bulletin.id, this.bulletin).then(response => {
-            if (response.Status === 204) this.$message.success('修改成功')
-            else this.$message.error('修改失败')
+            if (response.Status === 204) {
+              this.$message.success('修改成功')
+              this.bulletinDetailDialogVisible = false
+            } else this.$message.error('修改失败')
           })
         } else {
           this.$message.error('提交失败')
