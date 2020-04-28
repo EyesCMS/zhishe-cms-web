@@ -28,8 +28,8 @@ export default {
     }
   },
   created() {
+    this.clubId = sessionStorage.getItem('clubId')
     this.getClubDetail()
-    this.clubId = localStorage.getItem('clubid')
   },
   methods: {
     getClubDetail() {

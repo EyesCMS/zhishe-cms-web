@@ -20,7 +20,11 @@
           </template>
         </el-table-column>
         <el-table-column label="活动地点" prop="location" />
-        <el-table-column label="活动内容" prop="content" />
+        <el-table-column label="活动内容">
+          <template slot-scope="scope">
+            {{ scope.row.content | interceptAbstract }}
+          </template>
+        </el-table-column>
         <el-table-column label="参与人数" prop="member_count" />
         <el-table-column label="状态" prop="state">
           <template slot-scope="scope">
@@ -117,6 +121,9 @@ import { publishApply } from '@/api/club'
 export default {
   name: 'ActivityManage',
   filters: {
+    interceptAbstract(content) {
+      return content.substr(0, 10)
+    },
     verifyStatusFilter(value) {
       if (value === 0) {
         return '未审核'
@@ -181,6 +188,7 @@ export default {
     }
   },
   created() {
+    this.clubId = sessionStorage.getItem('clubId')
     this.getActivitiesList()
   },
   methods: {

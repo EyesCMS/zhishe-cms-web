@@ -10,7 +10,7 @@
         </el-col>
         <h3>{{ memberInfo.nickname }}</h3>
         <h4>{{ memberInfo.slogan }}</h4>
-        <h4>职位：{{ memberInfo.position }}</h4>
+        <h4>职位：{{ memberInfo.role }}</h4>
       </el-row>
     </el-card>
 
@@ -48,6 +48,9 @@ export default {
     }
   },
   created() {
+    // this.userId = this.$store.getters.userid
+    this.clubId = sessionStorage.getItem('clubId')
+    // console.log('ww' + this.clubId)
     this.getMemberDetails()
     // this.clubId = localStorage.getItem('clubid')
   },

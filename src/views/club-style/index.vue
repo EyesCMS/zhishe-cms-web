@@ -110,10 +110,15 @@ export default {
     }
   },
   created() {
-    if (this.$route.params.clubid) {
-      this.clubId = this.$route.params.clubid
+    // this.userId = this.$store.getters.name
+    console.log('风采页面userId为' + this.userId)
+    if (this.$route.query.cid !== undefined) {
+      this.clubId = this.$route.query.cid
+      console.log('接收cid')
+      console.log('clubId为' + this.clubId)
+      sessionStorage.setItem('clubId', this.clubId)
     }
-    localStorage.setItem('clubid', this.clubid)
+    // this.clubId = this.$route.query.cid
     this.getBulletinsList()
     this.getInvitationsList()
     this.getClubDetail()
