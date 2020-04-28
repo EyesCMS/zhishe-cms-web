@@ -125,9 +125,9 @@ for (let i = 0; i < 100; i++) {
     Mock.mock({
       id: '@id',
       clubName: '@string',
-      applicant: '@cname',
       accessoryUrl: '@string',
       createAt: '@datetime',
+      reason: '@string',
       state: 0
     })
   )
@@ -628,6 +628,16 @@ export default [
   // create club
   {
     url: '/clubs/creations',
+    type: 'post',
+    response: config => {
+      return {
+        status: 201
+      }
+    }
+  },
+  // identify club
+  {
+    url: '/clubs/certifications',
     type: 'post',
     response: config => {
       return {

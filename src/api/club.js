@@ -165,6 +165,15 @@ export function postSubmit(query) {
   })
 }
 
+export function postIdentifyApply(query) {
+  console.log(query)
+  return request({
+    url: `/clubs/certifications`,
+    method: 'post',
+    params: query
+  })
+}
+
 // 获取退社通知
 export function getQuitList(clubid, query) {
   console.log(clubid)

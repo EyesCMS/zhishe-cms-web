@@ -374,6 +374,21 @@ export const clubChiefRouter = [
         meta: { title: '社团活动管理', icon: 'people', roles: ['admin'] }
       }
     ]
+  },
+  // 社团申请管理
+  {
+    path: '/club-identify',
+    component: Layout,
+    name: 'club-identify',
+    meta: { title: '社团申请管理', icon: 'form', roles: ['amdin'] },
+    children: [
+      {
+        path: 'list',
+        name: 'ActivityList',
+        component: () => import('@/views/club-identify/index.vue'),
+        meta: { title: '社团认证申请', icon: 'people', roles: ['admin'] }
+      }
+    ]
   }
 ]
 
