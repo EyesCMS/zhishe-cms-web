@@ -52,7 +52,29 @@ export function getBulletinDetail(clubid, bulletinid) {
     params: { clubid, bulletinid }
   })
 }
-
+// 发布公告
+export function publishBulletin(cid, data) {
+  return request({
+    url: `/clubs/${cid}/bulletins`,
+    method: 'post',
+    data
+  })
+}
+// 删除公告
+export function deleteBulletin(id) {
+  return request({
+    url: `/clubs/bulletins/${id}`,
+    method: 'delete'
+  })
+}
+// 修改公告
+export function changeBulletinDetail(cid, id, data) {
+  return request({
+    url: `/clubs/${cid}/bulletins/${id}`,
+    method: 'put',
+    data
+  })
+}
 // 创建社团申请
 export function pushToCreateApply(data) {
   console.log(data)

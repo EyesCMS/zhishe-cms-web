@@ -214,6 +214,36 @@ export default [
       }
     }
   },
+  // POST /clubs/:club/bulletins
+  {
+    url: '/clubs/[0-9]/bulletins',
+    type: 'post',
+    response: config => {
+      return {
+        Status: 201
+      }
+    }
+  },
+  // PUT /clubs/:club/bulletins/:bulletin_id
+  {
+    url: '/clubs/[0-9]/bulletins/[0-9]',
+    type: 'put',
+    response: () => {
+      return {
+        Status: 204
+      }
+    }
+  },
+  // DELETE /clubs/bulletins/:bulletin_id
+  {
+    url: '/clubs/bulletins/[0-9]',
+    type: 'delete',
+    response: () => {
+      return {
+        Status: 204
+      }
+    }
+  },
   // POST /clubs/activities
   {
     url: '/clubs/activities',
