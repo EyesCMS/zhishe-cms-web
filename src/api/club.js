@@ -19,23 +19,21 @@ export function getMemberDetail(clubid, userid) {
   return request({
     url: `/clubs/${clubid}/members/${userid}`,
     method: 'get'
-    // params: { clubid, userid }
   })
 }
 
-export function getBulletinList(clubid, queryInfo) {
+export function getBulletinList(clubid, query) {
   return request({
     url: `/clubs/${clubid}/bulletins`,
     method: 'get',
-    params: queryInfo
+    params: query
   })
 }
 
 export function getBulletinDetail(clubid, bulletinid) {
   return request({
     url: `/clubs/${clubid}/bulletins/${bulletinid}`,
-    method: 'get',
-    params: { clubid, bulletinid }
+    method: 'get'
   })
 }
 
@@ -131,16 +129,15 @@ export function ApplyToJoin(query) {
 export function getClubDetail(clubid) {
   return request({
     url: `/clubs/${clubid}`,
-    method: 'get',
-    params: { clubid }
+    method: 'get'
   })
 }
 
-export function quitClub(param) {
+export function quitClub(data) {
   return request({
     url: '/clubs/quit',
     method: 'post',
-    params: param
+    data
   })
 }
 
@@ -244,11 +241,11 @@ export function deleteActivity(id) {
   })
 }
 
-export function publishApply(input) {
+export function publishApply(data) {
   return request({
     url: '/clubs/activities',
     method: 'post',
-    params: input
+    data
   })
 }
 

@@ -9,7 +9,7 @@
       <p>{{ detailInfo.content }}</p>
       <p>{{ detailInfo.create_at }}</p>
       <el-card>
-        <div v-for="(item, index) in detailInfo.remarks" :key="index">
+        <div v-for="(item, index) in remarksList" :key="index">
           <el-row>
             <el-avatar style="float:left" :src="item.avator_url" />
             <p style="float: left;margin-left:5px">{{ item.nickname }}</p>
@@ -34,6 +34,7 @@
 
 <script>
 import { getInvitationDetail } from '@/api/forum'
+import { getRemarksList } from '@/api/forum'
 export default {
   name: 'ActivityDetail',
   data() {
@@ -46,6 +47,8 @@ export default {
         order: 'desc'
       },
       detailInfo: {},
+      remarksList: [],
+      ramarksTotal: 0,
       clubAvator: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
     }
   },
@@ -53,19 +56,27 @@ export default {
     // this.id = this.$route.query.id
     console.log(this.id)
     this.getInvitationDetail()
+    this.getRemarksList()
   },
   methods: {
     // 获取帖子详情
     getInvitationDetail() {
-      getInvitationDetail(this.id, this.queryInfo).then(response => {
+      getInvitationDetail(this.id).then(response => {
         this.detailInfo = response.items
         console.log(this.detailInfo)
         // console.log(132)
       })
     },
+    getRemarksList() {
+      getRemarksList(1, this.queryInfo).then(response => {
+        this.remarksList = response.items
+        this.ramarksTotal = response.total_count
+        console.log(this.detailInfo)
+      })
+    },
     showMoreRemarks() {
       this.queryInfo.limit += 5
-      this.getInvitationDetail()
+      this.getRemarksList()
     }
   }
 }

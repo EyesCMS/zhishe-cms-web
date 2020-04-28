@@ -331,8 +331,7 @@ export default [
   {
     url: '/clubs/[0-9]/members/[0-9]',
     type: 'get',
-    response: config => {
-      // console.log('yse')
+    response: _ => {
       return {
         items: {
           nickname: '@cname',
@@ -370,7 +369,7 @@ export default [
   {
     url: '/clubs/[0-9]/bulletins/[0-9]',
     type: 'get',
-    response: config => {
+    response: _ => {
       return {
         items: {
           title: '关于第六届社团纳新活动的说明',
@@ -599,10 +598,9 @@ export default [
   {
     url: '/clubs/[0-9]',
     type: 'get',
-    response: config => {
+    response: _ => {
       return {
-        status: 200,
-        data: {
+        items: {
           cid: 2,
           name: '篮球社',
           chief_id: 2,
@@ -620,7 +618,8 @@ export default [
   {
     url: '/clubs/quit',
     type: 'post',
-    response: config => {
+    response: data => {
+      console.log(data)
       return {
         status: 201
       }
