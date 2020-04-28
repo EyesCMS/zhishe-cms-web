@@ -44,13 +44,14 @@ export default {
     }
   },
   methods: {
-    submitProfile(nickname, major, email, slogan, phone) {
+    submitProfile(nickname, major, email, slogan, phone, avatar) {
       const input = {
         nickname: nickname,
         major: major,
         email: email,
         slogan: slogan,
-        phone: phone
+        phone: phone,
+        avatar: this.$store.getters.avatar
       }
       submitProfile(input).then(response => {
         if (response.status === 204) {
