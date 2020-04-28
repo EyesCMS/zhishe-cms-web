@@ -258,3 +258,10 @@ export function publishApply(data) {
   })
 }
 
+export function switchRole(data) {
+  return request({
+    url: '/roles/swtich',
+    method: 'post',
+    data
+  })
+}

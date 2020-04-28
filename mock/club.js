@@ -674,5 +674,15 @@ export default [
         total: clubsList.length
       }
     }
+  },
+  // switch role
+  {
+    url: '/roles/swtich',
+    type: 'post',
+    response: config => {
+      return {
+        status: 204
+      }
+    }
   }
 ]
