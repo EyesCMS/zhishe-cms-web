@@ -4,7 +4,7 @@ for (let i = 0; i < 100; i++) {
   membersList.push(
     Mock.mock({
       'userid|+1': 0,
-      username: '@string',
+      username: '@string(11)',
       nickname: '@cname',
       'honor|1': ['龙王', '潜水'],
       'role|1': ['社长', '副社长', '游客', '管理员'],
@@ -17,9 +17,9 @@ const bulletinsList = []
 for (let i = 0; i < 100; i++) {
   bulletinsList.push(
     Mock.mock({
-      'id|+1': 0,
-      title: '@string',
-      content: '@string',
+      'id|+1': 1,
+      title: '@ctitle',
+      content: '@cparagraph(10)',
       create_at: Mock.Random.date(),
       update_at: Mock.Random.date()
     })
@@ -168,7 +168,7 @@ for (let i = 0; i < 50; i++) {
     Mock.mock({
       'id|+1': 1,
       applicant: '@cname',
-      reason: '@string',
+      reason: '@cparagraph(3)',
       create_at: '@datetime',
       'state|1': [0, 1, 2]
     })
@@ -180,10 +180,10 @@ for (let i = 0; i < 50; i++) {
   activitiesList.push(
     Mock.mock({
       'id|+1': 1,
-      name: '@string',
-      location: '@string',
-      content: '@string',
-      member_count: 255,
+      name: '@cname',
+      location: '@country',
+      content: '@cparagraph(10)',
+      member_count: '@integer(0)',
       start_date: '@datetime',
       end_date: '@datetime',
       'state|1': [0, 1, 2, 3, 4]
@@ -193,7 +193,7 @@ for (let i = 0; i < 50; i++) {
 //
 export default [
   {
-    url: '/clubs/[0-9]/activities',
+    url: '/clubs/[0-9]/activities/apply',
     type: 'get',
     response: config => {
       const { page, limit } = config.query
@@ -212,7 +212,8 @@ export default [
   {
     url: '/clubs/activities',
     type: 'post',
-    response: config => {
+    response: data => {
+      console.log(data)
       return {}
     }
   },
@@ -220,7 +221,8 @@ export default [
   {
     url: '/clubs/activities/state',
     type: 'put',
-    response: config => {
+    response: data => {
+      console.log(data)
       return {}
     }
   },
@@ -228,7 +230,7 @@ export default [
   {
     url: '/clubs/activities/[0-9]',
     type: 'delete',
-    response: config => {
+    response: _ => {
       return {}
     }
   },
@@ -286,8 +288,9 @@ export default [
   {
     url: '/clubs/joins/audit',
     type: 'put',
-    response: config => {
-      const { id, state } = config.query
+    response: data => {
+      console.log(data)
+      const { id, state } = data.query
       for (let i = 0; i < addList.length; ++i) {
         if (addList[i].id === id) {
           addList[i].state = state
@@ -334,15 +337,17 @@ export default [
     response: _ => {
       return {
         items: {
+          username: '@string(11)',
           nickname: '@cname',
-          slogan: '我只是一个测试的',
-          position: '社员',
+          slogan: '@cparagraph(2)',
+          role: '社员',
           major: '数计学院软件工程',
           phone: '1231254125',
-          email: '1195669260@qq.com',
+          email: '@email',
           address: '@string',
           credit: 100,
-          honor: '龙王'
+          honor: '龙王',
+          avatarUrl: '@image'
         }
       }
     }

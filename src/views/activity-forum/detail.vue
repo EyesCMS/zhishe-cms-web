@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       id: 1,
-      uid: 1,
+      userId: 1,
       queryInfo: {
         page: 1,
         limit: 5,
@@ -62,6 +62,8 @@ export default {
   },
   created() {
     // this.id = this.$route.query.id
+    this.userId = this.$store.getters.userid
+    console.log('风采页面userId为' + this.userId)
     console.log(this.id)
     this.getInvitationDetail()
     this.getRemarksList()
@@ -88,7 +90,7 @@ export default {
     },
     postComment() {
       const data = {
-        uid: this.uid,
+        uid: this.userId,
         pid: this.id,
         content: this.comment
       }

@@ -54,6 +54,7 @@ export default {
     }
   },
   created() {
+    this.clubId = sessionStorage.getItem('clubId')
     // this.clubId = localStorage.getItem('clubid')
     this.getMembersList()
   },

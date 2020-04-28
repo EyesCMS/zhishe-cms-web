@@ -202,11 +202,11 @@ export function getAddList(clubid, query) {
 }
 
 // 审核入社申请
-export function joinAudit(input) {
+export function joinAudit(data) {
   return request({
     url: '/clubs/joins/audit',
     method: 'put',
-    params: input
+    data
   })
 }
 // 获取学生加入的社团列表
@@ -229,17 +229,17 @@ export function getManageclubsList(userid, query) {
 
 export function getActivitiesList(clubid, query) {
   return request({
-    url: `/clubs/${clubid}/activities`,
+    url: `/clubs/${clubid}/activities/apply`,
     method: 'get',
     params: query
   })
 }
 
-export function reviseActivityState(input) {
+export function reviseActivityState(data) {
   return request({
     url: '/clubs/activities/state',
     method: 'put',
-    params: input
+    data
   })
 }
 
