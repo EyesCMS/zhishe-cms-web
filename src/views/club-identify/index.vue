@@ -43,8 +43,8 @@ export default {
     }
   },
   created() {
-    if (this.$route.params.clubid) {
-      this.clubId = this.$route.params.clubid
+    if (this.$route.query.cid) {
+      this.clubId = this.$route.query.cid
     }
     localStorage.setItem('clubid', this.clubid)
   },
@@ -52,7 +52,8 @@ export default {
     postIdentifyApply() {
       const param = {
         clubId: this.clubId,
-        reason: this.form.reason
+        reason: this.form.reason,
+        form: this.form
       }
       postIdentifyApply(param).then(response => {
         if (response.status === 201) {

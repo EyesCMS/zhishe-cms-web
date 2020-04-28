@@ -386,7 +386,7 @@ export const clubChiefRouter = [
         path: 'list',
         name: 'ActivityList',
         component: () => import('@/views/club-identify/index.vue'),
-        meta: { title: '社团认证申请', icon: 'people', roles: ['admin'] }
+        meta: { title: '社团认证申请', icon: 'form', roles: ['admin'] }
       }
     ]
   }
