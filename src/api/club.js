@@ -33,23 +33,21 @@ export function getMemberDetail(clubid, userid) {
   return request({
     url: `/clubs/${clubid}/members/${userid}`,
     method: 'get'
-    // params: { clubid, userid }
   })
 }
 
-export function getBulletinList(clubid, queryInfo) {
+export function getBulletinList(clubid, query) {
   return request({
     url: `/clubs/${clubid}/bulletins`,
     method: 'get',
-    params: queryInfo
+    params: query
   })
 }
 
 export function getBulletinDetail(clubid, bulletinid) {
   return request({
     url: `/clubs/${clubid}/bulletins/${bulletinid}`,
-    method: 'get',
-    params: { clubid, bulletinid }
+    method: 'get'
   })
 }
 // 发布公告
@@ -167,16 +165,15 @@ export function ApplyToJoin(query) {
 export function getClubDetail(clubid) {
   return request({
     url: `/clubs/${clubid}`,
-    method: 'get',
-    params: { clubid }
+    method: 'get'
   })
 }
 
-export function quitClub(param) {
+export function quitClub(data) {
   return request({
     url: '/clubs/quit',
     method: 'post',
-    params: param
+    data
   })
 }
 
@@ -199,6 +196,15 @@ export function getCreateApplicationsList(userid, query) {
 export function postSubmit(query) {
   return request({
     url: `/clubs/creations`,
+    method: 'post',
+    params: query
+  })
+}
+
+export function postIdentifyApply(query) {
+  console.log(query)
+  return request({
+    url: `/clubs/certifications`,
     method: 'post',
     params: query
   })
@@ -280,10 +286,10 @@ export function deleteActivity(id) {
   })
 }
 
-export function publishApply(input) {
+export function publishApply(data) {
   return request({
     url: '/clubs/activities',
     method: 'post',
-    params: input
+    data
   })
 }

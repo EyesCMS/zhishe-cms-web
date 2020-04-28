@@ -9,11 +9,11 @@ export function getAllInvitationList(queryInfo) {
   })
 }
 
-export function getInvitationList(clubid, queryInfo) {
+export function getInvitationList(clubid, query) {
   return request({
     url: `/forum/${clubid}/posts`,
     method: 'get',
-    params: queryInfo
+    params: query
   })
 }
 
@@ -25,11 +25,26 @@ export function getAllInvitationDetail(id, queryInfo) {
   })
 }
 
-export function getInvitationDetail(id, queryInfo) {
+export function getInvitationDetail(id) {
   return request({
     url: `/forum/posts/${id}`,
+    method: 'get'
+  })
+}
+
+export function getRemarksList(actId, query) {
+  return request({
+    url: `/activity/${actId}/remarks`,
     method: 'get',
-    params: queryInfo
+    params: query
+  })
+}
+
+export function postComment(actId, data) {
+  return request({
+    url: `/forum/posts/${actId}/remarks`,
+    method: 'post',
+    data
   })
 }
 

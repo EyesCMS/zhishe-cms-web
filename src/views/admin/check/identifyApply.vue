@@ -6,10 +6,10 @@
       <!-- 社团认证申请列表 -->
       <el-table :data="identifyApplyList" stripe border>
         <el-table-column type="index" label="#" />
-        <el-table-column label="社团名称" prop="club_name" />
-        <el-table-column label="申请人" prop="applicant" />
-        <el-table-column label="附件" prop="accessory_url" />
-        <el-table-column label="申请时间" prop="create_at" />
+        <el-table-column label="社团名称" prop="clubName" />
+        <el-table-column label="附件" prop="accessoryUrl" />
+        <el-table-column label="申请时间" prop="createAt" />
+        <el-table-column label="申请原因" prop="reason" />
         <el-table-column label="" width="200px">
           <template slot-scope="scope">
             <el-button type="primary" @click="pushToAgree(scope)">批准</el-button>

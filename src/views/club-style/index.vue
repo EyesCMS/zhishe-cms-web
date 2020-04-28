@@ -137,14 +137,10 @@ export default {
     // 获取社团详情
     getClubDetail() {
       getClubDetail(this.clubId).then(response => {
+        console.log(123)
         console.log(response)
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.clubDetail = response.data
-          console.log(this.clubDetail)
-        } else {
-          return this.$message.error('获取社团详情失败')
-        }
+        this.clubDetail = response.items
+        console.log(this.clubDetail)
         // console.log(this.memberInfo)
       })
     },
@@ -166,8 +162,8 @@ export default {
     // 退出社团
     quitClubConfirm() {
       const param = {
-        user_id: this.userId,
-        club_id: this.clubId,
+        userId: this.userId,
+        clubId: this.clubId,
         reason: this.quitReason
       }
       quitClub(param).then(response => {

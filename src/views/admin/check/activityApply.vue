@@ -6,14 +6,14 @@
       <!-- 社团活动申请列表 -->
       <el-table :data="activityApplyList" stripe border>
         <el-table-column type="index" label="#" />
-        <el-table-column label="社团名称" prop="club_name" />
+        <el-table-column label="社团名称" prop="clubName" />
         <el-table-column label="活动名称" prop="name" />
         <el-table-column label="活动标题" prop="title" />
         <el-table-column label="活动内容" prop="content" />
-        <el-table-column label="开始时间" prop="start_date" />
-        <el-table-column label="结束时间" prop="end_date" />
+        <el-table-column label="开始时间" prop="startDate" />
+        <el-table-column label="结束时间" prop="endDate" />
         <el-table-column label="活动场地" prop="location" />
-        <el-table-column label="附件" prop="accessory_url" />
+        <el-table-column label="附件" prop="accessoryUrl" />
         <el-table-column label="" width="200px">
           <template slot-scope="scope">
             <el-button type="primary" @click="pushToAgree(scope)">批准</el-button>

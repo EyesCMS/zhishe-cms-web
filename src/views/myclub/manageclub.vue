@@ -8,10 +8,8 @@
       <el-table-column label="社团名称" prop="name" />
       <el-table-column label="社长名称" prop="chief_name" />
       <el-table-column label="操作" width="200px">
-        <template>
-          <!--<template slot-scope="scope">-->
-          <!--scope.row.name -->
-          <el-button type="primary" size="mini" @click="EnterToClub()">进入社团</el-button>
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="EnterToClub(scope.row.cid)">进入社团</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -83,14 +81,10 @@ export default {
       this.queryInfo.page = newPage
       this.getManageclubsList()
     },
-    // 跳转到社团成员页面
-    EnterToClub() {
+    // 跳转到社团风采页面
+    EnterToClub(cid) {
       this.$store.dispatch('user/changeRoles', 'menber')
-      this.$router.replace('/clubstyle/index')
-    },
-    // 设置cookie,我不知道这样写对不对...
-    setCookie: function (cid, userid) {
-      document.cookie = 'cid=' + cid + ';' + 'userid=' + userid + ';' + 'secure'
+      this.$router.push({ path: '/clubstyle/index', query: { cid: cid }})
     }
   }
 }

@@ -6,10 +6,10 @@
       <!-- 社长换届申请列表 -->
       <el-table :data="changeApplyList" stripe border>
         <el-table-column type="index" label="#" />
-        <el-table-column label="社团名称" prop="club_name" />
-        <el-table-column label="现任社长" prop="old_chief_name" />
-        <el-table-column label="新任社长" prop="new_chief_name" />
-        <el-table-column label="申请时间" prop="create_at" />
+        <el-table-column label="社团名称" prop="clubName" />
+        <el-table-column label="现任社长" prop="oldChiefName" />
+        <el-table-column label="新任社长" prop="newChiefName" />
+        <el-table-column label="申请时间" prop="createAt" />
         <el-table-column label="" width="200px">
           <template slot-scope="scope">
             <el-button type="primary" @click="pushToAgree(scope)">批准</el-button>
