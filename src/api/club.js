@@ -82,11 +82,12 @@ export function pushToCreateApply(data) {
     data
   })
 }
-export function getCreateApplyList(clubid, query) {
+export function getCreateApplyList(params) {
+  console.log(params)
   return request({
     url: `/clubs/creations`,
     method: 'get',
-    params: query
+    params: params
   })
 }
 // 社团解散申请
@@ -100,7 +101,7 @@ export function pushToDismissApply(data) {
 }
 export function getDismissApplyList(query) {
   return request({
-    url: '/clubs/dissolutions',
+    url: '/clubs/dissolution',
     method: 'get',
     params: query
   })

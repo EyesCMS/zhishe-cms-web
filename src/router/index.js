@@ -111,33 +111,33 @@ export const constantRoutes = [
 export const asyncRoutes = [
   // clbus
   {
-    path: '/clubs',
+    path: '/student',
     component: Layout,
     children: [
       {
         path: 'index',
         name: 'Clubs',
-        component: () => import('@/views/clubs/index'),
+        component: () => import('@/views/student/clubs/index'),
         meta: { title: '所有社团', icon: 'search', roles: ['student'] }
       },
       {
         path: '/clubDetail',
         name: 'ClubDetail',
-        component: () => import('@/views/chief/club-detail/index'),
+        component: () => import('@/views/student/club-detail/index'),
         meta: { title: '社团详情', noCache: true, roles: ['student'] },
         hidden: true
       },
       {
         path: '/createClub',
         name: 'CreateClub',
-        component: () => import('@/views/club-create/index'),
+        component: () => import('@/views/student/club-create/index'),
         meta: { title: '创建社团', noCache: true, roles: ['student'] },
         hidden: true
       },
       {
         path: '/joinClub',
         name: 'joinClub',
-        component: () => import('@/views/club-join/index'),
+        component: () => import('@/views/student/club-join/index'),
         meta: { title: '加入社团申请', noCache: true, roles: ['student'] },
         hidden: true
       }
@@ -151,13 +151,13 @@ export const asyncRoutes = [
       {
         path: 'forum',
         name: 'Forum',
-        component: () => import('@/views/forum/index'),
+        component: () => import('@/views/student/forum/index'),
         meta: { title: '活动论坛', icon: 'message', roles: ['student'] }
       },
       {
         path: 'studentforum',
         name: 'StudentForm',
-        component: () => import('@/views/forum/detail'),
+        component: () => import('@/views/student/forum/detail'),
         meta: { title: '帖子详情', noCache: true, roles: ['student'] },
         hidden: true
       }
@@ -174,13 +174,13 @@ export const asyncRoutes = [
       {
         path: 'joinclub',
         name: 'JoinClub',
-        component: () => import('@/views/myclub/joinclub'),
+        component: () => import('@/views/student/myclub/joinclub'),
         meta: { title: '我加入的社团', noCache: true, roles: ['student'] }
       },
       {
         path: 'manageclub',
         name: 'ManageClub',
-        component: () => import('@/views/myclub/manageclub'),
+        component: () => import('@/views/student/myclub/manageclub'),
         meta: { title: '我管理的社团', noCache: true, roles: ['student'] }
       }
     ]
@@ -196,13 +196,13 @@ export const asyncRoutes = [
       {
         path: 'creation',
         name: 'Creation',
-        component: () => import('@/views/applications/creation'),
+        component: () => import('@/views/student/applications/creation'),
         meta: { title: '创建社团', noCache: true, roles: ['student'] }
       },
       {
         path: 'join',
         name: 'Join',
-        component: () => import('@/views/applications/join'),
+        component: () => import('@/views/student/applications/join'),
         meta: { title: '加入社团', noCache: true, roles: ['student'] }
       }
     ]
@@ -275,7 +275,7 @@ export const asyncRoutes = [
       {
         path: 'index',
         name: 'announcement',
-        component: () => import('@/views/member/club-announcement/index.vue'),
+        component: () => import('@/views/member/club-announcement/index'),
         meta: { title: '社团公告', icon: 'message', roles: ['menber'] }
       }
     ]
