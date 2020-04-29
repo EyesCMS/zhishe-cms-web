@@ -43,7 +43,6 @@
         width="50%"
         center
         modal
-        @close="publishAnnouncementDialogClosed"
       >
         <el-form
           ref="publishFormRef"
@@ -68,6 +67,7 @@
           </el-form-item>
         </el-form>
         <el-upload
+          action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
@@ -236,9 +236,6 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
-    },
-    publishAnnouncementDialogClosed() {
-      this.$refs.publishFormRef.resetFields()
     },
     // 获取共公告列表
     getBulletinsList() {

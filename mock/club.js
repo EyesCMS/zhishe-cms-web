@@ -214,7 +214,6 @@ export default [
       }
     }
   },
-  // POST /clubs/:club/bulletins
   {
     url: '/clubs/[0-9]/bulletins',
     type: 'post',

@@ -1,4 +1,3 @@
-
 import request from '@/utils/request'
 
 export function getAllInvitationList(queryInfo) {
@@ -9,11 +8,11 @@ export function getAllInvitationList(queryInfo) {
   })
 }
 
-export function getInvitationList(clubid, query) {
+export function getInvitationList(clubid, query, originState) {
   return request({
     url: `/forum/${clubid}/posts`,
     method: 'get',
-    params: query
+    params: { query, originState }
   })
 }
 
@@ -47,4 +46,3 @@ export function postComment(actId, data) {
     data
   })
 }
-

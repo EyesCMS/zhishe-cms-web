@@ -2,8 +2,14 @@
   <div>
     <el-card>
       <!-- 社团风采走马灯 -->
-      <el-carousel :interval="5000" arrow="always">
-        <el-carousel-item v-for="item in 4" :key="item">
+      <el-carousel
+        :interval="5000"
+        arrow="always"
+      >
+        <el-carousel-item
+          v-for="item in 4"
+          :key="item"
+        >
           <h3>{{ item }}</h3>
         </el-carousel-item>
       </el-carousel>
@@ -12,20 +18,34 @@
           <el-divider />
           <h3 style="text-align:center;">公告列表</h3>
           <el-divider />
-          <div v-for="(item, i) in bulletinsList" id="bulletin" :key="i">
+          <div
+            v-for="(item, i) in bulletinsList"
+            id="bulletin"
+            :key="i"
+          >
             <el-tag>{{ i + 1 }}</el-tag>
             <p style="display:inline;">{{ item.title }}</p>
-            <el-link type="primary" @click="openBulletinDetailDiaglog(item.id)">详情</el-link>
+            <el-link
+              type="primary"
+              @click="openBulletinDetailDiaglog(item.id)"
+            >详情</el-link>
           </div>
         </el-col>
         <el-col :span="8">
           <el-divider />
           <h3 style="text-align:center;">帖子列表</h3>
           <el-divider />
-          <div v-for="(item, i) in invitationList" id="bulletin" :key="i">
+          <div
+            v-for="(item, i) in invitationList"
+            id="bulletin"
+            :key="i"
+          >
             <el-tag type="warning">{{ i + 1 }}</el-tag>
             <p style="display:inline;">{{ item.title }}</p>
-            <el-link type="primary" @click="pushToActivityDetail(item.id)">详情</el-link>
+            <el-link
+              type="primary"
+              @click="pushToActivityDetail(item.id)"
+            >详情</el-link>
           </div>
         </el-col>
         <el-col :span="8">
@@ -38,7 +58,11 @@
             <h4>qq群：{{ clubDetail.qq_group }}</h4>
             <h4>简介：{{ clubDetail.slogan }}</h4>
           </el-card>
-          <el-button style="display:block;margin:15px auto" type="info" @click="quitClubDialog()">退出社团</el-button>
+          <el-button
+            style="display:block;margin:15px auto"
+            type="info"
+            @click="quitClubDialog()"
+          >退出社团</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -54,8 +78,14 @@
       <p>{{ bulletin.content }}</p>
       <p>发布时间:{{ bulletin.create_at }}</p>
       <p>上次修改:{{ bulletin.update_at }}</p>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="bulletinDetailDialogVisible = false">确 定</el-button>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="bulletinDetailDialogVisible = false"
+        >确 定</el-button>
       </span>
     </el-dialog>
 
@@ -69,11 +99,20 @@
     >
       <el-form>
         <el-form-item label="退社理由">
-          <el-input v-model="quitReason" type="textarea">1</el-input>
+          <el-input
+            v-model="quitReason"
+            type="textarea"
+          >1</el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="quitClubConfirm">确 定</el-button>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="quitClubConfirm"
+        >确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -179,7 +218,7 @@ export default {
       // 跳转到其他页面
     },
     pushToActivityDetail(id) {
-      this.$router.push({ path: '/activityforum/detail', query: { id: id }})
+      this.$router.push({ path: '/activityforum/detail', query: { id: id } })
     }
   }
 }

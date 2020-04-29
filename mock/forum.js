@@ -1,36 +1,42 @@
 import Mock from 'mockjs'
 const invitationsList = []
 for (let i = 0; i < 100; i++) {
-  invitationsList.push(Mock.mock({
-    'id|+1': 1,
-    title: '@string',
-    content: '@string',
-    clubName: 'XX社',
-    createAt: '2018-04-19 18:14:12',
-    imgUrl: '131231241241.jpg',
-    avatarUrl: 'e312312312312.jpg'
-  }))
+  invitationsList.push(
+    Mock.mock({
+      'id|+1': 1,
+      title: '@string',
+      content: '@string',
+      posterName: 'XXç¤¾',
+      createAt: '2018-04-19 18:14:12',
+      imgUrl: '131231241241.jpg',
+      avatarUrl: 'e312312312312.jpg'
+    })
+  )
 }
 const AllinvitationsList = []
 for (let i = 0; i < 100; i++) {
-  AllinvitationsList.push(Mock.mock({
-    title: '@string',
-    content: '@string',
-    club_name: 'XX社',
-    create_at: '2018-04-19 18:14:12',
-    img_url: '131231241241.jpg',
-    avator_url: 'e312312312312.jpg'
-  }))
+  AllinvitationsList.push(
+    Mock.mock({
+      title: '@string',
+      content: '@string',
+      club_name: 'XXç¤¾',
+      create_at: '2018-04-19 18:14:12',
+      img_url: '131231241241.jpg',
+      avator_url: 'e312312312312.jpg'
+    })
+  )
 }
 const remarksList = []
 for (let i = 0; i < 20; i++) {
-  remarksList.push(Mock.mock({
-    'userid|+1': 1,
-    nickname: '@cname',
-    content: '@string',
-    createAt: '2018-04-19 18:14:12',
-    avatorUrl: '@string'
-  }))
+  remarksList.push(
+    Mock.mock({
+      'userid|+1': 1,
+      nickname: '@cname',
+      content: '@string',
+      createAt: '2018-04-19 18:14:12',
+      avatorUrl: '@string'
+    })
+  )
 }
 export default [
   // GET /activity/:actId/remarks
@@ -40,7 +46,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = remarksList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = remarksList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         items: pageList,
         total_count: remarksList.length
@@ -62,7 +70,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = invitationsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = invitationsList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         items: pageList,
         total_count: invitationsList.length
@@ -81,7 +91,7 @@ export default [
           'id|+1': 1,
           title: '@string',
           content: '@string',
-          club_name: 'XX社',
+          club_name: 'XXç¤¾',
           create_at: '2018-04-19 18:14:12',
           img_url: '131231241241.jpg',
           avator_url: 'e312312312312.jpg'
@@ -97,7 +107,9 @@ export default [
     response: config => {
       const { page, limit } = config.query
       console.log(config.query)
-      const pageList = AllinvitationsList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      const pageList = AllinvitationsList.filter(
+        (item, index) => index < limit * page && index >= limit * (page - 1)
+      )
       return {
         status: 200,
         data: pageList,
@@ -116,7 +128,7 @@ export default [
   //       data: {
   //         title: '@string',
   //         content: '@string',
-  //         club_name: 'XX社',
+  //         club_name: 'XXç¤¾',
   //         create_at: '2018-04-19 18:14:12',
   //         img_url: '131231241241.jpg',
   //         avator_url: 'e312312312312.jpg',

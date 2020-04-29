@@ -375,6 +375,20 @@ export const clubChiefRouter = [
       }
     ]
   },
+  // 社团论坛管理
+  {
+    path: '/forumManage',
+    component: Layout,
+    name: 'forumManage',
+    children: [
+      {
+        path: 'forum',
+        name: 'forumManage',
+        component: () => import('@/views/forum-mamage/index'),
+        meta: { title: '论坛管理', icon: 'people', roles: ['admin'] }
+      }
+    ]
+  },
   // 社团简介管理
   {
     path: '/Detailmanage',

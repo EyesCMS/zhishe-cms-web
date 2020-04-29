@@ -78,14 +78,12 @@ export default {
   created() {
     getClubDetail(2).then(response => {
       console.log(response)
-      if (response.status === 200) {
-        // this.$message.success('获取成员列表成功')
-        this.clubInfo = response.data
-        console.log('detile=' + this.clubInfo)
+      if (response.items) {
+        this.clubInfo = response.items
+        // console.log('detile=' + this.clubInfo)
       } else {
         return this.$message.error('获取社团详情失败')
       }
-      // console.log(this.memberInfo)
     })
   },
   methods: {
