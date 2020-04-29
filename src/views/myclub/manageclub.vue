@@ -37,6 +37,7 @@
 </style>
 <script>
 import { getManageclubsList } from '@/api/club'
+import { switchRole } from '@/api/club'
 export default {
   name: 'ManageClubs',
   data() {
@@ -85,6 +86,16 @@ export default {
     EnterToClub(cid) {
       this.$store.dispatch('user/changeRoles', 'menber')
       this.$router.push({ path: '/clubstyle/index', query: { cid: cid }})
+      this.switchRole(cid)
+    },
+    switchRole(cid) {
+      switchRole(cid).then(response => {
+        if (response.status === 204) {
+          return this.$message.success('切换角色成功')
+        } else {
+          return this.$message.error('切换角色失败')
+        }
+      })
     }
   }
 }

@@ -64,6 +64,7 @@ export default {
     }
   },
   created() {
+    this.clubId = sessionStorage.getItem('clubId')
     this.getInvitationsList()
   },
   methods: {

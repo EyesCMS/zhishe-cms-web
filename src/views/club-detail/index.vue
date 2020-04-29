@@ -76,7 +76,8 @@ export default {
     }
   },
   created() {
-    getClubDetail(2).then(response => {
+    this.clubId = sessionStorage.getItem('clubId')
+    getClubDetail(this.clubId).then(response => {
       console.log(response)
       if (response.items) {
         this.clubInfo = response.items

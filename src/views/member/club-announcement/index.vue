@@ -10,13 +10,19 @@
         <el-button slot="append" icon="el-icon-search" @click="queryAnnouncementList" />
       </el-input>
       <p>共搜索到100条相关公告</p>
-      <div v-for="(item, index) in bulletinsList" :key="index">
+      <el-card v-for="(item, index) in bulletinsList" :key="index">
+        <h2 class="title">{{ item.title }}</h2>
+        <p>{{ item.content }}</p>
+        <p class="createAt">{{ item.create_at }}  </p>
+        <el-link type="primary" @click="openBulletinDetailDiaglog(item.id)">详情</el-link>
+      </el-card>
+      <!-- <div >
         <h2>{{ item.title }}</h2>
         <p>{{ item.create_at }}  </p>
         <p>{{ item.content }}</p>
         <el-link type="primary" @click="openBulletinDetailDiaglog(item.id)">详情</el-link>
         <el-divider><i class="el-icon-message-solid" /></el-divider>
-      </div>
+      </div> -->
 
       <!-- 分页 -->
       <el-pagination
@@ -70,6 +76,7 @@ export default {
     }
   },
   created() {
+    this.clubId = sessionStorage.getItem('clubId')
     // this.clubId = localStorage.getItem('clubid')
     this.getBulletinsList()
   },
@@ -118,5 +125,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.title {
+  font-family: "PingFang SC";
+  text-align: center;
+  font-size: 12px Extra Small
+}
+.createAt {
+  font-size: 13px Small;
+  text-align: right
+}
 </style>

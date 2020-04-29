@@ -37,6 +37,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { switchRole } from '@/api/club'
 
 export default {
   components: {
@@ -60,6 +61,16 @@ export default {
     pushToHomePage() {
       this.$store.dispatch('user/changeRoles', 'student')
       this.$router.replace('/home-page/index')
+      this.switchRole(this.$route.query.cid)
+    },
+    switchRole(cid) {
+      switchRole(cid).then(response => {
+        if (response.status === 204) {
+          return this.$message.success('切换角色成功')
+        } else {
+          return this.$message.error('切换角色失败')
+        }
+      })
     }
   }
 }

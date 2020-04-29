@@ -4,11 +4,11 @@ for (let i = 0; i < 100; i++) {
   invitationsList.push(
     Mock.mock({
       'id|+1': 1,
-      title: '@string',
-      content: '@string',
-      posterName: 'XXç¤¾',
-      createAt: '2018-04-19 18:14:12',
-      imgUrl: '131231241241.jpg',
+      title: '@ctitle',
+      content: '@cparagraph(10)',
+      clubName: '@title',
+      createAt: Mock.Random.date(),
+      imgUrl: '@image',
       avatarUrl: 'e312312312312.jpg'
     })
   )
@@ -32,8 +32,8 @@ for (let i = 0; i < 20; i++) {
     Mock.mock({
       'userid|+1': 1,
       nickname: '@cname',
-      content: '@string',
-      createAt: '2018-04-19 18:14:12',
+      content: '@cparagraph(5)',
+      createAt: Mock.Random.date(),
       avatorUrl: '@string'
     })
   )

@@ -80,6 +80,7 @@ export default {
     }
   },
   created() {
+    // this.userId = this.$store.getters.userid
     this.getAddsList()
   },
   methods: {
