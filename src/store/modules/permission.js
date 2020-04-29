@@ -1,14 +1,17 @@
+/* eslint-disable prefer-const */
 import {
-  // asyncRoutes,
-  constantRoutes,
-  clubMenberRouter,
-  studentRoutes,
-  clubChiefRouter,
-  adminRouter
+  asyncRoutes,
+  constantRoutes
+  // clubMenberRouter,
+  // studentRoutes,
+  // clubChiefRouter,
+  // adminRouter
 } from '@/router'
 
 /**
  * Use meta.role to determine if the current user has permission
+ * 在router/index.js文件的挂在的路由的meta有roles的属性该属性用来判断那个角色才有的这个属性
+ * 如果meta.roles没有这个属性的话说明这个路由没有限制都能访问到
  * @param roles
  * @param route
  */
@@ -22,12 +25,12 @@ function hasPermission(roles, route) {
 
 /**
  * Filter asynchronous routing tables by recursion
+ * 将某个角色有的权限路由都填写到res中返回，若有子节点则遍历子节点
  * @param routes asyncRoutes
  * @param roles
  */
 export function filterAsyncRoutes(routes, roles) {
   const res = []
-
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
@@ -57,18 +60,7 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = adminRouter || []
-      } else if (roles.includes('chief')) {
-        accessedRoutes = clubChiefRouter || []
-      } else if (roles.includes('student')) {
-        accessedRoutes = studentRoutes || []
-      } else if (roles.includes('menber')) {
-        accessedRoutes = clubMenberRouter || []
-      } else {
-        accessedRoutes = []
-        // accessedRoutes = []
-      }
+      accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })

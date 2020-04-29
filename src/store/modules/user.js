@@ -57,6 +57,7 @@ const mutations = {
 
 const actions = {
   // user login
+  // 调用login api设置store的token并且将token存到session中
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
@@ -75,16 +76,16 @@ const actions = {
   },
 
   // get user info
+  // 调用getInfo api 初始化user的各个属性
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token)
         .then(response => {
-          const data = response
+          var data = response
           if (!data) {
             reject('Verification failed, please Login again.')
           }
-          const { roles, avatar } = data
-          commit('SET_ROLES', roles)
+          commit('SET_ROLES', data.roles)
           commit('SET_USERNAME', data.username)
           commit('SET_NICKNAME', data.nickname)
           commit('SET_PHONE', data.phone)
@@ -92,7 +93,8 @@ const actions = {
           commit('SET_SLOGAN', data.slogan)
           commit('SET_MAJOR', data.major)
           commit('SET_USERID', data.userid)
-          commit('SET_AVATAR', avatar)
+          commit('SET_AVATAR', data.avatar)
+          // console.log(state)
           resolve(data)
         })
         .catch(error => {
@@ -107,6 +109,7 @@ const actions = {
       logout(state.token)
         .then(() => {
           removeToken() // must remove  token  first
+          window.sessionStorage.removeItem('roles')
           resetRouter()
 
           // reset visited views and cached views
@@ -142,6 +145,7 @@ const actions = {
       // TODO: update this
       // const { roles } = await dispatch('getInfo')
       const roles = [role]
+      window.sessionStorage.setItem('roles', roles)
       resetRouter()
 
       commit('SET_ROLES', roles)
