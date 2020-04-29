@@ -223,7 +223,7 @@ export default {
       // 跳转到其他页面
     },
     pushToActivityDetail(id) {
-      this.$router.push({ path: '/activityforum/detail', query: { id: id } })
+      this.$router.push({ path: '/activityforum/detail', query: { id: id }})
     }
   }
 }

@@ -103,7 +103,6 @@ for (let i = 0; i < 100; i++) {
       id: '@id',
       clubName: '@string',
       createAt: '@datetime',
-      applicant: '@cname',
       reason: '@string',
       state: 0
     })

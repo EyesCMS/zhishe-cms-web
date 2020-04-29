@@ -399,7 +399,7 @@ export const clubChiefRouter = [
       {
         path: 'Detail',
         name: 'Detailmanage',
-        component: () => import('@/views/club-detail/index'),
+        component: () => import('@/views/student/club-detail/index'),
         meta: { title: '简介管理', icon: 'message' }
       }
     ]
@@ -545,13 +545,13 @@ export const asyncRoutes = [
       {
         path: 'joinclub',
         name: 'JoinClub',
-        component: () => import('@/views/myclub/joinclub'),
+        component: () => import('@/views/student/myclub/joinclub'),
         meta: { title: '我加入的社团', noCache: true }
       },
       {
         path: 'manageclub',
         name: 'ManageClub',
-        component: () => import('@/views/myclub/manageclub'),
+        component: () => import('@/views/student/myclub/manageclub'),
         meta: { title: '我管理的社团', noCache: true }
       }
     ]
@@ -567,13 +567,13 @@ export const asyncRoutes = [
       {
         path: 'creation',
         name: 'Creation',
-        component: () => import('@/views/applications/creation'),
+        component: () => import('@/views/student/applications/creation'),
         meta: { title: '加入社团', noCache: true }
       },
       {
         path: 'join',
         name: 'Join',
-        component: () => import('@/views/applications/join'),
+        component: () => import('@/views/student/applications/join'),
         meta: { title: '创建社团', noCache: true }
       }
     ]
