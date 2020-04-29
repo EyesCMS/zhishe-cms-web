@@ -230,7 +230,7 @@ export const clubMenberRouter = [
       {
         path: 'index',
         name: 'index',
-        component: () => import('@/views/club-style/index.vue'),
+        component: () => import('@/views/member/club-style/index.vue'),
         meta: { title: '社团风采', noCache: true }
       }
     ]
@@ -243,13 +243,13 @@ export const clubMenberRouter = [
       {
         path: 'index',
         name: 'ClubMember',
-        component: () => import('@/views/club-member/index.vue'),
+        component: () => import('@/views/member/club-member/index.vue'),
         meta: { title: '社团成员', icon: 'peoples', roles: ['admin'] }
       },
       {
         path: 'detail',
         name: 'MemberDetail',
-        component: () => import('@/views/member-detail/index.vue'),
+        component: () => import('@/views/member/member-detail/index.vue'),
         meta: { title: '成员详情' },
         hidden: true
       }
@@ -263,13 +263,13 @@ export const clubMenberRouter = [
       {
         path: 'index',
         name: 'ActivityForum',
-        component: () => import('@/views/activity-forum/index.vue'),
+        component: () => import('@/views/member/activity-forum/index.vue'),
         meta: { title: '活动论坛', icon: 'message', roles: ['admin'] }
       },
       {
         path: 'detail',
         name: 'ActivityDetail',
-        component: () => import('@/views/activity-forum/detail.vue'),
+        component: () => import('@/views/member/activity-forum/detail.vue'),
         meta: { title: '帖子详情' },
         hidden: true
       }
@@ -283,7 +283,7 @@ export const clubMenberRouter = [
       {
         path: 'index',
         name: 'Announcement',
-        component: () => import('@/views/club-announcement/index.vue'),
+        component: () => import('@/views/member/club-announcement/index.vue'),
         meta: { title: '社团公告', icon: 'message', roles: ['admin'] }
       }
     ]
@@ -310,7 +310,7 @@ export const clubChiefRouter = [
       {
         path: 'index',
         name: 'index',
-        component: () => import('@/views/club-style/index.vue'),
+        component: () => import('@/views/member/club-style/index.vue'),
         meta: { title: '社团风采', noCache: true }
       }
     ]
@@ -344,13 +344,13 @@ export const clubChiefRouter = [
       {
         path: 'list',
         name: 'MemberList',
-        component: () => import('@/views/club-member/index.vue'),
+        component: () => import('@/views/member/club-member/index.vue'),
         meta: { title: '查看所有成员', icon: 'people', roles: ['admin'] }
       },
       {
         path: 'add',
         name: 'MemberAdd',
-        component: () => import('@/views/member-add/index.vue'),
+        component: () => import('@/views/chief/member-add/index.vue'),
         meta: { title: '审核加入申请', icon: 'applyadd', roles: ['admin'] }
       },
       {
@@ -371,7 +371,7 @@ export const clubChiefRouter = [
       {
         path: 'list',
         name: 'ActivityList',
-        component: () => import('@/views/activity-manage/index.vue'),
+        component: () => import('@/views/chief/activity-manage/index.vue'),
         meta: { title: '社团活动管理', icon: 'people', roles: ['admin'] }
       }
     ]
@@ -594,7 +594,7 @@ export const asyncRoutes = [
       {
         path: 'index',
         name: 'index',
-        component: () => import('@/views/club-style/index.vue'),
+        component: () => import('@/views/member/club-style/index.vue'),
         meta: { title: '社团风采', noCache: true }
       }
     ]
@@ -607,13 +607,13 @@ export const asyncRoutes = [
       {
         path: 'index',
         name: 'ClubMember',
-        component: () => import('@/views/club-member/index.vue'),
+        component: () => import('@/views/member/club-member/index.vue'),
         meta: { title: '社团成员', icon: 'peoples', roles: ['admin'] }
       },
       {
         path: 'detail',
         name: 'MemberDetail',
-        component: () => import('@/views/member-detail/index.vue'),
+        component: () => import('@/views/member/member-detail/index.vue'),
         hidden: true
       }
     ]
@@ -627,13 +627,13 @@ export const asyncRoutes = [
       {
         path: 'index',
         name: 'ActivityForum',
-        component: () => import('@/views/activity-forum/index.vue'),
+        component: () => import('@/views/member/activity-forum/index.vue'),
         meta: { title: '活动论坛', icon: 'message', roles: ['admin'] }
       },
       {
         path: 'detail',
         name: 'ActivityDetail',
-        component: () => import('@/views/activity-forum/detail.vue'),
+        component: () => import('@/views/member/activity-forum/detail.vue'),
         meta: { title: '帖子详情', icon: 'message', roles: ['admin'] },
         hidden: true
       }
@@ -648,7 +648,7 @@ export const asyncRoutes = [
       {
         path: 'index',
         name: 'Announcement',
-        component: () => import('@/views/club-announcement/index.vue'),
+        component: () => import('@/views/member/club-announcement/index.vue'),
         meta: { title: '社团公告', icon: 'message', roles: ['admin'] }
       }
     ]
