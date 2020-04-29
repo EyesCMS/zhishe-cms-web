@@ -13,7 +13,7 @@
       <el-table :data="membersList" stripe border>
         <el-table-column type="index" label="#" />
         <el-table-column label="昵称" prop="nickname" />
-        <el-table-column label="学号" prop="username" />
+        <el-table-column label="用户名" prop="username" />
         <el-table-column label="活跃度" prop="honor" />
         <el-table-column label="角色" prop="role" />
         <el-table-column label="操作" width="100px">
