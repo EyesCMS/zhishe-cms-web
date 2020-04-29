@@ -7,10 +7,10 @@
 
     <!-- 社团列表 -->
     <el-table :data="clubsList" stripe border>
-      <el-table-column label="序号" prop="cid" />
-      <el-table-column label="社团头像" prop="avatar_url" />
+      <el-table-column label="序号" prop="id" />
+      <el-table-column label="社团头像" prop="avatarUrl" />
       <el-table-column label="社团名称" prop="name" />
-      <el-table-column label="社长名称" prop="chief_name" />
+      <el-table-column label="社长名称" prop="chiefName" />
       <el-table-column label="操作" width="200px">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="LookForDetail(scope.row.cid)">查看详情</el-button>
@@ -64,8 +64,8 @@ export default {
       this.listLoading = true
       getClubsList(this.queryInfo).then(response => {
         if (response.status === 200) {
-          this.clubsList = response.data
-          this.total = response.total
+          this.clubsList = response.data.items
+          this.total = response.data.totalCount
         } else {
           return this.$message.error('获取社团列表失败')
         }
