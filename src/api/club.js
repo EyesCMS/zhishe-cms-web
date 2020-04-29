@@ -265,3 +265,10 @@ export function switchRole(data) {
     data
   })
 }
+
+export function getActivityApplyDetail(id) {
+  return request({
+    url: `/activities/apply/${id}`,
+    method: 'get'
+  })
+}

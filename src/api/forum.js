@@ -1,11 +1,11 @@
 
 import request from '@/utils/request'
 
-export function getAllInvitationList(queryInfo) {
+export function getAllInvitationList(query) {
   return request({
     url: `/forum/posts`,
     method: 'get',
-    params: queryInfo
+    params: query
   })
 }
 

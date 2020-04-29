@@ -190,6 +190,26 @@ for (let i = 0; i < 50; i++) {
 //
 export default [
   {
+    url: '/activities/apply/[0-9]',
+    type: 'get',
+    response: _ => {
+      return {
+        items: {
+          id: 1,
+          title: '@ctitle',
+          name: '@string(8)',
+          location: '青春广场',
+          content: '社团团聚',
+          memberCount: '55',
+          startDate: '2018-04-19 18:14:12',
+          endDate: '2018-04-19 18:14:12',
+          state: 4,
+          imgUrl: '@image'
+        }
+      }
+    }
+  },
+  {
     url: '/clubs/[0-9]/activities/apply',
     type: 'get',
     response: config => {

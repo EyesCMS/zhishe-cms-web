@@ -37,7 +37,7 @@
         </el-table-column>
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
-            <el-button type="primary">查看</el-button>
+            <el-button type="primary" @click="checkActivityApplyDetail(scope.row.id)">查看</el-button>
             <el-button v-if="scope.row.state === 0" type="danger" @click="deleteActivity(scope.row.id)">撤销</el-button>
             <el-button v-else-if="scope.row.state === 1" type="success" @click="publishActivity(scope.row.id, 2)">发布</el-button>
           </template>
@@ -109,6 +109,48 @@
           <el-button type="primary" @click="publishApply">申请</el-button>
         </span>
       </el-dialog>
+
+      <el-dialog
+        title="活动申请详情"
+        :visible.sync="applyDetailDialogVisible"
+        width="50%"
+        center
+      >
+        <el-form ref="addFormRef" :model="applyDetailForm" label-width="90px">
+          <el-form-item label="活动名称">
+            <el-input v-model="applyDetailForm.name" disabled />
+          </el-form-item>
+          <el-form-item label="活动标题">
+            <el-input v-model="applyDetailForm.title" disabled />
+          </el-form-item>
+          <el-form-item label="活动内容">
+            <el-input v-model="applyDetailForm.content" type="textarea" disabled />
+          </el-form-item>
+          <el-form-item label="活动地点">
+            <el-input v-model="applyDetailForm.location" disabled />
+          </el-form-item>
+          <el-form-item label="活动时间">
+            <el-col :span="11">
+              <el-form-item>
+                <el-date-picker v-model="applyDetailForm.startDate" type="date" placeholder="选择日期" style="width: 90%;" disabled />
+              </el-form-item>
+            </el-col>
+            <el-col class="line" :span="2">-</el-col>
+            <el-col :span="11">
+              <el-form-item>
+                <el-date-picker v-model="applyDetailForm.endDate" type="date" placeholder="选择日期" style="width: 90%;" disabled />
+              </el-form-item>
+            </el-col>
+          </el-form-item>
+          <el-image
+            style="width: 600px; height: 500px"
+            :src="applyDetailForm.imgUrl"
+          />
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="applyDetailDialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -118,6 +160,7 @@ import { getActivitiesList } from '@/api/club'
 import { reviseActivityState } from '@/api/club'
 import { deleteActivity } from '@/api/club'
 import { publishApply } from '@/api/club'
+import { getActivityApplyDetail } from '@/api/club'
 export default {
   name: 'ActivityManage',
   filters: {
@@ -149,10 +192,12 @@ export default {
         sort: '',
         order: ''
       },
+      applyDetailForm: {},
       total: 0,
       date: [],
       applyActivityDialogVisible: false,
       dialogVisible: false,
+      applyDetailDialogVisible: false,
       dialogImageUrl: '',
       addForm: {
         clubId: 0,
@@ -247,6 +292,13 @@ export default {
     },
     applyActivityDialogClosed() {
       this.$refs.addFormRef.resetFields()
+    },
+    checkActivityApplyDetail(id) {
+      getActivityApplyDetail(id).then(response => {
+        this.applyDetailForm = response.items
+        console.log('applyDetail为' + this.applyDetailForm)
+        this.applyDetailDialogVisible = true
+      })
     }
   }
 }
