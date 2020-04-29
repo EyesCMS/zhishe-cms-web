@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { getInvitationList } from '../../api/forum'
+import { getInvitationList } from '@/api/forum'
 export default {
   data() {
     return {

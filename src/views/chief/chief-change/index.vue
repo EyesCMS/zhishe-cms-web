@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { leaderchange } from '../../api/club'
+import { leaderchange } from '@/api/club'
 export default {
   data() {
     return {

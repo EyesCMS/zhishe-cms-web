@@ -12,7 +12,7 @@ export function getInvitationList(clubid, query, originState) {
   return request({
     url: `/forum/${clubid}/posts`,
     method: 'get',
-    params: { query, originState }
+    params: query
   })
 }
 

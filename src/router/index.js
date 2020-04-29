@@ -385,7 +385,7 @@ export const clubChiefRouter = [
       {
         path: 'forum',
         name: 'forumManage',
-        component: () => import('@/views/forum-mamage/index'),
+        component: () => import('@/views/chief/forum-mamage/index'),
         meta: { title: '论坛管理', icon: 'people', roles: ['admin'] }
       }
     ]
@@ -399,7 +399,7 @@ export const clubChiefRouter = [
       {
         path: 'Detail',
         name: 'Detailmanage',
-        component: () => import('@/views/club-detail/index'),
+        component: () => import('@/views/chief/club-detail/index'),
         meta: { title: '简介管理', icon: 'message' }
       }
     ]
@@ -412,7 +412,7 @@ export const clubChiefRouter = [
       {
         path: 'Announcement',
         name: 'Announcement',
-        component: () => import('@/views/announcement-mamage/index'),
+        component: () => import('@/views/chief/announcement-mamage/index'),
         meta: { title: '公告管理', icon: 'message' }
       }
     ]
@@ -426,7 +426,7 @@ export const clubChiefRouter = [
       {
         path: 'dissolution',
         name: 'dissolution',
-        component: () => import('@/views/club-dissolution/index'),
+        component: () => import('@/views/chief/club-dissolution/index'),
         meta: { title: '解散社团', icon: 'message' }
       }
     ]
@@ -440,7 +440,7 @@ export const clubChiefRouter = [
       {
         path: 'chiefChange',
         name: 'chiefChange',
-        component: () => import('@/views/chief-change/index'),
+        component: () => import('@/views/chief/chief-change/index'),
         meta: { title: '换届管理', icon: 'message' }
       }
     ]
