@@ -356,7 +356,7 @@ export const clubChiefRouter = [
       {
         path: 'quit',
         name: 'MemberQuit',
-        component: () => import('@/views/member-quit/index.vue'),
+        component: () => import('@/views/chief/member-quit/index.vue'),
         meta: { title: '成员退出通知', icon: 'memberquit', roles: ['admin'] }
       }
     ]
@@ -386,7 +386,7 @@ export const clubChiefRouter = [
       {
         path: 'list',
         name: 'ActivityList',
-        component: () => import('@/views/club-identify/index.vue'),
+        component: () => import('@/views/chief/club-identify/index.vue'),
         meta: { title: '社团认证申请', icon: 'form', roles: ['admin'] }
       }
     ]
@@ -402,7 +402,7 @@ export const adminRouter = [
   {
     path: '/admin/check',
     component: Layout,
-    redirect: '/admin/check/createApply',
+    redirect: '/administrator/check/createApply',
     alwaysShow: true, // will always show the root menu
     name: 'check',
     meta: {
@@ -413,7 +413,7 @@ export const adminRouter = [
     children: [
       {
         path: 'createApply',
-        component: () => import('@/views/admin/check/createApply'),
+        component: () => import('@/views/administrator/check/createApply'),
         name: 'createApply',
         meta: {
           title: '社团创建申请',
@@ -422,7 +422,7 @@ export const adminRouter = [
       },
       {
         path: 'dismissApply',
-        component: () => import('@/views/admin/check/dismissApply'),
+        component: () => import('@/views/administrator/check/dismissApply'),
         name: 'dismissApply',
         meta: {
           title: '社团解散申请',
@@ -431,7 +431,7 @@ export const adminRouter = [
       },
       {
         path: 'activityApply',
-        component: () => import('@/views/admin/check/activityApply'),
+        component: () => import('@/views/administrator/check/activityApply'),
         name: 'activityApply',
         meta: {
           title: '社团活动申请',
@@ -440,7 +440,7 @@ export const adminRouter = [
       },
       {
         path: 'changeApply',
-        component: () => import('@/views/admin/check/changeApply'),
+        component: () => import('@/views/administrator/check/changeApply'),
         name: 'changeApply',
         meta: {
           title: '社长换届申请',
@@ -449,7 +449,7 @@ export const adminRouter = [
       },
       {
         path: 'identifyApply',
-        component: () => import('@/views/admin/check/identifyApply'),
+        component: () => import('@/views/administrator/check/identifyApply'),
         name: 'identifyApply',
         meta: {
           title: '社团认证申请',
