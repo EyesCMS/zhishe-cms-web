@@ -180,7 +180,7 @@ export function quitClub(data) {
 
 export function getJoinApplicationsList(userid, query) {
   return request({
-    url: `/clubs/join/${userid}`,
+    url: `/users/${userid}/clubs/joins`,
     method: 'get',
     params: query
   })
@@ -249,7 +249,7 @@ export function joinAudit(data) {
 // 获取学生加入的社团列表
 export function getJoinclubsList(userid, query) {
   return request({
-    url: `/clubs/user/${userid}`,
+    url: `/users/${userid}/clubs?statue=member`,
     method: 'get',
     params: query
   })
@@ -258,7 +258,7 @@ export function getJoinclubsList(userid, query) {
 // 获取学生作为社长管理的社团列表
 export function getManageclubsList(userid, query) {
   return request({
-    url: `/clubs/manager/${userid}`,
+    url: `/users/${userid}/clubs?statue=chief`,
     method: 'get',
     params: query
   })
