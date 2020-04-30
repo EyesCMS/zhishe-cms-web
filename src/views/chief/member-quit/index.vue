@@ -42,7 +42,9 @@ export default {
     }
   },
   created() {
-    // this.clubId = localStorage.getItem('clubid')
+    if (this.$route.query.cid) {
+      this.clubId = this.$route.query.cid
+    }
     this.getQuitList()
   },
   methods: {

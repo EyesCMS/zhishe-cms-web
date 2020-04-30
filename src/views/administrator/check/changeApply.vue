@@ -67,13 +67,12 @@ export default {
     }
   },
   created() {
-    this.clubId = localStorage.getItem('clubid')
     this.getChangeApplyList()
   },
   methods: {
     getChangeApplyList() {
       this.listLoading = true
-      getChangeApplyList(this.clubId, this.queryInfo).then(response => {
+      getChangeApplyList(this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社长换届申请成功')
           this.changeApplyList = response.data.items

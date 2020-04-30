@@ -115,7 +115,7 @@ export function pushToChangeApply(data) {
     data
   })
 }
-export function getChangeApplyList(clubid, query) {
+export function getChangeApplyList(query) {
   return request({
     url: `/clubs/leader/changes`,
     method: 'get',
@@ -131,7 +131,7 @@ export function pushToIdentifyApply(data) {
     data
   })
 }
-export function getIdentifyApplyList(clubid, query) {
+export function getIdentifyApplyList(query) {
   return request({
     url: `/clubs/certifications`,
     method: 'get',
@@ -147,7 +147,7 @@ export function pushToActivityApply(data) {
     data
   })
 }
-export function getActivityApplyList(clubid, query) {
+export function getActivityApplyList(query) {
   return request({
     url: `/clubs/activities`,
     method: 'get',

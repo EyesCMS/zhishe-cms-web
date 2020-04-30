@@ -66,7 +66,6 @@ export default {
     }
   },
   created() {
-    this.clubId = localStorage.getItem('clubid')
     this.getIdentifyApplyList()
   },
   methods: {

@@ -70,13 +70,12 @@ export default {
     }
   },
   created() {
-    this.clubId = localStorage.getItem('clubid')
     this.getActivityApplyList()
   },
   methods: {
     getActivityApplyList() {
       this.listLoading = true
-      getActivityApplyList(this.clubId, this.queryInfo).then(response => {
+      getActivityApplyList(this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团活动申请成功')
           this.activityApplyList = response.data.items
