@@ -10,13 +10,13 @@
         <div>
           <el-form ref="form" :model="form" label-width="150px">
             <el-form-item label="社团ID">
-              <el-input v-model="clubInfo.id" :disabled="true" />
+              <el-input v-model="id" :disabled="true" />
             </el-form-item>
             <el-form-item label="社团名称">
-              <el-input v-model="clubInfo.name" :disabled="true" />
+              <el-input v-model="name" :disabled="true" />
             </el-form-item>
             <el-form-item label="社长名称">
-              <el-input v-model="clubInfo.chiefName" :disabled="true" />
+              <el-input v-model="chiefName" :disabled="true" />
             </el-form-item>
             <el-form-item label="社团简介">
               <el-input v-model="clubInfo.slogan" :disabled="true" />
@@ -40,18 +40,20 @@ export default {
   name: 'ClubDetails',
   data() {
     return {
+      id: this.$route.query.id,
+      name: this.$route.query.name,
+      chiefName: this.$route.query.chiefName,
       clubInfo: {}
     }
   },
   created() {
     this.getClubDetail()
-    this.clubId = this.$route.query.cid
   },
   methods: {
     getClubDetail() {
-      getClubDetail(this.clubId).then(response => {
+      getClubDetail(this.id).then(response => {
         if (response.status === 200) {
-          this.clubInfo = response.items
+          this.clubInfo = response.data.items
           console.log(response.data)
           return this.$message.success('获取社团信息成功')
         } else {

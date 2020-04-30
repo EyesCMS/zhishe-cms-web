@@ -20,7 +20,7 @@
       <el-table-column label="社长名称" prop="chiefName" />
       <el-table-column label="操作" width="200px">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="LookForDetail(scope.row.cid)">查看详情</el-button>
+          <el-button type="primary" size="mini" @click="LookForDetail(scope.row.id,scope.row.name,scope.row.chiefName)">查看详情</el-button>
           <el-button type="primary" size="mini" @click="ApplyToJoin(scope.row.name)">申请加入</el-button>
         </template>
       </el-table-column>
@@ -92,8 +92,8 @@ export default {
       this.getClubsList()
     },
     // 跳转到社团信息详细页面
-    LookForDetail(cid) {
-      this.$router.push({ path: '/clubDetail', query: { cid: cid }})
+    LookForDetail(id, name, chiefName) {
+      this.$router.push({ path: '/clubDetail', query: { id: id, name: name, chiefName: chiefName }})
     },
     ApplyToCreate() {
       this.$router.replace('/createClub')
