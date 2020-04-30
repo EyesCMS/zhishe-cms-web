@@ -3,13 +3,20 @@
 
     <!-- 社团列表 -->
     <el-table :data="JoinclubsList" stripe border>
-      <el-table-column label="社团ID" prop="cid" />
-      <el-table-column label="社团头像" prop="avatar_url" />
+      <el-table-column label="社团ID" prop="id" />
+      <el-table-column label="社团头像" prop="avatarUrl">
+        <template slot-scope="scope" width="40">
+          <el-image
+            :src="scope.row.avatarUrl"
+            style="width: 50px; height: 50px"
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="社团名称" prop="name" />
-      <el-table-column label="社长名称" prop="chief_name" />
+      <el-table-column label="社长名称" prop="chiefName" />
       <el-table-column label="操作" width="200px">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="EnterToClub(scope.row.cid)">进入社团</el-button>
+          <el-button type="primary" size="mini" @click="EnterToClub(scope.row.id)">进入社团</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,8 +69,8 @@ export default {
       this.listLoading = true
       getJoinclubsList(this.userid, this.queryInfo).then(response => {
         if (response.status === 200) {
-          this.JoinclubsList = response.data
-          this.total = response.total
+          this.JoinclubsList = response.data.items
+          this.total = response.data.totalCount
         } else {
           return this.$message.error('获取社团列表失败')
         }

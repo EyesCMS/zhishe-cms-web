@@ -249,7 +249,7 @@ export function joinAudit(data) {
 // 获取学生加入的社团列表
 export function getJoinclubsList(userid, query) {
   return request({
-    url: `/clubs/users/${userid}`,
+    url: `/clubs/user/${userid}`,
     method: 'get',
     params: query
   })

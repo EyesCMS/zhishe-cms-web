@@ -6,7 +6,7 @@
         <el-input v-model="form.userid" :disabled="true" />
       </el-form-item>
       <el-form-item label="社团名称">
-        <el-input v-model="form.clubname" :disabled="true" />
+        <el-input v-model="clubName" :disabled="true" />
       </el-form-item>
       <el-form-item label="申请原因" prop="reason">
         <el-input v-model="form.reason" placeholder="请输入申请原因" />
@@ -23,9 +23,9 @@ import { ApplyToJoin } from '@/api/club'
 export default {
   data() {
     return {
+      clubName: this.$route.query.name,
       form: {
         userid: this.$store.getters.name,
-        clubname: this.$route.query.name,
         reason: ''
       },
       formRules: {
@@ -39,7 +39,11 @@ export default {
     ApplyToJoin() {
       this.$refs.form.validate(valid => {
         if (!valid) return
-        ApplyToJoin(this.form).then(response => {
+        const data = {
+          uid: this.form.userid,
+          reason: this.form.reason
+        }
+        ApplyToJoin(data).then(response => {
           if (response.status === 201) {
             this.$alert('提交成功', '申请加入社团', {
               confirmButtonText: '确定',
@@ -57,8 +61,6 @@ export default {
       })
     },
     renew() {
-      this.form.name = ''
-      this.form.username = ''
       this.form.reason = ''
     }
   }

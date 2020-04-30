@@ -13,7 +13,6 @@
           <el-image
             :src="scope.row.avatarUrl"
             style="width: 50px; height: 50px"
-            :fit="fill"
           />
         </template>
       </el-table-column>
