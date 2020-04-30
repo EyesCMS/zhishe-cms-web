@@ -1,9 +1,12 @@
 <template>
   <div>
-    <el-button
-      type="primary"
-      @click="addForum"
-    >添加动态</el-button>
+    <div :style="btnStyle">
+      <el-button
+        type="primary"
+        @click="addForum"
+      >添加动态</el-button>
+    </div>
+
     <el-card>
       <div
         v-for="(item, i) in forumsList"
@@ -11,10 +14,13 @@
       >
         <el-row>
           <el-col :span="2">
-            <el-avatar style="float:left" />
+            <el-avatar
+              :src="item.avatarUrl"
+              style="float:left"
+            />
           </el-col>
           <el-col :span="10">
-            <p>{{ item.posterName }}</p>
+            <p>{{ item.clubName }}</p>
             <p>{{ item.createAt }}</p>
           </el-col>
           <el-col :span="6">
@@ -93,7 +99,7 @@ export default {
   data() {
     return {
       forumsList: [],
-      clubId: 0,
+      clubId: 10000,
       queryInfo: {
         keyword: '',
         page: 1,
@@ -103,7 +109,8 @@ export default {
       },
       total: 0,
       addForumDialogVisible: false,
-      originState: 1
+      originState: 1,
+      btnStyle: window.sessionStorage.getItem('roles') === 'chief' ? 'display: none' : ''
     }
   },
   created: function () {
@@ -122,9 +129,10 @@ export default {
     },
     getForumsList() {
       getInvitationList(this.clubId, this.queryInfo, this.originState).then(response => {
+        console.log('@club forum-mamage getForumsList response')
         console.log(response)
-        this.forumsList = response.items
-        this.total = response.totalCount
+        this.forumsList = response.data.items
+        this.total = response.data.totalCount
       })
     },
     addForum() {

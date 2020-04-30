@@ -63,6 +63,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password })
         .then(response => {
+          console.log('@login response: ')
+          console.log(response)
           const { token, tokenHead } = response.data
           const tokenStr = tokenHead + token
           commit('SET_TOKEN', tokenStr)
@@ -81,6 +83,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token)
         .then(response => {
+          console.log('@getInfo response: ')
+          console.log(response)
           var data = response.data
           if (!data) {
             reject('Verification failed, please Login again.')
@@ -94,7 +98,6 @@ const actions = {
           commit('SET_MAJOR', data.major)
           commit('SET_USERID', data.userid)
           commit('SET_AVATAR', data.avatar)
-          // console.log(state)
           resolve(data)
         })
         .catch(error => {

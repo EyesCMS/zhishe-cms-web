@@ -13,8 +13,8 @@
         :key="index"
       >
         <h2>{{ item.title }}</h2>
-        <p>{{ item.create_at }} </p>
-        <p>{{ item.content }}</p>
+        <p>{{ item.createAt }} </p>
+        <p>{{ item.body }}</p>
         <el-link
           type="primary"
           @click="openBulletinDetailDiaglog(item.id)"
@@ -118,7 +118,7 @@
             label="公告内容"
           >
             <el-input
-              v-model="bulletin.content"
+              v-model="bulletin.body"
               rows="5"
               type="textarea"
             />
@@ -143,7 +143,7 @@ export default {
   name: 'ActivityManage',
   data() {
     return {
-      clubId: 0,
+      clubId: 10000,
       total: 0,
       queryInfo: {
         keyword: '',
@@ -240,19 +240,19 @@ export default {
     // 获取共公告列表
     getBulletinsList() {
       getBulletinList(this.clubId, this.queryInfo).then(response => {
-        // console.log(response)
-        this.bulletinsList = response.items
-        this.total = response.total_count
-        console.log(this.bulletinsList)
-        // console.log(this.memberInfo)
+        console.log('@announcement-mamage getBulletinList:')
+        console.log(response)
+        this.bulletinsList = response.data.items
+        this.total = response.totalCount
       })
     },
     // 点击详情
     openBulletinDetailDiaglog(id) {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
+        console.log('@announcement-mamage openBulletinDetailDiaglog:')
         console.log(response)
-        this.bulletin = response.items
+        this.bulletin = response.data
         this.bulletin['id'] = id
         // console.log('123' + response.data)
         // console.log('公告是' + this.bulletin)

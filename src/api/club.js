@@ -22,7 +22,6 @@ export function getMemberList(clubid, query) {
   })
 }
 export function recommended(query) {
-  console.log('api' + query)
   return request({
     url: `/clubs/recommended`,
     method: 'get',

@@ -43,13 +43,13 @@
             <el-tag>{{ i + 1 }}</el-tag>
             <el-image
               style="width: 50px; height: 50px"
-              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+              :src="item.avatarUrl"
               fit="fill"
             />
             <p style="display:inline;">{{ item.name }}</p>
             <el-link
               type="primary"
-              @click="getClubDetail(i+1)"
+              @click="getClubDetail(item.id)"
             >详情</el-link>
           </div>
         </el-col>
@@ -63,9 +63,9 @@
       modal
     >
       <h2 style="text-align:center;margin-bottom:50px">{{ clubDetail.name }}</h2>
-      <h4>社长：{{ clubDetail.chief_name }}</h4>
-      <h4>成员数：{{ clubDetail.member_count }}</h4>
-      <h4>qq群：{{ clubDetail.qq_group }}</h4>
+      <h4>社长：{{ clubDetail.chiefName }}</h4>
+      <h4>成员数：{{ clubDetail.memberCount }}</h4>
+      <h4>qq群：{{ clubDetail.qqGroup }}</h4>
       <h4>简介：{{ clubDetail.slogan }}</h4>
       <span
         slot="footer"
@@ -118,24 +118,21 @@ export default {
     },
     getrRecommendedList() {
       recommended(this.queryInfo).then(response => {
+        console.log('@home-page RecommendedList response:')
         console.log(response)
-        this.recommendedList = response.data.pageList
+        this.recommendedList = response.data
         // console.log(this.memberInfo)
       })
     },
     // 获取社团详情
     getClubDetail(id) {
+      console.log('@home-page getClubDetail id:' + id)
       getClubDetail(id).then(response => {
         console.log(response)
-        if (response.status === 200) {
-          // this.$message.success('获取成员列表成功')
-          this.clubDetail = response.data.items
-          console.log(this.clubDetail)
-          this.bulletinDetailDialogVisible = true
-        } else {
-          return this.$message.error('获取社团详情失败')
-        }
-        // console.log(this.memberInfo)
+        // this.$message.success('获取成员列表成功')
+        this.clubDetail = response.data
+        console.log(this.clubDetail)
+        this.bulletinDetailDialogVisible = true
       })
     }
   }

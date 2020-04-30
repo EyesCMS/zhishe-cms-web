@@ -75,7 +75,7 @@ export default {
         newpassword: 'test'
       },
       activeName: '1',
-      name: 1
+      name: 0
     }
   },
   methods: {
@@ -86,7 +86,7 @@ export default {
         if (result.Status === 200) {
           this.form2.login_question = result.login_problem
           this.activeName = i.toString()
-          this.name = i
+          this.name = i - 1
         } else this.$message.error('获取问题失败！')
       } else if (i === 3) {
         const data = {
@@ -97,7 +97,7 @@ export default {
         console.log(result)
         if (result.status === 204) {
           this.activeName = i.toString()
-          this.name = i
+          this.name = i - 1
         } else this.$message.error('回答错误！')
       } else {
         const data = {

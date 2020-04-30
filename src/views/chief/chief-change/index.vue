@@ -17,14 +17,14 @@
               <el-form-item label="社团名称">
                 <el-input
                   v-model="leaderChange.clubname"
-                  readonly="readonly"
+                  :readonly="readOnly"
                 />
               </el-form-item>
               <!-- 原社长 -->
               <el-form-item label="原社长">
                 <el-input
                   v-model="leaderChange.oldChiefName"
-                  readonly="readonly"
+                  :readonly="readOnly"
                 />
               </el-form-item>
               <!-- 新社长 -->
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { leaderchange } from '@/api/club'
+import { leaderchange, getClubDetail } from '@/api/club'
 export default {
   data() {
     return {
@@ -73,6 +73,7 @@ export default {
         newChiefName: 'newName',
         reason: '没啥原因'
       },
+      readOnly: true,
       rules: {
         newChiefName: [
           { required: true, message: '请输新社长名字', trigger: 'blur' },
@@ -83,6 +84,19 @@ export default {
         ]
       }
     }
+  },
+  created() {
+    getClubDetail(10000).then(response => {
+      console.log('@chief-change created reaponse:')
+      console.log(response)
+      if (response.data) {
+        this.leaderChange.clubname = response.data.name
+        this.leaderChange.oldChiefId = response.data.chiefName
+        // console.log('detile=' + this.clubInfo)
+      } else {
+        return this.$message.error('获取社团信息失败')
+      }
+    })
   },
   methods: {
     submitForm() {

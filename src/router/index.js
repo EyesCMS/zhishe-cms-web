@@ -332,7 +332,7 @@ export const asyncRoutes = [
         path: 'forum',
         name: 'forum',
         component: () => import('@/views/chief/forum-mamage/index'),
-        meta: { title: '论坛管理', icon: 'people', roles: ['chief'] }
+        meta: { title: '论坛管理', icon: 'people', roles: ['chief', 'student'] }
       }
     ]
   },
