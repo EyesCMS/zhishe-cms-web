@@ -51,8 +51,8 @@ export default {
       getQuitList(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取成员退出通知成功')
-          this.quitList = response.items
-          this.total = response.total_count
+          this.quitList = response.data.items
+          this.total = response.data.total_count
         } else {
           return this.$message.error('获取成员退出通知失败')
         }

@@ -61,8 +61,8 @@ export default {
       getActivityApplyList(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团活动申请成功')
-          this.activityApplyList = response.items
-          this.total = response.total_count
+          this.activityApplyList = response.data.items
+          this.total = response.data.total_count
         } else {
           return this.$message.error('获取社团活动申请失败')
         }
