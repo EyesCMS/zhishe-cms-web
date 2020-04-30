@@ -86,7 +86,7 @@
 
 </template>
 <script>
-import { register } from '../../api/user'
+import { register } from '@/api/user'
 export default {
   data() {
     var validatePass2 = (rule, value, callback) => {

@@ -119,7 +119,7 @@ export default {
     getrRecommendedList() {
       recommended(this.queryInfo).then(response => {
         console.log(response)
-        this.recommendedList = response.pageList
+        this.recommendedList = response.data.pageList
         // console.log(this.memberInfo)
       })
     },
@@ -129,7 +129,7 @@ export default {
         console.log(response)
         if (response.status === 200) {
           // this.$message.success('获取成员列表成功')
-          this.clubDetail = response.data
+          this.clubDetail = response.data.items
           console.log(this.clubDetail)
           this.bulletinDetailDialogVisible = true
         } else {

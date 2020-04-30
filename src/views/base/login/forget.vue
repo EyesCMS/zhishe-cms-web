@@ -58,9 +58,9 @@
 
 </template>
 <script>
-import { question } from '../../api/user'
-import { answer } from '../../api/user'
-import { newpassword } from '../../api/user'
+import { question } from '@/api/user'
+import { answer } from '@/api/user'
+import { newpassword } from '@/api/user'
 export default {
   data() {
     return {

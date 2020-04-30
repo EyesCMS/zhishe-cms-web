@@ -33,13 +33,13 @@ import Layout from '@/layout'
 export const constantRoutes = [
   // homepage
   {
-    path: '/home-page',
+    path: '/',
     component: Layout,
     children: [
       {
         path: 'index',
         name: 'HomePage',
-        component: () => import('@/views/home-page/index'),
+        component: () => import('@/views/base/home-page/index'),
         meta: { title: '首页', icon: 'component' }
       }
     ]
@@ -53,7 +53,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/profile/index'),
+        component: () => import('@/views/base/profile/index'),
         name: 'Profile',
         meta: { title: '个人中心', icon: 'user', noCache: true }
       }
@@ -62,47 +62,47 @@ export const constantRoutes = [
   // register
   {
     path: '/register',
-    component: () => import('@/views/register/index'),
+    component: () => import('@/views/base/register/index'),
     hidden: true
   },
   // forget
   {
     path: '/forget',
-    component: () => import('@/views/login/forget'),
+    component: () => import('@/views/base/login/forget'),
     hidden: true
   },
   // login
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import('@/views/base/login/index'),
     hidden: true
   },
   // 404
   {
     path: '/404',
-    component: () => import('@/views/error-page/404'),
+    component: () => import('@/views/base/error-page/404'),
     hidden: true
   },
   // 401
   {
     path: '/401',
-    component: () => import('@/views/error-page/401'),
+    component: () => import('@/views/base/error-page/401'),
     hidden: true
-  },
-  // /
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/home-page',
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index'),
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-      }
-    ]
   }
+  // // /
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/home-page',
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       name: 'Dashboard',
+  //       component: () => import('@/views/dashboard/index'),
+  //       meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // }
 ]
 /**
  * asyncRoutes
@@ -519,13 +519,13 @@ export const asyncRoutes = [
       {
         path: '401',
         name: 'Page401',
-        component: () => import('@/views/error-page/401'),
+        component: () => import('@/views/base/error-page/401'),
         meta: { title: '401', noCache: true }
       },
       {
         path: '404',
         name: 'Page404',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/base/error-page/404'),
         meta: { title: '404', noCache: true }
       }
     ]
