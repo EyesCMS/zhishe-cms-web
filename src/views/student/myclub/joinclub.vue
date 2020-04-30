@@ -91,7 +91,7 @@ export default {
     },
     // 跳转到社团风采页面
     EnterToClub(cid) {
-      this.$store.dispatch('user/changeRoles', 'menber')
+      this.$store.dispatch('user/changeRoles', 'member')
       this.$router.push({ path: '/clubstyle/index', query: { cid: cid }})
       this.switchRole(cid)
     },
