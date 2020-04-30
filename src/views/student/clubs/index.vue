@@ -8,7 +8,15 @@
     <!-- 社团列表 -->
     <el-table :data="clubsList" stripe border>
       <el-table-column label="序号" prop="id" />
-      <el-table-column label="社团头像" prop="avatarUrl" />
+      <el-table-column label="社团头像" prop="avatarUrl">
+        <template slot-scope="scope" width="40">
+          <el-image
+            :src="scope.row.avatarUrl"
+            style="width: 50px; height: 50px"
+            :fit="fill"
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="社团名称" prop="name" />
       <el-table-column label="社长名称" prop="chiefName" />
       <el-table-column label="操作" width="200px">
