@@ -25,7 +25,7 @@ export function getInvitationDetail(id) {
 
 export function getRemarksList(actId, query) {
   return request({
-    url: `/activity/${actId}/remarks`,
+    url: `/forum/posts/${actId}/remarks`,
     method: 'get',
     params: query
   })

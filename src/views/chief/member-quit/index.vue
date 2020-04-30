@@ -6,7 +6,7 @@
       <!-- 社员退社通知列表 -->
       <el-table :data="quitList" stripe border>
         <el-table-column type="index" label="#" />
-        <el-table-column label="社员名" prop="applicant" />
+        <el-table-column label="社员名" prop="username" />
         <el-table-column label="退社原因" prop="reason" />
         <el-table-column label="退社时间" prop="createAt" />
       </el-table>
@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       listLoading: true,
-      clubId: 0,
+      clubId: 5000,
       queryInfo: {
         page: 1,
         limit: 5
@@ -42,7 +42,12 @@ export default {
     }
   },
   created() {
-    // this.clubId = localStorage.getItem('clubid')
+    if (this.$route.query.cid !== undefined) {
+      this.clubId = this.$route.query.cid
+      console.log('接收cid')
+      console.log('clubId为' + this.clubId)
+      sessionStorage.setItem('clubId', this.clubId)
+    }
     this.getQuitList()
   },
   methods: {

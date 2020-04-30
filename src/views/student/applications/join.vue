@@ -2,8 +2,16 @@
   <div>
     <!-- 加入社团申请列表 -->
     <el-table :data="JoinApplicationsList" stripe border>
-      <el-table-column label="序号" prop="cid" />
-      <el-table-column label="社团ID" prop="club_id" />
+      <el-table-column label="社团ID" prop="id" />
+      <el-table-column label="社团头像" prop="avatarUrl">
+        <template slot-scope="scope" width="40">
+          <el-image
+            :src="scope.row.avatarUrl"
+            style="width: 50px; height: 50px"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="社团名称" prop="name" />
       <el-table-column label="申请原因" prop="reason" />
       <el-table-column label="申请状态" prop="state" />
     </el-table>
@@ -28,8 +36,7 @@ export default {
   data() {
     return {
       listLoading: true,
-      // user_id: this.$store.getters.name,
-      user_id: 1,
+      userID: this.$store.getters.name,
       queryInfo: {
         page: 1,
         limit: 5
@@ -44,10 +51,11 @@ export default {
   methods: {
     getJoinApplicationsList() {
       this.listLoading = true
-      getJoinApplicationsList(this.user_id, this.queryInfo).then(response => {
+      getJoinApplicationsList(this.userID, this.queryInfo).then(response => {
         if (response.status === 200) {
-          this.JoinApplicationsList = response.data
-          this.total = response.total
+          console.log(111)
+          this.JoinApplicationsList = response.data.items
+          this.total = response.data.totalCount
         } else {
           return this.$message.error('获取申请加入社团列表失败')
         }

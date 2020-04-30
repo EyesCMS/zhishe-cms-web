@@ -524,7 +524,7 @@ export default [
     }
   },
   {
-    url: '/clubs/dissolutions',
+    url: '/clubs/dissolution',
     type: 'get',
     response: config => {
       const { page, limit } = config.query

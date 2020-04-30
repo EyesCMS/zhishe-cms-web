@@ -98,11 +98,11 @@ export function pushToDismissApply(data) {
     data
   })
 }
-export function getDismissApplyList(query) {
+export function getDismissApplyList(params) {
   return request({
     url: '/clubs/dissolution',
     method: 'get',
-    params: query
+    params: params
   })
 }
 // 社长换届申请
@@ -114,11 +114,11 @@ export function pushToChangeApply(data) {
     data
   })
 }
-export function getChangeApplyList(clubid, query) {
+export function getChangeApplyList(params) {
   return request({
     url: `/clubs/leader/changes`,
     method: 'get',
-    params: query
+    params: params
   })
 }
 // 社团认证申请
@@ -130,11 +130,11 @@ export function pushToIdentifyApply(data) {
     data
   })
 }
-export function getIdentifyApplyList(clubid, query) {
+export function getIdentifyApplyList(params) {
   return request({
     url: `/clubs/certifications`,
     method: 'get',
-    params: query
+    params: params
   })
 }
 // 社团活动申请
@@ -146,11 +146,11 @@ export function pushToActivityApply(data) {
     data
   })
 }
-export function getActivityApplyList(clubid, query) {
+export function getActivityApplyList(params) {
   return request({
     url: `/clubs/activities`,
     method: 'get',
-    params: query
+    params: params
   })
 }
 
@@ -179,7 +179,7 @@ export function quitClub(data) {
 
 export function getJoinApplicationsList(userid, query) {
   return request({
-    url: `/clubs/join/${userid}`,
+    url: `/users/${userid}/clubs/joins`,
     method: 'get',
     params: query
   })
@@ -248,7 +248,7 @@ export function joinAudit(data) {
 // 获取学生加入的社团列表
 export function getJoinclubsList(userid, query) {
   return request({
-    url: `/clubs/users/${userid}`,
+    url: `/users/${userid}/clubs?statue=member`,
     method: 'get',
     params: query
   })
@@ -257,7 +257,7 @@ export function getJoinclubsList(userid, query) {
 // 获取学生作为社长管理的社团列表
 export function getManageclubsList(userid, query) {
   return request({
-    url: `/clubs/manager/${userid}`,
+    url: `/users/${userid}/clubs?statue=chief`,
     method: 'get',
     params: query
   })
