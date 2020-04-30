@@ -57,8 +57,8 @@ export default {
       getDismissApplyList(this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团解散申请成功')
-          this.dismissApplyList = response.items
-          this.total = response.total_count
+          this.dismissApplyList = response.data.items
+          this.total = response.data.total_count
         } else {
           return this.$message.error('获取社团解散申请失败')
         }

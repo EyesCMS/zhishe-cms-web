@@ -58,8 +58,8 @@ export default {
       getChangeApplyList(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社长换届申请成功')
-          this.changeApplyList = response.items
-          this.total = response.total_count
+          this.changeApplyList = response.data.items
+          this.total = response.data.total_count
         } else {
           return this.$message.error('获取社长换届申请失败')
         }
