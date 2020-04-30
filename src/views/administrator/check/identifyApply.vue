@@ -71,7 +71,7 @@ export default {
   methods: {
     getIdentifyApplyList() {
       this.listLoading = true
-      getIdentifyApplyList(this.clubId, this.queryInfo).then(response => {
+      getIdentifyApplyList(this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团认证申请成功')
           this.identifyApplyList = response.data.items
@@ -101,13 +101,13 @@ export default {
         state: 1
       }
       pushToIdentifyApply(data).then(response => {
-        if (response.status === 204) {
+        if (response.data.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.identifyApplyList.splice($index, 1)
       })
+      row.state = 1
     },
     pushToRefuse({ $index, row }) {
       const data = {
@@ -115,13 +115,13 @@ export default {
         state: 2
       }
       pushToIdentifyApply(data).then(response => {
-        if (response.status === 204) {
+        if (response.data.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.identifyApplyList.splice($index, 1)
       })
+      row.state = 2
     }
   }
 }

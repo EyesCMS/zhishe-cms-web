@@ -102,13 +102,13 @@ export default {
         state: 1
       }
       pushToDismissApply(data).then(response => {
-        if (response.status === 204) {
+        if (response.data.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.dismissApplyList.splice($index, 1)
       })
+      row.state = 1
     },
     pushToRefuse({ $index, row }) {
       const data = {
@@ -116,13 +116,13 @@ export default {
         state: 2
       }
       pushToDismissApply(data).then(response => {
-        if (response.status === 204) {
+        if (response.data.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.dismissApplyList.splice($index, 1)
       })
+      row.state = 2
     }
   }
 }

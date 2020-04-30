@@ -2,7 +2,7 @@
   <div>
     <!-- 卡片视图区 -->
     <el-card>
-      <el-form :inline="true" :model="form" label-width="200px">
+      <el-form :inline="true" :model="form" label-width="100px">
         <el-form-item label="申请人" prop="applicant">
           <el-input v-model="form.applicant" placeholder="" />
         </el-form-item>
@@ -15,17 +15,17 @@
             <el-option label="正式" value="1" />
           </el-select>
         </el-form-item>
-        <el-form-item label="申请时间">
-          <el-form-item prop="createAt">
-            <el-date-picker v-model="form.createAt" type="date" placeholder="选择日期" style="width: 90%;" />
-          </el-form-item>
-        </el-form-item>
         <el-form-item label="审核状态" prop="state">
           <el-select v-model="form.state" placeholder="请选择">
             <el-option label="未审核" value="0" />
             <el-option label="已批准" value="1" />
             <el-option label="已退回" value="2" />
           </el-select>
+        </el-form-item>
+        <el-form-item label="申请时间">
+          <el-form-item prop="createAt">
+            <el-date-picker v-model="form.createAt" type="date" placeholder="选择日期" style="width: 90%;" />
+          </el-form-item>
         </el-form-item>
         <div style="text-align:center">
           <el-button type="primary" @click="check">查询</el-button>
@@ -159,13 +159,13 @@ export default {
         state: 1
       }
       pushToCreateApply(data).then(response => {
-        if (response.status === 204) {
+        if (response.data.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.createApplyList.splice($index, 1)
       })
+      row.state = 1
     },
     pushToRefuse({ $index, row }) {
       const data = {
@@ -173,13 +173,13 @@ export default {
         state: 2
       }
       pushToCreateApply(data).then(response => {
-        if (response.status === 204) {
+        if (response.data.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
-        this.createApplyList.splice($index, 1)
       })
+      row.state = 2
     },
     // 组合查询
     renew() {
@@ -187,6 +187,7 @@ export default {
       this.form.clubName = ''
       this.form.officialState = ''
       this.form.createAt = ''
+      this.form.state = ''
     },
     check() {
       this.getCreateApplyList()
