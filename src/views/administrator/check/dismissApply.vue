@@ -9,10 +9,17 @@
         <el-table-column label="社团名称" prop="clubName" />
         <el-table-column label="申请时间" prop="createAt" />
         <el-table-column label="申请原因" prop="reason" />
+        <el-table-column label="申请状态" prop="state">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else-if="scope.row.state === 1" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else style="text-align:center" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column label="" width="200px">
           <template slot-scope="scope">
-            <el-button type="primary" @click="pushToAgree(scope)">批准</el-button>
-            <el-button type="primary" @click="pushToRefuse(scope)">退回</el-button>
+            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToAgree(scope)">批准</el-button>
+            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToRefuse(scope)">退回</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -35,6 +42,17 @@
 import { getDismissApplyList, pushToDismissApply } from '@/api/club'
 export default {
   name: 'DismissApply',
+  filters: {
+    statusFilter(value) {
+      if (value === 0) {
+        return '待审核'
+      } else if (value === 1) {
+        return '已批准'
+      } else {
+        return '已退回'
+      }
+    }
+  },
   data() {
     return {
       listLoading: true,

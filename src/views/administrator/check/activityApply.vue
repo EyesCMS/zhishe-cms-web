@@ -13,10 +13,17 @@
         <el-table-column label="开始时间" prop="startDate" />
         <el-table-column label="结束时间" prop="endDate" />
         <el-table-column label="活动场地" prop="location" />
+        <el-table-column label="申请状态" prop="state">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else-if="scope.row.state === 1" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else style="text-align:center" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column label="" width="200px">
           <template slot-scope="scope">
-            <el-button type="primary" @click="pushToAgree(scope)">批准</el-button>
-            <el-button type="primary" @click="pushToRefuse(scope)">退回</el-button>
+            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToAgree(scope)">批准</el-button>
+            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToRefuse(scope)">退回</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -39,6 +46,17 @@
 import { getActivityApplyList, pushToActivityApply } from '@/api/club'
 export default {
   name: 'ActivityApply',
+  filters: {
+    statusFilter(value) {
+      if (value === 0) {
+        return '待审核'
+      } else if (value === 1) {
+        return '已批准'
+      } else {
+        return '已退回'
+      }
+    }
+  },
   data() {
     return {
       listLoading: true,
