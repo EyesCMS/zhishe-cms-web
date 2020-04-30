@@ -33,7 +33,7 @@ import Layout from '@/layout'
 export const constantRoutes = [
   // homepage
   {
-    path: '/',
+    path: '/home-page',
     component: Layout,
     children: [
       {
@@ -88,21 +88,21 @@ export const constantRoutes = [
     path: '/401',
     component: () => import('@/views/base/error-page/401'),
     hidden: true
+  },
+  // /
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/home-page',
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      }
+    ]
   }
-  // // /
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/home-page',
-  //   children: [
-  //     {
-  //       path: 'dashboard',
-  //       name: 'Dashboard',
-  //       component: () => import('@/views/dashboard/index'),
-  //       meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-  //     }
-  //   ]
-  // }
 ]
 /**
  * asyncRoutes
