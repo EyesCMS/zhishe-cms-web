@@ -99,11 +99,11 @@ export function pushToDismissApply(data) {
     data
   })
 }
-export function getDismissApplyList(query) {
+export function getDismissApplyList(params) {
   return request({
     url: '/clubs/dissolution',
     method: 'get',
-    params: query
+    params: params
   })
 }
 // 社长换届申请
@@ -115,11 +115,11 @@ export function pushToChangeApply(data) {
     data
   })
 }
-export function getChangeApplyList(query) {
+export function getChangeApplyList(params) {
   return request({
     url: `/clubs/leader/changes`,
     method: 'get',
-    params: query
+    params: params
   })
 }
 // 社团认证申请
@@ -131,11 +131,11 @@ export function pushToIdentifyApply(data) {
     data
   })
 }
-export function getIdentifyApplyList(query) {
+export function getIdentifyApplyList(params) {
   return request({
     url: `/clubs/certifications`,
     method: 'get',
-    params: query
+    params: params
   })
 }
 // 社团活动申请
@@ -147,11 +147,11 @@ export function pushToActivityApply(data) {
     data
   })
 }
-export function getActivityApplyList(query) {
+export function getActivityApplyList(params) {
   return request({
     url: `/clubs/activities`,
     method: 'get',
-    params: query
+    params: params
   })
 }
 

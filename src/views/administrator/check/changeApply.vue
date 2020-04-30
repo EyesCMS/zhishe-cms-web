@@ -2,7 +2,27 @@
   <div>
     <!-- 卡片视图区 -->
     <el-card>
-
+      <el-form :inline="true" :model="form" label-width="100px">
+        <el-form-item label="社团名称">
+          <el-input v-model="form.clubName" placeholder="" />
+        </el-form-item>
+        <el-form-item label="申请状态" prop="state">
+          <el-select v-model="form.state" placeholder="请选择">
+            <el-option label="未审核" value="0" />
+            <el-option label="已批准" value="1" />
+            <el-option label="已退回" value="2" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="申请时间">
+          <el-form-item prop="createAt">
+            <el-date-picker v-model="form.createAt" type="date" placeholder="选择日期" style="width: 90%;" />
+          </el-form-item>
+        </el-form-item>
+        <div style="text-align:center">
+          <el-button type="primary" @click="check">查询</el-button>
+          <el-button type="primary" @click="renew">重置</el-button>
+        </div>
+      </el-form>
       <!-- 社长换届申请列表 -->
       <el-table :data="changeApplyList" stripe border>
         <el-table-column type="index" label="#" />
@@ -63,7 +83,12 @@ export default {
         limit: 5
       },
       total: 0,
-      changeApplyList: []
+      changeApplyList: [],
+      form: {
+        clubName: '',
+        createAt: '',
+        state: ''
+      }
     }
   },
   created() {
@@ -72,7 +97,13 @@ export default {
   methods: {
     getChangeApplyList() {
       this.listLoading = true
-      getChangeApplyList(this.queryInfo).then(response => {
+      const param = {
+        clubName: this.form.clubName,
+        createAt: this.form.createAt,
+        state: this.form.state,
+        query: this.queryInfo
+      }
+      getChangeApplyList(param).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社长换届申请成功')
           this.changeApplyList = response.data.items
@@ -102,7 +133,7 @@ export default {
         state: 1
       }
       pushToChangeApply(data).then(response => {
-        if (response.data.status === 204) {
+        if (response.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
@@ -116,13 +147,22 @@ export default {
         state: 2
       }
       pushToChangeApply(data).then(response => {
-        if (response.data.status === 204) {
+        if (response.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
         }
       })
       row.state = 2
+    },
+    // 组合查询
+    renew() {
+      this.form.clubName = ''
+      this.form.createAt = ''
+      this.form.state = ''
+    },
+    check() {
+      this.getChangeApplyList()
     }
   }
 }

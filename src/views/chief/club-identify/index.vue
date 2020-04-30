@@ -18,15 +18,18 @@ import { postIdentifyApply } from '@/api/club'
 export default {
   data() {
     return {
-      clubId: 0,
+      clubId: 5000,
       form: {
         reason: ''
       }
     }
   },
   created() {
-    if (this.$route.query.cid) {
+    if (this.$route.query.cid !== undefined) {
       this.clubId = this.$route.query.cid
+      console.log('接收cid')
+      console.log('clubId为' + this.clubId)
+      sessionStorage.setItem('clubId', this.clubId)
     }
     localStorage.setItem('clubid', this.clubid)
   },

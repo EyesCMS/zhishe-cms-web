@@ -15,7 +15,7 @@
             <el-option label="正式" value="1" />
           </el-select>
         </el-form-item>
-        <el-form-item label="审核状态" prop="state">
+        <el-form-item label="申请状态" prop="state">
           <el-select v-model="form.state" placeholder="请选择">
             <el-option label="未审核" value="0" />
             <el-option label="已批准" value="1" />
@@ -159,7 +159,7 @@ export default {
         state: 1
       }
       pushToCreateApply(data).then(response => {
-        if (response.data.status === 204) {
+        if (response.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
@@ -173,7 +173,7 @@ export default {
         state: 2
       }
       pushToCreateApply(data).then(response => {
-        if (response.data.status === 204) {
+        if (response.status === 204) {
           this.$message.success('审核申请成功')
         } else {
           return this.$message.error('审核申请失败')
