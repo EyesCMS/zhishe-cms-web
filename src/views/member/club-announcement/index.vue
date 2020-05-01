@@ -9,11 +9,12 @@
       >
         <el-button slot="append" icon="el-icon-search" @click="queryAnnouncementList" />
       </el-input>
-      <p>共搜索到100条相关公告</p>
+      <p>共搜索到{{ total }}条相关公告</p>
       <el-card v-for="(item, index) in bulletinsList" :key="index">
         <h2 class="title">{{ item.title }}</h2>
         <p>{{ item.content }}</p>
-        <p class="createAt">{{ item.create_at }}  </p>
+        <p class="createAt">{{ item.createAt }}  </p>
+        <p class="createAt">{{ item.updateAt }}  </p>
         <el-link type="primary" @click="openBulletinDetailDiaglog(item.id)">详情</el-link>
       </el-card>
       <!-- <div >
@@ -44,8 +45,8 @@
       >
         <h2 style="text-align:center;margin-bottom:50px">{{ bulletin.title }}</h2>
         <p>{{ bulletin.content }}</p>
-        <p>发布时间:{{ bulletin.create_at }}</p>
-        <p>上次修改:{{ bulletin.update_at }}</p>
+        <p>发布时间:{{ bulletin.createAt }}</p>
+        <p>上次修改:{{ bulletin.updateAt }}</p>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="bulletinDetailDialogVisible = false">确 定</el-button>
         </span>
@@ -55,7 +56,7 @@
 </template>
 
 <script>
-import { getBulletinList } from '@/api/club'
+import { listBulletins } from '@/api/club'
 import { getBulletinDetail } from '@/api/club'
 export default {
   name: 'ClubAnnouncement',
@@ -63,10 +64,10 @@ export default {
     return {
       clubId: 0,
       queryInfo: {
-        keyword: '',
+        // keyword: '',
         page: 1,
         limit: 5,
-        sort: 'create_at',
+        sort: 'updateAt',
         order: 'desc'
       },
       total: 0,
@@ -76,16 +77,16 @@ export default {
     }
   },
   created() {
-    this.clubId = sessionStorage.getItem('clubId')
+    // this.clubId = sessionStorage.getItem('clubId')
     // this.clubId = localStorage.getItem('clubid')
     this.getBulletinsList()
   },
   methods: {
     getBulletinsList() {
-      getBulletinList(this.clubId, this.queryInfo).then(response => {
+      listBulletins(this.clubId, this.queryInfo).then(response => {
         // console.log(response.clubId)
-        this.bulletinsList = response.items
-        this.total = response.total_count
+        this.bulletinsList = response.data.items
+        this.total = response.data.totalCount
         console.log(this.bulletinsList)
         // console.log(this.memberInfo)
       })
@@ -107,7 +108,7 @@ export default {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
         console.log(response)
-        this.bulletin = response.items
+        this.bulletin = response.data.items
         // console.log('123' + response.data)
         // console.log('公告是' + this.bulletin)
         // console.log(this.memberInfo)

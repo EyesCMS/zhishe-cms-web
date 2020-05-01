@@ -53,9 +53,17 @@
           <h3 style="text-align:center;">社团简介</h3>
           <el-divider />
           <el-card>
-            <h4>社长：{{ clubDetail.chief_name }}</h4>
-            <h4>成员数：{{ clubDetail.member_count }}</h4>
-            <h4>qq群：{{ clubDetail.qq_group }}</h4>
+            <el-row>
+              <el-col :span="10">
+                <el-avatar :size="50" :src="clubDetail.avatarUrl" />
+              </el-col>
+              <el-col :span="14">
+                <h3>{{ clubDetail.name }}</h3>
+              </el-col>
+            </el-row>
+            <h4>社长：{{ clubDetail.chiefName }}</h4>
+            <h4>成员数：{{ clubDetail.memberCount }}</h4>
+            <h4>qq群：{{ clubDetail.qqGroup }}</h4>
             <h4>简介：{{ clubDetail.slogan }}</h4>
           </el-card>
           <el-button
@@ -76,8 +84,8 @@
     >
       <h2 style="text-align:center;margin-bottom:50px">{{ bulletin.title }}</h2>
       <p>{{ bulletin.content }}</p>
-      <p>发布时间:{{ bulletin.create_at }}</p>
-      <p>上次修改:{{ bulletin.update_at }}</p>
+      <p>发布时间:{{ bulletin.createAt }}</p>
+      <p>上次修改:{{ bulletin.updateAt }}</p>
       <span
         slot="footer"
         class="dialog-footer"
@@ -119,7 +127,7 @@
 </template>
 
 <script>
-import { getBulletinList } from '@/api/club'
+import { listBulletins } from '@/api/club'
 import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
@@ -129,11 +137,11 @@ export default {
   data() {
     return {
       userId: 0,
-      clubId: 0,
+      clubId: 5000,
       queryInfo: {
         page: 1,
         limit: 10,
-        sort: 'update_at',
+        sort: 'updateAt',
         order: 'desc'
       },
       // 公告列表
@@ -164,15 +172,15 @@ export default {
   },
   methods: {
     getBulletinsList() {
-      getBulletinList(this.clubId, this.queryInfo).then(response => {
-        this.bulletinsList = response.items
+      listBulletins(this.clubId, this.queryInfo).then(response => {
+        this.bulletinsList = response.data.items
         console.log(this.bulletinsList)
         // console.log(this.memberInfo)
       })
     },
     getInvitationsList() {
       getInvitationList(this.clubId, this.queryInfo).then(response => {
-        this.invitationList = response.items
+        this.invitationList = response.data.items
         console.log(this.invitationList)
         // console.log(this.memberInfo)
       })
@@ -183,7 +191,7 @@ export default {
       getClubDetail(this.clubId).then(response => {
         console.log(123)
         console.log(response)
-        this.clubDetail = response.items
+        this.clubDetail = response.data
         console.log(this.clubDetail)
         // console.log(this.memberInfo)
       })
@@ -193,7 +201,7 @@ export default {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
         console.log(response)
-        this.bulletin = response.items
+        this.bulletin = response.data
       })
       this.bulletinDetailDialogVisible = true
     },
@@ -206,7 +214,6 @@ export default {
     // 退出社团
     quitClubConfirm() {
       const param = {
-        userId: this.userId,
         clubId: this.clubId,
         reason: this.quitReason
       }

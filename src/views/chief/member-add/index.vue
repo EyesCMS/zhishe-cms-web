@@ -6,7 +6,7 @@
         <el-table-column type="index" label="#" />
         <el-table-column label="昵称" prop="applicant" width="150px" />
         <el-table-column label="申请理由" prop="reason" />
-        <el-table-column label="申请时间" prop="create_at" width="200px" />
+        <el-table-column label="申请时间" prop="createAt" width="200px" />
         <el-table-column label="状态" width="150px">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>

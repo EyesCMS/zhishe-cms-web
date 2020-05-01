@@ -23,9 +23,9 @@ export function getInvitationDetail(id) {
   })
 }
 
-export function getRemarksList(actId, query) {
+export function getRemarksList(id, query) {
   return request({
-    url: `/forum/posts/${actId}/remarks`,
+    url: `/forum/posts/${id}/remarks`,
     method: 'get',
     params: query
   })

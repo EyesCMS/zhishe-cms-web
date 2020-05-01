@@ -14,11 +14,12 @@
         <el-table-column type="index" label="#" />
         <el-table-column label="昵称" prop="nickname" />
         <el-table-column label="用户名" prop="username" />
-        <el-table-column label="活跃度" prop="honor" />
+        <el-table-column label="头衔" prop="honor" />
+        <el-table-column label="积分" prop="credit" />
         <el-table-column label="角色" prop="role" />
         <el-table-column label="操作" width="100px">
           <template slot-scope="scope">
-            <el-button type="primary" @click="pushToDetail(scope.row.userid)">查看</el-button>
+            <el-button type="primary" @click="pushToDetail(scope.row.userId)">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -44,7 +45,7 @@ export default {
   data() {
     return {
       listLoading: true,
-      clubId: 0,
+      clubId: 5000,
       queryInfo: {
         page: 1,
         limit: 5
@@ -54,7 +55,7 @@ export default {
     }
   },
   created() {
-    this.clubId = sessionStorage.getItem('clubId')
+    // this.clubId = sessionStorage.getItem('clubId')
     // this.clubId = localStorage.getItem('clubid')
     this.getMembersList()
   },
@@ -62,9 +63,9 @@ export default {
     getMembersList() {
       this.listLoading = true
       getMemberList(this.clubId, this.queryInfo).then(response => {
-        console.log('response为' + response.status)
-        this.membersList = response.items
-        this.total = response.total_count
+        // console.log('response为' + response.status)
+        this.membersList = response.data.items
+        this.total = response.data.totalCount
         console.log(this.membersList)
       })
     },
@@ -82,7 +83,7 @@ export default {
     },
     // 跳转到成员信息详细页面
     pushToDetail(userId) {
-      this.$router.push({ path: 'detail', query: { userid: userId }})
+      this.$router.push({ path: 'detail', query: { userId: userId }})
     }
   }
 }

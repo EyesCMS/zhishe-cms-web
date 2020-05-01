@@ -35,7 +35,7 @@ export function getMemberDetail(clubid, userid) {
   })
 }
 
-export function getBulletinList(clubid, query) {
+export function listBulletins(clubid, query) {
   return request({
     url: `/clubs/${clubid}/bulletins`,
     method: 'get',
@@ -43,9 +43,9 @@ export function getBulletinList(clubid, query) {
   })
 }
 
-export function getBulletinDetail(clubid, bulletinid) {
+export function getBulletinDetail(clubId, id) {
   return request({
-    url: `/clubs/${clubid}/bulletins/${bulletinid}`,
+    url: `/clubs/${clubId}/bulletins/${id}`,
     method: 'get'
   })
 }
@@ -292,5 +292,12 @@ export function publishApply(data) {
     url: '/clubs/activities',
     method: 'post',
     data
+  })
+}
+
+export function getActivityApplyDetail(id) {
+  return request({
+    url: `/activities/apply/${id}`,
+    method: 'get'
   })
 }
