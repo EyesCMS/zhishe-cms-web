@@ -63,8 +63,12 @@ export default {
       this.$router.replace('/home-page/index')
       this.switchRole(this.$route.query.cid)
     },
-    switchRole(cid) {
-      switchRole(cid).then(response => {
+    switchRole() {
+      const input = {
+        clubId: this.$route.query.cid,
+        type: 1
+      }
+      switchRole(input).then(response => {
         if (response.status === 204) {
           return this.$message.success('切换角色成功')
         } else {

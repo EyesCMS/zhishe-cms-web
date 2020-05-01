@@ -302,3 +302,11 @@ export function getActivityApplyDetail(id) {
     method: 'get'
   })
 }
+
+export function switchRole(data) {
+  return request({
+    url: '/roles/swtich',
+    method: 'post',
+    data
+  })
+}
