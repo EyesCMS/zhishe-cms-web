@@ -52,7 +52,7 @@ export default {
       'major',
       'slogan',
       'phone',
-      'roles'
+      'role'
     ])
   },
   created() {

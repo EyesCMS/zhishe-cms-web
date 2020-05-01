@@ -77,6 +77,7 @@ export default {
         return {
           nickname: this.$store.getters.nickname,
           email: this.$store.getters.email,
+          address: this.$store.getters.address,
           avatar: this.action,
           role: this.$store.getters.role,
           major: this.$store.getters.major,
