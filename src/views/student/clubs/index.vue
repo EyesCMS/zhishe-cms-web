@@ -28,7 +28,7 @@
       <el-table-column label="操作" width="200px">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="LookForDetail(scope.row.id,scope.row.name,scope.row.chiefName,scope.row.avatarUrl)">查看详情</el-button>
-          <el-button type="primary" size="mini" @click="ApplyToJoin(scope.row.name)">申请加入</el-button>
+          <el-button type="primary" size="mini" @click="ApplyToJoin(scope.row.id,scope.row.name)">申请加入</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -110,8 +110,8 @@ export default {
       this.$router.replace('/createClub')
     },
     // 申请加入社团
-    ApplyToJoin(name) {
-      this.$router.push({ path: '/joinClub', query: { name: name }})
+    ApplyToJoin(id, name) {
+      this.$router.push({ path: '/joinClub', query: { id: id, name: name }})
     }
   }
 }

@@ -3,7 +3,7 @@
     <h2 align="center" />
     <el-form ref="form" :model="form" :rules="formRules" label-width="150px">
       <el-form-item label="申请人ID">
-        <el-input v-model="form.userid" :disabled="true" />
+        <el-input v-model="userid" :disabled="true" />
       </el-form-item>
       <el-form-item label="社团名称">
         <el-input v-model="clubName" :disabled="true" />
@@ -24,8 +24,9 @@ export default {
   data() {
     return {
       clubName: this.$route.query.name,
+      userid: this.$store.getters.userid,
       form: {
-        userid: this.$store.getters.name,
+        id: this.$route.query.id,
         reason: ''
       },
       formRules: {
@@ -40,9 +41,10 @@ export default {
       this.$refs.form.validate(valid => {
         if (!valid) return
         const data = {
-          uid: this.form.userid,
+          clubId: this.form.id,
           reason: this.form.reason
         }
+        console.log(data)
         ApplyToJoin(data).then(response => {
           if (response.status === 201) {
             this.$alert('提交成功', '申请加入社团', {

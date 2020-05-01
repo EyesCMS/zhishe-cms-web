@@ -87,8 +87,8 @@ export default {
     getAddsList() {
       getAddList(this.clubId, this.queryInfo).then(response => {
         console.log(response)
-        this.addList = response.items
-        this.total = response.total_count
+        this.addList = response.data.items
+        this.total = response.data.totalCount
         console.log(this.addList)
       })
     },

@@ -231,6 +231,7 @@ export function getClubsList(params) {
 // 获取申请加入列表
 export function getAddList(clubid, query) {
   console.log(1234)
+  // clubid = '10016'
   return request({
     url: `/clubs/${clubid}/joins`,
     method: 'get',
