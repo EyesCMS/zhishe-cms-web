@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <el-col :span="4">
-        <el-avatar shape="square" :size="180" :src="clubInfo.avatarUrl" />
+        <el-avatar shape="square" :size="180" :src="avatarUrl" />
       </el-col>
     </el-card>
     <el-card>
@@ -10,7 +10,7 @@
         <div>
           <el-form ref="form" :model="form" label-width="150px">
             <el-form-item label="社团ID">
-              <el-input v-model="cid" :disabled="true" />
+              <el-input v-model="id" :disabled="true" />
             </el-form-item>
             <el-form-item label="社团名称">
               <el-input v-model="name" :disabled="true" />
@@ -43,6 +43,7 @@ export default {
       id: this.$route.query.id,
       name: this.$route.query.name,
       chiefName: this.$route.query.chiefName,
+      avatarUrl: this.$route.query.avatarUrl,
       clubInfo: {}
     }
   },
