@@ -9,6 +9,9 @@
     <el-form-item label="Email">
       <el-input v-model.trim="user.email" />
     </el-form-item>
+    <el-form-item label="地址">
+      <el-input v-model.trim="user.address" />
+    </el-form-item>
     <el-form-item label="个性签名">
       <el-input v-model.trim="user.slogan" />
     </el-form-item>
@@ -37,6 +40,7 @@ export default {
           nickname: '',
           major: '',
           email: '',
+          address: '',
           slogan: '',
           phone: ''
         }
@@ -44,11 +48,12 @@ export default {
     }
   },
   methods: {
-    submitProfile(nickname, major, email, slogan, phone, avatar) {
+    submitProfile(nickname, major, email, address, slogan, phone, avatar) {
       const input = {
         nickname: nickname,
         major: major,
         email: email,
+        address: address,
         slogan: slogan,
         phone: phone,
         avatar: this.$store.getters.avatar

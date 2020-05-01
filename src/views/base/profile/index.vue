@@ -65,6 +65,7 @@ export default {
         nickname: this.$store.getters.nickname,
         role: this.$store.getters.roles,
         email: this.$store.getters.email,
+        address: this.$store.getters.address,
         avatar: this.$store.getters.avatar,
         major: this.$store.getters.major,
         phone: this.$store.getters.phone,

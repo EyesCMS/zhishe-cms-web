@@ -59,7 +59,7 @@ export function logout() {
 
 export function submitProfile(data) {
   return request({
-    url: '/user/info',
+    url: '/users/info',
     method: 'put',
     data
   })
