@@ -16,10 +16,11 @@ export function getInvitationList(clubid, query, originState) {
   })
 }
 
-export function getInvitationDetail(id) {
+export function getInvitationDetail(id, query) {
   return request({
     url: `/forum/posts/${id}`,
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 
@@ -33,7 +34,7 @@ export function getRemarksList(id, query) {
 
 export function postComment(actId, data) {
   return request({
-    url: `/forum/posts/${actId}/remarks`,
+    url: `/forum/posts/remarks`,
     method: 'post',
     data
   })

@@ -139,6 +139,7 @@ export default {
       userId: 0,
       clubId: 5000,
       queryInfo: {
+        type: 1,
         page: 1,
         limit: 10,
         sort: 'updateAt',

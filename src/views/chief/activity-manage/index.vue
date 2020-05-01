@@ -184,7 +184,7 @@ export default {
   data() {
     return {
       activitiesList: [],
-      clubId: 0,
+      clubId: 5000,
       queryInfo: {
         keyword: '',
         page: 1,
@@ -232,7 +232,7 @@ export default {
     }
   },
   created() {
-    this.clubId = sessionStorage.getItem('clubId')
+    // this.clubId = sessionStorage.getItem('clubId')
     this.getActivitiesList()
   },
   methods: {

@@ -53,10 +53,13 @@ export default {
       queryInfo: {
         page: 1,
         limit: 5,
-        sort: 'update_at',
+        sort: 'updateAt',
         order: 'desc'
       },
-      detailInefo: {},
+      detailQuery: {
+        type: 1
+      },
+      detailInfo: {},
       remarksList: [],
       // 评论条数
       remarksTotal: 0,
@@ -75,7 +78,7 @@ export default {
   methods: {
     // 获取帖子详情
     getInvitationDetail() {
-      getInvitationDetail(this.id).then(response => {
+      getInvitationDetail(this.id, this.detailQuery).then(response => {
         this.detailInfo = response.data
         console.log(this.detailInfo)
         // console.log(132)
@@ -94,8 +97,7 @@ export default {
     },
     postComment() {
       const data = {
-        uid: this.userId,
-        pid: this.id,
+        postId: this.id,
         content: this.comment
       }
       postComment(this.id, data).then(response => {

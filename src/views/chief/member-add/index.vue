@@ -53,13 +53,13 @@ export default {
   },
   data() {
     return {
-      clubId: 1,
+      clubId: 5000,
       addList: [],
       queryInfo: {
         keyword: '',
         page: 1,
         limit: 5,
-        sort: '',
+        sort: 'createAt',
         order: 'desc'
       },
       total: 0,

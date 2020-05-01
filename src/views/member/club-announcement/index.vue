@@ -62,7 +62,7 @@ export default {
   name: 'ClubAnnouncement',
   data() {
     return {
-      clubId: 0,
+      clubId: 5000,
       queryInfo: {
         // keyword: '',
         page: 1,

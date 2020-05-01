@@ -2,7 +2,6 @@
   <div>
     <el-card>
       <el-input
-        v-model="queryInfo.keyword"
         placeholder="请输入文章标题关键字"
         class="input-with-select"
       >
@@ -16,7 +15,7 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="15">
-            <el-image :src="item.imgUrl" :fit="fit" lazy />
+            <el-image :src="item.imgUrl" lazy />
           </el-col>
           <el-col :span="9">
             <el-card>
@@ -49,15 +48,15 @@ export default {
   name: 'ActivityForum',
   data() {
     return {
-      clubId: 0,
+      clubId: 5000,
       queryInfo: {
-        keyword: '',
+        // keyword: '',
+        type: 1,
         page: 1,
         limit: 5,
-        sort: 'created_at',
+        sort: 'createAt',
         order: 'desc'
       },
-      imgUrl: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
       invitationsList: [],
       total: 0,
       fit: 'contain'
