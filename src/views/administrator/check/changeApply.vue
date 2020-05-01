@@ -6,6 +6,12 @@
         <el-form-item label="社团名称">
           <el-input v-model="form.clubName" placeholder="" />
         </el-form-item>
+        <el-form-item label="现任社长">
+          <el-input v-model="form.oldChiefName" placeholder="" />
+        </el-form-item>
+        <el-form-item label="新任社长">
+          <el-input v-model="form.newChiefName" placeholder="" />
+        </el-form-item>
         <el-form-item label="申请状态" prop="state">
           <el-select v-model="form.state" placeholder="请选择">
             <el-option label="未审核" value="0" />
@@ -87,7 +93,9 @@ export default {
       form: {
         clubName: '',
         createAt: '',
-        state: ''
+        state: '',
+        oldChiefName: '',
+        newChiefName: ''
       }
     }
   },
@@ -101,13 +109,16 @@ export default {
         clubName: this.form.clubName,
         createAt: this.form.createAt,
         state: this.form.state,
-        query: this.queryInfo
+        oldChiefName: this.form.oldChiefName,
+        newChiefName: this.form.newChiefName,
+        page: this.queryInfo.page,
+        limit: this.queryInfo.limit
       }
       getChangeApplyList(param).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社长换届申请成功')
           this.changeApplyList = response.data.items
-          this.total = response.data.total_count
+          this.total = response.data.totalCount
         } else {
           return this.$message.error('获取社长换届申请失败')
         }
@@ -160,6 +171,8 @@ export default {
       this.form.clubName = ''
       this.form.createAt = ''
       this.form.state = ''
+      this.form.newChiefName = ''
+      this.form.oldChiefName = ''
     },
     check() {
       this.getChangeApplyList()

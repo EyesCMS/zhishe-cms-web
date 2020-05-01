@@ -97,13 +97,14 @@ export default {
       const param = {
         clubName: this.form.clubName,
         state: this.form.state,
-        query: this.queryInfo
+        page: this.queryInfo.page,
+        limit: this.queryInfo.limit
       }
       getActivityApplyList(param).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团活动申请成功')
           this.activityApplyList = response.data.items
-          this.total = response.data.total_count
+          this.total = response.data.totalCount
         } else {
           return this.$message.error('获取社团活动申请失败')
         }
