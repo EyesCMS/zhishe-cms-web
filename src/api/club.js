@@ -220,11 +220,12 @@ export function getQuitList(clubid, query) {
   })
 }
 
-export function getClubsList(query) {
+export function getClubsList(params) {
+  console.log(params)
   return request({
     url: `/clubs`,
     method: 'get',
-    params: query
+    params: params
   })
 }
 // 获取申请加入列表

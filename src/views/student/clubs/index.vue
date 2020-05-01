@@ -1,13 +1,20 @@
 <template>
   <div style="margin-top: 15px;text-align:center;">
-    <el-input v-model="search" placeholder="请输入社团名称" class="input-with-select">
-      <el-button slot="append" icon="el-icon-search" @click="Search()" />
-    </el-input>
+    <div style="margin-top: 15px;">
+      <el-input v-model="search" placeholder="请输入内容" class="input-with-select">
+        <el-select slot="prepend" v-model="select" placeholder="请选择">
+          <el-option label="社团ID" value="1" />
+          <el-option label="社团名称" value="2" />
+          <el-option label="社长名称" value="3" />
+        </el-select>
+        <el-button slot="append" icon="el-icon-search" />
+      </el-input>
+    </div>
     <el-button type="primary" @click="ApplyToCreate()">创建社团</el-button>
 
     <!-- 社团列表 -->
     <el-table :data="clubsList" stripe border>
-      <el-table-column label="序号" prop="id" />
+      <el-table-column label="社团ID" prop="id" />
       <el-table-column label="社团头像" prop="avatarUrl">
         <template slot-scope="scope" width="40">
           <el-image
@@ -40,12 +47,12 @@
 </template>
 
 <style>
-.el-input {
-  width: 600px;
-}
-.input-with-select .el-input-group__prepend {
-  background-color: #fff;
-}
+.el-select .el-input {
+    width: 130px;
+  }
+  .input-with-select .el-input-group__prepend {
+    background-color: #fff;
+  }
 </style>
 <script>
 import { getClubsList } from '@/api/club'
@@ -53,7 +60,7 @@ export default {
   name: 'Clubs',
   data() {
     return {
-      search: '',
+      search: '', // 复选框还未完成，缺select待讨论
       listLoading: true,
       queryInfo: {
         page: 1,
@@ -69,7 +76,11 @@ export default {
   methods: {
     getClubsList() {
       this.listLoading = true
-      getClubsList(this.queryInfo).then(response => {
+      const params = {
+        search: this.search,
+        query: this.queryInfo
+      }
+      getClubsList(params).then(response => {
         if (response.status === 200) {
           this.clubsList = response.data.items
           this.total = response.data.totalCount

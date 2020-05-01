@@ -14,6 +14,11 @@
       <el-table-column label="社团名称" prop="name" />
       <el-table-column label="申请原因" prop="reason" />
       <el-table-column label="申请状态" prop="state" />
+      <template slot-scope="scope">
+        <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+        <el-tag v-else-if="scope.row.state === 1" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+        <el-tag v-else style="text-align:center" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+      </template>
     </el-table>
 
     <!-- 分页区域 -->
@@ -33,6 +38,17 @@
 import { getJoinApplicationsList } from '@/api/club'
 export default {
   name: 'JoinApplications',
+  filters: {
+    statusFilter(value) {
+      if (value === 0) {
+        return '待审核'
+      } else if (value === 1) {
+        return '已通过'
+      } else {
+        return '未通过'
+      }
+    }
+  },
   data() {
     return {
       listLoading: true,
