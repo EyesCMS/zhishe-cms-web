@@ -80,7 +80,7 @@ export default {
   name: 'CreateApply',
   filters: {
     officialStatusFilter(value) {
-      if (value === 0) {
+      if (!value) {
         return '非正式'
       } else {
         return '正式'
