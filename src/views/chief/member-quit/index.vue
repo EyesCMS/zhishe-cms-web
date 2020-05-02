@@ -34,7 +34,7 @@ export default {
       listLoading: true,
       clubId: 5000,
       queryInfo: {
-        page: 1,
+        page: 0,
         limit: 5
       },
       total: 0,
