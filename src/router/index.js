@@ -33,14 +33,15 @@ import Layout from '@/layout'
 export const constantRoutes = [
   // homepage
   {
-    path: '/home-page',
+    path: '',
+    redirect: '/home',
     component: Layout,
     children: [
       {
-        path: 'index',
-        name: 'HomePage',
-        component: () => import('@/views/base/home-page/index'),
-        meta: { title: '首页', icon: 'component' }
+        path: 'home',
+        name: 'home',
+        component: () => import('@/views/base/home/index'),
+        meta: { title: '首页', icon: 'home' }
       }
     ]
   },
@@ -88,21 +89,21 @@ export const constantRoutes = [
     path: '/401',
     component: () => import('@/views/base/error-page/401'),
     hidden: true
-  },
-  // /
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/home-page',
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index'),
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-      }
-    ]
   }
+  // /
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/home',
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       name: 'Dashboard',
+  //       component: () => import('@/views/home/index'),
+  //       meta: { title: 'Dashboard', icon: 'home', affix: true }
+  //     }
+  //   ]
+  // }
 ]
 /**
  * asyncRoutes
