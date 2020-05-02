@@ -6,8 +6,8 @@
     >切换到chief</el-button>
     <el-button
       type="primary"
-      @click="menber"
-    >切换到clunMenber</el-button>
+      @click="member"
+    >切换到clubMember</el-button>
     <el-button
       type="primary"
       @click="student"
@@ -101,7 +101,7 @@ export default {
   created() {
     const clubid = 112
     localStorage.setItem('clubid', clubid)
-    this.getrRecommendedList()
+    this.getRecommendedList()
   },
   methods: {
     chief: function () {
@@ -113,10 +113,10 @@ export default {
     student: function () {
       this.$store.dispatch('user/changeRoles', 'student')
     },
-    menber: function () {
-      this.$store.dispatch('user/changeRoles', 'menber')
+    member: function () {
+      this.$store.dispatch('user/changeRoles', 'member')
     },
-    getrRecommendedList() {
+    getRecommendedList() {
       recommended(this.queryInfo).then(response => {
         console.log('@home-page RecommendedList response:')
         console.log(response)

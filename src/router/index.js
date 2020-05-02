@@ -217,14 +217,14 @@ export const asyncRoutes = [
     meta: {
       title: '社团风采',
       icon: 'fengcai',
-      roles: ['menber', 'chief']
+      roles: ['member', 'chief']
     },
     children: [
       {
         path: 'index',
         name: 'index',
         component: () => import('@/views/member/club-style/index.vue'),
-        meta: { title: '社团风采', noCache: true, roles: ['menber', 'chief'] }
+        meta: { title: '社团风采', noCache: true, roles: ['member', 'chief'] }
       }
     ]
   },
@@ -237,13 +237,13 @@ export const asyncRoutes = [
         path: 'index',
         name: 'ClubMember',
         component: () => import('@/views/member/club-member/index.vue'),
-        meta: { title: '社团成员', icon: 'peoples', roles: ['menber'] }
+        meta: { title: '社团成员', icon: 'peoples', roles: ['member'] }
       },
       {
         path: 'detail',
         name: 'MemberDetail',
         component: () => import('@/views/member/member-detail/index.vue'),
-        meta: { title: '成员详情', roles: ['menber'] },
+        meta: { title: '成员详情', roles: ['member'] },
         hidden: true
       }
     ]
@@ -257,13 +257,13 @@ export const asyncRoutes = [
         path: 'index',
         name: 'ActivityForum',
         component: () => import('@/views/member/activity-forum/index.vue'),
-        meta: { title: '活动论坛', icon: 'message', roles: ['menber'] }
+        meta: { title: '活动论坛', icon: 'message', roles: ['member'] }
       },
       {
         path: 'detail',
         name: 'ActivityDetail',
         component: () => import('@/views/member/activity-forum/detail.vue'),
-        meta: { title: '帖子详情', roles: ['menber'] },
+        meta: { title: '帖子详情', roles: ['member'] },
         hidden: true
       }
     ]
@@ -277,7 +277,7 @@ export const asyncRoutes = [
         path: 'index',
         name: 'announcement',
         component: () => import('@/views/member/club-announcement/index'),
-        meta: { title: '社团公告', icon: 'message', roles: ['menber'] }
+        meta: { title: '社团公告', icon: 'message', roles: ['member'] }
       }
     ]
   },
@@ -332,7 +332,7 @@ export const asyncRoutes = [
       {
         path: 'forum',
         name: 'forum',
-        component: () => import('@/views/chief/forum-mamage/index'),
+        component: () => import('@/views/chief/forum-manage/index'),
         meta: { title: '论坛管理', icon: 'people', roles: ['chief', 'student'] }
       }
     ]
