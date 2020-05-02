@@ -16,7 +16,7 @@
         <el-table-column label="活动名称" prop="name" />
         <el-table-column label="活动时间" width="300px">
           <template slot-scope="scope">
-            {{ scope.row.start_date }} - {{ scope.row.end_date }}
+            {{ scope.row.startDate }} - {{ scope.row.endDate }}
           </template>
         </el-table-column>
         <el-table-column label="活动地点" prop="location" />
@@ -25,7 +25,7 @@
             {{ scope.row.content | interceptAbstract }}
           </template>
         </el-table-column>
-        <el-table-column label="参与人数" prop="member_count" />
+        <el-table-column label="参与人数" prop="memberCount" />
         <el-table-column label="状态" prop="state">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
@@ -124,7 +124,7 @@
             <el-input v-model="applyDetailForm.title" disabled />
           </el-form-item>
           <el-form-item label="活动内容">
-            <el-input v-model="applyDetailForm.content" type="textarea" disabled />
+            <el-input v-model="applyDetailForm.body" type="textarea" disabled />
           </el-form-item>
           <el-form-item label="活动地点">
             <el-input v-model="applyDetailForm.location" disabled />
@@ -184,7 +184,7 @@ export default {
   data() {
     return {
       activitiesList: [],
-      clubId: 0,
+      clubId: 5000,
       queryInfo: {
         keyword: '',
         page: 1,
@@ -207,8 +207,7 @@ export default {
         startDate: '',
         endDate: '',
         location: '',
-        imgUrl: '',
-        accessoryUrl: ''
+        imgUrl: ''
       },
       addFormRules: {
         name: [
@@ -233,7 +232,7 @@ export default {
     }
   },
   created() {
-    this.clubId = sessionStorage.getItem('clubId')
+    // this.clubId = sessionStorage.getItem('clubId')
     this.getActivitiesList()
   },
   methods: {
@@ -245,10 +244,10 @@ export default {
         console.log(this.activitiesList)
       })
     },
-    publishActivity(id, state_id) {
+    publishActivity(id, state) {
       const input = {
         id: id,
-        state_id: state_id
+        state: state
       }
       reviseActivityState(input).then(response => {
         this.$message.success('发布成功')
@@ -295,7 +294,7 @@ export default {
     },
     checkActivityApplyDetail(id) {
       getActivityApplyDetail(id).then(response => {
-        this.applyDetailForm = response.items
+        this.applyDetailForm = response.data
         console.log('applyDetail为' + this.applyDetailForm)
         this.applyDetailDialogVisible = true
       })

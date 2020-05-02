@@ -6,7 +6,7 @@
         <el-table-column type="index" label="#" />
         <el-table-column label="昵称" prop="applicant" width="150px" />
         <el-table-column label="申请理由" prop="reason" />
-        <el-table-column label="申请时间" prop="create_at" width="200px" />
+        <el-table-column label="申请时间" prop="createAt" width="200px" />
         <el-table-column label="状态" width="150px">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
@@ -53,13 +53,13 @@ export default {
   },
   data() {
     return {
-      clubId: 1,
+      clubId: 10016,
       addList: [],
       queryInfo: {
         keyword: '',
-        page: 1,
+        page: 0,
         limit: 5,
-        sort: '',
+        sort: 'createAt',
         order: 'desc'
       },
       total: 0,
@@ -87,8 +87,8 @@ export default {
     getAddsList() {
       getAddList(this.clubId, this.queryInfo).then(response => {
         console.log(response)
-        this.addList = response.items
-        this.total = response.total_count
+        this.addList = response.data.items
+        this.total = response.data.totalCount
         console.log(this.addList)
       })
     },

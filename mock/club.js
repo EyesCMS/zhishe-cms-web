@@ -29,10 +29,10 @@ const clubsList = []
 for (let i = 0; i < 100; i++) {
   clubsList.push(
     Mock.mock({
-      'cid|+1': 0,
+      'id|+1': 0,
       avatar_url: '@string',
       name: '@string',
-      chief_name: '@cname'
+      chiefName: '@cname'
     })
   )
 }

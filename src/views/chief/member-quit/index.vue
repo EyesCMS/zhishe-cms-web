@@ -34,7 +34,7 @@ export default {
       listLoading: true,
       clubId: 5000,
       queryInfo: {
-        page: 1,
+        page: 0,
         limit: 5
       },
       total: 0,
@@ -57,7 +57,7 @@ export default {
         if (response.status === 200) {
           this.$message.success('获取成员退出通知成功')
           this.quitList = response.data.items
-          this.total = response.data.total_count
+          this.total = response.data.totalCount
         } else {
           return this.$message.error('获取成员退出通知失败')
         }

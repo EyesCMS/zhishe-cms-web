@@ -1,19 +1,22 @@
 <template>
   <el-form>
     <el-form-item label="姓名">
-      <el-input v-model.trim="user.nickname" />
+      <el-input v-model.trim="form.nickname" />
     </el-form-item>
     <el-form-item label="专业">
-      <el-input v-model.trim="user.major" />
+      <el-input v-model.trim="form.major" />
     </el-form-item>
     <el-form-item label="Email">
-      <el-input v-model.trim="user.email" />
+      <el-input v-model.trim="form.email" />
+    </el-form-item>
+    <el-form-item label="地址">
+      <el-input v-model.trim="form.address" />
     </el-form-item>
     <el-form-item label="个性签名">
-      <el-input v-model.trim="user.slogan" />
+      <el-input v-model.trim="form.slogan" />
     </el-form-item>
     <el-form-item label="联系方式">
-      <el-input v-model.trim="user.phone" />
+      <el-input v-model.trim="form.phone" />
     </el-form-item>
     <div style="text-align:center">
       <el-form-item>
@@ -29,31 +32,21 @@
 <script>
 import { submitProfile } from '@/api/user'
 export default {
-  props: {
-    user: {
-      type: Object,
-      default: () => {
-        return {
-          nickname: '',
-          major: '',
-          email: '',
-          slogan: '',
-          phone: ''
-        }
+  data() {
+    return {
+      form: {
+        nickname: this.$store.getters.nickname,
+        email: this.$store.getters.email,
+        address: this.$store.getters.address,
+        major: this.$store.getters.major,
+        phone: this.$store.getters.phone,
+        slogan: this.$store.getters.slogan
       }
     }
   },
   methods: {
-    submitProfile(nickname, major, email, slogan, phone, avatar) {
-      const input = {
-        nickname: nickname,
-        major: major,
-        email: email,
-        slogan: slogan,
-        phone: phone,
-        avatar: this.$store.getters.avatar
-      }
-      submitProfile(input).then(response => {
+    submitProfile() {
+      submitProfile(this.form).then(response => {
         if (response.status === 204) {
           this.$message.success('修改成功')
         }

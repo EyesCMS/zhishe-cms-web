@@ -35,7 +35,7 @@ export function getMemberDetail(clubid, userid) {
   })
 }
 
-export function getBulletinList(clubid, query) {
+export function listBulletins(clubid, query) {
   return request({
     url: `/clubs/${clubid}/bulletins`,
     method: 'get',
@@ -43,9 +43,9 @@ export function getBulletinList(clubid, query) {
   })
 }
 
-export function getBulletinDetail(clubid, bulletinid) {
+export function getBulletinDetail(clubId, id) {
   return request({
-    url: `/clubs/${clubid}/bulletins/${bulletinid}`,
+    url: `/clubs/${clubId}/bulletins/${id}`,
     method: 'get'
   })
 }
@@ -220,16 +220,18 @@ export function getQuitList(clubid, query) {
   })
 }
 
-export function getClubsList(query) {
+export function getClubsList(params) {
+  console.log(params)
   return request({
     url: `/clubs`,
     method: 'get',
-    params: query
+    params: params
   })
 }
 // 获取申请加入列表
 export function getAddList(clubid, query) {
   console.log(1234)
+  // clubid = '10016'
   return request({
     url: `/clubs/${clubid}/joins`,
     method: 'get',
@@ -289,6 +291,21 @@ export function deleteActivity(id) {
 export function publishApply(data) {
   return request({
     url: '/clubs/activities',
+    method: 'post',
+    data
+  })
+}
+
+export function getActivityApplyDetail(id) {
+  return request({
+    url: `/activities/apply/${id}`,
+    method: 'get'
+  })
+}
+
+export function switchRole(data) {
+  return request({
+    url: '/roles/swtich',
     method: 'post',
     data
   })

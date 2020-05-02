@@ -2,7 +2,6 @@
   <div>
     <el-card>
       <el-input
-        v-model="queryInfo.keyword"
         placeholder="请输入文章标题关键字"
         class="input-with-select"
       >
@@ -11,12 +10,12 @@
       <h4>共搜索到 {{ total }} 条记录</h4>
       <el-card v-for="(item, index) in invitationsList" :key="index" style="margin-top:20px">
         <el-row>
-          <el-avatar style="float:left" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-          <p style="float: left">{{ item.clubName }}</p>
+          <el-avatar style="float:left" :src="item.avatarUrl" />
+          <p style="float: left">{{ item.posterName }}</p>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="15">
-            <el-image :src="imgUrl" :fit="fit" lazy />
+            <el-image :src="item.imgUrl" lazy />
           </el-col>
           <el-col :span="9">
             <el-card>
@@ -49,30 +48,30 @@ export default {
   name: 'ActivityForum',
   data() {
     return {
-      clubId: 0,
+      clubId: 5000,
       queryInfo: {
-        keyword: '',
+        // keyword: '',
+        type: 1,
         page: 1,
         limit: 5,
-        sort: 'created_at',
+        sort: 'createAt',
         order: 'desc'
       },
-      imgUrl: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
       invitationsList: [],
       total: 0,
       fit: 'contain'
     }
   },
   created() {
-    this.clubId = sessionStorage.getItem('clubId')
+    // this.clubId = sessionStorage.getItem('clubId')
     this.getInvitationsList()
   },
   methods: {
     getInvitationsList() {
       getInvitationList(this.clubId, this.queryInfo).then(response => {
         console.log(response)
-        this.invitationsList = response.items
-        this.total = response.total_count
+        this.invitationsList = response.data.items
+        this.total = response.data.totalCount
         console.log(this.invitationsList)
         // console.log(this.memberInfo)
       })

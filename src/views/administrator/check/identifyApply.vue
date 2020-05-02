@@ -78,7 +78,7 @@ export default {
       listLoading: true,
       clubId: 0,
       queryInfo: {
-        page: 1,
+        page: 0,
         limit: 5
       },
       total: 0,
@@ -100,13 +100,14 @@ export default {
         clubName: this.form.clubName,
         createAt: this.form.createAt,
         state: this.form.state,
-        query: this.queryInfo
+        page: this.queryInfo.page,
+        limit: this.queryInfo.limit
       }
       getIdentifyApplyList(param).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团认证申请成功')
           this.identifyApplyList = response.data.items
-          this.total = response.data.total_count
+          this.total = response.data.totalCount
         } else {
           return this.$message.error('获取社团认证申请失败')
         }

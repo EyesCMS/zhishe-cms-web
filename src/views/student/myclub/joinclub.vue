@@ -56,8 +56,7 @@ export default {
         limit: 5
       },
       total: 0,
-      // userid: this.$store.getters.name,
-      userid: 0,
+      userid: this.$store.getters.userid,
       JoinclubsList: []
     }
   },
@@ -90,13 +89,17 @@ export default {
       this.getJoinclubsList()
     },
     // 跳转到社团风采页面
-    EnterToClub(cid) {
+    EnterToClub(id) {
       this.$store.dispatch('user/changeRoles', 'member')
-      this.$router.push({ path: '/clubstyle/index', query: { cid: cid }})
-      this.switchRole(cid)
+      this.$router.push({ path: '/clubstyle/index', query: { id: id }})
+      this.switchRole(id)
     },
-    switchRole(cid) {
-      switchRole(cid).then(response => {
+    switchRole() {
+      const input = {
+        clubId: this.id,
+        type: 0
+      }
+      switchRole(input).then(response => {
         if (response.status === 204) {
           return this.$message.success('切换角色成功')
         } else {

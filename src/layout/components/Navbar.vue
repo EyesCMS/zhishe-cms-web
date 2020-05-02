@@ -1,7 +1,6 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-    <el-button type="primary" style="float:left;margin-top:10px" size="mini" @click="pushToHomePage">首页</el-button>
     <breadcrumb class="breadcrumb-container" />
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
@@ -10,7 +9,7 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/home-page/index">
+          <router-link to="/home/index">
             <el-dropdown-item>
               首页
             </el-dropdown-item>
@@ -63,8 +62,12 @@ export default {
       this.$router.replace('/home-page/index')
       this.switchRole(this.$route.query.cid)
     },
-    switchRole(cid) {
-      switchRole(cid).then(response => {
+    switchRole() {
+      const input = {
+        clubId: this.$route.query.cid,
+        type: 1
+      }
+      switchRole(input).then(response => {
         if (response.status === 204) {
           return this.$message.success('切换角色成功')
         } else {

@@ -6,9 +6,11 @@
         <el-col :span="3">
           <el-image
             style="width: 100px; height: 100px"
+            :src="memberInfo.avatarUrl"
           />
         </el-col>
         <h3>{{ memberInfo.nickname }}</h3>
+        <h4>{{ memberInfo.username }}</h4>
         <h4>{{ memberInfo.slogan }}</h4>
         <h4>职位：{{ memberInfo.role }}</h4>
       </el-row>
@@ -42,14 +44,14 @@ export default {
   name: 'MemberDetail',
   data() {
     return {
-      clubId: 1,
+      clubId: 5000,
       userId: 1,
       memberInfo: {}
     }
   },
   created() {
-    // this.userId = this.$store.getters.userid
-    this.clubId = sessionStorage.getItem('clubId')
+    this.userId = this.$route.query.userId
+    // this.clubId = sessionStorage.getItem('clubId')
     // console.log('ww' + this.clubId)
     this.getMemberDetails()
     // this.clubId = localStorage.getItem('clubid')
@@ -60,7 +62,7 @@ export default {
       // console.log('UserId' + this.userId)
       // console.log(this.userId)
       getMemberDetail(this.clubId, this.userId).then(response => {
-        this.memberInfo = response.items
+        this.memberInfo = response.data
         console.log(this.memberInfo)
       })
     }

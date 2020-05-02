@@ -14,8 +14,8 @@ const tokens = {
   student: {
     token: 'student-token'
   },
-  menber: {
-    token: 'menber-token'
+  member: {
+    token: 'member-token'
   }
 }
 
@@ -72,8 +72,8 @@ const users = {
     slogan: '这是一条个性签名',
     major: '大数据'
   },
-  'menber-token': {
-    roles: ['menber'],
+  'member-token': {
+    roles: ['member'],
     introduction: 'I am an chief',
     nickname: 'nickname',
     userid: 'userid',

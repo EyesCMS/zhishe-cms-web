@@ -60,8 +60,16 @@ export function logout() {
 
 export function submitProfile(data) {
   return request({
-    url: '/user/info',
+    url: '/users/info',
     method: 'put',
+    data
+  })
+}
+
+export function updatePassword(data) {
+  return request({
+    url: '/auth/password',
+    method: 'post',
     data
   })
 }

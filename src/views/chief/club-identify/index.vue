@@ -18,7 +18,7 @@ import { postIdentifyApply } from '@/api/club'
 export default {
   data() {
     return {
-      clubId: 5000,
+      clubId: 10013,
       form: {
         reason: ''
       }

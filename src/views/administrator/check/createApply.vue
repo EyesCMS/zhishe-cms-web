@@ -80,7 +80,7 @@ export default {
   name: 'CreateApply',
   filters: {
     officialStatusFilter(value) {
-      if (value === 0) {
+      if (!value) {
         return '非正式'
       } else {
         return '正式'
@@ -127,13 +127,14 @@ export default {
         officialState: this.form.officialState,
         createAt: this.form.createAt,
         state: this.form.state,
-        query: this.queryInfo
+        page: this.queryInfo.page,
+        limit: this.queryInfo.limit
       }
       getCreateApplyList(param).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团创建申请成功')
           this.createApplyList = response.data.items
-          this.total = response.data.total_count
+          this.total = response.data.totalCount
         } else {
           return this.$message.error('获取社团创建申请失败')
         }

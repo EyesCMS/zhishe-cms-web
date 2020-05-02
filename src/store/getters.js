@@ -11,8 +11,8 @@ const getters = {
   slogan: state => state.user.slogan,
   phone: state => state.user.phone,
   roles: state => state.user.roles,
-  permission_routes: state => state.permission.routes,
-  visitedViews: state => state.tagsView.visitedViews,
-  cachedViews: state => state.tagsView.cachedViews
+  permission_routes: state => state.permission.routes
+  // visitedViews: state => state.tagsView.visitedViews,
+  // cachedViews: state => state.tagsView.cachedViews
 }
 export default getters
