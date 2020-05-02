@@ -64,3 +64,11 @@ export function submitProfile(data) {
     data
   })
 }
+
+export function updatePassword(data) {
+  return request({
+    url: '/auth/password',
+    method: 'post',
+    data
+  })
+}

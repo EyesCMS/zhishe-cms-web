@@ -22,6 +22,9 @@
               >
                 <account :user="user" />
               </el-tab-pane>
+              <el-tab-pane label="修改密码" name="changePassword">
+                <changePassword />
+              </el-tab-pane>
             </el-tabs>
           </el-card>
         </el-col>
@@ -34,11 +37,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import UserCard from './components/UserCard'
+import ChangePassword from './components/ChangePassword'
 import Account from './components/Account'
 
 export default {
   name: 'Profile',
-  components: { UserCard, Account },
+  components: { UserCard, Account, ChangePassword },
   data() {
     return {
       user: {},

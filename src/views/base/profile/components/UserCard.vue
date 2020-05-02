@@ -13,7 +13,7 @@
       </div>
       <div class="box-center">
         <div class="user-name text-center">{{ user.name }}</div>
-        <div class="user-role text-center text-muted">{{ user.role | uppercaseFirst }}</div>
+        <div class="user-role text-center text-muted">{{ user.role }}</div>
       </div>
     </div>
 
@@ -106,11 +106,12 @@ export default {
       }
       return isJPG && isLt2M
     },
-    submitProfile(nickname, major, email, slogan, phone, avatar) {
+    submitProfile(nickname, major, email, slogan, phone, avatar, address) {
       const input = {
         nickname: nickname,
         major: major,
         email: email,
+        address: address,
         slogan: slogan,
         phone: phone,
         avatar: avatar
