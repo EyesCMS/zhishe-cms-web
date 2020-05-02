@@ -15,8 +15,15 @@
       disabled="false"
     >
       <el-tab-pane name="1">
-        <el-form>
-          <el-form-item label="用户名">
+        <el-form
+          ref="form1"
+          :model="form1"
+          :rules="form1Rules"
+        >
+          <el-form-item
+            label="用户名"
+            prop="username"
+          >
             <el-input v-model="form1.username" />
           </el-form-item>
           <el-form-item>
@@ -25,11 +32,18 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane name="2">
-        <el-form :model="form2">
+        <el-form
+          ref="form2"
+          :model="form2"
+          :rules="form2Rules"
+        >
           <el-form-item label="保密问题">
             <el-input v-model="form2.login_question" />
           </el-form-item>
-          <el-form-item label="保密回答">
+          <el-form-item
+            label="保密回答"
+            prop="login_aswer"
+          >
             <el-input v-model="form2.login_aswer" />
           </el-form-item>
           <el-form-item>
@@ -39,8 +53,15 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane name="3">
-        <el-form>
-          <el-form-item label="输入新密码">
+        <el-form
+          ref="form3"
+          :model="form3"
+          :rules="form3Rules"
+        >
+          <el-form-item
+            label="输入新密码"
+            prop="newpassword"
+          >
             <el-input
               v-model="form3.newpassword"
               type="password"
@@ -75,41 +96,78 @@ export default {
         newpassword: 'test'
       },
       activeName: '1',
-      name: 0
+      name: 0,
+      form1Rules: {
+        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }]
+      },
+      form2Rules: {
+        login_aswer: [{ required: true, trigger: 'blur', message: '请输入回答' }]
+      },
+      form3Rules: {
+        newpassword: [{ required: true, trigger: 'blur', message: '请输入密码' }]
+      }
     }
   },
   methods: {
     async handleClick(i) {
       if (i === 2) {
-        const result = await question()
-        console.log(result)
-        if (result.Status === 200) {
-          this.form2.login_question = result.login_problem
-          this.activeName = i.toString()
-          this.name = i - 1
-        } else this.$message.error('获取问题失败！')
+        this.$refs.form1.validate(valid => {
+          if (valid) {
+            question(this.form1).then(response => {
+              console.log('@forget getQuestion response:')
+              console.log(response)
+              this.form2.login_question = response.data.loginProblem
+              this.activeName = i.toString()
+              this.name = i - 1
+            }).catch((e) => {
+              console.log(e)
+              this.$message.error('获取问题失败！')
+            })
+          } else {
+            this.$message.error('提交失败')
+          }
+        })
       } else if (i === 3) {
-        const data = {
-          username: this.form1.username,
-          answer: this.form2.login_aswer
-        }
-        const result = await answer(data)
-        console.log(result)
-        if (result.status === 204) {
-          this.activeName = i.toString()
-          this.name = i - 1
-        } else this.$message.error('回答错误！')
+        this.$refs.form2.validate(valid => {
+          if (valid) {
+            const data = {
+              username: this.form1.username,
+              answer: this.form2.login_aswer
+            }
+            answer(data).then(response => {
+              console.log('@forget answer response:')
+              console.log(response)
+              this.activeName = i.toString()
+              this.name = i - 1
+            }).catch((e) => {
+              console.log(e)
+              this.$message.error('回答错误！')
+            })
+          } else {
+            this.$message.error('提交失败')
+          }
+        })
       } else {
-        const data = {
-          username: this.form1.username,
-          password: this.form3.newpassword
-        }
-        const result = await newpassword(data)
-        console.log(result)
-        if (result.status === 200) {
-          this.$message.success('修改成功！')
-          this.$router.push('/login')
-        } else this.$message.error('修改失败！')
+        this.$refs.form2.validate(valid => {
+          if (valid) {
+            const data = {
+              username: this.form1.username,
+              oldPassword: this.form2.login_aswer,
+              newPassword: this.form3.newpassword
+            }
+            newpassword(data).then(response => {
+              console.log('@forget newpassword response:')
+              console.log(response)
+              this.$message.success('修改成功！')
+              this.$router.push('/login')
+            }).catch((e) => {
+              console.log(e)
+              this.$message.error('修改失败')
+            })
+          } else {
+            this.$message.error('提交失败')
+          }
+        })
       }
     },
     back(i) {

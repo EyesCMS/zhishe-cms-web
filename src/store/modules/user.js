@@ -110,7 +110,9 @@ const actions = {
   logout({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
       logout(state.token)
-        .then(() => {
+        .then(response => {
+          console.log('@store user logout:')
+          console.log(response)
           removeToken() // must remove  token  first
           window.sessionStorage.removeItem('roles')
           resetRouter()

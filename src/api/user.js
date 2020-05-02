@@ -17,10 +17,11 @@ export function register(data) {
   })
 }
 
-export function question() {
+export function question(data) {
   return request({
-    url: '/users/username/question',
-    method: 'get'
+    url: '/users/question',
+    method: 'get',
+    data
   })
 }
 
@@ -36,7 +37,7 @@ export function answer(data) {
 export function newpassword(data) {
   console.log(data)
   return request({
-    url: '/users/newpassword',
+    url: '/users/password',
     method: 'post',
     data
   })

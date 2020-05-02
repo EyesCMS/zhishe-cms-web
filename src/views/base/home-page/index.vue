@@ -120,7 +120,7 @@ export default {
       recommended(this.queryInfo).then(response => {
         console.log('@home-page RecommendedList response:')
         console.log(response)
-        this.recommendedList = response.data
+        this.recommendedList = response.data.items
         // console.log(this.memberInfo)
       })
     },
@@ -131,7 +131,6 @@ export default {
         console.log(response)
         // this.$message.success('获取成员列表成功')
         this.clubDetail = response.data
-        console.log(this.clubDetail)
         this.bulletinDetailDialogVisible = true
       })
     }

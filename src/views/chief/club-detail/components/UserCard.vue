@@ -99,43 +99,43 @@ export default {
           qqGroup: '122333322',
           avatarUrl: ''
         }
-      },
-      methods: {
-        handleRemove1(file, fileList) {
-          console.log(file, fileList)
-        },
-        handlePreview1(file) {
-          console.log(file)
-        },
-        beforeAvatarUpload1(file) {
-          const isJPG = file.type === 'image/jpeg'
-          const isLt2M = file.size / 1024 / 1024 < 2
-
-          if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!')
-          }
-          if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!')
-          }
-          return isJPG && isLt2M
-        }
-        // submitProfile(nickname, major, email, slogan, phone, avatar) {
-        //   const input = {
-        //     nickname: nickname,
-        //     major: major,
-        //     email: email,
-        //     slogan: slogan,
-        //     phone: phone,
-        //     avatar: avatar
-        //   }
-        //   submitProfile(input).then(response => {
-        //     if (response.status === 204) {
-        //       this.$message.success('修改成功')
-        //     }
-        //   })
-        // }
       }
     }
+  },
+  methods: {
+    handleRemove1(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview1(file) {
+      console.log(file)
+    },
+    beforeAvatarUpload1(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    }
+    // submitProfile(nickname, major, email, slogan, phone, avatar) {
+    //   const input = {
+    //     nickname: nickname,
+    //     major: major,
+    //     email: email,
+    //     slogan: slogan,
+    //     phone: phone,
+    //     avatar: avatar
+    //   }
+    //   submitProfile(input).then(response => {
+    //     if (response.status === 204) {
+    //       this.$message.success('修改成功')
+    //     }
+    //   })
+    // }
   }
 }
 </script>

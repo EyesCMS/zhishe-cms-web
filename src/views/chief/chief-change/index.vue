@@ -91,7 +91,7 @@ export default {
       console.log(response)
       if (response.data) {
         this.leaderChange.clubname = response.data.name
-        this.leaderChange.oldChiefId = response.data.chiefName
+        this.leaderChange.oldChiefName = response.data.chiefName
         // console.log('detile=' + this.clubInfo)
       } else {
         return this.$message.error('获取社团信息失败')
