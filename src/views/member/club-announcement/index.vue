@@ -10,13 +10,30 @@
         <el-button slot="append" icon="el-icon-search" @click="queryAnnouncementList" />
       </el-input>
       <p>共搜索到{{ total }}条相关公告</p>
-      <el-card v-for="(item, index) in bulletinsList" :key="index">
-        <h2 class="title">{{ item.title }}</h2>
-        <p>{{ item.content }}</p>
-        <p class="createAt">{{ item.createAt }}  </p>
-        <p class="createAt">{{ item.updateAt }}  </p>
-        <el-link type="primary" @click="openBulletinDetailDiaglog(item.id)">详情</el-link>
-      </el-card>
+      <el-row v-for="(item, index) in bulletinsList" :key="index" :gutter="10">
+        <el-col :span="12">
+          <el-card :style="{'background':'rgb('+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+')'}">
+            <h2 class="title">{{ item.title }}</h2>
+            <p>{{ item.content }}</p>
+            <!-- <p class="createAt">{{ item.createAt }}  </p> -->
+            <p class="createAt">{{ item.updateAt }}  </p>
+            <div class="ww">
+              <el-link @click="openBulletinDetailDiaglog(item.id)"><i class="el-icon-view el-icon--right" />详情</el-link>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="12">
+          <el-card :style="{'background':'rgb('+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+')'}">
+            <h2 class="title">{{ item.title }}</h2>
+            <p>{{ item.content }}</p>
+            <!-- <p class="createAt">{{ item.createAt }}  </p> -->
+            <p class="createAt">{{ item.updateAt }}  </p>
+            <div class="ww">
+              <el-link @click="openBulletinDetailDiaglog(item.id)"><i class="el-icon-view el-icon--right" />详情</el-link>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
       <!-- <div >
         <h2>{{ item.title }}</h2>
         <p>{{ item.create_at }}  </p>
@@ -132,7 +149,18 @@ export default {
   font-size: 12px Extra Small
 }
 .createAt {
-  font-size: 13px Small;
-  text-align: right
+  font-size: 14px;
+  text-align: left;
+}
+.el-card {
+  margin-top: 15px;
+}
+.ww {
+   text-align: center;
+   margin: 0 auto;
+}
+.el-pagination {
+  position: relative;
+  margin-top: 20px;
 }
 </style>
