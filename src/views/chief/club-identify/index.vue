@@ -1,24 +1,84 @@
 <template>
   <div>
-    <h2 align="center" />
-    <el-form ref="form" :model="form" label-width="150px">
-      <el-form-item label="申请原因">
-        <el-input v-model="form.reason" placeholder="请输入申请原因" />
-      </el-form-item>
-      <div style="text-align:center">
-        <el-button type="primary" @click="postIdentifyApply">申请认证</el-button>
-        <el-button @click="renew">重置</el-button>
-      </div>
-    </el-form>
+    <el-card>
+      <h2 align="center" />
+      <el-row style="margin-top:20px">
+        <el-button type="primary" @click="applyIdentify()">申请认证</el-button>
+      </el-row>
+    </el-card>
+    <el-card>
+      <!-- 社团认证申请列表 -->
+      <el-table :data="identifyApplyList" stripe border>
+        <el-table-column type="index" label="#" />
+        <el-table-column label="申请时间" prop="createAt" />
+        <el-table-column label="申请原因" prop="reason" />
+        <el-table-column label="申请状态" prop="state">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else-if="scope.row.state === 1" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else style="text-align:center" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <!-- 分页区域 -->
+      <el-pagination
+        :current-page="queryInfo.page"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="queryInfo.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+      <el-dialog
+        title="申请认证"
+        :visible.sync="applyIdentifyDialogVisible"
+        width="70%"
+        center
+        modal
+        @close="applyIdentifyDialogClosed"
+      >
+        <el-form ref="form" :model="form" label-width="70px">
+          <el-form-item label="申请原因">
+            <el-input v-model="form.reason" placeholder="请输入申请原因" />
+          </el-form-item>
+          <div style="text-align:center">
+            <el-button type="primary" @click="postIdentifyApply">申请认证</el-button>
+            <el-button @click="renew">重置</el-button>
+          </div>
+        </el-form>
+      </el-dialog>
+    </el-card>
   </div>
 </template>
 
 <script>
-import { postIdentifyApply } from '@/api/club'
+import { postIdentifyApply, getMyIdentifyApplyList } from '@/api/club'
 export default {
+  filters: {
+    statusFilter(value) {
+      if (value === 0) {
+        return '待审核'
+      } else if (value === 1) {
+        return '已批准'
+      } else {
+        return '已退回'
+      }
+    }
+  },
   data() {
     return {
+      listLoading: true,
       clubId: 10013,
+      queryInfo: {
+        page: 1,
+        limit: 5
+      },
+      total: 0,
+      identifyApplyList: [],
+      applyIdentifyDialogVisible: false,
+      dialogVisible: false,
       form: {
         reason: ''
       }
@@ -32,8 +92,35 @@ export default {
       sessionStorage.setItem('clubId', this.clubId)
     }
     localStorage.setItem('clubid', this.clubid)
+    this.getMyIdentifyApplyList()
   },
   methods: {
+    getMyIdentifyApplyList() {
+      this.listLoading = true
+      getMyIdentifyApplyList(this.clubId, this.queryInfo).then(response => {
+        if (response.status === 200) {
+          this.$message.success('获取社团认证申请成功')
+          this.identifyApplyList = response.data.items
+          this.total = response.data.totalCount
+        } else {
+          return this.$message.error('获取社团认证申请失败')
+        }
+        console.log(this.identifyApplyList)
+      })
+    },
+    // 监听pagesize改变的事件
+    handleSizeChange(newSize) {
+      console.log(newSize)
+      this.queryInfo.limit = newSize
+      this.getMyIdentifyApplyList()
+    },
+    // 监听页码值改变的事件
+    handleCurrentChange(newPage) {
+      console.log(newPage)
+      this.queryInfo.page = newPage
+      this.getMyIdentifyApplyList()
+    },
+    // 提交认证申请
     postIdentifyApply() {
       if (this.form.reason) {
         const param = {
@@ -64,6 +151,12 @@ export default {
     },
     renew() {
       this.form.reason = ''
+    },
+    applyIdentify() {
+      this.applyIdentifyDialogVisible = true
+    },
+    applyIdentifyDialogClosed() {
+      this.$refs.addFormRef.resetFields()
     }
   }
 }

@@ -122,6 +122,13 @@ export function getChangeApplyList(params) {
   })
 }
 // 社团认证申请
+export function getMyIdentifyApplyList(clubid, query) {
+  return request({
+    url: `/clubs/${clubid}/certifications`,
+    method: 'get',
+    params: query
+  })
+}
 export function pushToIdentifyApply(data) {
   console.log(data)
   return request({
