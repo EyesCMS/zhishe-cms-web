@@ -39,3 +39,24 @@ export function postComment(actId, data) {
     data
   })
 }
+
+export function changeForum(id, data) {
+  return request({
+    url: `/forum/posts/${id}`,
+    method: 'put',
+    data
+  })
+}
+export function publishForum(data) {
+  return request({
+    url: `/forum/posts`,
+    method: 'post',
+    data
+  })
+}
+export function deletForum(id) {
+  return request({
+    url: `forum/posts/${id}`,
+    method: 'delet'
+  })
+}

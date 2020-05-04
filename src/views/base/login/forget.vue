@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <h1>Reset Password</h1>
     <div class="index">
       <el-steps
         :active="name"
@@ -187,19 +188,23 @@ html body {
   padding: 0;
 }
 .content {
-  margin: 0;
-  padding: 0;
+  position: absolute;
   background-color: #2d3a4b;
   width: 100%;
   height: 100%;
 }
 .index {
-  width: 45%;
-  position: absolute;
+  width: 65%;
   padding: 20px;
   border-radius: 5px;
   background-color: aliceblue;
-  margin: 200px auto;
-  margin-left: 30%;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+h1 {
+  margin-top: 150px;
+  padding: 8px;
+  text-align: center;
+  color: #eee;
 }
 </style>

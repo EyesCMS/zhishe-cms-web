@@ -190,11 +190,12 @@ body {
   margin: 0 auto;
 }
 .card {
-  margin: 20px;
+  margin: 0px;
+  padding: 5px;
   float: left;
   position: relative;
   height: 340px;
-  width: 21%;
+  width: 33%;
   background: white;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
   transition: 0.4s linear;
@@ -259,6 +260,7 @@ body {
   background: #e64533;
 }
 .recommend {
-  margin: 20px auto;
+  width: 90%;
+  margin: 0 auto;
 }
 </style>
