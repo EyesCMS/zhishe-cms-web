@@ -23,9 +23,9 @@
 
     <!-- 分页区域 -->
     <el-pagination
-      :current-page="queryInfo.pagenum"
+      :current-page="queryInfo.page"
       :page-sizes="[5, 10, 15, 20]"
-      :page-size="queryInfo.pagesize"
+      :page-size="queryInfo.limit"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
       @size-change="handleSizeChange"
