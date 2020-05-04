@@ -10,9 +10,15 @@
     >
       <el-form-item
         label="用户名"
-        prop="name"
+        prop="username"
       >
-        <el-input v-model="ruleForm.name" />
+        <el-input v-model="ruleForm.username" />
+      </el-form-item>
+      <el-form-item
+        label="昵称"
+        prop="nickname"
+      >
+        <el-input v-model="ruleForm.nickname" />
       </el-form-item>
       <el-form-item
         label="密码"
@@ -51,12 +57,6 @@
         <el-input v-model="ruleForm.answer" />
       </el-form-item>
       <el-form-item
-        label="个性签名"
-        prop="solgan"
-      >
-        <el-input v-model="ruleForm.slogan" />
-      </el-form-item>
-      <el-form-item
         label="专业"
         prop="major"
       >
@@ -69,10 +69,10 @@
         <el-input v-model="ruleForm.phone" />
       </el-form-item>
       <el-form-item
-        label="地址"
-        prop="address"
+        label="邮箱"
+        prop="email"
       >
-        <el-input v-model="ruleForm.address" />
+        <el-input v-model="ruleForm.email" />
       </el-form-item>
       <el-form-item>
         <el-button
@@ -96,21 +96,38 @@ export default {
         callback()
       }
     }
+    var validateEmail = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请正确填写邮箱'))
+      } else {
+        if (value !== '') {
+          var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+          if (!reg.test(value)) {
+            callback(new Error('请输入有效的邮箱'))
+          }
+        }
+        callback()
+      }
+    }
     return {
       ruleForm: {
-        name: 'zhishe',
+        username: 'zhishe',
         password: '123456',
         password2: '123456',
         major: '大数据',
         slogan: '这是一条个性签名',
         phone: '12345678910',
-        address: '这是宿舍地址',
+        nickname: '这是昵称',
         answer: '这是一个保密问题答案',
-        question: '这是一个保密问题'
+        question: '这是一个保密问题',
+        email: '22222222@qq.com'
       },
       rules: {
-        name: [
+        username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+        ],
+        nickname: [
           { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
         password: [
@@ -122,9 +139,6 @@ export default {
           { min: 6, max: 12, message: '长度为6-12个字符', trigger: 'blur' },
           { validator: validatePass2, trigger: 'blur' }
         ],
-        slogan: [
-          { max: 100, message: '请保持在100字符内', trigger: 'blur' }
-        ],
         major: [
           { max: 30, message: '请保持在30字符内', trigger: 'blur' }
         ],
@@ -134,6 +148,7 @@ export default {
         question: [
           { required: true, message: '请输入保密问题用以找回密码', trigger: 'blur' }
         ],
+        email: [{ trigger: 'blur', validator: validateEmail }],
         answer: [
           { required: true, message: '请输入回答', trigger: 'blur' }
         ]
@@ -146,22 +161,23 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           var data = {
-            name: this.ruleForm.name,
+            username: this.ruleForm.username,
+            nickname: this.ruleForm.nickname,
             password: this.ruleForm.password,
             major: this.ruleForm.major,
-            slogan: this.ruleForm.slogan,
+            email: this.ruleForm.email,
             phone: this.ruleForm.phone,
-            address: this.ruleForm.address,
             answer: this.ruleForm.answer,
             question: this.ruleForm.question
           }
-          const result = await register(data)
-          if (result.status === 201) {
+          register(data).then(response => {
+            console.log('@register result:')
+            console.log(response)
             this.$message.success('注册成功')
             this.$router.push('/login')
-          } else if (result.status === 409) {
-            this.$message.error('用户名已存在')
-          } else this.$message.error('注册失败')
+          }).catch((e) => {
+            console.log(e)
+          })
         } else {
           this.$message.error('提交失败')
           // console.log('error submit!!')

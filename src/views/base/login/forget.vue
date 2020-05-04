@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       form1: {
-        username: 'test'
+        username: 'test2'
       },
       form2: {
         login_question: 'test',
@@ -113,6 +113,7 @@ export default {
       if (i === 2) {
         this.$refs.form1.validate(valid => {
           if (valid) {
+            console.log(this.form1)
             question(this.form1).then(response => {
               console.log('@forget getQuestion response:')
               console.log(response)

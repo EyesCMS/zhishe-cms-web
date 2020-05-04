@@ -1,33 +1,37 @@
 <template>
   <div>
+    <!-- 发布活动的button -->
     <div :style="btnStyle">
       <el-button
         type="primary"
         @click="addForum"
       >添加动态</el-button>
     </div>
-
+    <!-- 帖子部分 -->
     <el-card>
       <div
         v-for="(item, i) in forumsList"
         :key="i"
       >
         <el-row>
+          <!-- 头像 -->
           <el-col :span="2">
             <el-avatar
               :src="item.avatarUrl"
               style="float:left"
             />
           </el-col>
+          <!-- 创建时间和发帖者 -->
           <el-col :span="10">
-            <p>{{ item.clubName }}</p>
+            <p>{{ item.posterName }}</p>
             <p>{{ item.createAt }}</p>
           </el-col>
+          <!-- 帖子标题 -->
           <el-col :span="6">
             <p>{{ item.title }}</p>
           </el-col>
+          <!-- 删除和修改的按钮 -->
           <el-col :span="10">
-
             <i
               style="float:right"
               class="el-icon-edit"
@@ -104,6 +108,7 @@ export default {
         keyword: '',
         page: 1,
         limit: 5,
+        type: window.sessionStorage.getItem('roles') === 'chief' ? 1 : 0,
         sort: 'created_at',
         order: 'desc'
       },
