@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <el-row style="margin-top:20px">
+      <el-row style="margin-top:30px width:60%">
         <el-button
           type="primary"
           @click="publishAnnouncement()"
@@ -11,6 +11,7 @@
       <div
         v-for="(item, index) in bulletinsList"
         :key="index"
+        style="margin:20px"
       >
         <h2>{{ item.title }}</h2>
         <p>{{ item.createAt }} </p>
@@ -23,7 +24,6 @@
           type="primary"
           @click="deleteBulletin(item.id)"
         >删除</el-link>
-        <el-divider><i class="el-icon-message-solid" /></el-divider>
       </div>
 
       <!-- 分页 -->

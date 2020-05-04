@@ -1,61 +1,56 @@
 <template>
   <div>
-    <el-card>
-      <el-row>
-        <el-col>
-          <div>
-            <h3>社团解散申请</h3>
-            <!-- 社团解散表单显示 -->
-            <el-form
-              ref="Form"
-              :model="dissolution"
-              :rules="rules"
-              label-width="100px"
-            >
-              <!-- 社团名称 -->
-              <el-form-item
-                prop="clubName"
-                label="社团名称"
-              >
-                <el-input
-                  v-model="dissolution.clubName"
-                  :readonly="readonly"
-                />
-              </el-form-item>
-              <!-- 申请人 -->
-              <el-form-item
-                prop="applicant"
-                label="申请人"
-              >
-                <el-input
-                  v-model="dissolution.applicant"
-                  :readonly="readonly"
-                />
-              </el-form-item>
-              <!-- 附件 -->
-              <el-form-item label="附件">
-                <el-input v-model="dissolution.accessoryUrl" />
-              </el-form-item>
-              <!-- 换届原因 -->
-              <el-form-item label="原因">
-                <textarea
-                  v-model="dissolution.reason"
-                  style="margin: 0px; width: 65%; height: 200px;"
-                >解散原因</textarea>
-              </el-form-item>
-              <!-- 提交按钮 -->
-              <el-form-item>
-                <el-button
-                  type="primary"
-                  @click="submitForm"
-                >提交</el-button>
-              </el-form-item>
-            </el-form>
-          </div>
-        </el-col>
 
-      </el-row>
-    </el-card>
+    <div class="dissolution">
+      <h3>社团解散申请</h3>
+      <!-- 社团解散表单显示 -->
+      <el-form
+        ref="Form"
+        :model="dissolution"
+        :rules="rules"
+        label-width="100px"
+      >
+        <!-- 社团名称 -->
+        <el-form-item
+          prop="clubName"
+          label="社团名称"
+        >
+          <el-input
+            v-model="dissolution.clubName"
+            :readonly="readonly"
+          />
+        </el-form-item>
+        <!-- 申请人 -->
+        <el-form-item
+          prop="applicant"
+          label="申请人"
+        >
+          <el-input
+            v-model="dissolution.applicant"
+            :readonly="readonly"
+          />
+        </el-form-item>
+        <!-- 附件 -->
+        <el-form-item label="附件">
+          <el-input v-model="dissolution.accessoryUrl" />
+        </el-form-item>
+        <!-- 换届原因 -->
+        <el-form-item label="原因">
+          <el-input
+            v-model="dissolution.reason"
+            type="textarea"
+            :span="5"
+          >解散原因</el-input>
+        </el-form-item>
+        <!-- 提交按钮 -->
+        <el-form-item>
+          <el-button
+            type="primary"
+            @click="submitForm"
+          >提交</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -68,8 +63,8 @@ export default {
         clubName: '这是社团名字',
         clubId: 10000,
         applicant: '申请人姓名',
-        accessoryUrl: '附加地址',
-        reason: '没啥原因'
+        accessoryUrl: '',
+        reason: ''
       },
       readonly: true,
       rules: {
@@ -121,4 +116,10 @@ export default {
 </script>
 
 <style lang="scss" scope>
+.dissolution {
+  width: 50%;
+  margin: 50px auto;
+  margin-top: 100px;
+  text-align: center;
+}
 </style>

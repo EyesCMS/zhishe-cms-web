@@ -1,80 +1,82 @@
 <template>
-  <div>
-    <el-steps
-      :active="name"
-      finish-status="success"
-      simple
-      style="margin-top: 20px"
-    >
-      <el-step title=" 填写用户名" />
-      <el-step title="填写答案" />
-      <el-step title="修改密码" />
-    </el-steps>
-    <el-tabs
-      v-model="activeName"
-      disabled="false"
-    >
-      <el-tab-pane name="1">
-        <el-form
-          ref="form1"
-          :model="form1"
-          :rules="form1Rules"
-        >
-          <el-form-item
-            label="用户名"
-            prop="username"
+  <div class="content">
+    <div class="index">
+      <el-steps
+        :active="name"
+        finish-status="success"
+        simple
+      >
+        <el-step title=" 填写用户名" />
+        <el-step title="填写答案" />
+        <el-step title="修改密码" />
+      </el-steps>
+      <el-tabs
+        v-model="activeName"
+        disabled="false"
+      >
+        <el-tab-pane name="1">
+          <el-form
+            ref="form1"
+            :model="form1"
+            :rules="form1Rules"
           >
-            <el-input v-model="form1.username" />
-          </el-form-item>
-          <el-form-item>
-            <el-button @click="handleClick(2)">下一步</el-button>
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
-      <el-tab-pane name="2">
-        <el-form
-          ref="form2"
-          :model="form2"
-          :rules="form2Rules"
-        >
-          <el-form-item label="保密问题">
-            <el-input v-model="form2.login_question" />
-          </el-form-item>
-          <el-form-item
-            label="保密回答"
-            prop="login_aswer"
+            <el-form-item
+              label="用户名"
+              prop="username"
+            >
+              <el-input v-model="form1.username" />
+            </el-form-item>
+            <el-form-item>
+              <el-button @click="handleClick(2)">下一步</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane name="2">
+          <el-form
+            ref="form2"
+            :model="form2"
+            :rules="form2Rules"
           >
-            <el-input v-model="form2.login_aswer" />
-          </el-form-item>
-          <el-form-item>
-            <el-button @click="handleClick(3)">下一步</el-button>
-            <el-button @click="back(1)">上一步</el-button>
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
-      <el-tab-pane name="3">
-        <el-form
-          ref="form3"
-          :model="form3"
-          :rules="form3Rules"
-        >
-          <el-form-item
-            label="输入新密码"
-            prop="newpassword"
+            <el-form-item label="保密问题">
+              <el-input v-model="form2.login_question" />
+            </el-form-item>
+            <el-form-item
+              label="保密回答"
+              prop="login_aswer"
+            >
+              <el-input v-model="form2.login_aswer" />
+            </el-form-item>
+            <el-form-item>
+              <el-button @click="handleClick(3)">下一步</el-button>
+              <el-button @click="back(1)">上一步</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane name="3">
+          <el-form
+            ref="form3"
+            :model="form3"
+            :rules="form3Rules"
           >
-            <el-input
-              v-model="form3.newpassword"
-              type="password"
-            />
-          </el-form-item>
-          <el-form-item>
-            <el-button @click="handleClick()">提交</el-button>
-            <el-button @click="back(2)">上一步</el-button>
+            <el-form-item
+              label="输入新密码"
+              prop="newpassword"
+            >
+              <el-input
+                v-model="form3.newpassword"
+                type="password"
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-button @click="handleClick()">提交</el-button>
+              <el-button @click="back(2)">上一步</el-button>
 
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
-    </el-tabs>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+
   </div>
 
 </template>
@@ -178,3 +180,26 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+html body {
+  margin: 0;
+  padding: 0;
+}
+.content {
+  margin: 0;
+  padding: 0;
+  background-color: #2d3a4b;
+  width: 100%;
+  height: 100%;
+}
+.index {
+  width: 45%;
+  position: absolute;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: aliceblue;
+  margin: 200px auto;
+  margin-left: 30%;
+}
+</style>

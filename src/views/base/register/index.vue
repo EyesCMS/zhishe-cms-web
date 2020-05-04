@@ -111,16 +111,16 @@ export default {
     }
     return {
       ruleForm: {
-        username: 'zhishe',
-        password: '123456',
-        password2: '123456',
-        major: '大数据',
-        slogan: '这是一条个性签名',
-        phone: '12345678910',
-        nickname: '这是昵称',
-        answer: '这是一个保密问题答案',
-        question: '这是一个保密问题',
-        email: '22222222@qq.com'
+        username: '',
+        password: '',
+        password2: '',
+        major: '',
+        slogan: '',
+        phone: '',
+        nickname: '',
+        answer: '',
+        question: '',
+        email: ''
       },
       rules: {
         username: [
@@ -212,13 +212,15 @@ export default {
 }
 h1 {
   margin: 0;
-  padding: 20px;
+  padding: 8px;
   text-align: center;
   color: #eee;
 }
 .Form {
-  width: 60%;
+  width: 45%;
+  padding: 20px;
   margin: 0 auto;
+  border-radius: 5px;
   background-color: aliceblue;
   margin: 0 auto;
 }

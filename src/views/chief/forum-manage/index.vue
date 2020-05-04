@@ -8,12 +8,13 @@
       >添加动态</el-button>
     </div>
     <!-- 帖子部分 -->
-    <el-card>
+    <el-card style="margin-top:30px">
       <div
         v-for="(item, i) in forumsList"
         :key="i"
+        class="forum"
       >
-        <el-row>
+        <el-row :body-style="{ padding: '0px' }">
           <!-- 头像 -->
           <el-col :span="2">
             <el-avatar
@@ -28,17 +29,17 @@
           </el-col>
           <!-- 帖子标题 -->
           <el-col :span="6">
-            <p>{{ item.title }}</p>
+            <h2>{{ item.title }}</h2>
           </el-col>
           <!-- 删除和修改的按钮 -->
           <el-col :span="10">
             <i
               style="float:right"
-              class="el-icon-edit"
+              class="el-icon-edit icon"
             />
             <i
               style="float:right"
-              class="el-icon-delete"
+              class="el-icon-delete icon"
               @click="deleteForum"
             />
           </el-col>
@@ -73,15 +74,19 @@
       modal
     >
       <h2 style="text-align:center;margin-bottom:50px">添加动态</h2>
-      <el-form>
+      <el-form :model="forumForm">
         <el-form-item label="标题">
-          <el-input />
+          <el-input v-model="forumForm.title" />
         </el-form-item>
         <el-form-item label="内容">
-          <el-input />
+          <el-input
+            v-model="forumForm.content"
+            type="textarea"
+            :rows="5"
+          />
         </el-form-item>
         <el-form-item label="添加图片">
-          <el-input />
+          <el-input v-model="forumForm.imgUrl" />
         </el-form-item>
       </el-form>
       <span
@@ -115,7 +120,12 @@ export default {
       total: 0,
       addForumDialogVisible: false,
       originState: 1,
-      btnStyle: window.sessionStorage.getItem('roles') === 'chief' ? 'display: none' : ''
+      btnStyle: window.sessionStorage.getItem('roles') === 'chief' ? 'display: none' : '',
+      forumForm: {
+        title: '这是标题',
+        content: '这是内容',
+        imgUrl: '这是图片路径'
+      }
     }
   },
   created: function () {
@@ -154,4 +164,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.icon {
+  line-height: 100%;
+}
+el-col {
+  text-align: center;
+}
+.forum {
+  margin: 30px auto;
+  margin-bottom: 50px;
+  width: 60%;
+  .img {
+    width: 70px;
+  }
+}
 </style>
