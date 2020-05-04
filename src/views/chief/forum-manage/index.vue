@@ -33,13 +33,13 @@
         <!-- 删除和修改的按钮 -->
         <el-row>
           <div
+            v-show="btnShow"
             style="display:inline;float:right;margin:10px;"
             @click="changeForum(item.id)"
           >
             <i class="el-icon-edit icon" />
           </div>
           <div
-            v-show="btnShow"
             style="display:inline;float:right;margin:10px;"
             @click="deleteForum(item.id)"
           >
@@ -49,7 +49,7 @@
 
         <el-row>
           <el-image
-            src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
+            :src="item.imgUrl"
             lazy
           />
         </el-row>
