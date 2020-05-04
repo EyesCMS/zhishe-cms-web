@@ -61,7 +61,7 @@ export default {
   methods: {
     getJoinApplicationsList() {
       this.listLoading = true
-      getJoinApplicationsList(this.userID, this.queryInfo).then(response => {
+      getJoinApplicationsList(this.queryInfo).then(response => {
         if (response.status === 200) {
           console.log(111)
           this.JoinApplicationsList = response.data.items

@@ -184,17 +184,17 @@ export function quitClub(data) {
   })
 }
 
-export function getJoinApplicationsList(userid, query) {
+export function getJoinApplicationsList(query) {
   return request({
-    url: `/users/${userid}/clubs/joins`,
+    url: `/users/clubs/joins`,
     method: 'get',
     params: query
   })
 }
 
-export function getCreateApplicationsList(userid, query) {
+export function getCreateApplicationsList(query) {
   return request({
-    url: `/clubs/creations/${userid}`,
+    url: `/users/clubs/creations`,
     method: 'get',
     params: query
   })

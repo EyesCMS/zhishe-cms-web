@@ -6,7 +6,7 @@
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb :image="form.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
+        <pan-thumb :image="form.avatarUrl" :height="'100px'" :width="'100px'" :hoverable="false">
           <div>Hello</div>
           {{ user.role }}
         </pan-thumb>
@@ -25,7 +25,7 @@
           <el-dialog title="上传头像" :visible.sync="dialogFormVisible">
             <el-form :model="form">
               <el-form-item label="头像地址" :label-width="formLabelWidth">
-                <el-input v-model="form.avatar" autocomplete="off" />
+                <el-input v-model="form.avatarUrl" autocomplete="off" />
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       form: {
-        avatar: ''
+        avatarUrl: ''
       },
       dialogFormVisible: false,
       formLabelWidth: '120px'
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     submitProfile() {
-      console.log(this.form.avatar)
+      console.log(this.form.avatarUrl)
       submitProfile(this.form).then(response => {
         console.log(response)
         if (response.status === 204) {
@@ -86,7 +86,7 @@ export default {
     },
     getInfo() {
       getInfo().then(response => {
-        this.form.avatar = response.data.avatar
+        this.form.avatarUrl = response.data.avatar
       })
     }
   }
