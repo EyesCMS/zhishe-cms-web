@@ -103,7 +103,7 @@ export default {
   methods: {
     getCreateApplicationsList() {
       this.listLoading = true
-      getCreateApplicationsList(this.userID, this.queryInfo).then(response => {
+      getCreateApplicationsList(this.queryInfo).then(response => {
         if (response.status === 200) {
           this.CreateApplicationsList = response.data.items
           this.total = response.data.totalCount

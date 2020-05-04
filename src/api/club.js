@@ -122,6 +122,13 @@ export function getChangeApplyList(params) {
   })
 }
 // 社团认证申请
+export function getMyIdentifyApplyList(clubid, query) {
+  return request({
+    url: `/clubs/${clubid}/certifications`,
+    method: 'get',
+    params: query
+  })
+}
 export function pushToIdentifyApply(data) {
   console.log(data)
   return request({
@@ -177,17 +184,17 @@ export function quitClub(data) {
   })
 }
 
-export function getJoinApplicationsList(userid, query) {
+export function getJoinApplicationsList(query) {
   return request({
-    url: `/users/${userid}/clubs/joins`,
+    url: `/users/clubs/joins`,
     method: 'get',
     params: query
   })
 }
 
-export function getCreateApplicationsList(userid, query) {
+export function getCreateApplicationsList(query) {
   return request({
-    url: `/clubs/creations/${userid}`,
+    url: `/users/clubs/creations`,
     method: 'get',
     params: query
   })

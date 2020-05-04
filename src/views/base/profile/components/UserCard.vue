@@ -6,7 +6,7 @@
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
+        <pan-thumb :image="form.avatarUrl" :height="'100px'" :width="'100px'" :hoverable="false">
           <div>Hello</div>
           {{ user.role }}
         </pan-thumb>
@@ -20,47 +20,21 @@
     <div class="user-bio">
       <div class="user-education user-bio-section">
         <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>头像修改</span></div>
-        <div class="user-bio-section-body">
-          <div style="text-align:center">
-            <el-upload
-              class="upload-demo"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :before-upload="beforeAvatarUpload"
-              list-type="picture"
-              :limit="1"
-            >
-              <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
-            <p />
-            <el-button size="small" type="primary" @click="submitProfile">确认</el-button>
-          </div>
+        <div class="user-bio-section-body" style="text-align:center">
+          <el-button size="small" type="primary" @click="dialogFormVisible = true">点击上传</el-button>
+          <el-dialog title="上传头像" :visible.sync="dialogFormVisible">
+            <el-form :model="form">
+              <el-form-item label="头像地址" :label-width="formLabelWidth">
+                <el-input v-model="form.avatarUrl" autocomplete="off" />
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="submitProfile();dialogFormVisible = false">确 定</el-button>
+            </div>
+          </el-dialog>
         </div>
       </div>
-
-      <!-- <div class="user-skills user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>技能</span></div>
-        <div class="user-bio-section-body">
-          <div class="progress-item">
-            <span>Vue</span>
-            <el-progress :percentage="70" />
-          </div>
-          <div class="progress-item">
-            <span>JavaScript</span>
-            <el-progress :percentage="62" />
-          </div>
-          <div class="progress-item">
-            <span>Css</span>
-            <el-progress :percentage="72" />
-          </div>
-          <div class="progress-item">
-            <span>Spring Boot</span>
-            <el-progress :percentage="100" status="success" />
-          </div>
-        </div>
-      </div> -->
     </div>
   </el-card>
 </template>
@@ -68,6 +42,7 @@
 <script>
 import PanThumb from '@/components/PanThumb'
 import { submitProfile } from '@/api/user'
+import { getInfo } from '@/api/user'
 export default {
   components: { PanThumb },
   props: {
@@ -78,7 +53,6 @@ export default {
           nickname: this.$store.getters.nickname,
           email: this.$store.getters.email,
           address: this.$store.getters.address,
-          avatar: this.action,
           role: this.$store.getters.role,
           major: this.$store.getters.major,
           phone: this.$store.getters.phone,
@@ -87,39 +61,32 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      form: {
+        avatarUrl: ''
+      },
+      dialogFormVisible: false,
+      formLabelWidth: '120px'
+    }
+  },
+  created() {
+    this.getInfo()
+  },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview(file) {
-      console.log(file)
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
-    },
-    submitProfile(nickname, major, email, slogan, phone, avatar, address) {
-      const input = {
-        nickname: nickname,
-        major: major,
-        email: email,
-        address: address,
-        slogan: slogan,
-        phone: phone,
-        avatar: avatar
-      }
-      submitProfile(input).then(response => {
+    submitProfile() {
+      console.log(this.form.avatarUrl)
+      submitProfile(this.form).then(response => {
+        console.log(response)
         if (response.status === 204) {
           this.$message.success('修改成功')
         }
+      })
+      this.getInfo()
+    },
+    getInfo() {
+      getInfo().then(response => {
+        this.form.avatarUrl = response.data.avatar
       })
     }
   }

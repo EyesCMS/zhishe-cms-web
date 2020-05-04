@@ -2,24 +2,28 @@
   <div>
     <el-card>
       <el-row>
-        <el-avatar style="float:left" :src="detailInfo.avator_url" />
-        <p style="float: left">{{ detailInfo.club_name }}</p>
+        <el-avatar style="float:left" :src="detailInfo.avatarUrl" />
+        <p style="float: left">{{ detailInfo.posterName }}</p>
+        <p style="float: left">{{ detailInfo.title }}</p>
       </el-row>
-      <el-image src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg" lazy />
+      <el-image :src="detailInfo.imgUrl" lazy />
       <p>{{ detailInfo.content }}</p>
-      <p>{{ detailInfo.create_at }}</p>
-      <el-card>
+      <p>{{ detailInfo.createAt }}</p>
+
+      <!-- 评论区 -->
+      <el-card id="comment">
         <div v-for="(item, index) in remarksList" :key="index">
           <el-row>
-            <el-avatar style="float:left" :src="item.avator_url" />
+            <el-avatar style="float:left" :src="item.avatarUrl" />
             <p style="float: left;margin-left:5px">{{ item.nickname }}</p>
           </el-row>
           <p>{{ item.content }}</p>
-          <p>{{ item.create_at }}</p>
+          <p>{{ item.createAt }}</p>
           <el-divider />
         </div>
         <div style="text-align:center">
-          <el-link type="primary" @click="showMoreRemarks">查看更多评论</el-link>
+          <el-link v-if="queryInfo.limit < remarksTotal" type="primary" @click="showMoreRemarks">查看更多评论</el-link>
+          <p v-else>已加载全部评论</p>
         </div>
         <el-row style="margin-top:15px">
           <el-input
@@ -45,39 +49,54 @@ export default {
   name: 'ActivityDetail',
   data() {
     return {
-      id: 1,
-      uid: 1,
+      id: this.$route.query.id,
+      userId: this.$store.getters.userid,
       queryInfo: {
         page: 1,
         limit: 5,
-        sort: 'update_at',
+        sort: 'updateAt',
         order: 'desc'
       },
-      detailInfo: {},
+      detailQuery: {
+        type: 1
+      },
+      detailInfo: {
+        id: '',
+        posterName: '',
+        avatarUrl: '',
+        title: '',
+        content: '',
+        imgUrl: '',
+        createAt: ''
+      },
       remarksList: [],
-      ramarksTotal: 0,
+      // 评论条数
+      remarksTotal: 0,
       clubAvator: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       comment: ''
     }
   },
   created() {
-    // this.id = this.$route.query.id
-    console.log(this.id)
     this.getInvitationDetail()
     this.getRemarksList()
   },
   methods: {
     // 获取帖子详情
     getInvitationDetail() {
-      getInvitationDetail(this.id).then(response => {
-        this.detailInfo = response.items
-        console.log(this.detailInfo)
+      getInvitationDetail(this.id, this.detailQuery).then(response => {
+        this.detailInfo.id = response.data.id
+        this.detailInfo.posterName = response.data.posterName
+        this.detailInfo.avatarUrl = response.data.avatarUrl
+        this.detailInfo.title = response.data.title
+        this.detailInfo.content = response.data.content
+        this.detailInfo.imgUrl = response.data.imgUrl
+        this.detailInfo.createAt = response.data.createAt
       })
     },
     getRemarksList() {
-      getRemarksList(1, this.queryInfo).then(response => {
-        this.remarksList = response.items
-        this.ramarksTotal = response.total_count
+      getRemarksList(this.detailInfo.id, this.queryInfo).then(response => {
+        this.remarksList = response.data.items
+        this.remarksTotal = response.data.totalCount
         console.log(this.remarksList)
       })
     },
@@ -87,16 +106,17 @@ export default {
     },
     postComment() {
       const data = {
-        uid: this.uid,
-        pid: this.id,
+        postId: this.detailInfo.id,
         content: this.comment
       }
-      postComment(this.id, data).then(response => {
+      postComment(data).then(response => {
         console.log(response)
         this.$message.success('发表成功')
       })
       this.comment = ''
       this.getRemarksList()
+      var element = document.getElementById('comment')
+      element.scrollIntoView()
     }
   }
 }

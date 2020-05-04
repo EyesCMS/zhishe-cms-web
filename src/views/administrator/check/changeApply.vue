@@ -104,7 +104,7 @@ export default {
       listLoading: true,
       clubId: 0,
       queryInfo: {
-        page: 0,
+        page: 1,
         limit: 5
       },
       total: 0,

@@ -23,7 +23,8 @@
             id="bulletin"
             :key="i"
           >
-            <el-tag>{{ i + 1 }}</el-tag>
+            <el-tag v-if="i <= 2" type="danger">{{ i + 1 }}</el-tag>
+            <el-tag v-else type="info">{{ i + 1 }}</el-tag>
             <p style="display:inline;">{{ item.title }}</p>
             <el-link
               type="primary"
@@ -40,7 +41,8 @@
             id="bulletin"
             :key="i"
           >
-            <el-tag type="warning">{{ i + 1 }}</el-tag>
+            <el-tag v-if="i <= 2" type="warning">{{ i + 1 }}</el-tag>
+            <el-tag v-else type="info">{{ i + 1 }}</el-tag>
             <p style="display:inline;">{{ item.title }}</p>
             <el-link
               type="primary"

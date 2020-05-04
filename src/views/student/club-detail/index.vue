@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="text-align:center;">
     <el-card>
       <el-col :span="4">
-        <el-avatar shape="square" :size="180" :src="avatarUrl" />
+        <el-avatar shape="circle" :size="180" :src="avatarUrl" />
       </el-col>
     </el-card>
     <el-card>
@@ -21,11 +21,20 @@
             <el-form-item label="社团简介">
               <el-input v-model="clubInfo.slogan" :disabled="true" />
             </el-form-item>
+            <el-form-item label="社团类别">
+              <el-input v-model="clubInfo.type" :disabled="true" />
+            </el-form-item>
             <el-form-item label="社团人数">
               <el-input v-model="clubInfo.memberCount" :disabled="true" />
             </el-form-item>
             <el-form-item label="社团Q群">
               <el-input v-model="clubInfo.qqGroup" :disabled="true" />
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="backToClub"
+              >确定</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -44,7 +53,12 @@ export default {
       name: this.$route.query.name,
       chiefName: this.$route.query.chiefName,
       avatarUrl: this.$route.query.avatarUrl,
-      clubInfo: {}
+      clubInfo: {
+        slogan: '',
+        memberCount: '',
+        qqGroup: '',
+        type: ''
+      }
     }
   },
   created() {
@@ -54,13 +68,18 @@ export default {
     getClubDetail() {
       getClubDetail(this.id).then(response => {
         if (response.status === 200) {
-          this.clubInfo = response.data.items
-          console.log(response.data)
+          this.clubInfo.slogan = response.data.slogan
+          this.clubInfo.memberCount = response.data.memberCount
+          this.clubInfo.qqGroup = response.data.slogan
+          this.clubInfo.type = response.data.type
           return this.$message.success('获取社团信息成功')
         } else {
           return this.$message.error('获取社团信息失败')
         }
       })
+    },
+    backToClub() {
+      this.$router.replace('/student/index')
     }
   }
 }
