@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="margin-top: 20px;">
     <!-- 加入社团申请列表 -->
     <el-table :data="JoinApplicationsList" stripe border>
-      <el-table-column label="社团ID" prop="id" />
+      <el-table-column label="社团ID" prop="clubId" />
       <el-table-column label="社团头像" prop="avatarUrl">
         <template slot-scope="scope" width="40">
           <el-image
@@ -11,21 +11,22 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="社团名称" prop="name" />
+      <el-table-column label="社团名称" prop="clubName" />
       <el-table-column label="申请原因" prop="reason" />
-      <el-table-column label="申请状态" prop="state" />
-      <template slot-scope="scope">
-        <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
-        <el-tag v-else-if="scope.row.state === 1" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
-        <el-tag v-else style="text-align:center" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
-      </template>
+      <el-table-column label="申请状态" prop="state">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+          <el-tag v-else-if="scope.row.state === 1" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+          <el-tag v-else style="text-align:center" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+        </template>
+      </el-table-column>
     </el-table>
 
     <!-- 分页区域 -->
     <el-pagination
-      :current-page="queryInfo.pagenum"
+      :current-page="queryInfo.page"
       :page-sizes="[5, 10, 15, 20]"
-      :page-size="queryInfo.pagesize"
+      :page-size="queryInfo.limit"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
       @size-change="handleSizeChange"
@@ -52,7 +53,7 @@ export default {
   data() {
     return {
       listLoading: true,
-      userID: this.$store.getters.name,
+      userID: this.$store.getters.userid,
       queryInfo: {
         page: 1,
         limit: 5

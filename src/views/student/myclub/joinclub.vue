@@ -14,6 +14,7 @@
       </el-table-column>
       <el-table-column label="社团名称" prop="name" />
       <el-table-column label="社长名称" prop="chiefName" />
+      <el-table-column label="社团类别" prop="type" />
       <el-table-column label="操作" width="200px">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="EnterToClub(scope.row.id)">进入社团</el-button>
@@ -23,9 +24,9 @@
 
     <!-- 分页区域 -->
     <el-pagination
-      :current-page="queryInfo.pagenum"
+      :current-page="queryInfo.page"
       :page-sizes="[5, 10, 15, 20]"
-      :page-size="queryInfo.pagesize"
+      :page-size="queryInfo.limit"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
       @size-change="handleSizeChange"
