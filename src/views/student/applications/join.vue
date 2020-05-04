@@ -3,16 +3,9 @@
     <!-- 加入社团申请列表 -->
     <el-table :data="JoinApplicationsList" stripe border>
       <el-table-column label="社团ID" prop="clubId" />
-      <el-table-column label="社团头像" prop="avatarUrl">
-        <template slot-scope="scope" width="40">
-          <el-image
-            :src="scope.row.avatarUrl"
-            style="width: 50px; height: 50px"
-          />
-        </template>
-      </el-table-column>
       <el-table-column label="社团名称" prop="clubName" />
       <el-table-column label="申请原因" prop="reason" />
+      <el-table-column label="申请时间" prop="createAt" />
       <el-table-column label="申请状态" prop="state">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>

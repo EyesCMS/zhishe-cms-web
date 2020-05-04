@@ -10,12 +10,12 @@
       <h4>共搜索到 {{ total }} 条记录</h4>
       <el-card v-for="(item, index) in AllinvitationsList" :key="index" style="margin-top:20px">
         <el-row>
-          <el-avatar style="float:left" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+          <el-avatar style="float:left" :src="item.avatarUrl" />
           <p style="float: left">{{ item.clubNname }}</p>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="15">
-            <el-image :src="imgUrl" :fit="fit" lazy />
+            <el-image :src="item.imgUrl" :fit="fit" lazy />
           </el-col>
           <el-col :span="9">
             <el-card>
@@ -50,6 +50,7 @@ export default {
     return {
       clubId: 0,
       queryInfo: {
+        type: 1,
         page: 1,
         limit: 5,
         sort: 'created_at',
@@ -69,8 +70,8 @@ export default {
       getAllInvitationList(this.queryInfo).then(response => {
         console.log(response)
         if (response.status === 200) {
-          this.AllinvitationsList = response.data
-          this.total = response.total
+          this.AllinvitationsList = response.data.items
+          this.total = response.data.totalCount
         } else {
           return this.$message.error('获取帖子列表失败')
         }
