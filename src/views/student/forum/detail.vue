@@ -4,13 +4,14 @@
       <el-row>
         <el-avatar style="float:left" :src="detailInfo.avatarUrl" />
         <p style="float: left">{{ detailInfo.posterName }}</p>
+        <p style="float: left">{{ detailInfo.title }}</p>
       </el-row>
       <el-image :src="detailInfo.imgUrl" lazy />
       <p>{{ detailInfo.content }}</p>
       <p>{{ detailInfo.createAt }}</p>
 
       <!-- 评论区 -->
-      <el-card>
+      <el-card id="comment">
         <div v-for="(item, index) in remarksList" :key="index">
           <el-row>
             <el-avatar style="float:left" :src="item.avatarUrl" />
@@ -48,8 +49,8 @@ export default {
   name: 'ActivityDetail',
   data() {
     return {
-      id: 1,
-      userId: 10088,
+      id: this.$route.query.id,
+      userId: this.$store.getters.userid,
       queryInfo: {
         page: 1,
         limit: 5,
@@ -59,7 +60,15 @@ export default {
       detailQuery: {
         type: 1
       },
-      detailInfo: {},
+      detailInfo: {
+        id: '',
+        posterName: '',
+        avatarUrl: '',
+        title: '',
+        content: '',
+        imgUrl: '',
+        createAt: ''
+      },
       remarksList: [],
       // 评论条数
       remarksTotal: 0,
@@ -68,8 +77,6 @@ export default {
     }
   },
   created() {
-    this.id = this.$route.query.id
-    this.userId = this.$store.getters.userid
     this.getInvitationDetail()
     this.getRemarksList()
   },
@@ -77,12 +84,17 @@ export default {
     // 获取帖子详情
     getInvitationDetail() {
       getInvitationDetail(this.id, this.detailQuery).then(response => {
-        this.detailInfo = response.data
-        console.log(this.detailInfo)
+        this.detailInfo.id = response.data.id
+        this.detailInfo.posterName = response.data.posterName
+        this.detailInfo.avatarUrl = response.data.avatarUrl
+        this.detailInfo.title = response.data.title
+        this.detailInfo.content = response.data.content
+        this.detailInfo.imgUrl = response.data.imgUrl
+        this.detailInfo.createAt = response.data.createAt
       })
     },
     getRemarksList() {
-      getRemarksList(1, this.queryInfo).then(response => {
+      getRemarksList(this.detailInfo.id, this.queryInfo).then(response => {
         this.remarksList = response.data.items
         this.remarksTotal = response.data.totalCount
         console.log(this.remarksList)
@@ -94,15 +106,17 @@ export default {
     },
     postComment() {
       const data = {
-        postId: this.id,
+        postId: this.detailInfo.id,
         content: this.comment
       }
-      postComment(this.id, data).then(response => {
+      postComment(data).then(response => {
         console.log(response)
         this.$message.success('发表成功')
       })
       this.comment = ''
       this.getRemarksList()
+      var element = document.getElementById('comment')
+      element.scrollIntoView()
     }
   }
 }

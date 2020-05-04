@@ -32,7 +32,7 @@ export function getRemarksList(id, query) {
   })
 }
 
-export function postComment(actId, data) {
+export function postComment(data) {
   return request({
     url: `/forum/posts/remarks`,
     method: 'post',

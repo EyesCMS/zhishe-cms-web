@@ -11,7 +11,7 @@
       <el-card v-for="(item, index) in AllinvitationsList" :key="index" style="margin-top:20px">
         <el-row>
           <el-avatar style="float:left" :src="item.avatarUrl" />
-          <p style="float: left">{{ item.clubNname }}</p>
+          <p style="float: left">{{ item.posterName }}</p>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="15">
@@ -56,7 +56,6 @@ export default {
         sort: 'created_at',
         order: 'desc'
       },
-      imgUrl: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
       AllinvitationsList: [],
       total: 0,
       fit: 'contain'
