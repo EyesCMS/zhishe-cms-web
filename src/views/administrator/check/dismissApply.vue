@@ -2,27 +2,46 @@
   <div>
     <!-- 卡片视图区 -->
     <el-card>
-      <el-form :inline="true" :model="form" label-width="100px">
-        <el-form-item label="社团名称">
-          <el-input v-model="form.clubName" placeholder="" />
-        </el-form-item>
-        <el-form-item label="申请状态" prop="state">
-          <el-select v-model="form.state" placeholder="请选择">
-            <el-option label="未审核" value="0" />
-            <el-option label="已批准" value="1" />
-            <el-option label="已退回" value="2" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="申请时间">
-          <el-form-item prop="createAt">
-            <el-date-picker v-model="form.createAt" type="date" placeholder="选择日期" style="width: 90%;" />
+      <div>
+        <i class="el-icon-search" />
+        <span>筛选搜索</span>
+        <el-button
+          style="float: right"
+          type="primary"
+          size="small"
+          @click="check"
+        >
+          查询
+        </el-button>
+        <el-button
+          style="float: right;margin-right: 15px"
+          size="small"
+          @click="renew"
+        >
+          重置
+        </el-button>
+      </div>
+      <div style="margin-top: 30px">
+        <el-form :inline="true" :model="form" label-width="100px">
+          <el-form-item label="社团名称">
+            <el-input v-model="form.clubName" placeholder="" />
           </el-form-item>
-        </el-form-item>
-        <div style="text-align:center">
-          <el-button type="primary" @click="check">查询</el-button>
-          <el-button type="primary" @click="renew">重置</el-button>
-        </div>
-      </el-form>
+          <el-form-item label="申请状态" prop="state">
+            <el-select v-model="form.state" placeholder="请选择">
+              <el-option label="未审核" value="0" />
+              <el-option label="已批准" value="1" />
+              <el-option label="已退回" value="2" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="申请时间">
+            <el-form-item prop="createAt">
+              <el-date-picker v-model="form.createAt" type="date" placeholder="选择日期" style="width: 90%;" />
+            </el-form-item>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-card>
+    <el-card>
       <!-- 社团解散申请列表 -->
       <el-table :data="dismissApplyList" stripe border>
         <el-table-column type="index" label="#" />
