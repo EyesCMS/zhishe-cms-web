@@ -31,25 +31,41 @@
 
 <script>
 import { submitProfile } from '@/api/user'
+import { getInfo } from '@/api/user'
 export default {
   data() {
     return {
       form: {
-        nickname: this.$store.getters.nickname,
-        email: this.$store.getters.email,
-        address: this.$store.getters.address,
-        major: this.$store.getters.major,
-        phone: this.$store.getters.phone,
-        slogan: this.$store.getters.slogan
+        nickname: '',
+        email: '',
+        address: '',
+        major: '',
+        phone: '',
+        slogan: ''
       }
     }
+  },
+  created() {
+    this.getInfo()
   },
   methods: {
     submitProfile() {
       submitProfile(this.form).then(response => {
         if (response.status === 204) {
           this.$message.success('修改成功')
+          this.getInfo()
         }
+      })
+    },
+    getInfo() {
+      getInfo().then(response => {
+        console.log(response)
+        this.form.nickname = response.data.nickname
+        this.form.email = response.data.email
+        this.form.address = response.data.address
+        this.form.major = response.data.major
+        this.form.phone = response.data.phone
+        this.form.slogan = response.data.slogan
       })
     }
   }
