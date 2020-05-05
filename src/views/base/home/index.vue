@@ -1,32 +1,31 @@
 <template>
   <div>
-    <el-button
-      type="primary"
-      @click="chief"
-    >切换到chief</el-button>
-    <el-button
-      type="primary"
-      @click="member"
-    >切换到clubMember</el-button>
-    <el-button
-      type="primary"
-      @click="student"
-    >切换到student</el-button>
-    <el-button
-      type="primary"
-      @click="admin"
-    >切换到admin</el-button>
+<!--    <el-button-->
+<!--      type="primary"-->
+<!--      @click="chief"-->
+<!--    >切换到chief</el-button>-->
+<!--    <el-button-->
+<!--      type="primary"-->
+<!--      @click="member"-->
+<!--    >切换到clubMember</el-button>-->
+<!--    <el-button-->
+<!--      type="primary"-->
+<!--      @click="student"-->
+<!--    >切换到student</el-button>-->
+<!--    <el-button-->
+<!--      type="primary"-->
+<!--      @click="admin"-->
+<!--    >切换到admin</el-button>-->
     <!-- 社团风采走马灯 -->
     <div class="carousel">
       <el-carousel
-        :interval="5000"
+        :interval="3000"
         arrow="always"
       >
         <el-carousel-item
-          v-for="item in 4"
+          v-for="item in carouselImgList"
           :key="item"
-        >
-          <h3>{{ item }}</h3>
+        ><img :src="item" alt="item"/>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -55,7 +54,7 @@
                 社长：{{ item.chiefName }}
               </div>
               <div class="bottom">
-                <button @click="getClubDetail(item.id)">learn more</button>
+                <button @click="getClubDetail(item.id)">查看详情</button>
               </div>
             </div>
           </div>
@@ -63,7 +62,7 @@
       </el-row>
     </div>
     <el-dialog
-      title="公告"
+      title="社团详情"
       :visible.sync="bulletinDetailDialogVisible"
       width="70%"
       center
@@ -90,6 +89,11 @@
 <script>
 
 import { recommended, getClubDetail } from '@/api/club'
+import clubImg1 from '@/assets/images/club1.jpg'
+import clubImg2 from '@/assets/images/club2.jpeg'
+import clubImg3 from '@/assets/images/club3.jpeg'
+
+
 export default {
   data() {
     return {
@@ -99,6 +103,11 @@ export default {
         sort: 'update_at',
         order: 'desc'
       },
+      carouselImgList: [
+        clubImg1,
+        clubImg2,
+        clubImg3
+      ],
       // 公告列表
       recommendedList: [],
       clubDetail: {},
@@ -150,7 +159,7 @@ export default {
 .carousel {
   margin: 20px auto;
   padding: 20px;
-  width: 75%;
+  width: 40%;
 }
 .el-carousel__item h3 {
   color: #475669;
@@ -234,7 +243,7 @@ body {
 .content .sub-title {
   font-size: 18px;
   font-weight: 500;
-  color: #e74c3c;
+  color: #909399;
   margin-bottom: 10px;
 }
 .bottom span {
@@ -248,7 +257,7 @@ body {
   float: left;
   padding: 7px 15px;
   font-size: 17px;
-  background: #e74c3c;
+  background: #409EFF;
   color: white;
   font-weight: 500;
   border: none;
@@ -258,7 +267,7 @@ body {
 }
 .bottom button:hover {
   transform: scale(0.9);
-  background: #e64533;
+  background: #409EFF;
 }
 .recommend {
   width: 90%;

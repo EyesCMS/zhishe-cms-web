@@ -163,7 +163,6 @@ import bg from '@/assets/images/bg.png'
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background: url(../../../assets/images/bg.png) no-repeat;
     background-size: 100% 100%;
   }
   .leftimg {

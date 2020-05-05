@@ -20,7 +20,7 @@ export function question(data) {
   return request({
     url: '/users/question',
     method: 'get',
-    data
+    params: data
   })
 }
 
