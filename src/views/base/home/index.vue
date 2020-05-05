@@ -109,6 +109,7 @@ export default {
     const clubid = 112
     localStorage.setItem('clubid', clubid)
     this.getRecommendedList()
+    console.log(this.$store.getters)
   },
   methods: {
     chief: function () {

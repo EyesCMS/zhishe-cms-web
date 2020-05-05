@@ -96,7 +96,7 @@ const actions = {
           commit('SET_EMAIL', data.email)
           commit('SET_SLOGAN', data.slogan)
           commit('SET_MAJOR', data.major)
-          commit('SET_USERID', data.userid)
+          commit('SET_USERID', data.userId)
           commit('SET_AVATAR', data.avatar)
           resolve(data)
         })
