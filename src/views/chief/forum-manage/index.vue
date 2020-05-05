@@ -1,14 +1,15 @@
 <template>
   <div>
     <!-- 发布活动的button -->
-    <div v-show="btnShow">
+    <div v-show="btnShow" style="text-align:center">
       <el-button
+        style="margin-top:20px;"
         type="primary"
         @click="addForum"
-      >添加动态</el-button>
+      >发布动态</el-button>
     </div>
     <!-- 帖子部分 -->
-    <el-card style="margin-top:30px">
+    <el-card style="margin-top:20px">
       <div
         v-for="(item, key) in forumsList"
         :key="key"
@@ -23,9 +24,9 @@
             />
           </el-col>
           <!-- 创建时间和发帖者 -->
-          <el-col :span="3">
-            <p style="font-size:14px">{{ item.posterName }}</p>
-            <p style=" font-size:5px">{{ item.createAt }}</p>
+          <el-col :span="4">
+            <p style="font-size:16px">{{ item.posterName }}</p>
+            <p style=" font-size:12px">{{ item.createAt }}</p>
           </el-col>
           <!-- 帖子标题 -->
           <h2 style="margin-top:0 padding: 0">{{ item.title }}</h2>
@@ -37,19 +38,33 @@
             style="display:inline;float:right;margin:10px;"
             @click="changeForum(item.id)"
           >
-            <i class="el-icon-edit icon" />
+            <i style="cursor:pointer" class="el-icon-edit icon" />
           </div>
           <div
             style="display:inline;float:right;margin:10px;"
-            @click="deleteForum(item.id)"
+            @click="dialogVisible = true"
           >
-            <i class="el-icon-delete icon" />
+            <i style="cursor:pointer" class="el-icon-delete icon" />
           </div>
         </el-row>
+        <el-dialog
+          title="提示"
+          :visible.sync="dialogVisible"
+          width="30%"
+        >
+          <span>确认删除该帖子吗？</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="deleteForum(item.id);dialogVisible = false">确 定</el-button>
+          </span>
+        </el-dialog>
 
         <el-row>
+          <!--cursor:pointer,鼠标滑过变成手指-->
           <el-image
+            style="width: 100px; height: 100px;"
             :src="item.imgUrl"
+            onerror="this.style.display='none'"
             lazy
           />
         </el-row>
@@ -57,11 +72,13 @@
           <p>{{ item.content }}</p>
         </el-row>
         <el-row>
-          <i
-            style="display: inline; float:right"
-            class="el-icon-s-comment"
-            @click="getRemarkList(item.id)"
-          />
+          <p style="display: inline;float:right;cursor:pointer" @click="getRemarkList(item.id)">
+            共 {{ length }} 条评论
+            <i
+              style="display: inline; float:right;cursor:pointer"
+              class="el-icon-s-comment"
+            />
+          </p>
         </el-row>
         <div
           v-for="(index, I) in remarklist"
@@ -79,26 +96,27 @@
             </el-col>
             <!-- 评论时间和发评论者 -->
             <el-col :span="3">
-              <p style="font-size:14px">{{ index.nickname }}</p>
-              <p style=" font-size:5px">{{ index.createAt }}</p>
+              <p style="font-size:18px">{{ index.nickname }}</p>
+              <p style=" font-size:10px">{{ index.createAt }}</p>
             </el-col>
             <!-- 帖子标题 -->
             <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
           </el-row>
         </div>
-
       </div>
 
       <!-- 分页区域 -->
-      <el-pagination
-        :current-page="queryInfo.page"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="queryInfo.limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      <div style="text-align:center">
+        <el-pagination
+          :current-page="queryInfo.page"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="queryInfo.limit"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
     </el-card>
     <!-- 添加动态 -->
     <el-dialog
@@ -107,7 +125,7 @@
       center
       modal
     >
-      <h2 style="text-align:center;margin-bottom:50px">发帖</h2>
+      <h2 style="text-align:center;margin-bottom:50px">发布动态</h2>
       <el-form
         ref="publish"
         :model="forumForm"
@@ -117,7 +135,7 @@
           label="标题"
           prop="title"
         >
-          <el-input v-model="forumForm.title" />
+          <el-input v-model="forumForm.title" placeholder="请输入标题" />
         </el-form-item>
         <el-form-item
           label="内容"
@@ -127,10 +145,11 @@
             v-model="forumForm.content"
             type="textarea"
             :rows="5"
+            placeholder="请输入内容"
           />
         </el-form-item>
         <el-form-item label="添加图片">
-          <el-input v-model="forumForm.imgUrl" />
+          <el-input v-model="forumForm.imgUrl" placeholder="请输入图片地址" />
         </el-form-item>
       </el-form>
       <span
@@ -190,10 +209,12 @@
 </template>
 
 <script>
-import { getInvitationList, getRemarksList, getInvitationDetail, changeForum, publishForum, deletForum } from '@/api/forum'
+import { getInvitationList, getRemarksList, getInvitationDetail, changeForum, publishForum, deleteForum } from '@/api/forum'
 export default {
   data() {
     return {
+      dialogVisible: false,
+      length: 0,
       forumsList: [],
       forumDetile: {},
       remarklist: [],
@@ -212,9 +233,9 @@ export default {
       originState: 1,
       btnShow: window.sessionStorage.getItem('roles') !== 'chief',
       forumForm: {
-        title: '这是标题',
-        content: '这是内容',
-        imgUrl: '这是图片路径'
+        title: '',
+        content: '',
+        imgUrl: ''
       },
       rules: {
         title: [{ required: true, trigger: 'blur', message: '请输入标题' }],
@@ -263,16 +284,23 @@ export default {
       })
     },
     deleteForum(id) {
-      deletForum(id)
-      this.getForumsList()
-      this.$message.success('删除帖子')
+      deleteForum(id).then(response => {
+        if (response.status === 204) {
+          this.$message.success('删除帖子成功')
+          this.getForumsList()
+        } else {
+          return this.$message.error('删除帖子失败')
+        }
+      })
     },
     getRemarkList(id) {
       getRemarksList(id, this.queryInfo).then(response => {
-        console.log('@forun getRemarkList response')
+        console.log('@forum getRemarkList response')
         console.log(response)
         console.log(id)
+        this.commentCount = true
         this.remarklist = response.data.items
+        this.length = response.data.items.length
         this.remarklist.forEach(element => {
           element['id'] = id
         })

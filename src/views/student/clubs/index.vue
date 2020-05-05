@@ -28,11 +28,11 @@
             </el-form-item>
             <el-form-item label="社团类别：">
               <el-select v-model="form.type" placeholder="请选择分类" clearable style="width: 203px">
-                <el-option label="艺术" value="art" />
-                <el-option label="运动" value="sport" />
-                <el-option label="学习" value="study" />
-                <el-option label="休闲" value="play" />
-                <el-option label="其他" value="other" />
+                <el-option label="艺术" value="艺术" />
+                <el-option label="运动" value="运动" />
+                <el-option label="学习" value="学习" />
+                <el-option label="休闲" value="休闲" />
+                <el-option label="其他" value="其他" />
               </el-select>
             </el-form-item>
           </div>

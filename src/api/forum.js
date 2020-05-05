@@ -54,7 +54,7 @@ export function publishForum(data) {
     data
   })
 }
-export function deletForum(id) {
+export function deleteForum(id) {
   return request({
     url: `forum/posts/${id}`,
     method: 'delete'
