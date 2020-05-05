@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      clubId: 10016,
+      clubId: sessionStorage.getItem('clubId'),
       addList: [],
       queryInfo: {
         keyword: '',

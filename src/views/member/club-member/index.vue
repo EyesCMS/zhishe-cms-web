@@ -1,5 +1,35 @@
 <template>
   <div>
+    <el-card style="margin: 15px 15px">
+      <el-row>
+        <i class="el-icon-search">筛选搜索</i>
+      </el-row>
+      <el-row style="margin-top: 25px" :gutter="10">
+        <el-form ref="form" :model="queryInfo" label-width="80px">
+          <el-col :span="10">
+            <el-form-item label="昵称/用户名">
+              <el-input v-model="queryInfo.name" placeholder="请输入昵称/用户名" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="头衔">
+              <el-select v-model="form.selectedHonor" placeholder="请选择头衔">
+                <el-option label="潜水" value="1" />
+                <el-option label="冒泡" value="2" />
+                <el-option label="吐槽" value="3" />
+                <el-option label="活跃" value="4" />
+                <el-option label="话痨" value="5" />
+                <el-option label="传说" value="6" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-form>
+      </el-row>
+      <el-row style="text-align: center; margin-top: 15px">
+        <el-button type="primary" @click="getInvitationsList">查询</el-button>
+        <el-button type="info" @click="reset">重置</el-button>
+      </el-row>
+    </el-card>
     <el-card>
       <el-input
         v-model="queryInfo.keyword"
@@ -50,10 +80,12 @@ export default {
       listLoading: true,
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
-        keyword: '',
+        name: '',
+        honorId: '',
         page: 1,
         limit: 5
       },
+      selectedHonor: '',
       total: 0,
       membersList: []
     }
