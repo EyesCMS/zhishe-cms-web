@@ -24,13 +24,8 @@
         <el-form :inline="true" :model="form" size="small" label-width="140px">
           <div style="text-align:center">
             <el-form-item label="输入搜索：">
-              <el-input v-model="form.name" style="width: 203px" placeholder="请输入社团名称" />
+              <el-input v-model="form.keyword" style="width: 203px" placeholder="请输入社团名称" />
             </el-form-item>
-            <el-form-item label="社团ID：">
-              <el-input v-model="form.id" style="width: 203px" placeholder="请输入社团ID" />
-            </el-form-item>
-          </div>
-          <div style="text-align:center">
             <el-form-item label="社团类别：">
               <el-select v-model="form.type" placeholder="请选择分类" clearable style="width: 203px">
                 <el-option label="艺术" value="art" />
@@ -39,9 +34,6 @@
                 <el-option label="休闲" value="play" />
                 <el-option label="其他" value="other" />
               </el-select>
-            </el-form-item>
-            <el-form-item label="社长名称：">
-              <el-input v-model="form.chiefName" style="width: 203px" placeholder="请输入社长名称" />
             </el-form-item>
           </div>
         </el-form>
@@ -114,9 +106,7 @@ export default {
       total: 0,
       clubsList: [],
       form: {
-        name: '',
-        id: '',
-        chiefName: '',
+        keyword: '',
         type: ''
       }
     }
@@ -128,9 +118,7 @@ export default {
     getClubsList() {
       this.listLoading = true
       const params = {
-        name: this.form.name,
-        id: this.form.id,
-        chiefName: this.form.chiefName,
+        keyword: this.form.keyword,
         type: this.form.type,
         page: this.queryInfo.page,
         limit: this.queryInfo.limit

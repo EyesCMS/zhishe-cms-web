@@ -10,16 +10,17 @@
       </el-form-item>
       <el-form-item label="社团类别" prop="type">
         <el-select v-model="form.type" placeholder="请选择社团类别">
-          <el-option label="艺术" value="art" />
-          <el-option label="运动" value="sport" />
-          <el-option label="学习" value="study" />
-          <el-option label="休闲" value="play" />
-          <el-option label="其他" value="other" />
+          <el-option label="艺术" value="艺术" />
+          <el-option label="运动" value="运动" />
+          <el-option label="学习" value="学习" />
+          <el-option label="休闲" value="休闲" />
+          <el-option label="其他" value="其他" />
         </el-select>
       </el-form-item>
       <el-form-item label="申请原因" prop="reason">
         <el-input v-model="form.reason" placeholder="请输入申请原因" />
       </el-form-item>
+      <!--社团上传头像组件
       <el-form-item label="社团头像" prop="avatarUrl">
         <el-upload
           class="upload-demo"
@@ -33,7 +34,7 @@
           <el-button size="small" type="primary">点击上传</el-button>
           <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
-      </el-form-item>
+      </el-form-item>-->
       <div style="text-align:center">
         <el-button type="primary" @click="postSubmit">立即创建</el-button>
         <el-button @click="renew">重置</el-button>
