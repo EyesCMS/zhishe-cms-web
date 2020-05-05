@@ -94,7 +94,7 @@ export default {
       })
     },
     getRemarksList() {
-      getRemarksList(this.detailInfo.id, this.queryInfo).then(response => {
+      getRemarksList(this.id, this.queryInfo).then(response => {
         this.remarksList = response.data.items
         this.remarksTotal = response.data.totalCount
         console.log(this.remarksList)

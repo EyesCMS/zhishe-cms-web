@@ -14,7 +14,7 @@
         <el-col :span="12">
           <el-card :style="{'background':'rgb('+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+')'}">
             <h2 class="title">{{ item.title }}</h2>
-            <p>{{ item.content }}</p>
+            <p>{{ item.body }}</p>
             <!-- <p class="createAt">{{ item.createAt }}  </p> -->
             <p class="createAt">{{ item.updateAt }}  </p>
             <div class="ww">
@@ -25,7 +25,7 @@
         <el-col :span="12">
           <el-card :style="{'background':'rgb('+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+')'}">
             <h2 class="title">{{ item.title }}</h2>
-            <p>{{ item.content }}</p>
+            <p>{{ item.body }}</p>
             <!-- <p class="createAt">{{ item.createAt }}  </p> -->
             <p class="createAt">{{ item.updateAt }}  </p>
             <div class="ww">
@@ -125,7 +125,7 @@ export default {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
         console.log(response)
-        this.bulletin = response.data.items
+        this.bulletin = response.data
         // console.log('123' + response.data)
         // console.log('公告是' + this.bulletin)
         // console.log(this.memberInfo)

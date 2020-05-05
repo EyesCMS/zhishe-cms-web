@@ -57,7 +57,7 @@ export default {
       addList: [],
       queryInfo: {
         keyword: '',
-        page: 0,
+        page: 1,
         limit: 5,
         sort: 'createAt',
         order: 'desc'

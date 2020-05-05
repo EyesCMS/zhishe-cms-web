@@ -1,13 +1,16 @@
 <template>
   <div>
-    <!-- 卡片视图区 -->
     <el-card>
       <el-input
+        v-model="queryInfo.keyword"
         placeholder="请输入内容"
         class="input-with-select"
       >
-        <el-button slot="append" icon="el-icon-search" />
+        <el-button slot="append" icon="el-icon-search" @click="getMembersList" />
       </el-input>
+    </el-card>
+    <!-- 卡片视图区 -->
+    <el-card>
 
       <!-- 用户列表 -->
       <el-table :data="membersList" stripe border>
@@ -24,17 +27,17 @@
         </el-table-column>
       </el-table>
 
-      <!-- 分页区域 -->
-      <el-pagination
-        :current-page="queryInfo.page"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="queryInfo.limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
     </el-card>
+    <!-- 分页区域 -->
+    <el-pagination
+      :current-page="queryInfo.page"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="queryInfo.limit"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
@@ -47,6 +50,7 @@ export default {
       listLoading: true,
       clubId: 5000,
       queryInfo: {
+        keyword: '',
         page: 1,
         limit: 5
       },
