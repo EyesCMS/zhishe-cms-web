@@ -8,6 +8,40 @@ export function login(data) {
   })
 }
 
+export function register(data) {
+  return request({
+    url: '/auth/register',
+    method: 'post',
+    data
+  })
+}
+
+export function question(data) {
+  return request({
+    url: '/users/question',
+    method: 'get',
+    params: data
+  })
+}
+
+export function answer(data) {
+  console.log(data)
+  return request({
+    url: '/users/answer',
+    method: 'post',
+    data
+  })
+}
+
+export function newpassword(data) {
+  console.log(data)
+  return request({
+    url: '/users/password',
+    method: 'post',
+    data
+  })
+}
+
 export function getInfo(token) {
   return request({
     url: '/auth/info',
@@ -20,5 +54,21 @@ export function logout() {
   return request({
     url: '/auth/logout',
     method: 'post'
+  })
+}
+
+export function submitProfile(data) {
+  return request({
+    url: '/users/info',
+    method: 'put',
+    data
+  })
+}
+
+export function updatePassword(data) {
+  return request({
+    url: '/auth/password',
+    method: 'post',
+    data
   })
 }

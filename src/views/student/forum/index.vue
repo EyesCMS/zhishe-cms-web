@@ -1,0 +1,139 @@
+<template>
+  <div>
+    +    <el-card style="margin: 15px 15px">
+      <el-row>
+        <i class="el-icon-search">筛选结果</i>
+      </el-row>
+      <el-row style="margin-top: 25px" :gutter="20">
+        <el-form ref="form" :model="queryInfo" label-width="80px">
+          <el-col :span="10">
+            <el-form-item label="社团名">
+              <el-input v-model="queryInfo.posterName" placeholder="请输入社团名" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="标题">
+              <el-input v-model="queryInfo.title" placeholder="请输入标题" />
+            </el-form-item>
+          </el-col>
+        </el-form>
+      </el-row>
+      <el-row style="margin-top: 15px" :gutter="20">
+        <el-form ref="form" :model="queryInfo" label-width="80px">
+          <el-col :span="10">
+            <el-form-item label="内容">
+              <el-input v-model="queryInfo.content" placeholder="请输入内容" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="发布日期">
+              <el-date-picker v-model="queryInfo.createAt" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" style="width: 100%;" />
+            </el-form-item>
+          </el-col>
+        </el-form>
+      </el-row>
+      <el-row style="text-align: center; margin-top: 15px">
+        <el-button type="primary" @click="getAllInvitationList">查询</el-button>
+        <el-button type="info" @click="reset">重置</el-button>
+      </el-row>
+    </el-card>
+    <el-card>
+      <h4>共搜索到 {{ total }} 条记录</h4>
+      <el-card v-for="(item, index) in AllinvitationsList" :key="index" style="margin-top:20px">
+        <el-row>
+          <el-avatar style="float:left" :src="item.avatarUrl" />
+          <p style="float: left">{{ item.posterName }}</p>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="15">
+            <el-image :src="item.imgUrl" :fit="fit" lazy />
+          </el-col>
+          <el-col :span="9">
+            <el-card>
+              <h2 style="text-align:center">{{ item.title }}</h2>
+              <p>{{ item.content }}</p>
+              <p>{{ item.createAt }}</p>
+              <el-button type="primary" style="display:block;margin:10 auto;" @click="pushToDetail(item.id)">查看详情</el-button>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-card>
+
+      <!-- 分页区域 -->
+      <el-pagination
+        :current-page="queryInfo.page"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="queryInfo.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </el-card>
+  </div>
+</template>
+
+<script>
+import { getAllInvitationList } from '@/api/forum'
+export default {
+  name: 'AllActivityForum',
+  data() {
+    return {
+      clubId: 0,
+      queryInfo: {
+        type: 1,
+        posterName: '',
+        title: '',
+        content: '',
+        createAt: '',
+        page: 1,
+        limit: 5,
+        sort: 'createAt',
+        order: 'desc'
+      },
+      AllinvitationsList: [],
+      total: 0,
+      fit: 'contain'
+    }
+  },
+  created() {
+    this.getAllInvitationList()
+  },
+  methods: {
+    getAllInvitationList() {
+      getAllInvitationList(this.queryInfo).then(response => {
+        console.log(response)
+        if (response.status === 200) {
+          this.AllinvitationsList = response.data.items
+          this.total = response.data.totalCount
+          return this.$message.success('获取帖子列表成功')
+        } else {
+          return this.$message.error('获取帖子列表失败')
+        }
+      })
+    },
+    handleSizeChange(newSize) {
+      console.log(newSize)
+      this.queryInfo.limit = newSize
+      this.getAllInvitationList()
+    },
+    handleCurrentChange(newPage) {
+      console.log(newPage)
+      this.queryInfo.page = newPage
+      this.getAllInvitationList()
+    },
+
+    // 跳转到帖子详情页面
+    pushToDetail(id) {
+      this.$router.push({ path: 'studentforum', query: { id: id }})
+    },
+    reset() {
+      this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt = ''
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+
+</style>

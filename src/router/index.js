@@ -31,168 +31,454 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  // homepage
   {
-    path: '/redirect',
+    path: '',
+    redirect: '/home',
     component: Layout,
+    children: [
+      {
+        path: 'home',
+        name: 'home',
+        component: () => import('@/views/base/home/index'),
+        meta: { title: '首页', icon: 'home' }
+      }
+    ]
+  },
+  // 个人中心
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
     hidden: true,
     children: [
       {
-        path: '/redirect/:path(.*)',
-        // path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
+        path: 'index',
+        component: () => import('@/views/base/profile/index'),
+        name: 'Profile',
+        meta: { title: '个人中心', icon: 'user', noCache: true }
       }
     ]
   },
-
+  // register
+  {
+    path: '/register',
+    component: () => import('@/views/base/register/index'),
+    hidden: true
+  },
+  // forget
+  {
+    path: '/forget',
+    component: () => import('@/views/base/login/forget'),
+    hidden: true
+  },
+  // login
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import('@/views/base/login/index'),
     hidden: true
   },
-
+  // 404
   {
     path: '/404',
-    component: () => import('@/views/error-page/404'),
+    component: () => import('@/views/base/error-page/404'),
     hidden: true
   },
+  // 401
   {
     path: '/401',
-    component: () => import('@/views/error-page/401'),
+    component: () => import('@/views/base/error-page/401'),
     hidden: true
-  },
-
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-    }]
-  },
-
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/table',
-  //   name: 'Example',
-  //   meta: { title: 'Example', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'table',
-  //       name: 'Table',
-  //       component: () => import('@/views/table/index'),
-  //       meta: { title: 'Table', icon: 'table' }
-  //     },
-  //     {
-  //       path: 'tree',
-  //       name: 'Tree',
-  //       component: () => import('@/views/tree/index'),
-  //       meta: { title: 'Tree', icon: 'tree' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/nested',
-  //   component: Layout,
-  //   redirect: '/nested/menu1',
-  //   name: 'Nested',
-  //   meta: {
-  //     title: 'Nested',
-  //     icon: 'nested'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'menu1',
-  //       component: () => import('@/views/nested/menu1/index'), // Parent router-view
-  //       name: 'Menu1',
-  //       meta: { title: 'Menu1' },
-  //       children: [
-  //         {
-  //           path: 'menu1-1',
-  //           component: () => import('@/views/nested/menu1/menu1-1'),
-  //           name: 'Menu1-1',
-  //           meta: { title: 'Menu1-1' }
-  //         },
-  //         {
-  //           path: 'menu1-2',
-  //           component: () => import('@/views/nested/menu1/menu1-2'),
-  //           name: 'Menu1-2',
-  //           meta: { title: 'Menu1-2' },
-  //           children: [
-  //             {
-  //               path: 'menu1-2-1',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-  //               name: 'Menu1-2-1',
-  //               meta: { title: 'Menu1-2-1' }
-  //             },
-  //             {
-  //               path: 'menu1-2-2',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-  //               name: 'Menu1-2-2',
-  //               meta: { title: 'Menu1-2-2' }
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           path: 'menu1-3',
-  //           component: () => import('@/views/nested/menu1/menu1-3'),
-  //           name: 'Menu1-3',
-  //           meta: { title: 'Menu1-3' }
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       path: 'menu2',
-  //       component: () => import('@/views/nested/menu2/index'),
-  //       meta: { title: 'menu2' }
-  //     }
-  //   ]
-  // },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
   }
+  // /
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/home',
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       name: 'Dashboard',
+  //       component: () => import('@/views/home/index'),
+  //       meta: { title: 'Dashboard', icon: 'home', affix: true }
+  //     }
+  //   ]
+  // }
 ]
-
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  // clbus
+  {
+    path: '/student',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Clubs',
+        component: () => import('@/views/student/clubs/index'),
+        meta: { title: '所有社团', icon: 'search', roles: ['student'] }
+      },
+      {
+        path: '/clubDetail',
+        name: 'ClubDetail',
+        component: () => import('@/views/student/club-detail/index'),
+        meta: { title: '社团详情', noCache: true, roles: ['student'] },
+        hidden: true
+      },
+      {
+        path: '/createClub',
+        name: 'CreateClub',
+        component: () => import('@/views/student/club-create/index'),
+        meta: { title: '创建社团', noCache: true, roles: ['student'] },
+        hidden: true
+      },
+      {
+        path: '/joinClub',
+        name: 'joinClub',
+        component: () => import('@/views/student/club-join/index'),
+        meta: { title: '加入社团申请', noCache: true, roles: ['student'] },
+        hidden: true
+      }
+    ]
+  },
+  // 活动论坛（学生页面）
+  {
+    path: '/forum',
+    component: Layout,
+    children: [
+      {
+        path: 'forum',
+        name: 'Forum',
+        component: () => import('@/views/student/forum/index'),
+        meta: { title: '活动论坛', icon: 'message', roles: ['student'] }
+      },
+      {
+        path: 'studentforum',
+        name: 'StudentForm',
+        component: () => import('@/views/student/forum/detail'),
+        meta: { title: '帖子详情', noCache: true, roles: ['student'] },
+        hidden: true
+      }
+    ]
+  },
+  // 我的社团
+  {
+    path: '/myclub',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'MyClub',
+    meta: { title: '我的社团', icon: 'peoples', roles: ['student'] },
+    children: [
+      {
+        path: 'joinclub',
+        name: 'JoinClub',
+        component: () => import('@/views/student/myclub/joinclub'),
+        meta: { title: '我加入的社团', noCache: true, roles: ['student'] }
+      },
+      {
+        path: 'manageclub',
+        name: 'ManageClub',
+        component: () => import('@/views/student/myclub/manageclub'),
+        meta: { title: '我管理的社团', noCache: true, roles: ['student'] }
+      }
+    ]
+  },
+  // 申请中心
+  {
+    path: '/applications',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'Applications',
+    meta: { title: '申请结果', icon: 'email', roles: ['student'] },
+    children: [
+      {
+        path: 'creation',
+        name: 'Creation',
+        component: () => import('@/views/student/applications/creation'),
+        meta: { title: '创建社团', noCache: true, roles: ['student'] }
+      },
+      {
+        path: 'join',
+        name: 'Join',
+        component: () => import('@/views/student/applications/join'),
+        meta: { title: '加入社团', noCache: true, roles: ['student'] }
+      }
+    ]
+  },
+  // 社团风采
+  {
+    path: '/clubstyle',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'ClubStyle',
+    meta: {
+      title: '社团风采',
+      icon: 'fengcai',
+      roles: ['member', 'chief']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/member/club-style/index.vue'),
+        meta: { title: '社团风采', noCache: true, roles: ['member', 'chief'] }
+      }
+    ]
+  },
+  // 社团成员
+  {
+    path: '/clubmember',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'ClubMember',
+        component: () => import('@/views/member/club-member/index.vue'),
+        meta: { title: '社团成员', icon: 'peoples', roles: ['member'] }
+      },
+      {
+        path: 'detail',
+        name: 'MemberDetail',
+        component: () => import('@/views/member/member-detail/index.vue'),
+        meta: { title: '成员详情', roles: ['member'] },
+        hidden: true
+      }
+    ]
+  },
+  // 活动论坛（社员界面）
+  {
+    path: '/activityforum',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'ActivityForum',
+        component: () => import('@/views/member/activity-forum/index.vue'),
+        meta: { title: '活动论坛', icon: 'message', roles: ['member'] }
+      },
+      {
+        path: 'detail',
+        name: 'ActivityDetail',
+        component: () => import('@/views/member/activity-forum/detail.vue'),
+        meta: { title: '帖子详情', roles: ['member'] },
+        hidden: true
+      }
+    ]
+  },
+  // 社团公告（社员界面）
+  {
+    path: '/announcement',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'announcement',
+        component: () => import('@/views/member/club-announcement/index'),
+        meta: { title: '社团公告', icon: 'message', roles: ['member'] }
+      }
+    ]
+  },
+  // 社团成员管理
+  {
+    path: '/membermanage',
+    component: Layout,
+    name: 'MemberManage',
+    meta: { title: '社团成员管理', icon: 'membermanage', roles: ['chief'] },
+    children: [
+      {
+        path: 'list',
+        name: 'MemberList',
+        component: () => import('@/views/member/club-member/index.vue'),
+        meta: { title: '查看所有成员', icon: 'people', roles: ['chief'] }
+      },
+      {
+        path: 'add',
+        name: 'MemberAdd',
+        component: () => import('@/views/chief/member-add/index.vue'),
+        meta: { title: '审核加入申请', icon: 'applyadd', roles: ['chief'] }
+      },
+      {
+        path: 'quit',
+        name: 'MemberQuit',
+        component: () => import('@/views/chief/member-quit/index.vue'),
+        meta: { title: '成员退出通知', icon: 'memberquit', roles: ['chief'] }
+      }
+    ]
+  },
+
+  // 社团活动管理
+  {
+    path: '/activitymanage',
+    component: Layout,
+    name: 'ActivityManage',
+    children: [
+      {
+        path: 'list',
+        name: 'activityList',
+        component: () => import('@/views/chief/activity-manage/index.vue'),
+        meta: { title: '社团活动管理', icon: 'people', roles: ['chief'] }
+      }
+    ]
+  },
+  // 社团论坛管理
+  {
+    path: '/forumManage',
+    component: Layout,
+    name: 'forumManage',
+    children: [
+      {
+        path: 'forum',
+        name: 'forum',
+        component: () => import('@/views/chief/forum-manage/index'),
+        meta: { title: '论坛管理', icon: 'people', roles: ['chief', 'student'] }
+      }
+    ]
+  },
+  // 社团简介管理
+  {
+    path: '/Detailmanage',
+    component: Layout,
+    name: 'Detail',
+    children: [
+      {
+        path: 'Detail',
+        name: 'Detailmanage',
+        component: () => import('@/views/chief/club-detail/index'),
+        meta: { title: '简介管理', icon: 'message', roles: ['chief'] }
+      }
+    ]
+  },
+  // 社团公告管理
+  {
+    path: '/Announcement',
+    component: Layout,
+    name: 'Announcement',
+    children: [
+      {
+        path: 'Announce',
+        name: 'announce',
+        component: () => import('@/views/chief/announcement-mamage/index'),
+        meta: { title: '公告管理', icon: 'message', roles: ['chief'] }
+      }
+    ]
+  },
+  // 社团解散管理
+  {
+    path: '/dissolution',
+    component: Layout,
+    name: 'Dissolution',
+    children: [
+      {
+        path: 'dissolution',
+        name: 'dissolution',
+        component: () => import('@/views/chief/club-dissolution/index'),
+        meta: { title: '解散社团', icon: 'message', roles: ['chief'] }
+      }
+    ]
+  },
+  // 社团换届管理
+  {
+    path: '/chief',
+    component: Layout,
+    name: 'chiefChange',
+    children: [
+      {
+        path: 'Change',
+        name: 'chiefchange',
+        component: () => import('@/views/chief/chief-change/index'),
+        meta: { title: '换届管理', icon: 'message', roles: ['chief'] }
+      }
+    ]
+  },
+  // 社团申请管理
+  {
+    path: '/club-identify',
+    component: Layout,
+    name: 'club-identify',
+    meta: { title: '社团申请管理', icon: 'form', roles: ['chief'] },
+    children: [
+      {
+        path: 'list',
+        name: 'ActivityList',
+        component: () => import('@/views/chief/club-identify/index.vue'),
+        meta: { title: '社团认证申请', icon: 'form', roles: ['chief'] }
+      }
+    ]
+  },
+  // 管理员菜单
+  {
+    path: '/admin/check',
+    component: Layout,
+    redirect: '/administrator/check/createApply',
+    alwaysShow: true, // will always show the root menu
+    name: 'check',
+    meta: {
+      title: '审核申请',
+      icon: 'form',
+      roles: ['admin'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'createApply',
+        component: () => import('@/views/administrator/check/createApply'),
+        name: 'createApply',
+        meta: {
+          title: '社团创建申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'dismissApply',
+        component: () => import('@/views/administrator/check/dismissApply'),
+        name: 'dismissApply',
+        meta: {
+          title: '社团解散申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'activityApply',
+        component: () => import('@/views/administrator/check/activityApply'),
+        name: 'activityApply',
+        meta: {
+          title: '社团活动申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'changeApply',
+        component: () => import('@/views/administrator/check/changeApply'),
+        name: 'changeApply',
+        meta: {
+          title: '社长换届申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'identifyApply',
+        component: () => import('@/views/administrator/check/identifyApply'),
+        name: 'identifyApply',
+        meta: {
+          title: '社团认证申请',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
+  // permission
   {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
     alwaysShow: true, // will always show the root menu
     name: 'Permission',
+    hidden: true,
     meta: {
       title: 'Permission',
-      icon: 'lock',
-      roles: ['admin', 'normal'] // you can set roles in root nav
+      icon: 'lock'
     },
     children: [
       {
@@ -200,8 +486,7 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/page'),
         name: 'PagePermission',
         meta: {
-          title: 'Page Permission',
-          roles: ['admin'] // or you can only set roles in sub nav
+          title: 'Page Permission'
         }
       },
       {
@@ -218,44 +503,44 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/role'),
         name: 'RolePermission',
         meta: {
-          title: 'Role Permission',
-          roles: ['admin']
+          title: 'Role Permission'
         }
       }
     ]
   },
-
+  // 结束
   {
     path: '/error',
     component: Layout,
     redirect: 'noRedirect',
     name: 'ErrorPages',
+    hidden: true,
     meta: { title: 'Error Pages', icon: '404' },
     children: [
       {
         path: '401',
         name: 'Page401',
-        component: () => import('@/views/error-page/401'),
+        component: () => import('@/views/base/error-page/401'),
         meta: { title: '401', noCache: true }
       },
       {
         path: '404',
         name: 'Page404',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/base/error-page/404'),
         meta: { title: '404', noCache: true }
       }
     ]
   },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
-
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    // routes: ROUTER
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 
