@@ -39,8 +39,8 @@
         modal
         @close="applyIdentifyDialogClosed"
       >
-        <el-form ref="form" :model="form" label-width="70px">
-          <el-form-item label="申请原因">
+        <el-form ref="form" :model="form">
+          <el-form-item label="申请原因" label-width="70px">
             <el-input v-model="form.reason" placeholder="请输入申请原因" />
           </el-form-item>
           <div style="text-align:center">
@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       listLoading: true,
-      clubId: 10013,
+      clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
         page: 1,
         limit: 5
@@ -85,13 +85,6 @@ export default {
     }
   },
   created() {
-    if (this.$route.query.cid !== undefined) {
-      this.clubId = this.$route.query.cid
-      console.log('接收cid')
-      console.log('clubId为' + this.clubId)
-      sessionStorage.setItem('clubId', this.clubId)
-    }
-    localStorage.setItem('clubid', this.clubid)
     this.getMyIdentifyApplyList()
   },
   methods: {

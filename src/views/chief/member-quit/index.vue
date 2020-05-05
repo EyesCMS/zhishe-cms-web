@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       listLoading: true,
-      clubId: 10017,
+      clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
         page: 1,
         limit: 5
@@ -42,12 +42,6 @@ export default {
     }
   },
   created() {
-    if (this.$route.query.cid !== undefined) {
-      this.clubId = this.$route.query.cid
-      console.log('接收cid')
-      console.log('clubId为' + this.clubId)
-      sessionStorage.setItem('clubId', this.clubId)
-    }
     this.getQuitList()
   },
   methods: {
