@@ -79,7 +79,7 @@ export default {
   name: 'ClubAnnouncement',
   data() {
     return {
-      clubId: 5000,
+      clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
         // keyword: '',
         page: 1,

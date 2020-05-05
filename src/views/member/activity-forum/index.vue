@@ -2,30 +2,21 @@
   <div>
     <el-card style="margin: 15px 15px">
       <el-row>
-        <i class="el-icon-search">筛选结果</i>
+        <i class="el-icon-search">筛选搜索</i>
       </el-row>
-      <el-row style="margin-top: 25px" :gutter="20">
+      <el-row style="margin-top: 25px" :gutter="10">
         <el-form ref="form" :model="queryInfo" label-width="80px">
-          <el-col :span="10">
-            <el-form-item label="社团名">
-              <el-input v-model="queryInfo.posterName" placeholder="请输入社团名" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
+          <el-col :span="8">
             <el-form-item label="标题">
               <el-input v-model="queryInfo.title" placeholder="请输入标题" />
             </el-form-item>
           </el-col>
-        </el-form>
-      </el-row>
-      <el-row style="margin-top: 15px" :gutter="20">
-        <el-form ref="form" :model="queryInfo" label-width="80px">
-          <el-col :span="10">
+          <el-col :span="8">
             <el-form-item label="内容">
               <el-input v-model="queryInfo.content" placeholder="请输入内容" />
             </el-form-item>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="8">
             <el-form-item label="发布日期">
               <el-date-picker v-model="queryInfo.createAt" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" style="width: 100%;" />
             </el-form-item>
@@ -39,6 +30,7 @@
     </el-card>
     <el-card>
       <h4>共搜索到 {{ total }} 条记录</h4>
+      <p v-show="total === 0" style="text-align: center">暂无记录</p>
       <el-card v-for="(item, index) in invitationsList" :key="index" style="margin-top:20px">
         <el-row>
           <el-avatar style="float:left" :src="item.avatarUrl" />
@@ -79,7 +71,7 @@ export default {
   name: 'ActivityForum',
   data() {
     return {
-      clubId: 5000,
+      clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
         // keyword: '',
         type: 1,
@@ -98,7 +90,6 @@ export default {
     }
   },
   created() {
-    // this.clubId = sessionStorage.getItem('clubId')
     this.getInvitationsList()
   },
   methods: {

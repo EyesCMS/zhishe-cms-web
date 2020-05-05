@@ -138,7 +138,7 @@ export default {
   name: 'MemClubStyle',
   data() {
     return {
-      userId: 0,
+      userId: this.$store.getters.userId,
       clubId: 5000,
       queryInfo: {
         type: 1,
@@ -160,10 +160,9 @@ export default {
     }
   },
   created() {
-    // this.userId = this.$store.getters.name
     console.log('风采页面userId为' + this.userId)
-    if (this.$route.query.cid !== undefined) {
-      this.clubId = this.$route.query.cid
+    if (this.$route.query.id !== undefined) {
+      this.clubId = this.$route.query.id
       console.log('接收cid')
       console.log('clubId为' + this.clubId)
       sessionStorage.setItem('clubId', this.clubId)

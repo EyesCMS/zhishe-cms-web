@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       listLoading: true,
-      clubId: 5000,
+      clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
         keyword: '',
         page: 1,
