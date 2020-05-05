@@ -30,7 +30,9 @@
             <el-select v-model="form.state" placeholder="请选择">
               <el-option label="未审核" value="0" />
               <el-option label="已批准" value="1" />
-              <el-option label="已退回" value="2" />
+              <el-option label="已发布" value="2" />
+              <el-option label="已退回" value="3" />
+              <el-option label="已结束" value="4" />
             </el-select>
           </el-form-item>
         </el-form>
@@ -51,6 +53,8 @@
           <template slot-scope="scope">
             <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
             <el-tag v-else-if="scope.row.state === 1" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else-if="scope.row.state === 2" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else-if="scope.row.state === 3" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
             <el-tag v-else style="text-align:center" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
           </template>
         </el-table-column>
@@ -86,8 +90,12 @@ export default {
         return '待审核'
       } else if (value === 1) {
         return '已批准'
-      } else {
+      } else if (value === 2) {
+        return '已发布'
+      } else if (value === 3) {
         return '已退回'
+      } else {
+        return '已结束'
       }
     }
   },
