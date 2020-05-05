@@ -257,7 +257,7 @@ export function joinAudit(data) {
 // 获取学生加入的社团列表
 export function getJoinclubsList(userid, query) {
   return request({
-    url: `/users/${userid}/clubs?status=member`,
+    url: `/clubs/users/${userid}/clubs?status=member`,
     method: 'get',
     params: query
   })
@@ -266,7 +266,7 @@ export function getJoinclubsList(userid, query) {
 // 获取学生作为社长管理的社团列表
 export function getManageclubsList(userid, query) {
   return request({
-    url: `/users/${userid}/clubs?status=chief`,
+    url: `/clubs/users/${userid}/clubs?status=chief`,
     method: 'get',
     params: query
   })

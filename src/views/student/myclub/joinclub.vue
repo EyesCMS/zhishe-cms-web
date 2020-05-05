@@ -50,7 +50,7 @@ export default {
   name: 'JoinClubs',
   data() {
     return {
-      search: '',
+      // search: '',
       listLoading: true,
       queryInfo: {
         page: 1,
@@ -58,7 +58,6 @@ export default {
       },
       total: 0,
       userId: this.$store.getters.userId,
-      // userid: 10088,
       JoinclubsList: []
     }
   },
@@ -68,7 +67,6 @@ export default {
   methods: {
     getJoinclubsList() {
       this.listLoading = true
-      console.log(this.$store.getters.userId)
       getJoinclubsList(this.userId, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.JoinclubsList = response.data.items

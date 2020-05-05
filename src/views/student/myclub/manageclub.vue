@@ -56,7 +56,7 @@ export default {
         limit: 5
       },
       total: 0,
-      userid: this.$store.getters.userid,
+      userid: this.$store.getters.userId,
       ManageclubsList: []
     }
   },
@@ -68,7 +68,6 @@ export default {
       this.listLoading = true
       getManageclubsList(this.userid, this.queryInfo).then(response => {
         if (response.status === 200) {
-          // console.log(111)
           this.ManageclubsList = response.data.items
           this.total = response.data.totalCount
         } else {
