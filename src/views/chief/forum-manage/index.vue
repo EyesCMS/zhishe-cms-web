@@ -42,22 +42,22 @@
           </div>
           <div
             style="display:inline;float:right;margin:10px;"
-            @click="dialogVisible = true"
+            @click="deleteForum(item.id);dialogVisible = true"
           >
             <i style="cursor:pointer" class="el-icon-delete icon" />
           </div>
+          <!--<el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+          >
+            <span>确认删除该帖子吗？</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="deleteButton()">确 定</el-button>
+            </span>
+          </el-dialog>-->
         </el-row>
-        <el-dialog
-          title="提示"
-          :visible.sync="dialogVisible"
-          width="30%"
-        >
-          <span>确认删除该帖子吗？</span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="deleteForum(item.id);dialogVisible = false">确 定</el-button>
-          </span>
-        </el-dialog>
 
         <el-row>
           <!--cursor:pointer,鼠标滑过变成手指-->
@@ -276,6 +276,7 @@ export default {
           publishForum(this.forumForm).then(response => {
             this.$message.success('发布成功！')
             this.getForumsList()
+            console.log(this.forumsList)
             this.addForumDialogVisible = false
           })
         } else {
@@ -284,10 +285,12 @@ export default {
       })
     },
     deleteForum(id) {
+      console.log(id)
       deleteForum(id).then(response => {
         if (response.status === 204) {
-          this.$message.success('删除帖子成功')
           this.getForumsList()
+          this.$message.success('删除帖子成功')
+          console.log(this.forumsList)
         } else {
           return this.$message.error('删除帖子失败')
         }
@@ -300,7 +303,7 @@ export default {
         console.log(id)
         this.commentCount = true
         this.remarklist = response.data.items
-        this.length = response.data.items.length
+        this.length = response.data.totalCount
         this.remarklist.forEach(element => {
           element['id'] = id
         })
@@ -308,6 +311,7 @@ export default {
       })
     },
     changeForum(id) { // 显示修改界面
+      console.log(id)
       this.changeForumDialogVisible = true
       var puery = {
         type: window.sessionStorage.getItem('roles') === 'chief' ? 1 : 0
