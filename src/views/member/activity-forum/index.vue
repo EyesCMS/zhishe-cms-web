@@ -1,12 +1,43 @@
 <template>
   <div>
+    <el-card style="margin: 15px 15px">
+      <el-row>
+        <i class="el-icon-search">筛选结果</i>
+      </el-row>
+      <el-row style="margin-top: 25px" :gutter="20">
+        <el-form ref="form" :model="queryInfo" label-width="80px">
+          <el-col :span="10">
+            <el-form-item label="社团名">
+              <el-input v-model="queryInfo.posterName" placeholder="请输入社团名" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="标题">
+              <el-input v-model="queryInfo.title" placeholder="请输入标题" />
+            </el-form-item>
+          </el-col>
+        </el-form>
+      </el-row>
+      <el-row style="margin-top: 15px" :gutter="20">
+        <el-form ref="form" :model="queryInfo" label-width="80px">
+          <el-col :span="10">
+            <el-form-item label="内容">
+              <el-input v-model="queryInfo.content" placeholder="请输入内容" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="发布日期">
+              <el-date-picker v-model="queryInfo.createAt" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" style="width: 100%;" />
+            </el-form-item>
+          </el-col>
+        </el-form>
+      </el-row>
+      <el-row style="text-align: center; margin-top: 15px">
+        <el-button type="primary" @click="getInvitationsList">查询</el-button>
+        <el-button type="info" @click="reset">重置</el-button>
+      </el-row>
+    </el-card>
     <el-card>
-      <el-input
-        placeholder="请输入文章标题关键字"
-        class="input-with-select"
-      >
-        <el-button slot="append" icon="el-icon-search" @click="queryInvitation" />
-      </el-input>
       <h4>共搜索到 {{ total }} 条记录</h4>
       <el-card v-for="(item, index) in invitationsList" :key="index" style="margin-top:20px">
         <el-row>
@@ -52,6 +83,10 @@ export default {
       queryInfo: {
         // keyword: '',
         type: 1,
+        posterName: '',
+        title: '',
+        content: '',
+        createAt: '',
         page: 1,
         limit: 5,
         sort: 'createAt',
@@ -94,6 +129,9 @@ export default {
     queryInvitation() {
       this.getInvitationsList()
       this.queryInfo.keyword = ''
+    },
+    reset() {
+      this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt = ''
     }
   }
 }
