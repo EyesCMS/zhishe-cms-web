@@ -1,6 +1,7 @@
 <template>
   <div style="padding: 20px;">
     <!-- 组合搜索 -->
+    <!--
     <el-card shadow="never">
       <div>
         <i class="el-icon-search" />
@@ -40,7 +41,7 @@
         </el-form>
       </div>
     </el-card>
-
+-->
     <!-- 创建社团申请列表 -->
     <el-table :data="CreateApplicationsList" stripe border>
       <el-table-column label="社团名称" prop="clubName" />
@@ -56,15 +57,17 @@
     </el-table>
 
     <!-- 分页区域 -->
-    <el-pagination
-      :current-page="queryInfo.page"
-      :page-sizes="[5, 10, 15, 20]"
-      :page-size="queryInfo.limit"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+    <div style="text-align: center;margin-top: 10px;">
+      <el-pagination
+        :current-page="queryInfo.page"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="queryInfo.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 

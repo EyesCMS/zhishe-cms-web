@@ -2,7 +2,6 @@
   <div style="margin-top: 20px;">
     <!-- 加入社团申请列表 -->
     <el-table :data="JoinApplicationsList" stripe border>
-      <el-table-column label="社团ID" prop="clubId" />
       <el-table-column label="社团名称" prop="clubName" />
       <el-table-column label="申请原因" prop="reason" />
       <el-table-column label="申请时间" prop="createAt" />
@@ -16,15 +15,17 @@
     </el-table>
 
     <!-- 分页区域 -->
-    <el-pagination
-      :current-page="queryInfo.page"
-      :page-sizes="[5, 10, 15, 20]"
-      :page-size="queryInfo.limit"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+    <div style="text-align: center;margin-top: 10px;">
+      <el-pagination
+        :current-page="queryInfo.page"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="queryInfo.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 
