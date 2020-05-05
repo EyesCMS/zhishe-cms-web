@@ -57,7 +57,8 @@ export default {
         limit: 5
       },
       total: 0,
-      userid: this.$store.getters.userid,
+      userId: this.$store.getters.userId,
+      // userid: 10088,
       JoinclubsList: []
     }
   },
@@ -67,7 +68,8 @@ export default {
   methods: {
     getJoinclubsList() {
       this.listLoading = true
-      getJoinclubsList(this.userid, this.queryInfo).then(response => {
+      console.log(this.$store.getters.userId)
+      getJoinclubsList(this.userId, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.JoinclubsList = response.data.items
           this.total = response.data.totalCount

@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       id: this.$route.query.id,
-      userId: this.$store.getters.userid,
+      userId: this.$store.getters.userId,
       queryInfo: {
         page: 1,
         limit: 5,
@@ -61,7 +61,7 @@ export default {
         type: 1
       },
       detailInfo: {
-        id: '',
+        // id: '',
         posterName: '',
         avatarUrl: '',
         title: '',
@@ -83,8 +83,8 @@ export default {
   methods: {
     // 获取帖子详情
     getInvitationDetail() {
+      console.log(this.id)
       getInvitationDetail(this.id, this.detailQuery).then(response => {
-        this.detailInfo.id = response.data.id
         this.detailInfo.posterName = response.data.posterName
         this.detailInfo.avatarUrl = response.data.avatarUrl
         this.detailInfo.title = response.data.title
@@ -106,7 +106,7 @@ export default {
     },
     postComment() {
       const data = {
-        postId: this.detailInfo.id,
+        postId: this.id,
         content: this.comment
       }
       postComment(data).then(response => {

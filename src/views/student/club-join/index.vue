@@ -44,7 +44,6 @@ export default {
           clubId: this.form.id,
           reason: this.form.reason
         }
-        console.log(data)
         ApplyToJoin(data).then(response => {
           if (response.status === 201) {
             this.$alert('提交成功', '申请加入社团', {
@@ -58,6 +57,7 @@ export default {
             })
           } else {
             return this.$message.error('申请加入社团失败')
+            // return this.$message
           }
         })
       })
