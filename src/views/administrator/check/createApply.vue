@@ -44,7 +44,7 @@
           </el-form-item>
           <el-form-item label="申请时间">
             <el-form-item prop="createAt">
-              <el-date-picker v-model="form.createAt" type="date" placeholder="选择日期" style="width: 90%;" />
+              <el-date-picker v-model="form.createAt" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" style="width: 90%;" />
             </el-form-item>
           </el-form-item>
         </el-form>
