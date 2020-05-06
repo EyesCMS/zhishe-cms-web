@@ -15,6 +15,13 @@ export function getInvitationList(clubid, query, originState) {
     params: query
   })
 }
+export function getMyForums(clubid, query, originState) {
+  return request({
+    url: `/forum/posts/mine`,
+    method: 'get',
+    params: query
+  })
+}
 
 export function getInvitationDetail(id, query) {
   return request({
@@ -52,6 +59,13 @@ export function publishForum(data) {
     url: `/forum/posts`,
     method: 'post',
     data
+  })
+}
+export function getForumList(data) {
+  return request({
+    url: `/forum/posts`,
+    method: 'get',
+    params: data
   })
 }
 export function deleteForum(id) {
