@@ -1,6 +1,6 @@
 <template>
   <div>
-    +    <el-card style="margin: 15px 15px">
+    <el-card style="margin: 15px 15px">
       <el-row>
         <i class="el-icon-search">筛选结果</i>
       </el-row>

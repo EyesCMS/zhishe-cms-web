@@ -114,12 +114,15 @@ export const asyncRoutes = [
   {
     path: '/student',
     component: Layout,
+    redirect: '/student/index',
+    name: 'AllClub',
+    meta: { title: '所有社团', icon: 'search', roles: ['student'] },
     children: [
       {
         path: 'index',
         name: 'Clubs',
         component: () => import('@/views/student/clubs/index'),
-        meta: { title: '所有社团', icon: 'search', roles: ['student'] }
+        meta: { title: '搜索社团', noCache: true, roles: ['student'] }
       },
       {
         path: '/clubDetail',
@@ -132,8 +135,7 @@ export const asyncRoutes = [
         path: '/createClub',
         name: 'CreateClub',
         component: () => import('@/views/student/club-create/index'),
-        meta: { title: '创建社团', noCache: true, roles: ['student'] },
-        hidden: true
+        meta: { title: '创建社团', noCache: true, roles: ['student'] }
       },
       {
         path: '/joinClub',
@@ -148,6 +150,7 @@ export const asyncRoutes = [
   {
     path: '/forum',
     component: Layout,
+    redirect: '/forum',
     children: [
       {
         path: 'forum',
@@ -168,7 +171,7 @@ export const asyncRoutes = [
   {
     path: '/myclub',
     component: Layout,
-    redirect: 'noRedirect',
+    redirect: '/myclub/joinclub',
     name: 'MyClub',
     meta: { title: '我的社团', icon: 'peoples', roles: ['student'] },
     children: [
@@ -190,7 +193,7 @@ export const asyncRoutes = [
   {
     path: '/applications',
     component: Layout,
-    redirect: 'noRedirect',
+    redirect: '/applications/creation',
     name: 'Applications',
     meta: { title: '申请结果', icon: 'email', roles: ['student'] },
     children: [
@@ -327,7 +330,6 @@ export const asyncRoutes = [
   {
     path: '/forumManage',
     component: Layout,
-    name: 'forumManage',
     children: [
       {
         path: 'forum',
