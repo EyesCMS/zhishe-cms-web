@@ -20,7 +20,7 @@
           重置
         </el-button>
       </div>
-      <div style="margin-top: 15px">
+      <div style="margin-top: 25px">
         <el-form :inline="true" :model="form" size="small" label-width="140px">
           <div style="text-align:center">
             <el-form-item label="输入搜索：">
@@ -33,6 +33,12 @@
                 <el-option label="学习" value="学习" />
                 <el-option label="休闲" value="休闲" />
                 <el-option label="其他" value="其他" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="官方状态：">
+              <el-select v-model="form.state" placeholder="请选择分类" clearable style="width: 203px">
+                <el-option label="非官方" value="0" />
+                <el-option label="官方" value="1" />
               </el-select>
             </el-form-item>
           </div>
@@ -60,6 +66,7 @@
         <el-table-column label="社团名称" prop="name" />
         <el-table-column label="社长名称" prop="chiefName" />
         <el-table-column label="社团类别" prop="type" />
+        <el-table-column label="官方状态" prop="state" />
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="LookForDetail(scope.row.id,scope.row.name,scope.row.chiefName,scope.row.avatarUrl)">查看详情</el-button>
@@ -107,7 +114,8 @@ export default {
       clubsList: [],
       form: {
         keyword: '',
-        type: ''
+        type: '',
+        state: ''
       }
     }
   },
@@ -120,6 +128,7 @@ export default {
       const params = {
         keyword: this.form.keyword,
         type: this.form.type,
+        state: this.form.state,
         page: this.queryInfo.page,
         limit: this.queryInfo.limit
       }
