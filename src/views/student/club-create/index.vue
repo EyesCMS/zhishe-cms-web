@@ -50,10 +50,10 @@ export default {
     return {
       username: this.$store.getters.nickname,
       form: {
-        avataUrl: this.action,
         clubName: '',
         type: '',
-        reason: ''
+        reason: '',
+        officialState: 0
       },
       formRules: {
         clubName: [
