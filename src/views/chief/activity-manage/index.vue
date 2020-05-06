@@ -1,12 +1,83 @@
 <template>
   <div>
     <el-card>
-      <el-input
-        placeholder="请输入内容"
-        class="input-with-select"
-      >
-        <el-button slot="append" icon="el-icon-search" />
-      </el-input>
+      <el-card>
+        <div>
+          <i class="el-icon-search" />
+          <span>筛选搜索</span>
+          <el-button
+            style="float: right"
+            type="primary"
+            size="small"
+            @click="getActivitiesList"
+          >
+            查询
+          </el-button>
+          <el-button
+            style="float: right;margin-right: 15px"
+            size="small"
+            @click="reset"
+          >
+            重置
+          </el-button>
+        </div>
+        <div style="margin-top: 15px">
+          <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+            <div>
+              <el-form-item label="活动名称">
+                <el-input v-model="queryInfo.name" style="width: 203px" placeholder="请输入活动名称" />
+              </el-form-item>
+              <el-form-item label="活动内容">
+                <el-input v-model="queryInfo.content" style="width: 203px" placeholder="请输入活动内容" />
+              </el-form-item>
+              <el-form-item label="活动地点">
+                <el-select v-model="queryInfo.location" style="width: 203px" placeholder="请选择活动地点">
+                  <el-option label="青春广场" value="青春广场" />
+                  <el-option label="生活三区" value="生活三区" />
+                  <el-option label="风雨操场" value="风雨操场" />
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-form>
+        </div>
+        <div style="margin-top: 15px">
+          <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+            <div>
+              <el-form-item label="活动状态">
+                <el-select v-model="queryInfo.state" style="width: 203px" placeholder="请选择活动状态">
+                  <el-option label="未审核" value="0" />
+                  <el-option label="审核通过" value="1" />
+                  <el-option label="已发布" value="2" />
+                  <el-option label="审核未通过" value="3" />
+                  <el-option label="已结束" value="4" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="开始时间">
+                <el-date-picker
+                  v-model="queryInfo.startDate"
+                  type="datetime"
+                  placeholder="选择开始时间"
+                  align="right"
+                  style="width: 203px"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  :picker-options="pickerOptions"
+                />
+              </el-form-item>
+              <el-form-item label="结束时间">
+                <el-date-picker
+                  v-model="queryInfo.endDate"
+                  type="datetime"
+                  placeholder="选择结束时间"
+                  align="right"
+                  style="width: 203px"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  :picker-options="pickerOptions"
+                />
+              </el-form-item>
+            </div>
+          </el-form>
+        </div>
+      </el-card>
       <el-row style="margin-top:20px">
         <el-button type="primary" @click="applyActivity()">申请活动</el-button>
       </el-row>
@@ -79,21 +150,23 @@
               <el-option label="生活三区" value="生活三区" />
             </el-select>
           </el-form-item>
-          <el-form-item label="开始时间" required>
+          <el-form-item label="开始时间" prop="startDate">
             <el-date-picker
               v-model="addForm.startDate"
               type="datetime"
               placeholder="选择开始时间"
               align="right"
+              value-format="yyyy-MM-dd HH:mm:ss"
               :picker-options="pickerOptions"
             />
           </el-form-item>
-          <el-form-item label="结束时间" required>
+          <el-form-item label="结束时间" prop="endDate">
             <el-date-picker
               v-model="addForm.endDate"
               type="datetime"
               placeholder="选择结束时间"
               align="right"
+              value-format="yyyy-MM-dd HH:mm:ss"
               :picker-options="pickerOptions"
             />
           </el-form-item>
@@ -191,6 +264,12 @@ export default {
       activitiesList: [],
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
+        name: '',
+        content: '',
+        location: '',
+        state: '',
+        startDate: '',
+        endDate: '',
         page: 1,
         limit: 5,
         sort: '',
@@ -227,10 +306,10 @@ export default {
           { required: true, message: '请输入活动地点', trigger: 'blur' }
         ],
         startDate: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          { type: 'date', required: true, message: '请选择开始时间', trigger: 'change' }
         ],
         endDate: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          { type: 'date', required: true, message: '请选择结束时间', trigger: 'change' }
         ]
       },
       pickerOptions: {
@@ -266,7 +345,7 @@ export default {
       getActivitiesList(this.clubId, this.queryInfo).then(response => {
         console.log(response)
         this.activitiesList = response.data.items
-        this.total = response.data.totalCount
+        this.total = response.totalCount
         console.log(this.activitiesList)
       })
     },
@@ -328,6 +407,9 @@ export default {
         console.log('applyDetail为' + this.applyDetailForm)
         this.applyDetailDialogVisible = true
       })
+    },
+    reset() {
+      this.queryInfo.name = this.queryInfo.content = this.queryInfo.location = ''
     }
   }
 }

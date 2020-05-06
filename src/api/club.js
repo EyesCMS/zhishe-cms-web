@@ -305,7 +305,7 @@ export function publishApply(data) {
 
 export function getActivityApplyDetail(id) {
   return request({
-    url: `/activities/apply/${id}`,
+    url: `/clubs/activities/apply/${id}`,
     method: 'get'
   })
 }
