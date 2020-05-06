@@ -65,6 +65,14 @@ export function submitProfile(data) {
   })
 }
 
+export function uploadAvatar(data) {
+  return request({
+    url: '/users/avatar',
+    method: 'post',
+    data
+  })
+}
+
 export function updatePassword(data) {
   return request({
     url: '/auth/password',
