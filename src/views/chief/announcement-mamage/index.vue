@@ -11,17 +11,19 @@
       <div
         v-for="(item, index) in bulletinsList"
         :key="index"
-        style="margin:20px"
+        class="bulletions"
       >
         <h2>{{ item.title }}</h2>
         <p>{{ item.createAt }} </p>
         <p>{{ item.body }}</p>
         <el-link
           type="primary"
+          style="float:right;margin-left:5px"
           @click="openBulletinDetailDiaglog(item.id)"
         >修改</el-link>
         <el-link
           type="primary"
+          style="float:right;margin-left:5px"
           @click="deleteBulletin(item.id)"
         >删除</el-link>
       </div>
@@ -58,31 +60,15 @@
           </el-form-item>
           <el-form-item
             label="公告内容"
-            prop="content"
+            prop="body"
           >
             <el-input
-              v-model="publishForm.content"
+              v-model="publishForm.body"
+              :rows="5"
               type="textarea"
             />
           </el-form-item>
         </el-form>
-        <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
-          list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
-          accept="image/gif, image/jpeg"
-          :limit="1"
-        >
-          <i class="el-icon-plus" />
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img
-            width="100%"
-            :src="publishForm.imgUrl"
-            alt=""
-          >
-        </el-dialog>
         <span
           slot="footer"
           class="dialog-footer"
@@ -138,12 +124,12 @@
 </template>
 
 <script>
-import { getBulletinList, getBulletinDetail, publishBulletin, deleteBulletin, changeBulletinDetail } from '@/api/club'
+import { listBulletins, getBulletinDetail, publishBulletin, deleteBulletin, changeBulletinDetail } from '@/api/club'
 export default {
   name: 'ActivityManage',
   data() {
     return {
-      clubId: 10000,
+      clubId: window.sessionStorage.getItem('clubId'),
       total: 0,
       queryInfo: {
         keyword: '',
@@ -160,15 +146,13 @@ export default {
       dialogImageUrl: '',
       publishForm: {
         title: '',
-        content: '',
-        imgUrl: '',
-        publishData: ''
+        body: ''
       },
       publishRules: {
         title: [
           { required: true, message: '请输入公告标题', trigger: 'blur' }
         ],
-        content: [
+        body: [
           { required: true, message: '请输入公告内容', trigger: 'blur' }
         ]
       },
@@ -176,7 +160,7 @@ export default {
         title: [
           { required: true, message: '请输入公告标题', trigger: 'blur' }
         ],
-        content: [
+        body: [
           { required: true, message: '请输入公告内容', trigger: 'blur' }
         ]
       }
@@ -190,12 +174,11 @@ export default {
     publishBulletin() {
       this.$refs.publishFormRef.validate(valid => {
         if (valid) {
-          const cid = 0
-          this.publishForm.publishData = new Date().toLocaleString()
-          console.log(new Date().toLocaleString())
-          publishBulletin(cid, this.publishForm).then(response => {
+          console.log('@publishBulletin clubId ' + this.clubId)
+          publishBulletin(this.clubId, this.publishForm).then(response => {
             console.log(response)
             this.$message.success('发布成功')
+            this.getBulletinsList()
             this.publishAnnouncementDialogVisible = false
           })
         } else {
@@ -206,12 +189,8 @@ export default {
     // 删除公告
     deleteBulletin(id) {
       deleteBulletin(id).then(response => {
-        if (response.Status === 204) {
-          this.$message.success('删除成功')
-          this.getBulletinsList()
-        } else {
-          this.$message.success('删除失败')
-        }
+        this.$message.success('删除成功')
+        this.getBulletinsList()
       })
     },
     // 监听pagesize改变的事件
@@ -230,16 +209,9 @@ export default {
     publishAnnouncement() {
       this.publishAnnouncementDialogVisible = true
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
-    },
     // 获取共公告列表
     getBulletinsList() {
-      getBulletinList(this.clubId, this.queryInfo).then(response => {
+      listBulletins(this.clubId, this.queryInfo).then(response => {
         console.log('@announcement-mamage getBulletinList:')
         console.log(response)
         this.bulletinsList = response.data.items
@@ -267,10 +239,9 @@ export default {
           const cid = this.clubId
           this.bulletin.update_at = new Date().toLocaleString()
           changeBulletinDetail(cid, this.bulletin.id, this.bulletin).then(response => {
-            if (response.Status === 204) {
-              this.$message.success('修改成功')
-              this.bulletinDetailDialogVisible = false
-            } else this.$message.error('修改失败')
+            this.$message.success('修改成功')
+            this.bulletinDetailDialogVisible = false
+            this.getBulletinsList()
           })
         } else {
           this.$message.error('提交失败')
@@ -287,5 +258,12 @@ export default {
 }
 .el-pagination {
   margin-top: 20px;
+}
+.bulletions {
+  width: 80%;
+  margin: 30px auto;
+  padding: 20px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
 }
 </style>

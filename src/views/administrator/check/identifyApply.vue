@@ -28,7 +28,7 @@
           </el-form-item>
           <el-form-item label="申请状态" prop="state">
             <el-select v-model="form.state" placeholder="请选择">
-              <el-option label="未审核" value="0" />
+              <el-option label="待审核" value="0" />
               <el-option label="已批准" value="1" />
               <el-option label="已退回" value="2" />
             </el-select>

@@ -93,7 +93,6 @@ export default {
     EnterToClub(id) {
       this.$store.dispatch('user/changeRoles', 'member')
       this.$router.push({ path: '/clubstyle/index', query: { id: id }})
-      this.switchRole(id)
     },
     switchRole() {
       const input = {

@@ -28,7 +28,7 @@
           </el-form-item>
           <el-form-item label="申请状态" prop="state">
             <el-select v-model="form.state" placeholder="请选择">
-              <el-option label="未审核" value="0" />
+              <el-option label="待审核" value="0" />
               <el-option label="已批准" value="1" />
               <el-option label="已发布" value="2" />
               <el-option label="已退回" value="3" />
@@ -168,7 +168,7 @@ export default {
     pushToRefuse({ $index, row }) {
       const data = {
         id: row.id,
-        state: 2
+        state: 3
       }
       pushToActivityApply(data).then(response => {
         if (response.status === 204) {
@@ -177,7 +177,7 @@ export default {
           return this.$message.error('审核申请失败')
         }
       })
-      row.state = 2
+      row.state = 3
     },
     // 组合查询
     renew() {

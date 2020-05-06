@@ -2,7 +2,7 @@
   <div class="login-container">
     <section>
       <div class="leftimg">
-        <img src="../../../assets/images/loginLeftImg.png" />
+        <img src="../../../assets/images/loginLeftImg.png">
       </div>
       <el-form
         ref="loginForm"
@@ -68,8 +68,8 @@
           >
             <span>forget password?</span>
           </router-link>
-<!--          <span style="margin-right:20px;">username: admin</span>-->
-<!--          <span> password: any</span>-->
+          <!--          <span style="margin-right:20px;">username: admin</span>-->
+          <!--          <span> password: any</span>-->
           <router-link
             to="/register"
             style="float:right"
@@ -159,93 +159,93 @@ export default {
 import bg from '@/assets/images/bg.png'
 
 <style scoped>
-  .login-container {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background-size: 100% 100%;
-  }
-  .leftimg {
-    width: 50%;
-    height: 100%;
-    float: left;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .leftimg img{
-    width: 75%;
-    margin-left: 3rem;
-  }
-  .login-container section{
-    border-radius: 15px;
-    width: 50%;
-    height: 52%;
-    background: #fff;
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
-    overflow: hidden;
-    box-sizing: border-box;
-    position: relative;
-    left: 25%;
-    top: 27%;
-  }
-  .el-input{
-    width: 92%;
-  }
-  .show-pwd {
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    font-size: 16px;
-    cursor: pointer;
-    user-select: none;
-  }
+.login-container {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-size: 100% 100%;
+}
+.leftimg {
+  width: 50%;
+  height: 100%;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.leftimg img {
+  width: 75%;
+  margin-left: 3rem;
+}
+.login-container section {
+  border-radius: 15px;
+  width: 50%;
+  height: 52%;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  left: 25%;
+  top: 27%;
+}
+.el-input {
+  width: 92%;
+}
+.show-pwd {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.login-page {
+  width: 50%;
+  float: right;
+  padding: 1rem 3rem;
+  box-sizing: border-box;
+}
+label.el-checkbox.rememberme {
+  margin: 0px 0px 15px;
+  text-align: left;
+}
+.title {
+  color: #333333;
+  font-weight: normal;
+  font-size: 1.375rem;
+  margin-bottom: 0.4rem;
+}
+.tname {
+  font-size: 0.6rem;
+  color: #a9a9a9;
+  margin: 0;
+  margin-bottom: 1.875rem;
+}
+.el-button {
+  width: 70% !important;
+  display: block;
+  border-radius: 25px;
+  margin-top: 1rem;
+  height: 2.5rem;
+}
+.el-checkbox {
+  color: #666666;
+}
+@media only screen and (min-width: 1920px) {
   .login-page {
-    width: 50%;
-    float: right;
-    padding: 1rem 3rem;
-    box-sizing: border-box;
+    padding: 3rem;
   }
-  label.el-checkbox.rememberme {
-    margin: 0px 0px 15px;
-    text-align: left;
+  .title {
+    font-size: 1.5625rem;
   }
-  .title{
-    color: #333333;
-    font-weight: normal;
-    font-size: 1.375rem;
-    margin-bottom: 0.4rem;
+  .tname {
+    margin-bottom: 4.375rem;
   }
-  .tname{
-    font-size: 0.6rem;
-    color: #a9a9a9;
-    margin: 0;
-    margin-bottom: 1.875rem;
+  .el-button {
+    height: 3.125rem;
+    margin-top: 3rem;
   }
-  .el-button{
-    width: 70% !important;
-    display: block;
-    border-radius: 25px;
-    margin-top: 1rem;
-    height: 2.5rem;
-  }
-  .el-checkbox{
-    color: #666666;
-  }
-  @media only screen and (min-width:1920px ) {
-    .login-page{
-      padding: 3rem;
-    }
-    .title{
-      font-size: 1.5625rem;
-    }
-    .tname{
-      margin-bottom: 4.375rem;
-    }
-    .el-button{
-      height: 3.125rem;
-      margin-top: 3rem;
-    }
-  }
+}
 </style>
