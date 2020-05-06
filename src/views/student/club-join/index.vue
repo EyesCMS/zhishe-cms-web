@@ -1,15 +1,29 @@
 <template>
   <div>
-    <h2 align="center" />
-    <el-form ref="form" :model="form" :rules="formRules" label-width="150px">
-      <el-form-item label="申请人ID">
-        <el-input v-model="userid" :disabled="true" />
+    <el-card shadow="never">
+      <el-steps :active="active" align-center>
+        <el-step title="填写申请信息" />
+        <el-step title="等待社长审核" />
+        <el-step title="加入成功" />
+      </el-steps>
+    </el-card>
+    <el-form ref="form" :model="form" :rules="formRules" label-width="350px">
+      <el-form-item label="申请人姓名">
+        <el-input v-model="username" style="width:400px;" :disabled="true" />
       </el-form-item>
       <el-form-item label="社团名称">
-        <el-input v-model="clubName" :disabled="true" />
+        <el-input v-model="clubName" style="width:400px;" :disabled="true" />
       </el-form-item>
       <el-form-item label="申请原因" prop="reason">
-        <el-input v-model="form.reason" placeholder="请输入申请原因" />
+        <el-input
+          v-model="form.reason"
+          style="width:400px;"
+          :rows="3"
+          type="textarea"
+          placeholder="请输入申请原因"
+          maxlength="50"
+          show-word-limit
+        />
       </el-form-item>
       <div style="text-align:center">
         <el-button type="primary" @click="ApplyToJoin">申请</el-button>
@@ -23,8 +37,9 @@ import { ApplyToJoin } from '@/api/club'
 export default {
   data() {
     return {
+      active: 0,
       clubName: this.$route.query.name,
-      userid: this.$store.getters.userid,
+      username: this.$store.getters.name,
       form: {
         id: this.$route.query.id,
         reason: ''
