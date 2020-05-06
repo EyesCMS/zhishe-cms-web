@@ -1,12 +1,18 @@
 <template>
   <div>
-    <h2 align="center" />
-    <el-form ref="form" :model="form" :rules="formRules" label-width="150px">
+    <el-card shadow="never">
+      <el-steps :active="active" align-center>
+        <el-step title="填写社团信息" />
+        <el-step title="等待管理员审核" />
+        <el-step title="创建成功" />
+      </el-steps>
+    </el-card>
+    <el-form ref="form" :model="form" :rules="formRules" label-width="350px">
       <el-form-item label="社团名称" prop="clubName">
-        <el-input v-model="form.clubName" placeholder="请输入社团名称" />
+        <el-input v-model="form.clubName" style="width:400px;" placeholder="请输入社团名称" maxlength="10" show-word-limit />
       </el-form-item>
       <el-form-item label="申请人用户名">
-        <el-input v-model="username" :disabled="true" />
+        <el-input v-model="username" style="width:400px;" :disabled="true" />
       </el-form-item>
       <el-form-item label="社团类别" prop="type">
         <el-select v-model="form.type" placeholder="请选择社团类别">
@@ -18,7 +24,15 @@
         </el-select>
       </el-form-item>
       <el-form-item label="申请原因" prop="reason">
-        <el-input v-model="form.reason" placeholder="请输入申请原因" />
+        <el-input
+          v-model="form.reason"
+          style="width:400px;"
+          :rows="3"
+          type="textarea"
+          placeholder="请输入申请原因"
+          maxlength="50"
+          show-word-limit
+        />
       </el-form-item>
       <!--社团上传头像组件
       <el-form-item label="社团头像" prop="avatarUrl">
@@ -48,6 +62,7 @@ import { postSubmit } from '@/api/club'
 export default {
   data() {
     return {
+      active: 0,
       username: this.$store.getters.nickname,
       form: {
         clubName: '',
