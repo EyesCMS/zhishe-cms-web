@@ -1,21 +1,21 @@
 <template>
   <div>
-<!--    <el-button-->
-<!--      type="primary"-->
-<!--      @click="chief"-->
-<!--    >切换到chief</el-button>-->
-<!--    <el-button-->
-<!--      type="primary"-->
-<!--      @click="member"-->
-<!--    >切换到clubMember</el-button>-->
-<!--    <el-button-->
-<!--      type="primary"-->
-<!--      @click="student"-->
-<!--    >切换到student</el-button>-->
-<!--    <el-button-->
-<!--      type="primary"-->
-<!--      @click="admin"-->
-<!--    >切换到admin</el-button>-->
+    <!--    <el-button-->
+    <!--      type="primary"-->
+    <!--      @click="chief"-->
+    <!--    >切换到chief</el-button>-->
+    <!--    <el-button-->
+    <!--      type="primary"-->
+    <!--      @click="member"-->
+    <!--    >切换到clubMember</el-button>-->
+    <!--    <el-button-->
+    <!--      type="primary"-->
+    <!--      @click="student"-->
+    <!--    >切换到student</el-button>-->
+    <!--    <el-button-->
+    <!--      type="primary"-->
+    <!--      @click="admin"-->
+    <!--    >切换到admin</el-button>-->
     <!-- 社团风采走马灯 -->
     <div class="carousel">
       <el-carousel
@@ -25,7 +25,11 @@
         <el-carousel-item
           v-for="item in carouselImgList"
           :key="item"
-        ><img :src="item" alt="item"/>
+        >
+          <img
+            :src="item"
+            alt="item"
+          >
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -92,8 +96,6 @@ import { recommended, getClubDetail } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
 import clubImg2 from '@/assets/images/club2.jpeg'
 import clubImg3 from '@/assets/images/club3.jpeg'
-
-
 export default {
   data() {
     return {
@@ -257,7 +259,7 @@ body {
   float: left;
   padding: 7px 15px;
   font-size: 17px;
-  background: #409EFF;
+  background: #409eff;
   color: white;
   font-weight: 500;
   border: none;
@@ -267,7 +269,7 @@ body {
 }
 .bottom button:hover {
   transform: scale(0.9);
-  background: #409EFF;
+  background: #409eff;
 }
 .recommend {
   width: 90%;

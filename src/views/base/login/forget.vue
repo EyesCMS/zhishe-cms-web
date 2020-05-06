@@ -117,7 +117,8 @@ export default {
         this.$refs.form1.validate(valid => {
           if (valid) {
             console.log(this.form1)
-            question(this.form1).then(response => {
+            const data = { username: this.form1.username }
+            question(data).then(response => {
               console.log('@forget getQuestion response:')
               console.log(response)
               this.form2.login_question = response.data.loginProblem

@@ -1,12 +1,15 @@
 <template>
   <div>
     <!-- 发布活动的button -->
-    <div v-show="btnShow" style="text-align:center">
+    <div
+      v-show="btnShow"
+      style="text-align:center"
+    >
       <el-button
         style="margin-top:20px;"
         type="primary"
-        @click="addForum"
-      >发布动态</el-button>
+        @click="myForum"
+      >我的帖子</el-button>
     </div>
     <!-- 帖子部分 -->
     <el-card style="margin-top:20px">
@@ -31,34 +34,6 @@
           <!-- 帖子标题 -->
           <h2 style="margin-top:0 padding: 0">{{ item.title }}</h2>
         </el-row>
-        <!-- 删除和修改的按钮 -->
-        <el-row>
-          <div
-            v-show="btnShow"
-            style="display:inline;float:right;margin:10px;"
-            @click="changeForum(item.id)"
-          >
-            <i style="cursor:pointer" class="el-icon-edit icon" />
-          </div>
-          <div
-            style="display:inline;float:right;margin:10px;"
-            @click="deleteForum(item.id);dialogVisible = true"
-          >
-            <i style="cursor:pointer" class="el-icon-delete icon" />
-          </div>
-          <!--<el-dialog
-            title="提示"
-            :visible.sync="dialogVisible"
-            width="30%"
-          >
-            <span>确认删除该帖子吗？</span>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="deleteButton()">确 定</el-button>
-            </span>
-          </el-dialog>-->
-        </el-row>
-
         <el-row>
           <!--cursor:pointer,鼠标滑过变成手指-->
           <el-image
@@ -72,8 +47,48 @@
           <p>{{ item.content }}</p>
         </el-row>
         <el-row>
-          <p style="display: inline;float:right;cursor:pointer" @click="getRemarkList(item.id)">
-            共 {{ length }} 条评论
+          <el-form
+            ref="remark"
+            :model="remark"
+            :rules="remarkRules"
+          >
+            <el-form-item prop="content">
+              <div style="margin-top: 15px;">
+                <el-input
+                  v-if="remark.id!==item.id"
+                  placeholder="发表评论"
+                  class="input-with-select"
+                  @focus="state(item.id)"
+                >
+                  <el-button
+                    slot="append"
+                    icon="el-icon-position"
+                    @click="publishRemark(item.id)"
+                  />
+                </el-input>
+                <el-input
+                  v-if="remark.id===item.id"
+                  v-model="remark.content"
+                  placeholder="发表评论"
+                  class="input-with-select"
+                >
+                  <el-button
+                    slot="append"
+                    icon="el-icon-position"
+                    @click="publishRemark(item.id)"
+                  />
+                </el-input>
+              </div>
+            </el-form-item>
+          </el-form>
+
+        </el-row>
+        <el-row>
+          <p
+            style="display: inline;float:right;cursor:pointer"
+            @click="getRemarkList(item.id)"
+          >
+            查看评论
             <i
               style="display: inline; float:right;cursor:pointer"
               class="el-icon-s-comment"
@@ -99,7 +114,7 @@
               <p style="font-size:18px">{{ index.nickname }}</p>
               <p style=" font-size:10px">{{ index.createAt }}</p>
             </el-col>
-            <!-- 帖子标题 -->
+            <!-- 评论内容 -->
             <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
           </el-row>
         </div>
@@ -118,107 +133,20 @@
         />
       </div>
     </el-card>
-    <!-- 添加动态 -->
-    <el-dialog
-      :visible.sync="addForumDialogVisible"
-      width="70%"
-      center
-      modal
-    >
-      <h2 style="text-align:center;margin-bottom:50px">发布动态</h2>
-      <el-form
-        ref="publish"
-        :model="forumForm"
-        :rules="rules"
-      >
-        <el-form-item
-          label="标题"
-          prop="title"
-        >
-          <el-input v-model="forumForm.title" placeholder="请输入标题" />
-        </el-form-item>
-        <el-form-item
-          label="内容"
-          prop="content"
-        >
-          <el-input
-            v-model="forumForm.content"
-            type="textarea"
-            :rows="5"
-            placeholder="请输入内容"
-          />
-        </el-form-item>
-        <el-form-item label="添加图片">
-          <el-input v-model="forumForm.imgUrl" placeholder="请输入图片地址" />
-        </el-form-item>
-      </el-form>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="handleForm"
-        >发 布</el-button>
-      </span>
-    </el-dialog>
-    <!-- 修改动态 -->
-    <el-dialog
-      :visible.sync="changeForumDialogVisible"
-      width="70%"
-      center
-      modal
-    >
-      <h2 style="text-align:center;margin-bottom:50px">Change Forum</h2>
-      <el-form
-        ref="change"
-        :model="forumDetile"
-        :rules="rules"
-      >
-        <el-form-item
-          label="title"
-          prop="title"
-        >
-          <el-input v-model="forumDetile.title" />
-        </el-form-item>
-        <el-form-item
-          label="content"
-          prop="content"
-        >
-          <el-input
-            v-model="forumDetile.content"
-            type="textarea"
-            :rows="5"
-          />
-        </el-form-item>
-        <el-form-item label="imgUrl">
-          <el-input v-model="forumDetile.imgUrl" />
-        </el-form-item>
-      </el-form>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="handleChange(forumDetile.id)"
-        >Handle Change</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getInvitationList, getRemarksList, getInvitationDetail, changeForum, publishForum, deleteForum } from '@/api/forum'
+import { getRemarksList, getForumList, postComment } from '@/api/forum'
 export default {
   data() {
     return {
       dialogVisible: false,
-      length: 0,
+      length: {},
       forumsList: [],
       forumDetile: {},
       remarklist: [],
-      clubId: 10000,
+      clubId: window.sessionStorage.getItem('clubId') ? window.sessionStorage.getItem('clubId') : this.$store.getters.userId,
       queryInfo: {
         keyword: '',
         page: 1,
@@ -227,25 +155,20 @@ export default {
         sort: 'created_at',
         order: 'desc'
       },
-      total: 0,
-      addForumDialogVisible: false,
-      changeForumDialogVisible: false,
-      originState: 1,
-      btnShow: window.sessionStorage.getItem('roles') !== 'chief',
-      forumForm: {
-        title: '',
+      remark: {
         content: '',
-        imgUrl: ''
+        id: ''
       },
-      rules: {
-        title: [{ required: true, trigger: 'blur', message: '请输入标题' }],
-        content: [{ required: true, trigger: 'blur', message: '请输入具体内容' }]
-      }
+      remarkRules: {
+        content: [{ required: true, trigger: 'blur', message: '请输入评论' }]
+      },
+      total: 0,
+      originState: 1,
+      btnShow: true
     }
   },
   created: function () {
     this.getForumsList()
-    console.log(this.remarklist)
   },
   methods: {
     handleSizeChange(newSize) {
@@ -259,79 +182,58 @@ export default {
       this.getForumsList()
     },
     getForumsList() {
-      getInvitationList(this.clubId, this.queryInfo, this.originState).then(response => {
+      console.log(this.queryInfo)
+      getForumList(this.queryInfo, this.originState).then(response => {
         console.log('@club forum-mamage getForumsList response')
         console.log(response)
         this.forumsList = response.data.items
+        this.forumsList.forEach(element => {
+          element['remark'] = { content: 'dfa' }
+        })
+        // console.log(this.remark)
         this.total = response.data.totalCount
         return response.data.items
       })
     },
-    addForum() {
-      this.addForumDialogVisible = true
-    },
-    handleForm() {
-      this.$refs.publish.validate(valid => {
-        if (valid) {
-          publishForum(this.forumForm).then(response => {
-            this.$message.success('发布成功！')
-            this.getForumsList()
-            console.log(this.forumsList)
-            this.addForumDialogVisible = false
-          })
-        } else {
-          this.$message.error('发布失败！')
-        }
-      })
-    },
-    deleteForum(id) {
-      console.log(id)
-      deleteForum(id).then(response => {
-        if (response.status === 204) {
-          this.getForumsList()
-          this.$message.success('删除帖子成功')
-          console.log(this.forumsList)
-        } else {
-          return this.$message.error('删除帖子失败')
-        }
-      })
-    },
     getRemarkList(id) {
       getRemarksList(id, this.queryInfo).then(response => {
-        console.log('@forum getRemarkList response')
+        console.log('@forum index getRemarkList response')
         console.log(response)
-        console.log(id)
-        this.commentCount = true
-        this.remarklist = response.data.items
-        this.length = response.data.totalCount
-        this.remarklist.forEach(element => {
-          element['id'] = id
+        response.data.items.forEach(Element => {
+          var check = false
+          Element['id'] = id
+          this.remarklist.forEach(element => {
+            if (this.deepEquals(element, Element)) {
+              check = true
+            }
+          })
+          if (!check) {
+            this.remarklist.push(Element)
+          }
         })
+        this.length = this.remarklist.length
         console.log(this.remarklist)
       })
     },
-    changeForum(id) { // 显示修改界面
-      console.log(id)
-      this.changeForumDialogVisible = true
-      var puery = {
-        type: window.sessionStorage.getItem('roles') === 'chief' ? 1 : 0
+    publishRemark(id) {
+      if (this.remark.content !== '') {
+        this.remark['postId'] = id
+        postComment(this.remark).then(response => {
+          this.$message.success('发表成功')
+          this.getRemarkList(id)
+          this.remark.content = ''
+        })
       }
-      getInvitationDetail(id, puery).then(response => {
-        console.log('@forum getInvitationDetail')
-        console.log(response)
-        this.forumDetile = response.data
-      })
     },
-    handleChange(id) {
-      this.$refs.change.validate(valid => {
-        if (valid) {
-          changeForum(id, this.forumDetile).then(response => {
-            this.$message.success('修改成功')
-            this.getForumsList()
-            this.changeForumDialogVisible = false
-          })
-        }
-      })
+    state(id) {
+      this.remark.id = id
+    },
+    deepEquals(x, y) {
+      if (x.createAt === y.createAt && x.content === y.content && x.id === y.id) return true
+      else return false
+    },
+    myForum() {
+      this.$router.push('/forumManage/manage')
     }
   }
 }

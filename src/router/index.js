@@ -333,7 +333,14 @@ export const asyncRoutes = [
         path: 'forum',
         name: 'forum',
         component: () => import('@/views/chief/forum-manage/index'),
-        meta: { title: '论坛管理', icon: 'people', roles: ['chief', 'student'] }
+        meta: { title: '我的论坛', icon: 'people', roles: ['chief', 'student'] }
+      },
+      {
+        path: 'manage',
+        name: 'manage',
+        hidden: true,
+        component: () => import('@/views/chief/forum-manage/manage'),
+        meta: { title: '论坛管理', roles: ['chief', 'student'] }
       }
     ]
   },
