@@ -44,13 +44,13 @@ export default {
   name: 'MemberDetail',
   data() {
     return {
-      clubId: 5000,
-      userId: 1,
+      clubId: sessionStorage.getItem('clubId'),
+      userId: this.$route.query.userId,
       memberInfo: {}
     }
   },
   created() {
-    this.userId = this.$route.query.userId
+    // this.userId = this.$route.query.userId
     // this.clubId = sessionStorage.getItem('clubId')
     // console.log('ww' + this.clubId)
     this.getMemberDetails()
