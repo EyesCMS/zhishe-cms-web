@@ -28,17 +28,9 @@
         <el-button type="info" @click="reset">重置</el-button>
       </el-row>
     </el-card>
-    <el-card>
-      <el-input
-        v-model="queryInfo.keyword"
-        placeholder="请输入内容"
-        class="input-with-select"
-      >
-        <el-button slot="append" icon="el-icon-search" @click="getMembersList" />
-      </el-input>
-    </el-card>
+
     <!-- 卡片视图区 -->
-    <el-card>
+    <el-card style="margin: 15px 15px">
 
       <!-- 用户列表 -->
       <el-table :data="membersList" stripe border>
@@ -63,6 +55,7 @@
       :page-size="queryInfo.limit"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
+      style="margin: 25px 15px;text-align:center"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />

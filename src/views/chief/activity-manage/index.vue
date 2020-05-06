@@ -75,22 +75,27 @@
           </el-form-item>
           <el-form-item label="活动地点" prop="location">
             <el-select v-model="addForm.location" placeholder="请选择活动地点">
-              <el-option label="区域一" value="shanghai" />
-              <el-option label="区域二" value="beijing" />
+              <el-option label="青春广场" value="青春广场" />
+              <el-option label="生活三区" value="生活三区" />
             </el-select>
           </el-form-item>
-          <el-form-item label="活动时间" required>
-            <el-col :span="11">
-              <el-form-item prop="startDate">
-                <el-date-picker v-model="addForm.startDate" type="date" placeholder="选择日期" style="width: 90%;" />
-              </el-form-item>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-form-item prop="endDate">
-                <el-date-picker v-model="addForm.endDate" type="date" placeholder="选择日期" style="width: 90%;" />
-              </el-form-item>
-            </el-col>
+          <el-form-item label="开始时间" required>
+            <el-date-picker
+              v-model="addForm.startDate"
+              type="datetime"
+              placeholder="选择开始时间"
+              align="right"
+              :picker-options="pickerOptions"
+            />
+          </el-form-item>
+          <el-form-item label="结束时间" required>
+            <el-date-picker
+              v-model="addForm.endDate"
+              type="datetime"
+              placeholder="选择结束时间"
+              align="right"
+              :picker-options="pickerOptions"
+            />
           </el-form-item>
         </el-form>
         <el-upload
@@ -186,7 +191,6 @@ export default {
       activitiesList: [],
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
-        keyword: '',
         page: 1,
         limit: 5,
         sort: '',
@@ -200,7 +204,7 @@ export default {
       applyDetailDialogVisible: false,
       dialogImageUrl: '',
       addForm: {
-        clubId: 0,
+        clubId: sessionStorage.getItem('clubId'),
         name: '',
         title: '',
         content: '',
@@ -228,6 +232,28 @@ export default {
         endDate: [
           { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ]
+      },
+      pickerOptions: {
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date())
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24)
+            picker.$emit('pick', date)
+          }
+        }, {
+          text: '一周前',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', date)
+          }
+        }]
       }
     }
   },
@@ -283,10 +309,13 @@ export default {
     publishApply() {
       this.$refs.addFormRef.validate(valid => {
         if (!valid) return
+        // console.log(this.addForm)
         publishApply(this.addForm).then(response => {
           this.$message.success('申请成功')
         })
+        // console.log(this.addForm)
         this.applyActivityDialogVisible = false
+        this.getActivitiesList()
       })
     },
     applyActivityDialogClosed() {
