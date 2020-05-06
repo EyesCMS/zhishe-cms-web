@@ -265,8 +265,8 @@ export default {
     getActivitiesList() {
       getActivitiesList(this.clubId, this.queryInfo).then(response => {
         console.log(response)
-        this.activitiesList = response.items
-        this.total = response.total_count
+        this.activitiesList = response.data.items
+        this.total = response.data.totalCount
         console.log(this.activitiesList)
       })
     },
@@ -277,6 +277,7 @@ export default {
       }
       reviseActivityState(input).then(response => {
         this.$message.success('发布成功')
+        this.getActivitiesList()
       })
     },
     deleteActivity(id) {
@@ -337,6 +338,8 @@ export default {
   margin-top: 20px;
 }
 .el-pagination {
-  margin-top: 20px;
+  // margin-top: 20px;
+  margin: 30px 15px;
+  text-align:center
 }
 </style>
