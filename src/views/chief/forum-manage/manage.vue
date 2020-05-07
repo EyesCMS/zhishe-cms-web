@@ -8,6 +8,11 @@
       <el-button
         style="margin-top:20px;"
         type="primary"
+        @click="back"
+      >返回</el-button>
+      <el-button
+        style="margin-top:20px;"
+        type="primary"
         @click="addForum"
       >发布动态</el-button>
     </div>
@@ -82,8 +87,9 @@
         </el-row>
         <el-row>
           <p
+            v-show="!forumsList[key].remarkVisiable"
             style="display: inline;float:right;cursor:pointer"
-            @click="getRemarkList(item.id)"
+            @click="getRemarkList(item)"
           >
             查看评论
             <i
@@ -91,13 +97,25 @@
               class="el-icon-s-comment"
             />
           </p>
+          <p
+            v-show="forumsList[key].remarkVisiable"
+            style="display: inline;float:right;cursor:pointer"
+            @click="removeRemark(item)"
+          >
+            收起评论
+            <i
+              style="display: inline; float:right;cursor:pointer"
+              class="el-icon-s-comment"
+            />
+          </p>
         </el-row>
         <div
-          v-for="(index, I) in remarklist"
-          v-show="index.id === item.id"
+          v-for="(index, I) in forumsList[key].remark.items"
+          v-show="forumsList[key].remarkVisiable"
           :key="I"
           style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);border-radius: 5px; padding: 10px"
         >
+          <!-- 评论具体内容 -->
           <el-row style="align-items: center;display: flex;background-color: #F2F6FC">
             <!-- 评论头像 -->
             <el-col :span="2">
@@ -111,7 +129,7 @@
               <p style="font-size:18px">{{ index.nickname }}</p>
               <p style=" font-size:10px">{{ index.createAt }}</p>
             </el-col>
-            <!-- 帖子标题 -->
+            <!-- 评论内容 -->
             <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
           </el-row>
         </div>
@@ -277,12 +295,60 @@ export default {
       this.getForumsList()
     },
     getForumsList() {
-      getMyForums(this.clubId, this.queryInfo, this.originState).then(response => {
+      console.log(this.queryInfo)
+      getMyForums(this.queryInfo, this.originState).then(response => {
         console.log('@club forum-mamage getForumsList response')
         console.log(response)
         this.forumsList = response.data.items
+        this.forumsList.forEach(element => {
+          element['query'] = {
+            page: 1,
+            limit: 5
+          }
+          element['remark'] = {
+            items: [],
+            totalCount: 100
+          }
+          element['remarkVisiable'] = true
+          this.getRemarkList(element)
+        })
+        // console.log(this.remark)
         this.total = response.data.totalCount
         return response.data.items
+      })
+    },
+    // 获取评论列表
+    getRemarkList(element) {
+      console.log('@getRemarkList element')
+      console.log(element.remark.items)
+      element.remarkVisiable = true
+      this.$forceUpdate()
+      if (element.remark.items !== []) {
+        element.query.limit = element.query.limit * 2
+      }
+      // if (element.query.limit > element.remark.totalCount) {
+      //   this.$message.success('已加载完')
+      //   return
+      // }
+      getRemarksList(element.id, element.query).then(response => {
+        console.log('@forum index getRemarkList response')
+        console.log(response)
+        element.remark = response.data
+        this.$forceUpdate()
+        console.log(element.remark.items)
+        // response.data.items.forEach(Element => {
+        //   var check = false
+        //   Element['id'] = element.id
+        //   this.remarklist.forEach(element => {
+        //     if (this.deepEquals(element, Element)) {
+        //       check = true
+        //     }
+        //   })
+        //   if (!check) {
+        //     this.remarklist.push(Element)
+        //   }
+        // })
+        // this.length = this.remarklist.length
       })
     },
     addForum() {
@@ -314,26 +380,6 @@ export default {
         }
       })
     },
-    getRemarkList(id) {
-      getRemarksList(id, this.queryInfo).then(response => {
-        console.log('@forum index getRemarkList response')
-        console.log(response)
-        response.data.items.forEach(Element => {
-          var check = false
-          Element['id'] = id
-          this.remarklist.forEach(element => {
-            if (this.deepEquals(element, Element)) {
-              check = true
-            }
-          })
-          if (!check) {
-            this.remarklist.push(Element)
-          }
-        })
-        this.length = this.remarklist.length
-        console.log(this.remarklist)
-      })
-    },
     changeForum(id) { // 显示修改界面
       console.log(id)
       this.changeForumDialogVisible = true
@@ -357,9 +403,12 @@ export default {
         }
       })
     },
-    deepEquals(x, y) {
-      if (x.createAt === y.createAt && x.content === y.content && x.id === y.id) return true
-      else return false
+    removeRemark(element) {
+      element.remarkVisiable = false
+      this.$forceUpdate()
+    },
+    back() {
+      this.$router.push('/forumManage/forum')
     }
   }
 }
@@ -375,7 +424,7 @@ el-col {
 .forum {
   margin: 30px auto;
   margin-bottom: 50px;
-  width: 75%;
+  width: 60%;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   padding: 15px;
