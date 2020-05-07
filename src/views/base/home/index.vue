@@ -68,24 +68,32 @@
     <el-dialog
       title="社团详情"
       :visible.sync="bulletinDetailDialogVisible"
-      width="70%"
+      width="50%"
       center
       modal
     >
-      <h2 style="text-align:center;margin-bottom:50px">{{ clubDetail.name }}</h2>
-      <h4>社长：{{ clubDetail.chiefName }}</h4>
-      <h4>成员数：{{ clubDetail.memberCount }}</h4>
-      <h4>qq群：{{ clubDetail.qqGroup }}</h4>
-      <h4>简介：{{ clubDetail.slogan }}</h4>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
+      <h2 style="text-align:center;margin-bottom:50px;font-family:'微软雅黑';font-size:32px;font-weight:lighter;">
+        {{ clubDetail.name }}
+      </h2>
+      <el-card style="margin: 30px 15px 30px 30px">
+        <div>
+          <el-form :model="clubDetail" label-position="left" label-width="300px">
+            <el-form-item label="社长">{{ clubDetail.chiefName }}</el-form-item>
+            <el-divider />
+            <el-form-item label="社团人数">{{ clubDetail.memberCount }}</el-form-item>
+            <el-divider />
+            <el-form-item label="社团Q群">{{ clubDetail.qqGroup }}</el-form-item>
+            <el-divider />
+            <el-form-item label="社团简介">{{ clubDetail.slogan }}</el-form-item>
+          </el-form>
+        </div>
+      </el-card>
+      <div style="text-align:center">
         <el-button
           type="primary"
           @click="bulletinDetailDialogVisible = false"
         >确 定</el-button>
-      </span>
+      </div>
     </el-dialog>
   </div>
 </template>

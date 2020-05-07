@@ -226,6 +226,7 @@ export default {
       }
     },
     state(id) {
+      this.remark.content = ''
       this.remark.id = id
     },
     deepEquals(x, y) {
