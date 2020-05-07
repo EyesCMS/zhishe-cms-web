@@ -68,8 +68,8 @@
         <el-table-column label="社团类别" prop="type" />
         <el-table-column label="官方状态" prop="state">
           <template slot-scope="scope">
-            <p v-if="scope.row.state === 0">{{ scope.row.state | statusFilter }}</p>
-            <p v-else>{{ scope.row.state | statusFilter }}</p>
+            <el-tag v-if="scope.row.state === 0" type="info">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else type="success">{{ scope.row.state | statusFilter }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="200px">
