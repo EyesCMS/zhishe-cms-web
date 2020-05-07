@@ -103,6 +103,7 @@ import { recommended, getClubDetail } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
 import clubImg2 from '@/assets/images/club2.jpeg'
 import clubImg3 from '@/assets/images/club3.jpeg'
+import { getInfo } from '@/api/user'
 export default {
   data() {
     return {
@@ -124,7 +125,7 @@ export default {
     }
   },
   created() {
-    this.pushToHomePage()
+    this.getInfo()
     const clubid = 112
     localStorage.setItem('clubid', clubid)
     this.getRecommendedList()
@@ -163,6 +164,14 @@ export default {
     },
     pushToHomePage() {
       this.$store.dispatch('user/changeRoles', 'student')
+    },
+    getInfo() {
+      getInfo().then(response => {
+        if (response.data.roles[0] === 'student') {
+          this.pushToHomePage()
+        }
+        // console.log(response.data.roles[0])
+      })
     }
   }
 }
