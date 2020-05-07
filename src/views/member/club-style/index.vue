@@ -13,42 +13,50 @@
           <h3>{{ item }}</h3>
         </el-carousel-item>
       </el-carousel>
-      <el-row :gutter="20">
+      <el-row :gutter="25">
         <el-col :span="8">
-          <el-divider />
-          <h3 style="text-align:center;">公告列表</h3>
-          <el-divider />
-          <div
-            v-for="(item, i) in bulletinsList"
-            id="bulletin"
-            :key="i"
-          >
-            <el-tag v-if="i <= 2" type="danger">{{ i + 1 }}</el-tag>
-            <el-tag v-else type="info">{{ i + 1 }}</el-tag>
-            <p style="display:inline;">{{ item.title }}</p>
-            <el-link
-              type="primary"
-              @click="openBulletinDetailDiaglog(item.id)"
-            >详情</el-link>
-          </div>
+          <el-card style="margin-top:30px">
+            <div style="display:flex;justify-content: space-between">
+              <h3>公告列表</h3>
+              <el-button plain size="mini" style="height:30px;position:relative;top:10px" @click="pushToBulletins()">更多<i class="el-icon-arrow-right" /></el-button>
+            </div>
+            <div
+              v-for="(item, i) in bulletinsList"
+              id="bulletin"
+              :key="i"
+            >
+              <div style="display:flex;justify-content: space-between">
+                <div>
+                  <el-tag v-if="i <= 2" type="danger">{{ i + 1 }}</el-tag>
+                  <el-tag v-else type="info">{{ i + 1 }}</el-tag>
+                  <el-link style="display:inline;" @click="openBulletinDetailDiaglog(item.id)">{{ item.title }}</el-link>
+                </div>
+                <p style="font-size:10px">{{ item.createAt }}</p>
+              </div>
+            </div>
+          </el-card>
         </el-col>
         <el-col :span="8">
-          <el-divider />
-          <h3 style="text-align:center;">帖子列表</h3>
-          <el-divider />
-          <div
-            v-for="(item, i) in invitationList"
-            id="bulletin"
-            :key="i"
-          >
-            <el-tag v-if="i <= 2" type="warning">{{ i + 1 }}</el-tag>
-            <el-tag v-else type="info">{{ i + 1 }}</el-tag>
-            <p style="display:inline;">{{ item.title }}</p>
-            <el-link
-              type="primary"
-              @click="pushToActivityDetail(item.id)"
-            >详情</el-link>
-          </div>
+          <el-card style="margin-top:30px">
+            <div style="display:flex;justify-content: space-between">
+              <h3>帖子列表</h3>
+              <el-button plain size="mini" style="height:30px;position:relative;top:10px" @click="pushToActivities()">更多<i class="el-icon-arrow-right" /></el-button>
+            </div>
+            <div
+              v-for="(item, i) in invitationList"
+              id="bulletin"
+              :key="i"
+            >
+              <div style="display:flex;justify-content: space-between">
+                <div>
+                  <el-tag v-if="i <= 2" type="warning">{{ i + 1 }}</el-tag>
+                  <el-tag v-else type="info">{{ i + 1 }}</el-tag>
+                  <el-link style="display:inline;" @click="pushToActivityDetail(item.id)">{{ item.title }}</el-link>
+                </div>
+                <p style="font-size:10px">{{ item.createAt }}</p>
+              </div>
+            </div>
+          </el-card>
         </el-col>
         <el-col :span="8">
           <el-divider />
@@ -85,7 +93,7 @@
       modal
     >
       <h2 style="text-align:center;margin-bottom:50px">{{ bulletin.title }}</h2>
-      <p>{{ bulletin.content }}</p>
+      <p>{{ bulletin.body }}</p>
       <p>发布时间:{{ bulletin.createAt }}</p>
       <p>上次修改:{{ bulletin.updateAt }}</p>
       <span
@@ -166,6 +174,8 @@ export default {
       console.log('接收cid')
       console.log('clubId为' + this.clubId)
       sessionStorage.setItem('clubId', this.clubId)
+    } else {
+      this.clubId = sessionStorage.getItem('clubId')
     }
     // this.clubId = this.$route.query.cid
     this.getBulletinsList()
@@ -233,6 +243,12 @@ export default {
     },
     pushToActivityDetail(id) {
       this.$router.push({ path: '/activityforum/detail', query: { id: id }})
+    },
+    pushToBulletins() {
+      this.$router.push({ path: '/announcement/index' })
+    },
+    pushToActivities() {
+      this.$router.push({ path: '/activityforum/index' })
     }
   }
 }
@@ -253,10 +269,6 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
-}
-
-.el-link {
-  float: right;
 }
 
 #bulletin {

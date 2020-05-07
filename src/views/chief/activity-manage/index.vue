@@ -369,8 +369,8 @@ export default {
         console.log(this.activitiesList)
       })
     },
-    publishActivity(id, state) {
-      const confirmResult = this.$confirm('此操作将发布活动, 是否继续?', '发布确认', {
+    async publishActivity(id, state) {
+      const confirmResult = await this.$confirm('此操作将发布活动, 是否继续?', '发布确认', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'info'
@@ -388,8 +388,8 @@ export default {
         this.getActivitiesList()
       })
     },
-    deleteActivity(id) {
-      const confirmResult = this.$confirm('此操作将撤销活动, 是否继续?', '撤销确认', {
+    async deleteActivity(id) {
+      const confirmResult = await this.$confirm('此操作将撤销活动, 是否继续?', '撤销确认', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -400,6 +400,7 @@ export default {
       }
       deleteActivity(id).then(response => {
         this.$message.success('撤销成功')
+        this.getActivitiesList()
       })
     },
     // 监听pagesize改变的事件
