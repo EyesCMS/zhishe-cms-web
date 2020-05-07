@@ -66,7 +66,6 @@
       </el-row>
     </div>
     <el-dialog
-      title="社团详情"
       :visible.sync="bulletinDetailDialogVisible"
       width="50%"
       center
@@ -125,6 +124,7 @@ export default {
     }
   },
   created() {
+    this.pushToHomePage()
     const clubid = 112
     localStorage.setItem('clubid', clubid)
     this.getRecommendedList()
@@ -160,6 +160,9 @@ export default {
         this.clubDetail = response.data
         this.bulletinDetailDialogVisible = true
       })
+    },
+    pushToHomePage() {
+      this.$store.dispatch('user/changeRoles', 'student')
     }
   }
 }
