@@ -1,45 +1,38 @@
 <template>
-  <div style="text-align:center;">
-    <el-card>
-      <el-col :span="4">
-        <el-avatar shape="circle" :size="180" :src="avatarUrl" />
-      </el-col>
-    </el-card>
-    <el-card>
-      <el-row>
+  <div>
+    <div style="display:inline-block;margin:30px;vertical-align: top;">
+      <el-image style="width: 350px; height: 350px;" :src="avatarUrl" />
+    </div>
+    <div style="width:650px;display:inline-block;vertical-align: top;">
+      <el-card style="margin: 30px 15px 30px 30px">
+        <h2 style="font-family:'微软雅黑';font-size:32px;font-weight:lighter;">
+          <!--<el-avatar shape="circle" :size="60" :src="avatarUrl" />-->
+          {{ name }}资料
+        </h2>
+        <p style="color:#9E9E9E;font-family:'微软雅黑';font-size:14px">
+          如果你感兴趣的话就
+          <el-link type="primary" @click="ApplyToJoin()">加入我们</el-link> 吧！
+        </p>
         <div>
-          <el-form ref="form" :model="form" label-width="150px">
-            <el-form-item label="社团ID">
-              <el-input v-model="id" :disabled="true" />
-            </el-form-item>
-            <el-form-item label="社团名称">
-              <el-input v-model="name" :disabled="true" />
-            </el-form-item>
-            <el-form-item label="社长名称">
-              <el-input v-model="chiefName" :disabled="true" />
-            </el-form-item>
-            <el-form-item label="社团简介">
-              <el-input v-model="clubInfo.slogan" :disabled="true" />
-            </el-form-item>
-            <el-form-item label="社团类别">
-              <el-input v-model="clubInfo.type" :disabled="true" />
-            </el-form-item>
-            <el-form-item label="社团人数">
-              <el-input v-model="clubInfo.memberCount" :disabled="true" />
-            </el-form-item>
-            <el-form-item label="社团Q群">
-              <el-input v-model="clubInfo.qqGroup" :disabled="true" />
-            </el-form-item>
-            <el-form-item>
-              <el-button
-                type="primary"
-                @click="backToClub"
-              >确定</el-button>
-            </el-form-item>
+          <el-form ref="form" :model="form" label-position="left" label-width="300px">
+            <el-form-item label="社团ID">{{ id }}</el-form-item>
+            <el-divider />
+            <el-form-item label="社长名称">{{ chiefName }}</el-form-item>
+            <el-divider />
+            <el-form-item label="社团简介">{{ clubInfo.slogan }}</el-form-item>
+            <el-divider />
+            <el-form-item label="社团类别">{{ clubInfo.type }}</el-form-item>
+            <el-divider />
+            <el-form-item label="社团人数">{{ clubInfo.memberCount }}</el-form-item>
+            <el-divider />
+            <el-form-item label="社团Q群">{{ clubInfo.qqGroup }}</el-form-item>
           </el-form>
         </div>
-      </el-row>
-    </el-card>
+      </el-card>
+    </div>
+    <div style="text-align:center">
+      <el-button type="primary" @click="backToClub">确定</el-button>
+    </div>
   </div>
 </template>
 
@@ -80,6 +73,12 @@ export default {
     },
     backToClub() {
       this.$router.replace('/student/index')
+    },
+    ApplyToJoin() {
+      this.$router.push({
+        path: '/joinClub',
+        query: { id: this.id, name: this.name }
+      })
     }
   }
 }
