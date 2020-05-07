@@ -56,11 +56,8 @@ export default {
       clubId: sessionStorage.getItem('clubId'),
       addList: [],
       queryInfo: {
-        keyword: '',
         page: 1,
-        limit: 5,
-        sort: 'createAt',
-        order: 'desc'
+        limit: 5
       },
       total: 0,
       publishStatusOptions: [

@@ -10,12 +10,14 @@
             style="float: right"
             type="primary"
             size="small"
+            @click="getBulletinsList"
           >
             查询
           </el-button>
           <el-button
             style="float: right;margin-right: 15px"
             size="small"
+            @click="reset"
           >
             重置
           </el-button>
@@ -27,7 +29,7 @@
                 <el-input v-model="queryInfo.title" style="width: 203px" placeholder="请输入公告标题" />
               </el-form-item>
               <el-form-item label="公告内容">
-                <el-input v-model="queryInfo.content" style="width: 203px" placeholder="请输入公告内容" />
+                <el-input v-model="queryInfo.body" style="width: 203px" placeholder="请输入公告内容" />
               </el-form-item>
             </div>
           </el-form>
@@ -74,7 +76,7 @@
         modal
       >
         <h2 style="text-align:center;margin-bottom:50px">{{ bulletin.title }}</h2>
-        <p>{{ bulletin.content }}</p>
+        <p>{{ bulletin.body }}</p>
         <p>发布时间:{{ bulletin.createAt }}</p>
         <p>上次修改:{{ bulletin.updateAt }}</p>
         <span slot="footer" class="dialog-footer">
@@ -96,7 +98,7 @@ export default {
       queryInfo: {
         // keyword: '',
         title: '',
-        content: '',
+        body: '',
         page: 1,
         limit: 5,
         sort: 'updateAt',
@@ -152,6 +154,9 @@ export default {
     queryAnnouncementList() {
       this.getBulletinsList()
       this.queryInfo.keyword = ''
+    },
+    reset() {
+      this.queryInfo.title = this.queryInfo.body = ''
     }
   }
 }

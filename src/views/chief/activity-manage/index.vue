@@ -146,11 +146,15 @@
           </el-form-item>
           <el-form-item label="活动地点" prop="location">
             <el-select v-model="addForm.location" placeholder="请选择活动地点">
-              <el-option label="青春广场" value="青春广场" />
-              <el-option label="生活三区" value="生活三区" />
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
-          <el-form-item label="开始时间" prop="startDate">
+          <el-form-item label="开始时间" required>
             <el-date-picker
               v-model="addForm.startDate"
               type="datetime"
@@ -160,7 +164,7 @@
               :picker-options="pickerOptions"
             />
           </el-form-item>
-          <el-form-item label="结束时间" prop="endDate">
+          <el-form-item label="结束时间" required>
             <el-date-picker
               v-model="addForm.endDate"
               type="datetime"
@@ -304,13 +308,13 @@ export default {
         ],
         location: [
           { required: true, message: '请输入活动地点', trigger: 'blur' }
-        ],
-        startDate: [
-          { type: 'date', required: true, message: '请选择开始时间', trigger: 'change' }
-        ],
-        endDate: [
-          { type: 'date', required: true, message: '请选择结束时间', trigger: 'change' }
         ]
+        // startDate: [
+        //   { type: 'date', required: true, message: '请选择开始时间', trigger: 'change' }
+        // ],
+        // endDate: [
+        //   { type: 'date', required: true, message: '请选择结束时间', trigger: 'change' }
+        // ]
       },
       pickerOptions: {
         shortcuts: [{
@@ -333,7 +337,23 @@ export default {
             picker.$emit('pick', date)
           }
         }]
-      }
+      },
+      options: [{
+        value: '青春广场',
+        label: '青春广场'
+      }, {
+        value: '风雨操场',
+        label: '风雨操场'
+      }, {
+        value: '生活一区',
+        label: '生活一区'
+      }, {
+        value: '生活二区',
+        label: '生活二区'
+      }, {
+        value: '生活三区',
+        label: '生活三区'
+      }]
     }
   },
   created() {
@@ -350,6 +370,15 @@ export default {
       })
     },
     publishActivity(id, state) {
+      const confirmResult = this.$confirm('此操作将发布活动, 是否继续?', '发布确认', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'info'
+      }).catch(err => err)
+
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消发布')
+      }
       const input = {
         id: id,
         state: state
@@ -360,6 +389,15 @@ export default {
       })
     },
     deleteActivity(id) {
+      const confirmResult = this.$confirm('此操作将撤销活动, 是否继续?', '撤销确认', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
+
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消撤销')
+      }
       deleteActivity(id).then(response => {
         this.$message.success('撤销成功')
       })
@@ -389,7 +427,7 @@ export default {
     publishApply() {
       this.$refs.addFormRef.validate(valid => {
         if (!valid) return
-        // console.log(this.addForm)
+        console.log(this.addForm)
         publishApply(this.addForm).then(response => {
           this.$message.success('申请成功')
         })
@@ -399,7 +437,8 @@ export default {
       })
     },
     applyActivityDialogClosed() {
-      this.$refs.addFormRef.resetFields()
+      // this.$refs.addFormRef.resetFields()
+      // this.addForm.startDate = this.addForm.endDate = ''
     },
     checkActivityApplyDetail(id) {
       getActivityApplyDetail(id).then(response => {
