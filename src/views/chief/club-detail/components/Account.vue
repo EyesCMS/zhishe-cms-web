@@ -1,5 +1,5 @@
 <template>
-  <el-form>
+  <el-form label-width="200px">
     <el-form-item label="社团名称">
       <el-input v-model.trim="clubinfo.name" />
     </el-form-item>
@@ -16,9 +16,7 @@
       <el-input v-model.trim="clubinfo.slogan" />
     </el-form-item>
     <div style="text-align:center">
-      <el-form-item>
-        <el-button type="primary">修改</el-button>
-      </el-form-item>
+      <el-button type="primary">修改</el-button>
     </div>
   </el-form>
 </template>

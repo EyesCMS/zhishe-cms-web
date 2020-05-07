@@ -17,7 +17,7 @@
           <el-card>
             <el-tabs v-model="activeTab">
               <el-tab-pane
-                label="个人信杯"
+                label="社团信息"
                 name="account"
               >
                 <account :clubinfo="clubInfo" />
