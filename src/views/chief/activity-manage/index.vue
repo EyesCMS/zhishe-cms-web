@@ -154,6 +154,9 @@
               />
             </el-select>
           </el-form-item>
+          <el-form-item label="参与人数">
+            <el-input-number v-model="addForm.memberCount" style="width:200px" :min="1" size="small" label="添加参与人数" />
+          </el-form-item>
           <el-form-item label="开始时间" required>
             <el-date-picker
               v-model="addForm.startDate"
@@ -210,6 +213,9 @@
           </el-form-item>
           <el-form-item label="活动地点">
             <el-input v-model="applyDetailForm.location" disabled />
+          </el-form-item>
+          <el-form-item label="参与人数">
+            <el-input-number v-model="applyDetailForm.memberCount" :min="1" disabled />
           </el-form-item>
           <el-form-item label="活动时间">
             <el-col :span="11">
@@ -294,6 +300,7 @@ export default {
         startDate: '',
         endDate: '',
         location: '',
+        memberCount: 1,
         imgUrl: ''
       },
       addFormRules: {
@@ -385,8 +392,8 @@ export default {
       }
       reviseActivityState(input).then(response => {
         this.$message.success('发布成功')
-        this.getActivitiesList()
       })
+      this.getActivitiesList()
     },
     async deleteActivity(id) {
       const confirmResult = await this.$confirm('此操作将撤销活动, 是否继续?', '撤销确认', {
