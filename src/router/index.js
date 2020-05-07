@@ -221,7 +221,12 @@ export const asyncRoutes = [
         path: 'index',
         name: 'index',
         component: () => import('@/views/member/club-style/index.vue'),
-        meta: { title: '社团风采', noCache: true, icon: 'fengcai', roles: ['member', 'chief'] }
+        meta: {
+          title: '社团风采',
+          noCache: true,
+          icon: 'fengcai',
+          roles: ['member', 'chief']
+        }
       }
     ]
   },
@@ -384,7 +389,7 @@ export const asyncRoutes = [
   },
   // 社团换届管理
   {
-    path: '/chief',
+    path: '/chiefChange',
     component: Layout,
     name: 'chiefChange',
     children: [

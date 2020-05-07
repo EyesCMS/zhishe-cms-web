@@ -34,7 +34,10 @@
           <!-- 创建时间和发帖者 -->
           <el-col :span="4">
             <p style="font-size:16px">{{ item.posterName }}</p>
-            <p style=" font-size:12px">{{ item.createAt }}</p>
+            <p
+              v-time="item.createAt"
+              style=" font-size:12px"
+            />
           </el-col>
           <!-- 帖子标题 -->
           <h2 style="margin-top:0 padding: 0">{{ item.title }}</h2>
@@ -127,7 +130,10 @@
             <!-- 评论时间和发评论者 -->
             <el-col :span="3">
               <p style="font-size:18px">{{ index.nickname }}</p>
-              <p style=" font-size:10px">{{ index.createAt }}</p>
+              <p
+                v-time="index.createAt"
+                style=" font-size:10px"
+              />
             </el-col>
             <!-- 评论内容 -->
             <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
@@ -245,7 +251,8 @@
 </template>
 
 <script>
-import { getMyForums, getRemarksList, getInvitationDetail, changeForum, publishForum, deleteForum } from '@/api/forum'
+import { getMyForums, getRemarksList, getInvitationDetail, changeForum, publishForum, deleteForum, getInvitationList } from '@/api/forum'
+import '../../../../time.js'
 export default {
   data() {
     return {
@@ -254,7 +261,6 @@ export default {
       forumsList: [],
       forumDetile: {},
       remarklist: [],
-      clubId: 10000,
       queryInfo: {
         keyword: '',
         page: 1,
@@ -295,27 +301,50 @@ export default {
       this.getForumsList()
     },
     getForumsList() {
-      console.log(this.queryInfo)
-      getMyForums(this.queryInfo, this.originState).then(response => {
-        console.log('@club forum-mamage getForumsList response')
-        console.log(response)
-        this.forumsList = response.data.items
-        this.forumsList.forEach(element => {
-          element['query'] = {
-            page: 1,
-            limit: 5
-          }
-          element['remark'] = {
-            items: [],
-            totalCount: 100
-          }
-          element['remarkVisiable'] = true
-          this.getRemarkList(element)
+      const clubId = window.sessionStorage.getItem('clubId')
+      if (clubId) {
+        getInvitationList(clubId, this.queryInfo).then(response => {
+          console.log('@club forum-mamage getForumsList response')
+          console.log(response)
+          this.forumsList = response.data.items
+          this.forumsList.forEach(element => {
+            element['query'] = {
+              page: 1,
+              limit: 5
+            }
+            element['remark'] = {
+              items: [],
+              totalCount: 100
+            }
+            element['remarkVisiable'] = true
+            this.getRemarkList(element)
+          })
+          // console.log(this.remark)
+          this.total = response.data.totalCount
+          return response.data.items
         })
-        // console.log(this.remark)
-        this.total = response.data.totalCount
-        return response.data.items
-      })
+      } else {
+        getMyForums(this.queryInfo, this.originState).then(response => {
+          console.log('@club forum-mamage getForumsList response')
+          console.log(response)
+          this.forumsList = response.data.items
+          this.forumsList.forEach(element => {
+            element['query'] = {
+              page: 1,
+              limit: 5
+            }
+            element['remark'] = {
+              items: [],
+              totalCount: 100
+            }
+            element['remarkVisiable'] = true
+            this.getRemarkList(element)
+          })
+          // console.log(this.remark)
+          this.total = response.data.totalCount
+          return response.data.items
+        })
+      }
     },
     // 获取评论列表
     getRemarkList(element) {

@@ -30,7 +30,10 @@
           <!-- 创建时间和发帖者 -->
           <el-col :span="4">
             <p style="font-size:16px">{{ item.posterName }}</p>
-            <p style=" font-size:12px">{{ item.createAt }}</p>
+            <p
+              v-time="item.createAt"
+              style=" font-size:12px"
+            />
           </el-col>
           <!-- 帖子标题 -->
           <h2 style="margin-top:0 padding: 0">{{ item.title }}</h2>
@@ -129,10 +132,16 @@
             <!-- 评论时间和发评论者 -->
             <el-col :span="3">
               <p style="font-size:18px">{{ index.nickname }}</p>
-              <p style=" font-size:10px">{{ index.createAt }}</p>
+              <p
+                v-time="index.createAt"
+                style=" font-size:10px"
+              />
             </el-col>
-            <!-- 评论内容 -->
-            <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
+            <el-col>
+              <!-- 评论内容 -->
+              <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
+            </el-col>
+
           </el-row>
         </div>
       </div>
@@ -155,6 +164,7 @@
 
 <script>
 import { getRemarksList, getForumList, postComment } from '@/api/forum'
+import '../../../../time.js'
 export default {
   data() {
     return {
