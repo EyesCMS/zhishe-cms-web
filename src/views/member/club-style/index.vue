@@ -59,10 +59,7 @@
           </el-card>
         </el-col>
         <el-col :span="8">
-          <el-divider />
-          <h3 style="text-align:center;">社团简介</h3>
-          <el-divider />
-          <el-card>
+          <el-card style="margin-top:30px">
             <el-row>
               <el-col :span="10">
                 <el-avatar :size="50" :src="clubDetail.avatarUrl" />
@@ -77,6 +74,7 @@
             <h4>简介：{{ clubDetail.slogan }}</h4>
           </el-card>
           <el-button
+            v-show="isMember()"
             style="display:block;margin:15px auto"
             type="info"
             @click="quitClubDialog()"
@@ -249,6 +247,9 @@ export default {
     },
     pushToActivities() {
       this.$router.push({ path: '/activityforum/index' })
+    },
+    isMember() {
+      return sessionStorage.getItem('roles') === 'member'
     }
   }
 }
