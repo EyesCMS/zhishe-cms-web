@@ -9,7 +9,7 @@
     </el-card>
     <el-form ref="form" :model="form" :rules="formRules" label-width="350px">
       <el-form-item label="社团名称" prop="clubName">
-        <el-input v-model="form.clubName" style="width:400px;" placeholder="请输入社团名称" maxlength="10" show-word-limit />
+        <el-input v-model="form.clubName" style="width:400px;" placeholder="请输入社团名称" maxlength="20" show-word-limit />
       </el-form-item>
       <el-form-item label="申请人用户名">
         <el-input v-model="username" style="width:400px;" :disabled="true" />
