@@ -13,7 +13,7 @@
       </div>
       <div class="box-center">
         <div class="user-name text-center">{{ user.name }}</div>
-        <div class="user-role text-center text-muted">{{ user.role }}</div>
+        <!--<div class="user-role text-center text-muted">{{ user.role }}</div>-->
       </div>
     </div>
 
@@ -22,7 +22,7 @@
         <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>头像修改</span></div>
 
         <div class="user-bio-section-body" style="text-align:center">
-          <el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
+          <!--<el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
             上传头像图片
           </el-button>
           <el-dialog title="上传头像图片" :visible.sync="imagecropperShow">
@@ -32,16 +32,35 @@
               :before-upload="beforeAvatarUpload"
             >
               <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
-          </el-dialog>
-          <el-button size="small" type="primary" @click="dialogFormVisible = true">设置头像链接</el-button>
-          <el-dialog title="设置头像链接" :visible.sync="dialogFormVisible">
-            <el-form :model="form">
-              <el-form-item label="头像地址" :label-width="formLabelWidth">
-                <el-input v-model="form.avatarUrl" autocomplete="off" />
-              </el-form-item>
-            </el-form>
+          </el-dialog>-->
+          <el-button size="small" type="primary" icon="el-icon-upload" @click="dialogFormVisible = true">上传头像</el-button>
+          <el-dialog title="修改头像" :visible.sync="dialogFormVisible">
+            <el-card>
+              <el-tabs v-model="activeTab">
+                <el-tab-pane
+                  label="上传网络照片"
+                  name="uploadWeb"
+                >
+                  <el-form :model="form">
+                    <el-form-item label="头像地址" label-width="80px">
+                      <el-input v-model="form.avatarUrl" autocomplete="off" style="width:500px;" />
+                    </el-form-item>
+                  </el-form>
+                </el-tab-pane>
+                <el-tab-pane label="上传本地照片" name="uploadLocal">
+                  <el-upload
+                    :show-file-list="false"
+                    accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
+                    :before-upload="beforeAvatarUpload"
+                  >
+                    <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon" />
+                  </el-upload>
+                </el-tab-pane>
+              </el-tabs>
+            </el-card>
             <div slot="footer" class="dialog-footer">
               <el-button @click="dialogFormVisible = false">取 消</el-button>
               <el-button type="primary" dialog-form-visible="false" @click="submitProfile()">确 定</el-button>
@@ -78,13 +97,13 @@ export default {
   },
   data() {
     return {
+      activeTab: 'uploadWeb',
       imagecropperShow: false,
       imagecropperKey: 0,
       form: {
         avatarUrl: ''
       },
-      dialogFormVisible: false,
-      formLabelWidth: '120px'
+      dialogFormVisible: false
     }
   },
   created() {
@@ -102,7 +121,7 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       if (isJPG && isLt2M) {
-        let fd = new FormData()
+        const fd = new FormData()
         fd.append('image', file)
         uploadAvatar(fd).then(response => {
           this.form.avatarUrl = response.data.avatarUrl
@@ -117,6 +136,7 @@ export default {
     },
     submitProfile() {
       console.log(this.form.avatarUrl)
+      this.dialogFormVisible = false
       submitProfile(this.form).then(response => {
         console.log(response)
         if (response.status === 204) {
