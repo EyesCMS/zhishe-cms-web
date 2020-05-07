@@ -146,27 +146,6 @@ export const asyncRoutes = [
       }
     ]
   },
-  // 活动论坛（学生页面）
-  {
-    path: '/forum',
-    component: Layout,
-    redirect: '/forum',
-    children: [
-      {
-        path: 'forum',
-        name: 'Forum',
-        component: () => import('@/views/student/forum/index'),
-        meta: { title: '活动论坛', icon: 'message', roles: ['student'] }
-      },
-      {
-        path: 'studentforum',
-        name: 'StudentForm',
-        component: () => import('@/views/student/forum/detail'),
-        meta: { title: '帖子详情', noCache: true, roles: ['student'] },
-        hidden: true
-      }
-    ]
-  },
   // 我的社团
   {
     path: '/myclub',
@@ -208,6 +187,27 @@ export const asyncRoutes = [
         name: 'Join',
         component: () => import('@/views/student/applications/join'),
         meta: { title: '加入社团', noCache: true, roles: ['student'] }
+      }
+    ]
+  },
+  // 活动论坛（学生页面）
+  {
+    path: '/forum',
+    component: Layout,
+    redirect: '/forum',
+    children: [
+      {
+        path: 'forum',
+        name: 'Forum',
+        component: () => import('@/views/student/forum/index'),
+        meta: { title: '活动论坛', icon: 'message', roles: ['student'] }
+      },
+      {
+        path: 'studentforum',
+        name: 'StudentForm',
+        component: () => import('@/views/student/forum/detail'),
+        meta: { title: '帖子详情', noCache: true, roles: ['student'] },
+        hidden: true
       }
     ]
   },
