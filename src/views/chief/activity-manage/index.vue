@@ -220,13 +220,13 @@
           <el-form-item label="活动时间">
             <el-col :span="11">
               <el-form-item>
-                <el-date-picker v-model="applyDetailForm.starDate" type="date" placeholder="选择日期" style="width: 90%;" disabled />
+                <el-date-picker v-model="applyDetailForm.startDate" type="date" placeholder="选择日期" style="width: 90%;" disabled />
               </el-form-item>
             </el-col>
             <el-col class="line" :span="2">-</el-col>
             <el-col :span="11">
               <el-form-item>
-                <el-date-picker v-model="applyDetailForm.endData" type="date" placeholder="选择日期" style="width: 90%;" disabled />
+                <el-date-picker v-model="applyDetailForm.endDate" type="date" placeholder="选择日期" style="width: 90%;" disabled />
               </el-form-item>
             </el-col>
           </el-form-item>

@@ -216,18 +216,12 @@ export const asyncRoutes = [
     path: '/clubstyle',
     component: Layout,
     redirect: 'noRedirect',
-    name: 'ClubStyle',
-    meta: {
-      title: '社团风采',
-      icon: 'fengcai',
-      roles: ['member', 'chief']
-    },
     children: [
       {
         path: 'index',
         name: 'index',
         component: () => import('@/views/member/club-style/index.vue'),
-        meta: { title: '社团风采', noCache: true, roles: ['member', 'chief'] }
+        meta: { title: '社团风采', noCache: true, icon: 'fengcai', roles: ['member', 'chief'] }
       }
     ]
   },
@@ -287,6 +281,7 @@ export const asyncRoutes = [
   // 社团成员管理
   {
     path: '/membermanage',
+    redirect: '/home',
     component: Layout,
     name: 'MemberManage',
     meta: { title: '社团成员管理', icon: 'membermanage', roles: ['chief'] },
@@ -316,7 +311,6 @@ export const asyncRoutes = [
   {
     path: '/activitymanage',
     component: Layout,
-    name: 'ActivityManage',
     children: [
       {
         path: 'list',
