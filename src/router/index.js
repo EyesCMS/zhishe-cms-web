@@ -398,22 +398,21 @@ export const asyncRoutes = [
   },
   // 社团申请管理
   {
-    path: '/club-identify',
+    path: '/chief',
     component: Layout,
-    name: 'club-identify',
-    meta: { title: '社团申请管理', icon: 'form', roles: ['chief'] },
+    name: 'chiefChange',
     children: [
       {
         path: 'list',
-        name: 'ActivityList',
-        component: () => import('@/views/chief/club-identify/index.vue'),
+        name: 'IdentifyApply',
+        component: () => import('@/views/chief/club-identify/index'),
         meta: { title: '社团认证申请', icon: 'form', roles: ['chief'] }
       }
     ]
   },
   // 管理员菜单
   {
-    path: '/admin/check',
+    path: '/administrator/check',
     component: Layout,
     redirect: '/administrator/check/createApply',
     alwaysShow: true, // will always show the root menu
