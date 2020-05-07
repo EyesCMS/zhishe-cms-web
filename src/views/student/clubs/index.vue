@@ -66,7 +66,12 @@
         <el-table-column label="社团名称" prop="name" />
         <el-table-column label="社长名称" prop="chiefName" />
         <el-table-column label="社团类别" prop="type" />
-        <el-table-column label="官方状态" prop="state" />
+        <el-table-column label="官方状态" prop="state">
+          <template slot-scope="scope">
+            <p v-if="scope.row.state === 0">{{ scope.row.state | statusFilter }}</p>
+            <p v-else>{{ scope.row.state | statusFilter }}</p>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="LookForDetail(scope.row.id,scope.row.name,scope.row.chiefName,scope.row.avatarUrl)">查看详情</el-button>
@@ -103,6 +108,15 @@
 import { getClubsList } from '@/api/club'
 export default {
   name: 'Clubs',
+  filters: {
+    statusFilter(value) {
+      if (value === 0) {
+        return '非官方'
+      } else {
+        return '官方'
+      }
+    }
+  },
   data() {
     return {
       listLoading: true,
@@ -171,10 +185,9 @@ export default {
       this.getClubsList()
     },
     handleResetSearch() {
-      this.form.name = ''
+      this.form.keyword = ''
       this.form.type = ''
-      this.form.chiefName = ''
-      this.form.id = ''
+      this.form.state = ''
     }
   }
 }
