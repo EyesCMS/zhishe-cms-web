@@ -31,8 +31,8 @@
           </el-form-item>
           <el-form-item label="官方状态" prop="officialState">
             <el-select v-model="form.officialState" placeholder="请选择">
-              <el-option label="非正式" value="0" />
-              <el-option label="正式" value="1" />
+              <el-option label="非官方" value="0" />
+              <el-option label="官方" value="1" />
             </el-select>
           </el-form-item>
           <el-form-item label="申请状态" prop="state">
@@ -59,8 +59,8 @@
         <el-table-column label="申请人" prop="applicant" />
         <el-table-column label="官方状态" prop="officialState">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.officialState === 0" style="text-align:center" type="primary" :disable-transitions="true" effect="dark">{{ scope.row.officialState | officialStatusFilter }}</el-tag>
-            <el-tag v-else style="text-align:center" type="primary" :disable-transitions="true" effect="dark">{{ scope.row.officialState | officialStatusFilter }}</el-tag>
+            <el-tag v-if="scope.row.officialState === 0" style="text-align:center" type="info" :disable-transitions="true" effect="dark">{{ scope.row.officialState | officialStatusFilter }}</el-tag>
+            <el-tag v-else style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.officialState | officialStatusFilter }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="申请原因" prop="reason" />
@@ -100,9 +100,9 @@ export default {
   filters: {
     officialStatusFilter(value) {
       if (!value) {
-        return '非正式'
+        return '非官方'
       } else {
-        return '正式'
+        return '官方'
       }
     },
     statusFilter(value) {
