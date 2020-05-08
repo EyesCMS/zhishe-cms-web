@@ -53,7 +53,7 @@
               <h2 style="text-align:center">{{ item.title }}</h2>
               <p>{{ item.content }}</p>
               <p>{{ item.createAt }}</p>
-              <el-button type="primary" style="display:block;margin:10 auto;" @click="pushToDetail(item.id)">查看详情</el-button>
+              <el-button type="primary" style="display:block;margin:10px auto;" @click="pushToDetail(item.id)">查看详情</el-button>
             </el-card>
           </el-col>
         </el-row>

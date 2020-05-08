@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 20px;">
+  <div style="padding: 15px;">
     <el-card shadow="never">
       <div>
         <i class="el-icon-search" />
@@ -20,7 +20,7 @@
           重置
         </el-button>
       </div>
-      <div style="margin-top: 25px">
+      <div style="margin-top: 15px">
         <el-form :inline="true" :model="form" size="small" label-width="140px">
           <div style="text-align:center">
             <el-form-item label="输入搜索：">
@@ -45,11 +45,11 @@
         </el-form>
       </div>
     </el-card>
-    <el-card style="margin-top: 20px;" shadow="never">
-      <i class="el-icon-tickets" />
-      <span>创建社团</span>
-      <el-button style="float:right" size="small" type="primary" @click="ApplyToCreate()">创建</el-button>
-    </el-card>
+<!--    <el-card style="margin-top: 20px;" shadow="never">-->
+<!--      <i class="el-icon-tickets" />-->
+<!--      <span>创建社团</span>-->
+<!--      <el-button style="float:right" size="small" type="primary" @click="ApplyToCreate()">创建</el-button>-->
+<!--    </el-card>-->
 
     <!-- 社团列表 -->
     <div style="margin-top: 20px;">
