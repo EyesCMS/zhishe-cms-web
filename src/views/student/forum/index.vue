@@ -39,7 +39,7 @@
         </el-form>
       </el-row>
       <el-row style="text-align: center; margin-top: 15px">
-        <el-button type="primary" @click="getAllInvitationList">查询</el-button>
+        <el-button type="primary" @click="searchInvitationList">查询</el-button>
         <el-button type="info" @click="reset">重置</el-button>
       </el-row>
     </el-card>
@@ -128,7 +128,6 @@ export default {
     getAllInvitationList() {
       getAllInvitationList(this.queryInfo).then(response => {
         // console.log(response)
-        this.queryInfo.page = 1
         if (response.status === 200) {
           this.AllinvitationsList = response.data.items
           this.total = response.data.totalCount
@@ -150,6 +149,10 @@ export default {
     // 跳转到帖子详情页面
     pushToDetail(id) {
       this.$router.push({ path: 'activityDetail', query: { id: id }})
+    },
+    searchInvitationList() {
+      this.queryInfo.page = 1
+      this.getAllInvitationList()
     },
     reset() {
       this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt =
