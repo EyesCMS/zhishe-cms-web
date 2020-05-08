@@ -29,26 +29,29 @@
       </el-row>
     </el-card>
     <el-card style="margin: 15px 15px">
-      <h4>共搜索到 {{ total }} 条记录</h4>
-      <p v-show="total === 0" style="text-align: center">暂无记录</p>
-      <el-card v-for="(item, index) in invitationsList" :key="index" style="margin-top:20px">
+      <h4>共搜索到 {{ total }} 条帖子</h4>
+      <p v-show="total === 0" style="text-align: center">暂无帖子</p>
+      <el-card v-for="(item, index) in invitationsList" :key="index" style="margin:20px 100px">
         <el-row>
           <el-avatar style="float:left" :src="item.avatarUrl" />
           <p style="float: left">{{ item.posterName }}</p>
         </el-row>
-        <el-row :gutter="20">
-          <el-col :span="15">
-            <el-image :src="item.imgUrl" lazy />
-          </el-col>
-          <el-col :span="9">
-            <el-card>
-              <h2 style="text-align:center">{{ item.title }}</h2>
-              <p>{{ item.content }}</p>
-              <p>{{ item.createAt }}</p>
-              <el-button type="primary" style="display:block;margin:10 auto;" @click="pushToDetail(item.id)">查看详情</el-button>
-            </el-card>
-          </el-col>
+        <div>
+          <h2 style="text-align:center">{{ item.title }}</h2>
+          <p style="font-size:15px;text-align:center"><i class="el-icon-date" />{{ item.createAt }}</p>
+          <el-divider />
+        </div>
+        <el-row>
+          <div>
+            <el-image :src="item.imgUrl" lazy style="height:200px;width:300px;float:left;" />
+            <div>
+              <p style="float:none; text-indent: 2em; font-size: 30px">{{ item.content | interceptAbstract }}</p>
+            </div>
+          </div>
         </el-row>
+        <div style="text-align:center;margin-top:20px">
+          <el-button type="primary" @click="pushToDetail(item.id)">查看详情</el-button>
+        </div>
       </el-card>
 
       <!-- 分页区域 -->
@@ -69,6 +72,14 @@
 import { getInvitationList } from '@/api/forum'
 export default {
   name: 'ActivityForum',
+  filters: {
+    interceptAbstract(content) {
+      if (content.length > 300) {
+        return content.substr(0, 300) + '......'
+      }
+      return content
+    }
+  },
   data() {
     return {
       clubId: sessionStorage.getItem('clubId'),
