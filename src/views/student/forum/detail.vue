@@ -92,7 +92,6 @@ export default {
   methods: {
     // 获取帖子详情
     getInvitationDetail() {
-      console.log(this.id)
       getInvitationDetail(this.id, this.detailQuery).then(response => {
         this.detailInfo.posterName = response.data.posterName
         this.detailInfo.avatarUrl = response.data.avatarUrl
@@ -106,7 +105,7 @@ export default {
       getRemarksList(this.id, this.queryInfo).then(response => {
         this.remarksList = response.data.items
         this.remarksTotal = response.data.totalCount
-        console.log(this.remarksList)
+        // console.log(this.remarksList)
       })
     },
     showMoreRemarks() {
@@ -119,7 +118,7 @@ export default {
         content: this.comment
       }
       await postComment(data).then(response => {
-        console.log(response)
+        // console.log(response)
         this.$message.success('发表成功')
       })
       this.comment = ''

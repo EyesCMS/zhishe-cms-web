@@ -72,7 +72,6 @@ export default {
             })
           } else {
             return this.$message.error('申请加入社团失败')
-            // return this.$message
           }
         })
       })

@@ -113,7 +113,7 @@ export default {
         } else {
           return this.$message.error('获取申请加入社团列表失败')
         }
-        console.log(this.CreateApplicationsList)
+        // console.log(this.CreateApplicationsList)
       })
     },
     // 监听pagesize改变的事件
@@ -124,7 +124,6 @@ export default {
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getCreateApplicationsList()
     },

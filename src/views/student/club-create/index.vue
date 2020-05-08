@@ -45,8 +45,6 @@
         <el-upload
           class="upload-demo"
           action="https://jsonplaceholder.typicode.com/posts/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
           :before-upload="beforeAvatarUpload"
           list-type="picture"
           :limit="1"
@@ -125,12 +123,6 @@ export default {
       this.form.clubName = ''
       this.form.type = ''
       this.form.reason = ''
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview(file) {
-      console.log(file)
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'

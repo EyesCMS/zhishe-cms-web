@@ -59,7 +59,7 @@ export default {
     },
     getInfo() {
       getInfo().then(response => {
-        console.log(response)
+        // console.log(response)
         this.form.nickname = response.data.nickname
         this.form.email = response.data.email
         this.form.address = response.data.address

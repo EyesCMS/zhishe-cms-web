@@ -127,7 +127,7 @@ export default {
   methods: {
     getAllInvitationList() {
       getAllInvitationList(this.queryInfo).then(response => {
-        console.log(response)
+        // console.log(response)
         this.queryInfo.page = 1
         if (response.status === 200) {
           this.AllinvitationsList = response.data.items
@@ -139,12 +139,10 @@ export default {
       })
     },
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getAllInvitationList()
     },
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getAllInvitationList()
     },
