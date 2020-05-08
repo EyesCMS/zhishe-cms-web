@@ -243,10 +243,10 @@ export default {
       this.$router.push({ path: '/activityforum/detail', query: { id: id }})
     },
     pushToBulletins() {
-      this.$router.push({ path: '/announcement/index' })
+      this.$router.replace('/announcement/index')
     },
     pushToActivities() {
-      this.$router.push({ path: '/activityforum/index' })
+      this.$router.replace('/activityforum/index')
     },
     isMember() {
       return sessionStorage.getItem('roles') === 'member'
