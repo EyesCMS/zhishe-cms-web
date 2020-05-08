@@ -37,15 +37,15 @@
           <p style="float: left">{{ item.posterName }}</p>
         </el-row>
         <div>
-          <h2 style="text-align:center">{{ item.title }}</h2>
+          <h2 style="text-align:center;font-size: 25px">{{ item.title }}</h2>
           <p style="font-size:15px;text-align:center"><i class="el-icon-date" />{{ item.createAt }}</p>
           <el-divider />
         </div>
         <el-row>
-          <div>
+          <div style="margin-left:20px">
             <el-image :src="item.imgUrl" lazy style="height:200px;width:300px;float:left;" />
-            <div>
-              <p style="float:none; text-indent: 2em; font-size: 30px">{{ item.content | interceptAbstract }}</p>
+            <div style="margin-right:20px">
+              <p style="float:none; text-indent: 2em; font-size: 20px;text-align:justify">{{ item.content | interceptAbstract }}</p>
             </div>
           </div>
         </el-row>
@@ -74,8 +74,8 @@ export default {
   name: 'ActivityForum',
   filters: {
     interceptAbstract(content) {
-      if (content.length > 300) {
-        return content.substr(0, 300) + '......'
+      if (content.length > 400) {
+        return content.substr(0, 400) + '......'
       }
       return content
     }
