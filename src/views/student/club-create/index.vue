@@ -4,7 +4,6 @@
       <el-steps :active="active" align-center>
         <el-step title="填写社团信息" />
         <el-step title="等待管理员审核" />
-        <el-step title="创建成功" />
       </el-steps>
     </el-card>
     <div v-show="formShow" style="margin-top:30px">
@@ -66,6 +65,8 @@
       <i class="el-icon-success" style="font-size:150px;color:#66CDAA" />
       <p />
       <p style="font-size:22px;color:#707070">您已申请成功，请等待管理员审核!</p>
+      <p />
+      <el-button type="primary" @click="lookForApplications">查看申请结果</el-button>
     </div>
   </div>
 </template>
@@ -102,7 +103,7 @@ export default {
         if (!valid) return
         postSubmit(this.form).then(response => {
           if (response.status === 201) {
-            if (this.active++ > 2) this.active = 0
+            if (this.active++ > 1) this.active = 0
             this.$alert('提交成功', '创建社团', {
               confirmButtonText: '确定',
               callback: action => {
@@ -142,6 +143,9 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
+    },
+    lookForApplications() {
+      this.$router.replace('/applications/creation')
     }
   }
 }
