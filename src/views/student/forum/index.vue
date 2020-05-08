@@ -27,7 +27,13 @@
           </el-col>
           <el-col :span="10">
             <el-form-item label="发布日期">
-              <el-date-picker v-model="queryInfo.createAt" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" style="width: 100%;" />
+              <el-date-picker
+                v-model="queryInfo.createAt"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="选择日期"
+                style="width: 100%;"
+              />
             </el-form-item>
           </el-col>
         </el-form>
@@ -47,14 +53,19 @@
         </el-row>
         <div>
           <h2 style="text-align:center;font-size: 25px">{{ item.title }}</h2>
-          <p style="font-size:15px;text-align:center"><i class="el-icon-date" />{{ item.createAt }}</p>
+          <p style="font-size:15px;text-align:center">
+            <i class="el-icon-date" />
+            {{ item.createAt }}
+          </p>
           <el-divider />
         </div>
         <el-row>
           <div style="margin-left:20px">
             <el-image :src="item.imgUrl" lazy style="height:200px;width:300px;float:left;" />
             <div style="margin-right:20px">
-              <p style="float:none; text-indent: 2em; font-size: 20px;text-align:justify">{{ item.content | interceptAbstract }}</p>
+              <p
+                style="float:none; text-indent: 2em; font-size: 20px;text-align:justify"
+              >{{ item.content | interceptAbstract }}</p>
             </div>
           </div>
         </el-row>
@@ -64,15 +75,17 @@
       </el-card>
 
       <!-- 分页区域 -->
-      <el-pagination
-        :current-page="queryInfo.page"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="queryInfo.limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      <div style="text-align:center">
+        <el-pagination
+          :current-page="queryInfo.page"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="queryInfo.limit"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
     </el-card>
   </div>
 </template>
@@ -115,6 +128,7 @@ export default {
     getAllInvitationList() {
       getAllInvitationList(this.queryInfo).then(response => {
         console.log(response)
+        this.queryInfo.page = 1
         if (response.status === 200) {
           this.AllinvitationsList = response.data.items
           this.total = response.data.totalCount
@@ -140,12 +154,12 @@ export default {
       this.$router.push({ path: 'activityDetail', query: { id: id }})
     },
     reset() {
-      this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt = ''
+      this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt =
+        ''
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-
 </style>
