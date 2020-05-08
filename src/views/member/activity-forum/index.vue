@@ -28,7 +28,7 @@
         <el-button type="info" @click="reset">重置</el-button>
       </el-row>
     </el-card>
-    <el-card>
+    <el-card style="margin: 15px 15px">
       <h4>共搜索到 {{ total }} 条记录</h4>
       <p v-show="total === 0" style="text-align: center">暂无记录</p>
       <el-card v-for="(item, index) in invitationsList" :key="index" style="margin-top:20px">

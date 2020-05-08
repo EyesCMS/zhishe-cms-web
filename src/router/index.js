@@ -387,7 +387,7 @@ export const asyncRoutes = [
     component: Layout,
     name: 'Announcement',
     redirect: '/Announcement/index',
-    meta: { title: '社团公告', icon: 'message' },
+    meta: { title: '社团公告', icon: 'message', roles: ['chief'] },
     children: [
       {
         path: 'index',
