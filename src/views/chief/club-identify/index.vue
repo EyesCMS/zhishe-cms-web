@@ -98,18 +98,15 @@ export default {
         } else {
           return this.$message.error('获取社团认证申请失败')
         }
-        console.log(this.identifyApplyList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getMyIdentifyApplyList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getMyIdentifyApplyList()
     },

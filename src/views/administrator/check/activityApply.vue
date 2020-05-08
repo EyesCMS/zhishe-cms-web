@@ -45,7 +45,7 @@
         <el-table-column label="社团名称" prop="clubName" />
         <el-table-column label="活动名称" prop="name" />
         <el-table-column label="活动标题" prop="title" />
-        <el-table-column label="活动内容" prop="content" />
+        <el-table-column label="活动内容" width="350px" prop="content" />
         <el-table-column label="开始时间" prop="startDate" />
         <el-table-column label="结束时间" prop="endDate" />
         <el-table-column label="活动场地" prop="location" />
@@ -135,18 +135,15 @@ export default {
         } else {
           return this.$message.error('获取社团活动申请失败')
         }
-        console.log(this.activityApplyList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getActivityApplyList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getActivityApplyList()
     },
@@ -186,7 +183,6 @@ export default {
     },
     check() {
       this.queryInfo.page = 1
-      this.queryInfo.limit = 5
       this.getActivityApplyList()
     }
   }

@@ -157,18 +157,15 @@ export default {
         } else {
           return this.$message.error('获取社团创建申请失败')
         }
-        console.log(this.createApplyList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getCreateApplyList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getCreateApplyList()
     },
@@ -211,7 +208,6 @@ export default {
     },
     check() {
       this.queryInfo.page = 1
-      this.queryInfo.limit = 5
       this.getCreateApplyList()
     }
   }
