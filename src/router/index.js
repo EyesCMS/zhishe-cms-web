@@ -194,20 +194,35 @@ export const asyncRoutes = [
   {
     path: '/forum',
     component: Layout,
-    redirect: '/forum',
+    redirect: '/forum/activity',
+    name: 'forum',
+    meta: { title: '活动论坛', icon: 'message', roles: ['student'] },
     children: [
       {
-        path: 'forum',
-        name: 'Forum',
+        path: 'activity',
+        name: 'activity',
         component: () => import('@/views/student/forum/index'),
-        meta: { title: '活动论坛', icon: 'message', roles: ['student'] }
+        meta: { title: '活动帖', icon: 'message' }
       },
       {
-        path: 'studentforum',
-        name: 'StudentForm',
+        path: 'activityDetail',
+        name: 'activityDetail',
         component: () => import('@/views/student/forum/detail'),
-        meta: { title: '帖子详情', noCache: true, roles: ['student'] },
+        meta: { title: '活动帖详情', noCache: true },
         hidden: true
+      },
+      {
+        path: 'personalPost',
+        name: 'personalPost',
+        component: () => import('@/views/chief/forum-manage/index'),
+        meta: { title: '个人帖', icon: 'people', roles: ['chief', 'student'] }
+      },
+      {
+        path: 'postManage',
+        name: 'postManage',
+        hidden: true,
+        component: () => import('@/views/chief/forum-manage/manage'),
+        meta: { title: '我的帖子', roles: ['chief', 'student'] }
       }
     ]
   },
@@ -325,26 +340,26 @@ export const asyncRoutes = [
       }
     ]
   },
-  // 社团论坛管理
-  {
-    path: '/forumManage',
-    component: Layout,
-    children: [
-      {
-        path: 'forum',
-        name: 'forum',
-        component: () => import('@/views/chief/forum-manage/index'),
-        meta: { title: '我的论坛', icon: 'people', roles: ['chief', 'student'] }
-      },
-      {
-        path: 'manage',
-        name: 'manage',
-        hidden: true,
-        component: () => import('@/views/chief/forum-manage/manage'),
-        meta: { title: '论坛管理', roles: ['chief', 'student'] }
-      }
-    ]
-  },
+  // // 社团论坛管理
+  // {
+  //   path: '/forumManage',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'forum',
+  //       name: 'forum',
+  //       component: () => import('@/views/chief/forum-manage/index'),
+  //       meta: { title: '我的论坛', icon: 'people', roles: ['chief', 'student'] }
+  //     },
+  //     {
+  //       path: 'manage',
+  //       name: 'manage',
+  //       hidden: true,
+  //       component: () => import('@/views/chief/forum-manage/manage'),
+  //       meta: { title: '论坛管理', roles: ['chief', 'student'] }
+  //     }
+  //   ]
+  // },
   // 社团简介管理
   {
     path: '/Detailmanage',

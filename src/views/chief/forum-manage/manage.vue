@@ -437,7 +437,7 @@ export default {
       this.$forceUpdate()
     },
     back() {
-      this.$router.push('/forumManage/forum')
+      this.$router.push('/forum/personalPost')
     }
   }
 }

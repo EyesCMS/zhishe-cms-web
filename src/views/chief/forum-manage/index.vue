@@ -283,7 +283,7 @@ export default {
       else return false
     },
     myForum() {
-      this.$router.push('/forumManage/manage')
+      this.$router.push('/forum/postManage')
     },
     removeRemark(element) {
       element.remarkVisiable = false

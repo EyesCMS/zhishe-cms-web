@@ -125,7 +125,7 @@ export default {
 
     // 跳转到帖子详情页面
     pushToDetail(id) {
-      this.$router.push({ path: 'studentforum', query: { id: id }})
+      this.$router.push({ path: 'activityDetail', query: { id: id }})
     },
     reset() {
       this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt = ''
