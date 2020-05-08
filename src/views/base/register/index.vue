@@ -1,8 +1,8 @@
 <template>
   <div class="content">
-    <h1>注册账号</h1>
     <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="Form">
-      <el-link type="primary" @click="back()">返回</el-link>
+      <el-link type="primary" @click="back()">使用已有账号登陆</el-link>
+      <h3 class="form-title">注册账号</h3>
       <el-form-item label="用户名" prop="username">
         <el-input v-model="ruleForm.username" />
       </el-form-item>
@@ -10,21 +10,15 @@
         <el-input v-model="ruleForm.nickname" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="ruleForm.password" type="password" />
+        <el-input v-model="ruleForm.password" type="password" placeholder="至少6位密码" />
       </el-form-item>
       <el-form-item label="确认密码" prop="password2">
         <el-input v-model="ruleForm.password2" type="password" />
-        <!-- <span
-          class="show-pwd"
-          @click="showPwd"
-        >
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>-->
       </el-form-item>
-      <el-form-item label="保密问题" prop="question">
+      <el-form-item label="密保问题" prop="question">
         <el-input v-model="ruleForm.question" />
       </el-form-item>
-      <el-form-item label="保密回答" prop="answer">
+      <el-form-item label="密保回答" prop="answer">
         <el-input v-model="ruleForm.answer" />
       </el-form-item>
       <el-form-item label="专业" prop="major">
@@ -168,9 +162,10 @@ export default {
 .content {
   margin: 0;
   padding: 0;
-  background-color: #2d3a4b;
+  min-height: 100%;
   width: 100%;
   height: 100%;
+  /*overflow: hidden;*/
 }
 h1 {
   margin: 0;
@@ -178,12 +173,15 @@ h1 {
   text-align: center;
   color: #eee;
 }
+.form-title{
+  text-align: center;
+  margin-bottom:30px;
+}
 .Form {
   width: 45%;
   padding: 20px;
-  margin: 0 auto;
-  border-radius: 5px;
-  background-color: aliceblue;
-  margin: 0 auto;
+  margin: 20px auto;
+  border-radius:20px;
+  box-shadow: 0 0 20px #DCDFE6;
 }
 </style>
