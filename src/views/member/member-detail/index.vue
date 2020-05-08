@@ -3,9 +3,9 @@
     <!-- 卡片视图区域1 -->
     <el-card>
       <el-row>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-image
-            style="width: 100px; height: 100px"
+            style="width: 140px; height: 140px"
             :src="memberInfo.avatarUrl"
           />
         </el-col>

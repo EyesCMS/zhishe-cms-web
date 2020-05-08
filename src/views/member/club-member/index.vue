@@ -8,10 +8,10 @@
         <el-form :inline="true" :model="queryInfo" label-width="140px">
           <div style="text-align:center">
             <el-form-item label="昵称/用户名">
-              <el-input v-model="queryInfo.name" placeholder="请输入昵称/用户名" />
+              <el-input v-model="queryInfo.name" style="width:300px;" placeholder="请输入昵称/用户名" />
             </el-form-item>
             <el-form-item label="头衔：">
-              <el-select v-model="queryInfo.honorId" placeholder="请选择分类" clearable style="width: 203px">
+              <el-select v-model="queryInfo.honorId" placeholder="请选择分类" clearable style="width: 300px">
                 <el-option label="潜水" value="1" />
                 <el-option label="冒泡" value="2" />
                 <el-option label="吐槽" value="3" />

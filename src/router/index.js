@@ -301,7 +301,7 @@ export const asyncRoutes = [
   // 社团成员管理
   {
     path: '/membermanage',
-    redirect: '/home',
+    redirect: 'list',
     component: Layout,
     name: 'MemberManage',
     meta: { title: '社团成员管理', icon: 'membermanage', roles: ['chief'] },
@@ -311,6 +311,13 @@ export const asyncRoutes = [
         name: 'MemberList',
         component: () => import('@/views/member/club-member/index.vue'),
         meta: { title: '查看所有成员', icon: 'people', roles: ['chief'] }
+      },
+      {
+        path: 'detail',
+        name: 'MemberDetail',
+        component: () => import('@/views/member/member-detail/index.vue'),
+        meta: { title: '成员详情', roles: ['chief'] },
+        hidden: true
       },
       {
         path: 'add',
