@@ -2,39 +2,52 @@
   <div>
     <!-- 卡片视图 -->
     <el-card>
-      <el-input
-        v-model="queryInfo.keyword"
-        placeholder="请输入公告标题关键字"
-        class="input-with-select"
-      >
-        <el-button slot="append" icon="el-icon-search" @click="queryAnnouncementList" />
-      </el-input>
-      <p>共搜索到{{ total }}条相关公告</p>
-      <el-row v-for="(item, index) in bulletinsList" :key="index" :gutter="10">
-        <el-col :span="12">
-          <el-card :style="{'background':'rgb('+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+')'}">
-            <h2 class="title">{{ item.title }}</h2>
-            <p>{{ item.body }}</p>
-            <!-- <p class="createAt">{{ item.createAt }}  </p> -->
-            <p class="createAt">{{ item.updateAt }}  </p>
-            <div class="ww">
-              <el-link @click="openBulletinDetailDiaglog(item.id)"><i class="el-icon-view el-icon--right" />详情</el-link>
+      <el-card>
+        <div>
+          <i class="el-icon-search" />
+          <span>筛选搜索</span>
+          <el-button
+            style="float: right"
+            type="primary"
+            size="small"
+            @click="getBulletinsList"
+          >
+            查询
+          </el-button>
+          <el-button
+            style="float: right;margin-right: 15px"
+            size="small"
+            @click="reset"
+          >
+            重置
+          </el-button>
+        </div>
+        <div style="margin-top: 15px">
+          <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+            <div style="text-align:center">
+              <el-form-item label="公告标题">
+                <el-input v-model="queryInfo.title" style="width: 203px" placeholder="请输入公告标题" />
+              </el-form-item>
+              <el-form-item label="公告内容">
+                <el-input v-model="queryInfo.body" style="width: 203px" placeholder="请输入公告内容" />
+              </el-form-item>
             </div>
-          </el-card>
-        </el-col>
-        <el-col :span="12">
-          <el-card :style="{'background':'rgb('+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+','+Math.floor(Math.random()*50+180)+')'}">
-            <h2 class="title">{{ item.title }}</h2>
-            <p>{{ item.body }}</p>
-            <!-- <p class="createAt">{{ item.createAt }}  </p> -->
-            <p class="createAt">{{ item.updateAt }}  </p>
-            <div class="ww">
-              <el-link @click="openBulletinDetailDiaglog(item.id)"><i class="el-icon-view el-icon--right" />详情</el-link>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-      <!-- <div >
+          </el-form>
+        </div>
+      </el-card>
+      <el-card>
+        <p>共搜索到{{ total }}条相关公告</p>
+        <el-card v-for="(item, index) in bulletinsList" :key="index" style="margin: 50px auto;width: 800px">
+          <h2 class="title">{{ item.title }}</h2>
+          <p>{{ item.body }}</p>
+          <!-- <p class="createAt">{{ item.createAt }}  </p> -->
+          <p class="createAt">{{ item.updateAt }}  </p>
+          <div class="ww">
+            <el-link @click="openBulletinDetailDiaglog(item.id)"><i class="el-icon-view el-icon--right" />详情</el-link>
+          </div>
+        </el-card>
+
+        <!-- <div >
         <h2>{{ item.title }}</h2>
         <p>{{ item.create_at }}  </p>
         <p>{{ item.content }}</p>
@@ -42,16 +55,18 @@
         <el-divider><i class="el-icon-message-solid" /></el-divider>
       </div> -->
 
-      <!-- 分页 -->
-      <el-pagination
-        :current-page="queryInfo.page"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="queryInfo.limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+        <!-- 分页 -->
+        <el-pagination
+          :current-page="queryInfo.page"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="queryInfo.limit"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          style="margin: 25px 15px;text-align:center"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </el-card>
       <!-- 公告详情对话框 -->
       <el-dialog
         title="公告"
@@ -61,7 +76,7 @@
         modal
       >
         <h2 style="text-align:center;margin-bottom:50px">{{ bulletin.title }}</h2>
-        <p>{{ bulletin.content }}</p>
+        <p>{{ bulletin.body }}</p>
         <p>发布时间:{{ bulletin.createAt }}</p>
         <p>上次修改:{{ bulletin.updateAt }}</p>
         <span slot="footer" class="dialog-footer">
@@ -82,6 +97,8 @@ export default {
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
         // keyword: '',
+        title: '',
+        body: '',
         page: 1,
         limit: 5,
         sort: 'updateAt',
@@ -137,6 +154,9 @@ export default {
     queryAnnouncementList() {
       this.getBulletinsList()
       this.queryInfo.keyword = ''
+    },
+    reset() {
+      this.queryInfo.title = this.queryInfo.body = ''
     }
   }
 }

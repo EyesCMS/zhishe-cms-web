@@ -8,7 +8,7 @@
         <el-table-column type="index" label="#" />
         <el-table-column label="社员名" prop="username" />
         <el-table-column label="退社原因" prop="reason" />
-        <el-table-column label="退社时间" prop="createAt" />
+        <el-table-column label="退社时间" prop="createAt" :formatter="formatDate" />
       </el-table>
 
       <!-- 分页区域 -->
@@ -69,6 +69,16 @@ export default {
       console.log(newPage)
       this.queryInfo.page = newPage
       this.getQuitList()
+    },
+    // 设置时间格式
+    formatDate(row, column) {
+      // 获取单元格数据
+      const data = row[column.property]
+      if (data == null) {
+        return null
+      }
+      const dt = new Date(data)
+      return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate()
     }
   }
 }

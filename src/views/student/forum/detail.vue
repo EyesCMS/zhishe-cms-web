@@ -104,12 +104,12 @@ export default {
       this.queryInfo.limit += 5
       this.getRemarksList()
     },
-    postComment() {
+    async postComment() {
       const data = {
         postId: this.id,
         content: this.comment
       }
-      postComment(data).then(response => {
+      await postComment(data).then(response => {
         console.log(response)
         this.$message.success('发表成功')
       })

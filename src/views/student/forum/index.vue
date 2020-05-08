@@ -1,6 +1,6 @@
 <template>
   <div>
-    +    <el-card style="margin: 15px 15px">
+    <el-card style="margin: 15px 15px">
       <el-row>
         <i class="el-icon-search">筛选结果</i>
       </el-row>
@@ -53,7 +53,7 @@
               <h2 style="text-align:center">{{ item.title }}</h2>
               <p>{{ item.content }}</p>
               <p>{{ item.createAt }}</p>
-              <el-button type="primary" style="display:block;margin:10 auto;" @click="pushToDetail(item.id)">查看详情</el-button>
+              <el-button type="primary" style="display:block;margin:10px auto;" @click="pushToDetail(item.id)">查看详情</el-button>
             </el-card>
           </el-col>
         </el-row>
@@ -125,7 +125,7 @@ export default {
 
     // 跳转到帖子详情页面
     pushToDetail(id) {
-      this.$router.push({ path: 'studentforum', query: { id: id }})
+      this.$router.push({ path: 'activityDetail', query: { id: id }})
     },
     reset() {
       this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt = ''

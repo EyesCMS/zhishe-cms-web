@@ -18,9 +18,7 @@
 
     <!-- 卡片视图区域2 -->
     <el-card>
-      <el-row>
-        <el-col :span="24" style="background-color:black"><h3 style="color:silver;margin-left:20px">基本信息</h3></el-col>
-      </el-row>
+      <h3 style="color:#27408B;">基本信息</h3>
       <h4><i class="el-icon-menu" />所在专业：{{ memberInfo.major }}</h4>
       <h4><i class="el-icon-phone" />联系方式：{{ memberInfo.phone }}</h4>
       <h4><i class="el-icon-s-promotion" />电子邮箱：{{ memberInfo.email }}</h4>
@@ -29,9 +27,7 @@
 
     <!-- 卡片视图区域3 -->
     <el-card>
-      <el-row>
-        <el-col :span="24" style="background-color:black"><h3 style="color:silver;margin-left:20px">活跃度</h3></el-col>
-      </el-row>
+      <h3 style="color:#27408B;">活跃度</h3>
       <h4><i class="el-icon-menu" />头衔：{{ memberInfo.honor }}</h4>
       <h4><i class="el-icon-phone" />积分：{{ memberInfo.credit }}</h4>
     </el-card>
@@ -44,13 +40,13 @@ export default {
   name: 'MemberDetail',
   data() {
     return {
-      clubId: 5000,
-      userId: 1,
+      clubId: sessionStorage.getItem('clubId'),
+      userId: this.$route.query.userId,
       memberInfo: {}
     }
   },
   created() {
-    this.userId = this.$route.query.userId
+    // this.userId = this.$route.query.userId
     // this.clubId = sessionStorage.getItem('clubId')
     // console.log('ww' + this.clubId)
     this.getMemberDetails()
@@ -73,5 +69,6 @@ export default {
 <style scoped lang="scss">
 .el-card {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+  margin: 20px 200px
 }
 </style>

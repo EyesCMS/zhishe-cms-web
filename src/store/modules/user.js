@@ -114,7 +114,7 @@ const actions = {
           console.log('@store user logout:')
           console.log(response)
           removeToken() // must remove  token  first
-          window.sessionStorage.removeItem('roles')
+          window.sessionStorage.clear()
           resetRouter()
 
           // reset visited views and cached views

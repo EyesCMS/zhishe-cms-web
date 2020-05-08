@@ -66,7 +66,7 @@
             to="/forget"
             style="float:left"
           >
-            <span>forget password?</span>
+            <span style="color:#104E8B">忘记密码?</span>
           </router-link>
           <!--          <span style="margin-right:20px;">username: admin</span>-->
           <!--          <span> password: any</span>-->
@@ -74,7 +74,7 @@
             to="/register"
             style="float:right"
           >
-            <span> register</span>
+            <span style="color:#104E8B"> 注册</span>
           </router-link>
         </div>
       </el-form>

@@ -14,6 +14,7 @@
           <el-input
             v-model="leaderChange.clubname"
             :readonly="readOnly"
+            :disabled="true"
           />
         </el-form-item>
         <!-- 原社长 -->
@@ -21,6 +22,7 @@
           <el-input
             v-model="leaderChange.oldChiefName"
             :readonly="readOnly"
+            :disabled="true"
           />
         </el-form-item>
         <!-- 新社长 -->
@@ -28,7 +30,10 @@
           label="新社长"
           prop="newChiefName"
         >
-          <el-input v-model="leaderChange.newChiefName" />
+          <el-input
+            v-model="leaderChange.newChiefName"
+            placeholder="请输入新社长姓名"
+          />
         </el-form-item>
         <!-- 换届原因 -->
         <el-form-item
@@ -38,6 +43,7 @@
           <el-input
             v-model="leaderChange.reason"
             type="textarea"
+            placeholder="请输入换届原因"
           >换届原因</el-input>
         </el-form-item>
         <!-- 提交按钮 -->
@@ -59,12 +65,12 @@ export default {
   data() {
     return {
       leaderChange: {
-        club_id: 'club_id',
+        club_id: window.sessionStorage.getItem('clubId'),
         clubname: '这是社团名称',
         oldChiefName: '老社长',
         oldChiefId: 'oldId',
-        newChiefName: 'newName',
-        reason: '没啥原因'
+        newChiefName: '',
+        reason: ''
       },
       readOnly: true,
       rules: {
@@ -79,7 +85,7 @@ export default {
     }
   },
   created() {
-    getClubDetail(10000).then(response => {
+    getClubDetail(window.sessionStorage.getItem('clubId')).then(response => {
       console.log('@chief-change created reaponse:')
       console.log(response)
       if (response.data) {
@@ -96,7 +102,7 @@ export default {
       this.$refs.Form.validate(async valid => {
         if (valid) {
           const data = {
-            club_id: this.leaderChange.club_id,
+            clubId: this.leaderChange.club_id,
             oldChiefId: this.leaderChange.oldChiefId,
             newChiefName: this.leaderChange.newChiefName,
             reason: this.leaderChange.reason

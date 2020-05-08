@@ -1,7 +1,8 @@
 <template>
   <div class="content">
-    <h1>Reset Password</h1>
+    <h1>重置密码</h1>
     <div class="index">
+      <el-link type="primary" @click="backToLogin()">返回</el-link>
       <el-steps
         :active="name"
         finish-status="success"
@@ -174,6 +175,10 @@ export default {
           }
         })
       }
+    },
+    async backToLogin() {
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     back(i) {
       this.activeName = i.toString()

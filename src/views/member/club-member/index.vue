@@ -5,15 +5,13 @@
         <i class="el-icon-search">筛选搜索</i>
       </el-row>
       <el-row style="margin-top: 25px" :gutter="10">
-        <el-form ref="form" :model="queryInfo" label-width="80px">
-          <el-col :span="10">
+        <el-form :inline="true" :model="queryInfo" label-width="140px">
+          <div style="text-align:center">
             <el-form-item label="昵称/用户名">
               <el-input v-model="queryInfo.name" placeholder="请输入昵称/用户名" />
             </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item label="头衔">
-              <el-select v-model="form.selectedHonor" placeholder="请选择头衔">
+            <el-form-item label="头衔：">
+              <el-select v-model="queryInfo.honorId" placeholder="请选择分类" clearable style="width: 203px">
                 <el-option label="潜水" value="1" />
                 <el-option label="冒泡" value="2" />
                 <el-option label="吐槽" value="3" />
@@ -22,25 +20,17 @@
                 <el-option label="传说" value="6" />
               </el-select>
             </el-form-item>
-          </el-col>
+          </div>
         </el-form>
       </el-row>
       <el-row style="text-align: center; margin-top: 15px">
-        <el-button type="primary" @click="getInvitationsList">查询</el-button>
+        <el-button type="primary" @click="getMembersList">查询</el-button>
         <el-button type="info" @click="reset">重置</el-button>
       </el-row>
     </el-card>
-    <el-card>
-      <el-input
-        v-model="queryInfo.keyword"
-        placeholder="请输入内容"
-        class="input-with-select"
-      >
-        <el-button slot="append" icon="el-icon-search" @click="getMembersList" />
-      </el-input>
-    </el-card>
+
     <!-- 卡片视图区 -->
-    <el-card>
+    <el-card style="margin: 15px 15px">
 
       <!-- 用户列表 -->
       <el-table :data="membersList" stripe border>
@@ -65,6 +55,7 @@
       :page-size="queryInfo.limit"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
+      style="margin: 25px 15px;text-align:center"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
@@ -85,7 +76,6 @@ export default {
         page: 1,
         limit: 5
       },
-      selectedHonor: '',
       total: 0,
       membersList: []
     }
@@ -120,6 +110,9 @@ export default {
     // 跳转到成员信息详细页面
     pushToDetail(userId) {
       this.$router.push({ path: 'detail', query: { userId: userId }})
+    },
+    reset() {
+      this.queryInfo.name = this.queryInfo.honorId = ''
     }
   }
 }

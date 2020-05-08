@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 20px;">
+  <div style="padding: 15px;">
     <el-card shadow="never">
       <div>
         <i class="el-icon-search" />
@@ -20,7 +20,7 @@
           重置
         </el-button>
       </div>
-      <div style="margin-top: 25px">
+      <div style="margin-top: 15px">
         <el-form :inline="true" :model="form" size="small" label-width="140px">
           <div style="text-align:center">
             <el-form-item label="输入搜索：">
@@ -45,11 +45,11 @@
         </el-form>
       </div>
     </el-card>
-    <el-card style="margin-top: 20px;" shadow="never">
-      <i class="el-icon-tickets" />
-      <span>创建社团</span>
-      <el-button style="float:right" size="small" type="primary" @click="ApplyToCreate()">创建</el-button>
-    </el-card>
+<!--    <el-card style="margin-top: 20px;" shadow="never">-->
+<!--      <i class="el-icon-tickets" />-->
+<!--      <span>创建社团</span>-->
+<!--      <el-button style="float:right" size="small" type="primary" @click="ApplyToCreate()">创建</el-button>-->
+<!--    </el-card>-->
 
     <!-- 社团列表 -->
     <div style="margin-top: 20px;">
@@ -66,7 +66,12 @@
         <el-table-column label="社团名称" prop="name" />
         <el-table-column label="社长名称" prop="chiefName" />
         <el-table-column label="社团类别" prop="type" />
-        <el-table-column label="官方状态" prop="state" />
+        <el-table-column label="官方状态" prop="state">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.state === 0" type="info">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag v-else type="success">{{ scope.row.state | statusFilter }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="LookForDetail(scope.row.id,scope.row.name,scope.row.chiefName,scope.row.avatarUrl)">查看详情</el-button>
@@ -103,6 +108,15 @@
 import { getClubsList } from '@/api/club'
 export default {
   name: 'Clubs',
+  filters: {
+    statusFilter(value) {
+      if (value === 0) {
+        return '非官方'
+      } else {
+        return '官方'
+      }
+    }
+  },
   data() {
     return {
       listLoading: true,
@@ -171,10 +185,9 @@ export default {
       this.getClubsList()
     },
     handleResetSearch() {
-      this.form.name = ''
+      this.form.keyword = ''
       this.form.type = ''
-      this.form.chiefName = ''
-      this.form.id = ''
+      this.form.state = ''
     }
   }
 }

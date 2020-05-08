@@ -1,89 +1,47 @@
 <template>
   <div class="content">
-    <h1>register</h1>
-    <el-form
-      ref="ruleForm"
-      :model="ruleForm"
-      :rules="rules"
-      label-width="100px"
-      class="Form"
-    >
-      <el-form-item
-        label="用户名"
-        prop="username"
-      >
+    <h1>注册账号</h1>
+    <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="Form">
+      <el-link type="primary" @click="back()">返回</el-link>
+      <el-form-item label="用户名" prop="username">
         <el-input v-model="ruleForm.username" />
       </el-form-item>
-      <el-form-item
-        label="昵称"
-        prop="nickname"
-      >
+      <el-form-item label="昵称" prop="nickname">
         <el-input v-model="ruleForm.nickname" />
       </el-form-item>
-      <el-form-item
-        label="密码"
-        prop="password"
-      >
-        <el-input
-          v-model="ruleForm.password"
-          type="password"
-        />
+      <el-form-item label="密码" prop="password">
+        <el-input v-model="ruleForm.password" type="password" />
       </el-form-item>
-      <el-form-item
-        label="确认密码"
-        prop="password2"
-      >
-        <el-input
-          v-model="ruleForm.password2"
-          type="password"
-        />
+      <el-form-item label="确认密码" prop="password2">
+        <el-input v-model="ruleForm.password2" type="password" />
         <!-- <span
           class="show-pwd"
           @click="showPwd"
         >
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span> -->
+        </span>-->
       </el-form-item>
-      <el-form-item
-        label="保密问题"
-        prop="question"
-      >
+      <el-form-item label="保密问题" prop="question">
         <el-input v-model="ruleForm.question" />
       </el-form-item>
-      <el-form-item
-        label="保密回答"
-        prop="answer"
-      >
+      <el-form-item label="保密回答" prop="answer">
         <el-input v-model="ruleForm.answer" />
       </el-form-item>
-      <el-form-item
-        label="专业"
-        prop="major"
-      >
+      <el-form-item label="专业" prop="major">
         <el-input v-model="ruleForm.major" />
       </el-form-item>
-      <el-form-item
-        label="电话"
-        prop="phone"
-      >
+      <el-form-item label="电话" prop="phone">
         <el-input v-model="ruleForm.phone" />
       </el-form-item>
-      <el-form-item
-        label="邮箱"
-        prop="email"
-      >
+      <el-form-item label="邮箱" prop="email">
         <el-input v-model="ruleForm.email" />
       </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          @click="submitForm('ruleForm')"
-        >立即注册</el-button>
+      <div style="text-align:center">
+        <el-button type="primary" @click="submitForm('ruleForm')">立即注册</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
+      </div>
     </el-form>
   </div>
-
 </template>
 <script>
 import { register } from '@/api/user'
@@ -139,26 +97,24 @@ export default {
           { min: 6, max: 12, message: '长度为6-12个字符', trigger: 'blur' },
           { validator: validatePass2, trigger: 'blur' }
         ],
-        major: [
-          { max: 30, message: '请保持在30字符内', trigger: 'blur' }
-        ],
-        phone: [
-          { min: 11, max: 11, message: '请正确输入', trigger: 'blur' }
-        ],
+        major: [{ max: 30, message: '请保持在30字符内', trigger: 'blur' }],
+        phone: [{ min: 11, max: 11, message: '请正确输入', trigger: 'blur' }],
         question: [
-          { required: true, message: '请输入保密问题用以找回密码', trigger: 'blur' }
+          {
+            required: true,
+            message: '请输入保密问题用以找回密码',
+            trigger: 'blur'
+          }
         ],
         email: [{ trigger: 'blur', validator: validateEmail }],
-        answer: [
-          { required: true, message: '请输入回答', trigger: 'blur' }
-        ]
+        answer: [{ required: true, message: '请输入回答', trigger: 'blur' }]
       },
       passwordType: 'password'
     }
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           var data = {
             username: this.ruleForm.username,
@@ -170,14 +126,16 @@ export default {
             answer: this.ruleForm.answer,
             question: this.ruleForm.question
           }
-          register(data).then(response => {
-            console.log('@register result:')
-            console.log(response)
-            this.$message.success('注册成功')
-            this.$router.push('/login')
-          }).catch((e) => {
-            console.log(e)
-          })
+          register(data)
+            .then(response => {
+              console.log('@register result:')
+              console.log(response)
+              this.$message.success('注册成功')
+              this.$router.push('/login')
+            })
+            .catch(e => {
+              console.log(e)
+            })
         } else {
           this.$message.error('提交失败')
           // console.log('error submit!!')
@@ -197,6 +155,10 @@ export default {
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
+    },
+    async back() {
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
 }

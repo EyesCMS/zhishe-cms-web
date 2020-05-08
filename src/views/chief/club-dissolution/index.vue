@@ -18,6 +18,7 @@
           <el-input
             v-model="dissolution.clubName"
             :readonly="readonly"
+            :disabled="true"
           />
         </el-form-item>
         <!-- 申请人 -->
@@ -28,6 +29,7 @@
           <el-input
             v-model="dissolution.applicant"
             :readonly="readonly"
+            :disabled="true"
           />
         </el-form-item>
         <!-- 附件 -->
@@ -40,7 +42,8 @@
             v-model="dissolution.reason"
             type="textarea"
             :span="5"
-          >解散原因</el-input>
+            placeholder="请输入解散原因"
+          />
         </el-form-item>
         <!-- 提交按钮 -->
         <el-form-item>
@@ -61,7 +64,7 @@ export default {
     return {
       dissolution: {
         clubName: '这是社团名字',
-        clubId: 10000,
+        clubId: window.sessionStorage.getItem('clubId'),
         applicant: '申请人姓名',
         accessoryUrl: '',
         reason: ''
@@ -79,7 +82,7 @@ export default {
     }
   },
   created() {
-    getClubDetail(10000).then(response => {
+    getClubDetail(window.sessionStorage.getItem('clubId')).then(response => {
       console.log('@club-dissolution getClubDetial reaponse:')
       console.log(response)
       if (response.data) {

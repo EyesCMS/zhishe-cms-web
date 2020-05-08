@@ -1,12 +1,83 @@
 <template>
   <div>
     <el-card>
-      <el-input
-        placeholder="请输入内容"
-        class="input-with-select"
-      >
-        <el-button slot="append" icon="el-icon-search" />
-      </el-input>
+      <el-card>
+        <div>
+          <i class="el-icon-search" />
+          <span>筛选搜索</span>
+          <el-button
+            style="float: right"
+            type="primary"
+            size="small"
+            @click="getActivitiesList"
+          >
+            查询
+          </el-button>
+          <el-button
+            style="float: right;margin-right: 15px"
+            size="small"
+            @click="reset"
+          >
+            重置
+          </el-button>
+        </div>
+        <div style="margin-top: 15px">
+          <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+            <div>
+              <el-form-item label="活动名称">
+                <el-input v-model="queryInfo.name" style="width: 203px" placeholder="请输入活动名称" />
+              </el-form-item>
+              <el-form-item label="活动内容">
+                <el-input v-model="queryInfo.content" style="width: 203px" placeholder="请输入活动内容" />
+              </el-form-item>
+              <el-form-item label="活动地点">
+                <el-select v-model="queryInfo.location" style="width: 203px" placeholder="请选择活动地点">
+                  <el-option label="青春广场" value="青春广场" />
+                  <el-option label="生活三区" value="生活三区" />
+                  <el-option label="风雨操场" value="风雨操场" />
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-form>
+        </div>
+        <div style="margin-top: 15px">
+          <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+            <div>
+              <el-form-item label="活动状态">
+                <el-select v-model="queryInfo.state" style="width: 203px" placeholder="请选择活动状态">
+                  <el-option label="未审核" value="0" />
+                  <el-option label="审核通过" value="1" />
+                  <el-option label="已发布" value="2" />
+                  <el-option label="审核未通过" value="3" />
+                  <el-option label="已结束" value="4" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="开始时间">
+                <el-date-picker
+                  v-model="queryInfo.startDate"
+                  type="datetime"
+                  placeholder="选择开始时间"
+                  align="right"
+                  style="width: 203px"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  :picker-options="pickerOptions"
+                />
+              </el-form-item>
+              <el-form-item label="结束时间">
+                <el-date-picker
+                  v-model="queryInfo.endDate"
+                  type="datetime"
+                  placeholder="选择结束时间"
+                  align="right"
+                  style="width: 203px"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  :picker-options="pickerOptions"
+                />
+              </el-form-item>
+            </div>
+          </el-form>
+        </div>
+      </el-card>
       <el-row style="margin-top:20px">
         <el-button type="primary" @click="applyActivity()">申请活动</el-button>
       </el-row>
@@ -75,22 +146,36 @@
           </el-form-item>
           <el-form-item label="活动地点" prop="location">
             <el-select v-model="addForm.location" placeholder="请选择活动地点">
-              <el-option label="区域一" value="shanghai" />
-              <el-option label="区域二" value="beijing" />
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
-          <el-form-item label="活动时间" required>
-            <el-col :span="11">
-              <el-form-item prop="startDate">
-                <el-date-picker v-model="addForm.startDate" type="date" placeholder="选择日期" style="width: 90%;" />
-              </el-form-item>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-form-item prop="endDate">
-                <el-date-picker v-model="addForm.endDate" type="date" placeholder="选择日期" style="width: 90%;" />
-              </el-form-item>
-            </el-col>
+          <el-form-item label="参与人数">
+            <el-input-number v-model="addForm.memberCount" style="width:200px" :min="1" size="small" label="添加参与人数" />
+          </el-form-item>
+          <el-form-item label="开始时间" required>
+            <el-date-picker
+              v-model="addForm.startDate"
+              type="datetime"
+              placeholder="选择开始时间"
+              align="right"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              :picker-options="pickerOptions"
+            />
+          </el-form-item>
+          <el-form-item label="结束时间" required>
+            <el-date-picker
+              v-model="addForm.endDate"
+              type="datetime"
+              placeholder="选择结束时间"
+              align="right"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              :picker-options="pickerOptions"
+            />
           </el-form-item>
         </el-form>
         <el-upload
@@ -128,6 +213,9 @@
           </el-form-item>
           <el-form-item label="活动地点">
             <el-input v-model="applyDetailForm.location" disabled />
+          </el-form-item>
+          <el-form-item label="参与人数">
+            <el-input-number v-model="applyDetailForm.memberCount" :min="1" disabled />
           </el-form-item>
           <el-form-item label="活动时间">
             <el-col :span="11">
@@ -186,7 +274,12 @@ export default {
       activitiesList: [],
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
-        keyword: '',
+        name: '',
+        content: '',
+        location: '',
+        state: '',
+        startDate: '',
+        endDate: '',
         page: 1,
         limit: 5,
         sort: '',
@@ -200,13 +293,14 @@ export default {
       applyDetailDialogVisible: false,
       dialogImageUrl: '',
       addForm: {
-        clubId: 0,
+        clubId: sessionStorage.getItem('clubId'),
         name: '',
         title: '',
         content: '',
         startDate: '',
         endDate: '',
         location: '',
+        memberCount: 1,
         imgUrl: ''
       },
       addFormRules: {
@@ -221,14 +315,52 @@ export default {
         ],
         location: [
           { required: true, message: '请输入活动地点', trigger: 'blur' }
-        ],
-        startDate: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-        ],
-        endDate: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ]
-      }
+        // startDate: [
+        //   { type: 'date', required: true, message: '请选择开始时间', trigger: 'change' }
+        // ],
+        // endDate: [
+        //   { type: 'date', required: true, message: '请选择结束时间', trigger: 'change' }
+        // ]
+      },
+      pickerOptions: {
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date())
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24)
+            picker.$emit('pick', date)
+          }
+        }, {
+          text: '一周前',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', date)
+          }
+        }]
+      },
+      options: [{
+        value: '青春广场',
+        label: '青春广场'
+      }, {
+        value: '风雨操场',
+        label: '风雨操场'
+      }, {
+        value: '生活一区',
+        label: '生活一区'
+      }, {
+        value: '生活二区',
+        label: '生活二区'
+      }, {
+        value: '生活三区',
+        label: '生活三区'
+      }]
     }
   },
   created() {
@@ -239,12 +371,21 @@ export default {
     getActivitiesList() {
       getActivitiesList(this.clubId, this.queryInfo).then(response => {
         console.log(response)
-        this.activitiesList = response.items
-        this.total = response.total_count
+        this.activitiesList = response.data.items
+        this.total = response.totalCount
         console.log(this.activitiesList)
       })
     },
-    publishActivity(id, state) {
+    async publishActivity(id, state) {
+      const confirmResult = await this.$confirm('此操作将发布活动, 是否继续?', '发布确认', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'info'
+      }).catch(err => err)
+
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消发布')
+      }
       const input = {
         id: id,
         state: state
@@ -252,10 +393,21 @@ export default {
       reviseActivityState(input).then(response => {
         this.$message.success('发布成功')
       })
+      this.getActivitiesList()
     },
-    deleteActivity(id) {
+    async deleteActivity(id) {
+      const confirmResult = await this.$confirm('此操作将撤销活动, 是否继续?', '撤销确认', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
+
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消撤销')
+      }
       deleteActivity(id).then(response => {
         this.$message.success('撤销成功')
+        this.getActivitiesList()
       })
     },
     // 监听pagesize改变的事件
@@ -283,14 +435,18 @@ export default {
     publishApply() {
       this.$refs.addFormRef.validate(valid => {
         if (!valid) return
+        console.log(this.addForm)
         publishApply(this.addForm).then(response => {
           this.$message.success('申请成功')
         })
+        // console.log(this.addForm)
         this.applyActivityDialogVisible = false
+        this.getActivitiesList()
       })
     },
     applyActivityDialogClosed() {
-      this.$refs.addFormRef.resetFields()
+      // this.$refs.addFormRef.resetFields()
+      // this.addForm.startDate = this.addForm.endDate = ''
     },
     checkActivityApplyDetail(id) {
       getActivityApplyDetail(id).then(response => {
@@ -298,6 +454,10 @@ export default {
         console.log('applyDetail为' + this.applyDetailForm)
         this.applyDetailDialogVisible = true
       })
+    },
+    reset() {
+      this.queryInfo.name = this.queryInfo.content = this.queryInfo.location = ''
+      this.queryInfo.state = this.queryInfo.startDate = this.queryInfo.endDate = ''
     }
   }
 }
@@ -308,6 +468,8 @@ export default {
   margin-top: 20px;
 }
 .el-pagination {
-  margin-top: 20px;
+  // margin-top: 20px;
+  margin: 30px 15px;
+  text-align:center
 }
 </style>
