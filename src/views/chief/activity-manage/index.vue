@@ -82,7 +82,7 @@
         <el-button type="primary" @click="applyActivity()">申请活动</el-button>
       </el-row>
       <!-- 活动申请列表 -->
-      <el-table :data="activitiesList" stripe border>
+      <el-table v-loading="listLoading" :data="activitiesList" stripe border>
         <el-table-column type="index" label="#" />
         <el-table-column label="活动名称" prop="name" />
         <el-table-column label="活动时间" width="300px">
@@ -271,6 +271,7 @@ export default {
   },
   data() {
     return {
+      listLoading: true,
       activitiesList: [],
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
@@ -369,9 +370,11 @@ export default {
   },
   methods: {
     getActivitiesList() {
+      this.listLoading = true
       getActivitiesList(this.clubId, this.queryInfo).then(response => {
         this.activitiesList = response.data.items
         this.total = response.totalCount
+        this.listLoading = false
       })
     },
     async publishActivity(id, state) {

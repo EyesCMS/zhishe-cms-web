@@ -8,7 +8,7 @@
     </el-card>
     <el-card>
       <!-- 社团认证申请列表 -->
-      <el-table :data="identifyApplyList" stripe border>
+      <el-table v-loading="listLoading" :data="identifyApplyList" stripe border>
         <el-table-column type="index" label="#" />
         <el-table-column label="申请时间" prop="createAt" />
         <el-table-column label="申请原因" prop="reason" />
@@ -95,7 +95,9 @@ export default {
           this.$message.success('获取社团认证申请成功')
           this.identifyApplyList = response.data.items
           this.total = response.data.totalCount
+          this.listLoading = false
         } else {
+          this.listLoading = false
           return this.$message.error('获取社团认证申请失败')
         }
       })

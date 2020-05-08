@@ -54,6 +54,7 @@
                     :show-file-list="false"
                     accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
                     :before-upload="beforeAvatarUpload"
+                    action=""
                   >
                     <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon" />

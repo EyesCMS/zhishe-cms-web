@@ -2,7 +2,7 @@
   <div style="margin-top: 15px;text-align:center;">
 
     <!-- 社团列表 -->
-    <el-table :data="JoinclubsList" stripe border>
+    <el-table v-loading="listLoading" :data="JoinclubsList" stripe border>
       <el-table-column label="社团ID" prop="id" />
       <el-table-column label="社团头像" prop="avatarUrl">
         <template slot-scope="scope" width="40">
@@ -70,7 +70,9 @@ export default {
         if (response.status === 200) {
           this.JoinclubsList = response.data.items
           this.total = response.data.totalCount
+          this.listLoading = false
         } else {
+          this.listLoading = false
           return this.$message.error('获取社团列表失败')
         }
         // console.log(this.JoinclubsList)

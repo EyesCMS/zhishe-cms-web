@@ -43,7 +43,7 @@
     </el-card>
 -->
     <!-- 创建社团申请列表 -->
-    <el-table :data="CreateApplicationsList" stripe border>
+    <el-table v-loading="listLoading" :data="CreateApplicationsList" stripe border>
       <el-table-column label="社团名称" prop="clubName" />
       <el-table-column label="申请原因" prop="reason" />
       <el-table-column label="申请时间" prop="createAt" />
@@ -110,7 +110,9 @@ export default {
         if (response.status === 200) {
           this.CreateApplicationsList = response.data.items
           this.total = response.data.totalCount
+          this.listLoading = false
         } else {
+          this.listLoading = false
           return this.$message.error('获取申请加入社团列表失败')
         }
         // console.log(this.CreateApplicationsList)

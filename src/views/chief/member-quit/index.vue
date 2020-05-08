@@ -4,7 +4,7 @@
     <el-card>
 
       <!-- 社员退社通知列表 -->
-      <el-table :data="quitList" stripe border>
+      <el-table v-loading="listLoading" :data="quitList" stripe border>
         <el-table-column type="index" label="#" />
         <el-table-column label="社员名" prop="username" />
         <el-table-column label="退社原因" prop="reason" />
@@ -52,7 +52,9 @@ export default {
           this.$message.success('获取成员退出通知成功')
           this.quitList = response.data.items
           this.total = response.data.totalCount
+          this.listLoading = false
         } else {
+          this.listLoading = false
           return this.$message.error('获取成员退出通知失败')
         }
       })

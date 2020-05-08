@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <el-row style="margin-top:30px width:60%">
+      <el-row style="margin-top:30px; width:60%">
         <el-button type="primary" @click="publishAnnouncement()">发布公告</el-button>
       </el-row>
       <!-- 公告列表 -->

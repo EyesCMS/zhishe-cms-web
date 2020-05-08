@@ -54,7 +54,7 @@
       </el-card>
       <el-card style="margin-top: 15px">
         <!-- 用户列表 -->
-        <el-table :data="addList" stripe border>
+        <el-table v-loading="listLoading" :data="addList" stripe border>
           <el-table-column type="index" label="#" />
           <el-table-column label="昵称" prop="applicant" width="150px" />
           <el-table-column label="申请理由" prop="reason" />
@@ -106,6 +106,7 @@ export default {
   },
   data() {
     return {
+      listLoading: true,
       clubId: sessionStorage.getItem('clubId'),
       addList: [],
       queryInfo: {
@@ -161,9 +162,11 @@ export default {
   },
   methods: {
     getAddsList() {
+      this.listLoading = true
       getAddList(this.clubId, this.queryInfo).then(response => {
         this.addList = response.data.items
         this.total = response.data.totalCount
+        this.listLoading = false
       })
     },
     isDisabled(state) {

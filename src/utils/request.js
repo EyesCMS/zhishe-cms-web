@@ -49,28 +49,47 @@ service.interceptors.response.use(
       Message({
         message: res.message || 'Error',
         type: 'error',
-        duration: 5 * 1000
+        duration: 3 * 1000
       })
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (response.status === 401) {
-        // to re-login
-        Message.info('你未登录或者登录已过期，请重新登陆')
-        store.dispatch('user/resetToken').then(() => {
-          location.reload()
-        })
-      }
+      // if (response.status === 401) {
+      //   // to re-login
+      //   MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+      //     confirmButtonText: '重新登录',
+      //     cancelButtonText: '取消',
+      //     type: 'warning'
+      //   }).then(() => {
+      //     store.dispatch('FedLogOut').then(() => {
+      //       location.reload()// 为了重新实例化 vue-router 对象 避免 bug
+      //     })
+      //   })
+      // }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return response
     }
   },
   error => {
+    if (error.response.status === 401) {
+      // to re-login
+      MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+        confirmButtonText: '重新登录',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        store.dispatch('user/resetToken').then(() => {
+          console.log('push to login')
+          location.reload()// 为了重新实例化 vue-router 对象 避免 bug
+        })
+      })
+    }
+
     console.log('err' + error) // for debug
     Message({
       message: error.message,
       type: 'error',
-      duration: 5 * 1000
+      duration: 3 * 1000
     })
     return Promise.reject(error)
   }
