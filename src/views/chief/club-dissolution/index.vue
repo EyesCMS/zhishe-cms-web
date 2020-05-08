@@ -63,9 +63,9 @@ export default {
   data() {
     return {
       dissolution: {
-        clubName: '这是社团名字',
+        clubName: '',
         clubId: window.sessionStorage.getItem('clubId'),
-        applicant: '申请人姓名',
+        applicant: '',
         accessoryUrl: '',
         reason: ''
       },

@@ -3,59 +3,29 @@
     <div class="change">
       <h3>社长换届申请</h3>
       <!-- 社长换届表单显示 -->
-      <el-form
-        ref="Form"
-        :model="leaderChange"
-        :rules="rules"
-        label-width="100px"
-      >
+      <el-form ref="Form" :model="leaderChange" :rules="rules" label-width="100px">
         <!-- 社团名称 -->
         <el-form-item label="社团名称">
-          <el-input
-            v-model="leaderChange.clubname"
-            :readonly="readOnly"
-            :disabled="true"
-          />
+          <el-input v-model="leaderChange.clubname" style="width:550px;" :readonly="readOnly" :disabled="true" />
         </el-form-item>
         <!-- 原社长 -->
         <el-form-item label="原社长">
-          <el-input
-            v-model="leaderChange.oldChiefName"
-            :readonly="readOnly"
-            :disabled="true"
-          />
+          <el-input v-model="leaderChange.oldChiefName" style="width:550px;" :readonly="readOnly" :disabled="true" />
         </el-form-item>
         <!-- 新社长 -->
-        <el-form-item
-          label="新社长"
-          prop="newChiefName"
-        >
-          <el-input
-            v-model="leaderChange.newChiefName"
-            placeholder="请输入新社长姓名"
-          />
+        <el-form-item label="新社长" prop="newChiefName">
+          <el-input v-model="leaderChange.newChiefName" style="width:550px;" placeholder="请输入新社长姓名" />
         </el-form-item>
         <!-- 换届原因 -->
-        <el-form-item
-          label="原因"
-          prop="reason"
-        >
-          <el-input
-            v-model="leaderChange.reason"
-            type="textarea"
-            placeholder="请输入换届原因"
-          >换届原因</el-input>
+        <el-form-item label="原因" prop="reason">
+          <el-input v-model="leaderChange.reason" type="textarea" style="width:550px;" placeholder="请输入换届原因">换届原因</el-input>
         </el-form-item>
         <!-- 提交按钮 -->
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="submitForm"
-          >提交</el-button>
+          <el-button type="primary" @click="submitForm">提交</el-button>
         </el-form-item>
       </el-form>
     </div>
-
   </div>
 </template>
 
@@ -75,12 +45,10 @@ export default {
       readOnly: true,
       rules: {
         newChiefName: [
-          { required: true, message: '请输新社长名字', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          { required: true, message: '请输新社长名字', trigger: 'blur' }
+          // { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
-        reason: [
-          { required: true, message: '请输入理由', trigger: 'blur' }
-        ]
+        reason: [{ required: true, message: '请输入理由', trigger: 'blur' }]
       }
     }
   },
@@ -107,13 +75,15 @@ export default {
             newChiefName: this.leaderChange.newChiefName,
             reason: this.leaderChange.reason
           }
-          const result = await leaderchange(data)
-          console.log(result)
-          if (result.Status === 201) {
-            this.$message.success('修改成功！')
-          } else {
-            this.$message.error('修改失败')
-          }
+          // const result = await leaderchange(data)
+          // console.log(result)
+          leaderchange(data).then(response => {
+            if (response.status === 201) {
+              this.$message.success('提交成功！')
+            } else {
+              this.$message.error('提交失败！')
+            }
+          })
         } else this.$message.error('error submit!!')
       })
     }
