@@ -1,22 +1,34 @@
 <template>
   <div>
     <el-card style="margin: 15px 15px">
-      <el-row>
-        <i class="el-icon-search">筛选搜索</i>
-      </el-row>
-      <el-row style="margin-top: 25px" :gutter="10">
-        <el-form ref="form" :model="queryInfo" label-width="80px">
-          <el-col :span="8">
-            <el-form-item label="标题">
-              <el-input v-model="queryInfo.title" placeholder="请输入标题" />
+      <div>
+        <i class="el-icon-search" />
+        <span>筛选搜索</span>
+        <el-button
+          style="float: right"
+          type="primary"
+          size="small"
+          @click="handleSearchList"
+        >
+          查询
+        </el-button>
+        <el-button
+          style="float: right;margin-right: 15px"
+          size="small"
+          @click="reset"
+        >
+          重置
+        </el-button>
+      </div>
+      <div style="margin-top: 55px">
+        <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+          <div>
+            <el-form-item label="帖子标题">
+              <el-input v-model="queryInfo.title" style="width: 203px" placeholder="请输入帖子标题" />
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="内容">
-              <el-input v-model="queryInfo.content" placeholder="请输入内容" />
+            <el-form-item label="帖子内容">
+              <el-input v-model="queryInfo.content" style="width: 203px" placeholder="请输入帖子内容" />
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
             <el-form-item label="发布日期">
               <el-date-picker
                 v-model="queryInfo.createAt"
@@ -26,13 +38,9 @@
                 style="width: 100%;"
               />
             </el-form-item>
-          </el-col>
+          </div>
         </el-form>
-      </el-row>
-      <el-row style="text-align: center; margin-top: 15px">
-        <el-button type="primary" @click="getInvitationsList">查询</el-button>
-        <el-button type="info" @click="reset">重置</el-button>
-      </el-row>
+      </div>
     </el-card>
     <el-card style="margin: 15px 15px">
       <h4>共搜索到 {{ total }} 条帖子</h4>
@@ -66,17 +74,16 @@
       </el-card>
 
       <!-- 分页区域 -->
-      <div style="text-align:center">
-        <el-pagination
-          :current-page="queryInfo.page"
-          :page-sizes="[5, 10, 15, 20]"
-          :page-size="queryInfo.limit"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
-      </div>
+      <el-pagination
+        :current-page="queryInfo.page"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="queryInfo.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        style="margin: 25px 15px;text-align:center"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </el-card>
   </div>
 </template>
@@ -97,7 +104,6 @@ export default {
     return {
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
-        // keyword: '',
         type: 1,
         posterName: '',
         title: '',
@@ -119,21 +125,15 @@ export default {
   methods: {
     getInvitationsList() {
       getInvitationList(this.clubId, this.queryInfo).then(response => {
-        console.log(response)
-        this.queryInfo.page = 1
         this.invitationsList = response.data.items
         this.total = response.data.totalCount
-        console.log(this.invitationsList)
-        // console.log(this.memberInfo)
       })
     },
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getInvitationsList()
     },
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getInvitationsList()
     },
@@ -145,6 +145,10 @@ export default {
     queryInvitation() {
       this.getInvitationsList()
       this.queryInfo.keyword = ''
+    },
+    handleSearchList() {
+      this.queryInfo.page = 1
+      this.getInvitationsList()
     },
     reset() {
       this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt =

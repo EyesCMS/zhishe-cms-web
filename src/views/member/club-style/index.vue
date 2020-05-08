@@ -51,7 +51,7 @@
                 <div>
                   <el-tag v-if="i <= 2" type="warning">{{ i + 1 }}</el-tag>
                   <el-tag v-else type="info">{{ i + 1 }}</el-tag>
-                  <el-link style="display:inline;" @click="pushToActivityDetail(item.id)">{{ item.title }}</el-link>
+                  <el-link style="display:inline;" @click="pushToActivityDetail(item.id)">{{ item.title | interceptAbstract }}</el-link>
                 </div>
                 <p style="font-size:10px">{{ item.createAt }}</p>
               </div>
@@ -142,6 +142,14 @@ import { getClubDetail } from '@/api/club'
 import { quitClub } from '@/api/club'
 export default {
   name: 'MemClubStyle',
+  filters: {
+    interceptAbstract(content) {
+      if (content.length > 15) {
+        return content.substr(0, 15) + '......'
+      }
+      return content
+    }
+  },
   data() {
     return {
       userId: this.$store.getters.userId,
@@ -166,11 +174,8 @@ export default {
     }
   },
   created() {
-    console.log('风采页面userId为' + this.userId)
     if (this.$route.query.id !== undefined) {
       this.clubId = this.$route.query.id
-      console.log('接收cid')
-      console.log('clubId为' + this.clubId)
       sessionStorage.setItem('clubId', this.clubId)
     } else {
       this.clubId = sessionStorage.getItem('clubId')
@@ -184,33 +189,24 @@ export default {
     getBulletinsList() {
       listBulletins(this.clubId, this.queryInfo).then(response => {
         this.bulletinsList = response.data.items
-        console.log(this.bulletinsList)
-        // console.log(this.memberInfo)
       })
     },
     getInvitationsList() {
       getInvitationList(this.clubId, this.queryInfo).then(response => {
         this.invitationList = response.data.items
-        console.log(this.invitationList)
-        // console.log(this.memberInfo)
       })
     },
 
     // 获取社团详情
     getClubDetail() {
       getClubDetail(this.clubId).then(response => {
-        console.log(123)
-        console.log(response)
         this.clubDetail = response.data
-        console.log(this.clubDetail)
-        // console.log(this.memberInfo)
       })
     },
     // 弹出公告详情对话框
     openBulletinDetailDiaglog(id) {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
-        console.log(response)
         this.bulletin = response.data
       })
       this.bulletinDetailDialogVisible = true

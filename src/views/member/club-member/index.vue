@@ -1,11 +1,27 @@
 <template>
   <div>
     <el-card style="margin: 15px 15px">
-      <el-row>
-        <i class="el-icon-search">筛选搜索</i>
-      </el-row>
-      <el-row style="margin-top: 25px" :gutter="10">
-        <el-form :inline="true" :model="queryInfo" label-width="140px">
+      <div>
+        <i class="el-icon-search" />
+        <span>筛选搜索</span>
+        <el-button
+          style="float: right"
+          type="primary"
+          size="small"
+          @click="handleSearchList"
+        >
+          查询
+        </el-button>
+        <el-button
+          style="float: right;margin-right: 15px"
+          size="small"
+          @click="reset"
+        >
+          重置
+        </el-button>
+      </div>
+      <div style="margin-top: 55px">
+        <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
           <div style="text-align:center">
             <el-form-item label="昵称/用户名">
               <el-input v-model="queryInfo.name" style="width:300px;" placeholder="请输入昵称/用户名" />
@@ -22,11 +38,7 @@
             </el-form-item>
           </div>
         </el-form>
-      </el-row>
-      <el-row style="text-align: center; margin-top: 15px">
-        <el-button type="primary" @click="getMembersList">查询</el-button>
-        <el-button type="info" @click="reset">重置</el-button>
-      </el-row>
+      </div>
     </el-card>
 
     <!-- 卡片视图区 -->
@@ -81,35 +93,33 @@ export default {
     }
   },
   created() {
-    // this.clubId = sessionStorage.getItem('clubId')
-    // this.clubId = localStorage.getItem('clubid')
     this.getMembersList()
   },
   methods: {
     getMembersList() {
       this.listLoading = true
       getMemberList(this.clubId, this.queryInfo).then(response => {
-        // console.log('response为' + response.status)
         this.membersList = response.data.items
         this.total = response.data.totalCount
-        console.log(this.membersList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getMembersList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getMembersList()
     },
     // 跳转到成员信息详细页面
     pushToDetail(userId) {
       this.$router.push({ path: 'detail', query: { userId: userId }})
+    },
+    handleSearchList() {
+      this.queryInfo.page = 1
+      this.getMembersList()
     },
     reset() {
       this.queryInfo.name = this.queryInfo.honorId = ''

@@ -80,8 +80,6 @@ export default {
   created() {
     this.id = this.$route.query.id
     this.userId = this.$store.getters.userid
-    console.log('风采页面userId为' + this.userId)
-    console.log(this.id)
     this.getInvitationDetail()
     this.getRemarksList()
   },
@@ -90,15 +88,12 @@ export default {
     getInvitationDetail() {
       getInvitationDetail(this.id, this.detailQuery).then(response => {
         this.detailInfo = response.data
-        console.log(this.detailInfo)
-        // console.log(132)
       })
     },
     getRemarksList() {
       getRemarksList(this.id, this.queryInfo).then(response => {
         this.remarksList = response.data.items
         this.remarksTotal = response.data.totalCount
-        console.log(this.remarksList)
       })
     },
     showMoreRemarks() {
@@ -111,7 +106,6 @@ export default {
         content: this.comment
       }
       await postComment(data).then(response => {
-        console.log(response)
         this.$message.success('发表成功')
       })
       this.comment = ''
