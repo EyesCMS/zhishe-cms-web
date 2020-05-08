@@ -181,6 +181,8 @@ export default {
       this.form.state = ''
     },
     check() {
+      this.queryInfo.page = 1
+      this.queryInfo.limit = 5
       this.getIdentifyApplyList()
     }
   }
