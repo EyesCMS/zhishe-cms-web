@@ -130,7 +130,10 @@ export default {
                 })
               }
             })
-            this.form.reason = ''
+            this.applyIdentifyDialogVisible = false
+            this.queryInfo.page = 1
+            this.getMyIdentifyApplyList()
+            // this.form.reason = ''
           } else {
             return this.$message.error('申请认证社团失败')
           }
