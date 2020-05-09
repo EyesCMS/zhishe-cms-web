@@ -56,24 +56,32 @@
           </div>
           <div
             style="display:inline;float:right;margin:10px;"
-            @click="deleteForum(item.id);dialogVisible = true"
+            @click="showDeleteForum(item);dialogVisible = true"
           >
             <i
               style="cursor:pointer"
               class="el-icon-delete icon"
             />
           </div>
-          <!--<el-dialog
+          <el-dialog
             title="提示"
             :visible.sync="dialogVisible"
             width="30%"
           >
-            <span>确认删除该帖子吗？</span>
-            <span slot="footer" class="dialog-footer">
+            <h3>{{ DeleteForum.title }}</h3>
+            <p>{{ DeleteForum.content }}</p>
+            <span style="float:right">确认删除该帖子吗？</span>
+            <span
+              slot="footer"
+              class="dialog-footer"
+            >
               <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="deleteButton()">确 定</el-button>
+              <el-button
+                type="primary"
+                @click="deleteForum(DeleteForum.id)"
+              >确 定</el-button>
             </span>
-          </el-dialog>-->
+          </el-dialog>
         </el-row>
 
         <el-row>
@@ -261,6 +269,11 @@ export default {
       forumsList: [],
       forumDetile: {},
       remarklist: [],
+      DeleteForum: {
+        id: '',
+        title: '',
+        content: ''
+      },
       queryInfo: {
         keyword: '',
         page: 1,
@@ -408,6 +421,7 @@ export default {
           return this.$message.error('删除帖子失败')
         }
       })
+      this.dialogVisible = false
     },
     changeForum(id) { // 显示修改界面
       console.log(id)
@@ -438,6 +452,12 @@ export default {
     },
     back() {
       this.$router.push('/forum/personalPost')
+    },
+    showDeleteForum(item) {
+      this.dialogVisible = true
+      this.DeleteForum.id = item.id
+      this.DeleteForum.title = item.title
+      this.DeleteForum.content = item.content
     }
   }
 }
