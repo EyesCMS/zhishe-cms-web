@@ -9,7 +9,7 @@
             style="float: right"
             type="primary"
             size="small"
-            @click="getActivitiesList"
+            @click="handleSearchList"
           >
             查询
           </el-button>
@@ -21,7 +21,7 @@
             重置
           </el-button>
         </div>
-        <div style="margin-top: 15px">
+        <div style="margin-top: 55px">
           <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
             <div>
               <el-form-item label="活动名称">
@@ -82,7 +82,7 @@
         <el-button type="primary" @click="applyActivity()">申请活动</el-button>
       </el-row>
       <!-- 活动申请列表 -->
-      <el-table :data="activitiesList" stripe border>
+      <el-table v-loading="listLoading" :data="activitiesList" stripe border>
         <el-table-column type="index" label="#" />
         <el-table-column label="活动名称" prop="name" />
         <el-table-column label="活动时间" width="300px">
@@ -271,6 +271,7 @@ export default {
   },
   data() {
     return {
+      listLoading: true,
       activitiesList: [],
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
@@ -369,11 +370,11 @@ export default {
   },
   methods: {
     getActivitiesList() {
+      this.listLoading = true
       getActivitiesList(this.clubId, this.queryInfo).then(response => {
-        console.log(response)
         this.activitiesList = response.data.items
         this.total = response.totalCount
-        console.log(this.activitiesList)
+        this.listLoading = false
       })
     },
     async publishActivity(id, state) {
@@ -412,13 +413,11 @@ export default {
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getActivitiesList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getActivitiesList()
     },
@@ -426,7 +425,6 @@ export default {
       this.applyActivityDialogVisible = true
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList)
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
@@ -435,7 +433,6 @@ export default {
     publishApply() {
       this.$refs.addFormRef.validate(valid => {
         if (!valid) return
-        console.log(this.addForm)
         publishApply(this.addForm).then(response => {
           this.$message.success('申请成功')
         })
@@ -451,9 +448,12 @@ export default {
     checkActivityApplyDetail(id) {
       getActivityApplyDetail(id).then(response => {
         this.applyDetailForm = response.data
-        console.log('applyDetail为' + this.applyDetailForm)
         this.applyDetailDialogVisible = true
       })
+    },
+    handleSearchList() {
+      this.queryInfo.page = 1
+      this.getActivitiesList()
     },
     reset() {
       this.queryInfo.name = this.queryInfo.content = this.queryInfo.location = ''

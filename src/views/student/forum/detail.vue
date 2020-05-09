@@ -1,17 +1,21 @@
 <template>
   <div>
     <el-card>
-      <el-row>
-        <el-avatar style="float:left" :src="detailInfo.avatarUrl" />
-        <p style="float: left">{{ detailInfo.posterName }}</p>
-        <p style="float: left">{{ detailInfo.title }}</p>
-      </el-row>
-      <el-image :src="detailInfo.imgUrl" lazy />
-      <p>{{ detailInfo.content }}</p>
-      <p>{{ detailInfo.createAt }}</p>
+      <el-card style="margin:15px 15px">
+        <el-row>
+          <el-avatar style="float:left" :src="detailInfo.avatarUrl" />
+          <p style="float: left">{{ detailInfo.posterName }}</p>
+        </el-row>
+        <div style="text-align:center;">
+          <p style="font-size:22px;font-weight:bold;">{{ detailInfo.title }}</p>
+          <el-image :src="detailInfo.imgUrl" lazy />
+          <p>{{ detailInfo.content }}</p>
+          <p>{{ detailInfo.createAt }}</p>
+        </div>
+      </el-card>
 
       <!-- 评论区 -->
-      <el-card id="comment">
+      <el-card id="comment" style="margin:15px 15px">
         <div v-for="(item, index) in remarksList" :key="index">
           <el-row>
             <el-avatar style="float:left" :src="item.avatarUrl" />
@@ -22,7 +26,11 @@
           <el-divider />
         </div>
         <div style="text-align:center">
-          <el-link v-if="queryInfo.limit < remarksTotal" type="primary" @click="showMoreRemarks">查看更多评论</el-link>
+          <el-link
+            v-if="queryInfo.limit < remarksTotal"
+            type="primary"
+            @click="showMoreRemarks"
+          >查看更多评论</el-link>
           <p v-else>已加载全部评论</p>
         </div>
         <el-row style="margin-top:15px">
@@ -72,7 +80,8 @@ export default {
       remarksList: [],
       // 评论条数
       remarksTotal: 0,
-      clubAvator: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      clubAvator:
+        'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       comment: ''
     }
   },
@@ -83,7 +92,6 @@ export default {
   methods: {
     // 获取帖子详情
     getInvitationDetail() {
-      console.log(this.id)
       getInvitationDetail(this.id, this.detailQuery).then(response => {
         this.detailInfo.posterName = response.data.posterName
         this.detailInfo.avatarUrl = response.data.avatarUrl
@@ -97,7 +105,7 @@ export default {
       getRemarksList(this.id, this.queryInfo).then(response => {
         this.remarksList = response.data.items
         this.remarksTotal = response.data.totalCount
-        console.log(this.remarksList)
+        // console.log(this.remarksList)
       })
     },
     showMoreRemarks() {
@@ -110,7 +118,7 @@ export default {
         content: this.comment
       }
       await postComment(data).then(response => {
-        console.log(response)
+        // console.log(response)
         this.$message.success('发表成功')
       })
       this.comment = ''
@@ -128,6 +136,6 @@ export default {
 }
 #postButton {
   display: block;
-  margin: 0 auto
+  margin: 0 auto;
 }
 </style>

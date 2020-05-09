@@ -2,7 +2,7 @@
   <div style="margin-top: 15px;text-align:center;">
 
     <!-- 社团列表 -->
-    <el-table :data="ManageclubsList" stripe border>
+    <el-table v-loading="listLoading" :data="ManageclubsList" stripe border>
       <el-table-column label="社团ID" prop="id" />
       <el-table-column label="社团头像" prop="avatarUrl">
         <template slot-scope="scope" width="40">
@@ -70,21 +70,21 @@ export default {
         if (response.status === 200) {
           this.ManageclubsList = response.data.items
           this.total = response.data.totalCount
+          this.listLoading = false
         } else {
+          this.listLoading = false
           return this.$message.error('获取社团列表失败')
         }
-        console.log(this.ManageclubsList)
+        // console.log(this.ManageclubsList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getManageclubsList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getManageclubsList()
     },

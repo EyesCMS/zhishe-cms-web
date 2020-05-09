@@ -19,14 +19,16 @@
     <!-- 社团风采走马灯 -->
     <div class="carousel">
       <el-carousel
-        :interval="3000"
+        :interval="4000"
         arrow="always"
+        type="card"
       >
         <el-carousel-item
           v-for="item in carouselImgList"
           :key="item"
         >
           <img
+            style="width:100%"
             :src="item"
             alt="item"
           >
@@ -76,7 +78,11 @@
       </h2>
       <el-card style="margin: 30px 15px 30px 30px">
         <div>
-          <el-form :model="clubDetail" label-position="left" label-width="300px">
+          <el-form
+            :model="clubDetail"
+            label-position="left"
+            label-width="300px"
+          >
             <el-form-item label="社长">{{ clubDetail.chiefName }}</el-form-item>
             <el-divider />
             <el-form-item label="社团人数">{{ clubDetail.memberCount }}</el-form-item>
@@ -109,7 +115,7 @@ export default {
     return {
       queryInfo: {
         page: 1,
-        limit: 5,
+        limit: 6,
         sort: 'update_at',
         order: 'desc'
       },
@@ -181,7 +187,7 @@ export default {
 .carousel {
   margin: 20px auto;
   padding: 20px;
-  width: 40%;
+  width: 90%;
 }
 .el-carousel__item h3 {
   color: #475669;

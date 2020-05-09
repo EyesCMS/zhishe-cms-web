@@ -130,18 +130,15 @@ export default {
         } else {
           return this.$message.error('获取社团解散申请失败')
         }
-        console.log(this.dismissApplyList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getDismissApplyList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getDismissApplyList()
     },
@@ -182,7 +179,6 @@ export default {
     },
     check() {
       this.queryInfo.page = 1
-      this.queryInfo.limit = 5
       this.getDismissApplyList()
     }
   }

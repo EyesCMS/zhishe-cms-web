@@ -1,74 +1,152 @@
 <template>
   <div>
+    <el-card>
+      <el-row>
+        <el-table
+          :data="dissolutionApply"
+          stripe
+          border
+        >
+          <el-table-column
+            type="index"
+            label="#"
+          />
+          <el-table-column
+            label="申请时间"
+            prop="createAt"
+          />
+          <el-table-column
+            label="申请原因"
+            prop="reason"
+          />
+          <el-table-column
+            label="申请状态"
+            prop="state"
+          >
+            <template slot-scope="scope">
+              <el-tag
+                v-if="scope.row.state === 0"
+                style="text-align:center"
+                type="warning"
+                :disable-transitions="true"
+                effect="dark"
+              >{{ scope.row.state | statusFilter }}</el-tag>
+              <el-tag
+                v-else-if="scope.row.state === 1"
+                style="text-align:center"
+                type="success"
+                :disable-transitions="true"
+                effect="dark"
+              >{{ scope.row.state | statusFilter }}</el-tag>
+              <el-tag
+                v-else
+                style="text-align:center"
+                type="danger"
+                :disable-transitions="true"
+                effect="dark"
+              >{{ scope.row.state | statusFilter }}</el-tag>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-row>
+    </el-card>
+    <div
+      v-show="dissolutionVisiable"
+      class="dissolution"
+    >
+      <el-card>
+        <el-row>
+          <h3>社团解散申请</h3>
+          <!-- 社团解散表单显示 -->
+          <el-form
+            ref="Form"
+            :model="dissolution"
+            :rules="rules"
+            label-width="100px"
+          >
+            <!-- 社团名称 -->
+            <el-form-item
+              prop="clubName"
+              label="社团名称"
+            >
+              <el-input
+                v-model="dissolution.clubName"
+                :readonly="readonly"
+                :disabled="true"
+              />
+            </el-form-item>
+            <!-- 申请人 -->
+            <el-form-item
+              prop="applicant"
+              label="申请人"
+            >
+              <el-input
+                v-model="dissolution.applicant"
+                :readonly="readonly"
+                :disabled="true"
+              />
+            </el-form-item>
+            <!-- 附件 -->
+            <el-form-item label="附件">
+              <el-input v-model="dissolution.accessoryUrl" />
+            </el-form-item>
+            <!-- 换届原因 -->
+            <el-form-item label="原因">
+              <el-input
+                v-model="dissolution.reason"
+                type="textarea"
+                :span="5"
+                placeholder="请输入解散原因"
+              />
+            </el-form-item>
+            <!-- 提交按钮 -->
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="submitForm"
+              >提交</el-button>
+            </el-form-item>
+          </el-form>
+        </el-row>
+      </el-card>
 
-    <div class="dissolution">
-      <h3>社团解散申请</h3>
-      <!-- 社团解散表单显示 -->
-      <el-form
-        ref="Form"
-        :model="dissolution"
-        :rules="rules"
-        label-width="100px"
-      >
-        <!-- 社团名称 -->
-        <el-form-item
-          prop="clubName"
-          label="社团名称"
-        >
-          <el-input
-            v-model="dissolution.clubName"
-            :readonly="readonly"
-            :disabled="true"
-          />
-        </el-form-item>
-        <!-- 申请人 -->
-        <el-form-item
-          prop="applicant"
-          label="申请人"
-        >
-          <el-input
-            v-model="dissolution.applicant"
-            :readonly="readonly"
-            :disabled="true"
-          />
-        </el-form-item>
-        <!-- 附件 -->
-        <el-form-item label="附件">
-          <el-input v-model="dissolution.accessoryUrl" />
-        </el-form-item>
-        <!-- 换届原因 -->
-        <el-form-item label="原因">
-          <el-input
-            v-model="dissolution.reason"
-            type="textarea"
-            :span="5"
-            placeholder="请输入解散原因"
-          />
-        </el-form-item>
-        <!-- 提交按钮 -->
-        <el-form-item>
-          <el-button
-            type="primary"
-            @click="submitForm"
-          >提交</el-button>
-        </el-form-item>
-      </el-form>
     </div>
   </div>
 </template>
 
 <script>
-import { dissolution, getClubDetail } from '@/api/club'
+import { dissolution, getClubDetail, getDissolutionApply } from '@/api/club'
 export default {
+  filters: {
+    statusFilter(value) {
+      if (value === 0) {
+        return '待审核'
+      } else if (value === 1) {
+        return '已批准'
+      } else {
+        return '已退回'
+      }
+    }
+  },
   data() {
     return {
       dissolution: {
-        clubName: '这是社团名字',
+        clubName: '',
         clubId: window.sessionStorage.getItem('clubId'),
-        applicant: '申请人姓名',
+        applicant: '',
         accessoryUrl: '',
         reason: ''
       },
+      dissolutionApply: [
+        {
+          id: 1,
+          clubName: '羽毛球社',
+          createAt: '2018-04-19 18:14:12',
+          reason: 'xxx',
+          state: 0
+        }
+      ],
+      dissolutionVisiable: false,
       readonly: true,
       rules: {
         clubName: [
@@ -82,6 +160,15 @@ export default {
     }
   },
   created() {
+    getDissolutionApply(this.dissolution.clubId).then(response => {
+      console.log('@getDissolutionApply response')
+      console.log(response)
+      this.dissolutionApply = response.data.items
+      if (response.data.totalCount === 0 || response.data.items[0].state !== 0) {
+        console.log(response.data.items[0])
+        this.dissolutionVisiable = true
+      } else this.dissolutionVisiable = false
+    })
     getClubDetail(window.sessionStorage.getItem('clubId')).then(response => {
       console.log('@club-dissolution getClubDetial reaponse:')
       console.log(response)
@@ -104,14 +191,25 @@ export default {
             accessoryUrl: this.dissolution.accessoryUrl,
             reason: this.dissolution.reason
           }
-          const result = await dissolution(data)
-          console.log(result)
-          if (result.Status === 201) {
-            this.$message.success('修改成功！')
-          } else {
-            this.$message.error('修改失败')
-          }
+          dissolution(data).then(response => {
+            console.log('@ clubDissolution submitForm')
+            console.log(response)
+            if (response.status === 201) {
+              this.$message.success('申请已提交')
+              this.getDissolutionApply()
+              this.dissolutionVisiable = false
+            } else {
+              this.$message.error('提交失败')
+            }
+          })
         } else this.$message.error('error submit!!')
+      })
+    },
+    getDissolutionApply() {
+      getDissolutionApply(this.dissolution.clubId).then(response => {
+        console.log('@getDissolutionApply response')
+        console.log(response)
+        this.dissolutionApply = response.data.items
       })
     }
   }

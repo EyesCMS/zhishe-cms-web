@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <el-row style="margin-top:30px width:60%">
+      <el-row style="margin-top:30px; width:60%">
         <el-button
           type="primary"
           @click="publishAnnouncement()"
@@ -14,7 +14,7 @@
         class="bulletions"
       >
         <h2>{{ item.title }}</h2>
-        <p>{{ item.createAt }} </p>
+        <p>{{ item.createAt }}</p>
         <p>{{ item.body }}</p>
         <el-link
           type="primary"
@@ -24,20 +24,22 @@
         <el-link
           type="primary"
           style="float:right;margin-left:5px"
-          @click="deleteBulletin(item.id)"
+          @click="showDelete(item)"
         >删除</el-link>
       </div>
 
       <!-- 分页 -->
-      <el-pagination
-        :current-page="queryInfo.page"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="queryInfo.limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      <div style="text-align:center;margin-top: 10px;">
+        <el-pagination
+          :current-page="queryInfo.page"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="queryInfo.limit"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
       <!-- 发布公告对话框 -->
       <el-dialog
         title="发布公告"
@@ -119,12 +121,39 @@
           </el-form-item>
         </el-form>
       </el-dialog>
+      <!-- 删除对话框 -->
+      <el-dialog
+        title="删除公告"
+        :visible.sync="delteAnnouncementDialogVisible"
+        width="50%"
+        center
+        modal
+      >
+        <h3>{{ DeleteBulletin.title }}</h3>
+        <p>{{ DeleteBulletin.createAt }}</p>
+        <p>{{ DeleteBulletin.body }}</p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button
+            type="primary"
+            @click="deleteBulletin(DeleteBulletin.id)"
+          >确认删除</el-button>
+        </span>
+      </el-dialog>
     </el-card>
   </div>
 </template>
 
 <script>
-import { listBulletins, getBulletinDetail, publishBulletin, deleteBulletin, changeBulletinDetail } from '@/api/club'
+import {
+  listBulletins,
+  getBulletinDetail,
+  publishBulletin,
+  deleteBulletin,
+  changeBulletinDetail
+} from '@/api/club'
 export default {
   name: 'ActivityManage',
   data() {
@@ -139,9 +168,16 @@ export default {
         order: ''
       },
       bulletin: {},
+      DeleteBulletin: {
+        title: '',
+        body: '',
+        createAt: '',
+        id: ''
+      },
       bulletinsList: [],
       publishAnnouncementDialogVisible: false,
       bulletinDetailDialogVisible: false,
+      delteAnnouncementDialogVisible: false,
       dialogVisible: false,
       dialogImageUrl: '',
       publishForm: {
@@ -149,20 +185,12 @@ export default {
         body: ''
       },
       publishRules: {
-        title: [
-          { required: true, message: '请输入公告标题', trigger: 'blur' }
-        ],
-        body: [
-          { required: true, message: '请输入公告内容', trigger: 'blur' }
-        ]
+        title: [{ required: true, message: '请输入公告标题', trigger: 'blur' }],
+        body: [{ required: true, message: '请输入公告内容', trigger: 'blur' }]
       },
       bulletinRules: {
-        title: [
-          { required: true, message: '请输入公告标题', trigger: 'blur' }
-        ],
-        body: [
-          { required: true, message: '请输入公告内容', trigger: 'blur' }
-        ]
+        title: [{ required: true, message: '请输入公告标题', trigger: 'blur' }],
+        body: [{ required: true, message: '请输入公告内容', trigger: 'blur' }]
       }
     }
   },
@@ -186,12 +214,20 @@ export default {
         }
       })
     },
+    showDelete(item) {
+      this.delteAnnouncementDialogVisible = true
+      this.DeleteBulletin.title = item.title
+      this.DeleteBulletin.body = item.body
+      this.DeleteBulletin.createAt = item.createAt
+      this.DeleteBulletin.id = item.id
+    },
     // 删除公告
     deleteBulletin(id) {
       deleteBulletin(id).then(response => {
         this.$message.success('删除成功')
         this.getBulletinsList()
       })
+      this.delteAnnouncementDialogVisible = false
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
@@ -215,7 +251,7 @@ export default {
         console.log('@announcement-mamage getBulletinList:')
         console.log(response)
         this.bulletinsList = response.data.items
-        this.total = response.totalCount
+        this.total = response.data.totalCount
       })
     },
     // 点击详情
@@ -238,11 +274,13 @@ export default {
         if (valid) {
           const cid = this.clubId
           this.bulletin.update_at = new Date().toLocaleString()
-          changeBulletinDetail(cid, this.bulletin.id, this.bulletin).then(response => {
-            this.$message.success('修改成功')
-            this.bulletinDetailDialogVisible = false
-            this.getBulletinsList()
-          })
+          changeBulletinDetail(cid, this.bulletin.id, this.bulletin).then(
+            response => {
+              this.$message.success('修改成功')
+              this.bulletinDetailDialogVisible = false
+              this.getBulletinsList()
+            }
+          )
         } else {
           this.$message.error('提交失败')
         }

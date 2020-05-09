@@ -274,13 +274,13 @@ export const asyncRoutes = [
         path: 'index',
         name: 'ActivityForum',
         component: () => import('@/views/member/activity-forum/index.vue'),
-        meta: { title: '活动论坛', icon: 'message', roles: ['member'] }
+        meta: { title: '活动论坛', icon: 'message', roles: ['member', 'chief'] }
       },
       {
         path: 'detail',
         name: 'ActivityDetail',
         component: () => import('@/views/member/activity-forum/detail.vue'),
-        meta: { title: '帖子详情', roles: ['member'] },
+        meta: { title: '帖子详情', roles: ['member', 'chief'] },
         hidden: true
       }
     ]
@@ -301,16 +301,23 @@ export const asyncRoutes = [
   // 社团成员管理
   {
     path: '/membermanage',
-    redirect: '/home',
+    redirect: 'list',
     component: Layout,
     name: 'MemberManage',
-    meta: { title: '社团成员管理', icon: 'membermanage', roles: ['chief'] },
+    meta: { title: '社团成员', icon: 'membermanage', roles: ['chief'] },
     children: [
       {
         path: 'list',
         name: 'MemberList',
         component: () => import('@/views/member/club-member/index.vue'),
         meta: { title: '查看所有成员', icon: 'people', roles: ['chief'] }
+      },
+      {
+        path: 'detail',
+        name: 'MemberDetail',
+        component: () => import('@/views/member/member-detail/index.vue'),
+        meta: { title: '成员详情', roles: ['chief'] },
+        hidden: true
       },
       {
         path: 'add',
@@ -370,7 +377,7 @@ export const asyncRoutes = [
         path: 'Detail',
         name: 'Detailmanage',
         component: () => import('@/views/chief/club-detail/index'),
-        meta: { title: '简介管理', icon: 'message', roles: ['chief'] }
+        meta: { title: '社团信息', icon: 'message', roles: ['chief'] }
       }
     ]
   },
@@ -379,12 +386,20 @@ export const asyncRoutes = [
     path: '/Announcement',
     component: Layout,
     name: 'Announcement',
+    redirect: '/Announcement/index',
+    meta: { title: '社团公告', icon: 'message', roles: ['chief'] },
     children: [
+      {
+        path: 'index',
+        name: 'announcement',
+        component: () => import('@/views/member/club-announcement/index'),
+        meta: { title: '社团公告', roles: ['chief'] }
+      },
       {
         path: 'Announce',
         name: 'announce',
         component: () => import('@/views/chief/announcement-mamage/index'),
-        meta: { title: '公告管理', icon: 'message', roles: ['chief'] }
+        meta: { title: '公告管理', roles: ['chief'] }
       }
     ]
   },

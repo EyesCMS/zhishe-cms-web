@@ -9,7 +9,7 @@
             style="float: right"
             type="primary"
             size="small"
-            @click="getAddsList"
+            @click="handleSearchList"
           >
             查询
           </el-button>
@@ -21,7 +21,7 @@
             重置
           </el-button>
         </div>
-        <div style="margin-top: 15px">
+        <div style="margin-top: 55px">
           <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
             <div>
               <el-form-item label="申请人">
@@ -54,7 +54,7 @@
       </el-card>
       <el-card style="margin-top: 15px">
         <!-- 用户列表 -->
-        <el-table :data="addList" stripe border>
+        <el-table v-loading="listLoading" :data="addList" stripe border>
           <el-table-column type="index" label="#" />
           <el-table-column label="昵称" prop="applicant" width="150px" />
           <el-table-column label="申请理由" prop="reason" />
@@ -106,6 +106,7 @@ export default {
   },
   data() {
     return {
+      listLoading: true,
       clubId: sessionStorage.getItem('clubId'),
       addList: [],
       queryInfo: {
@@ -161,11 +162,11 @@ export default {
   },
   methods: {
     getAddsList() {
+      this.listLoading = true
       getAddList(this.clubId, this.queryInfo).then(response => {
-        console.log(response)
         this.addList = response.data.items
         this.total = response.data.totalCount
-        console.log(this.addList)
+        this.listLoading = false
       })
     },
     isDisabled(state) {
@@ -175,12 +176,10 @@ export default {
       return true
     },
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getAddsList()
     },
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getAddsList()
     },
@@ -192,6 +191,10 @@ export default {
       joinAudit(input).then(response => {
         this.$message.success('已审批')
       })
+      this.getAddsList()
+    },
+    handleSearchList() {
+      this.queryInfo.page = 1
       this.getAddsList()
     },
     reset() {

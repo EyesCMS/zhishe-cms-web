@@ -1,12 +1,20 @@
 <template>
   <el-card style="margin-bottom:20px;">
-    <div slot="header" class="clearfix">
+    <div
+      slot="header"
+      class="clearfix"
+    >
       <span>关于我</span>
     </div>
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb :image="form.avatarUrl" :height="'100px'" :width="'100px'" :hoverable="false">
+        <pan-thumb
+          :image="form.avatarUrl"
+          :height="'100px'"
+          :width="'100px'"
+          :hoverable="false"
+        >
           <div>Hello</div>
           {{ user.role }}
         </pan-thumb>
@@ -19,9 +27,13 @@
 
     <div class="user-bio">
       <div class="user-education user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>头像修改</span></div>
+        <div class="user-bio-section-header">
+          <svg-icon icon-class="skill" /><span>头像修改</span></div>
 
-        <div class="user-bio-section-body" style="text-align:center">
+        <div
+          class="user-bio-section-body"
+          style="text-align:center"
+        >
           <!--<el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
             上传头像图片
           </el-button>
@@ -35,8 +47,16 @@
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-dialog>-->
-          <el-button size="small" type="primary" icon="el-icon-upload" @click="dialogFormVisible = true">上传头像</el-button>
-          <el-dialog title="修改头像" :visible.sync="dialogFormVisible">
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-upload"
+            @click="dialogFormVisible = true"
+          >上传头像</el-button>
+          <el-dialog
+            title="修改头像"
+            :visible.sync="dialogFormVisible"
+          >
             <el-card>
               <el-tabs v-model="activeTab">
                 <el-tab-pane
@@ -44,26 +64,51 @@
                   name="uploadWeb"
                 >
                   <el-form :model="form">
-                    <el-form-item label="头像地址" label-width="80px">
-                      <el-input v-model="form.avatarUrl" autocomplete="off" style="width:500px;" />
+                    <el-form-item
+                      label="头像地址"
+                      label-width="80px"
+                    >
+                      <el-input
+                        v-model="form.avatarUrl"
+                        autocomplete="off"
+                        style="width:500px;"
+                      />
                     </el-form-item>
                   </el-form>
                 </el-tab-pane>
-                <el-tab-pane label="上传本地照片" name="uploadLocal">
+                <el-tab-pane
+                  label="上传本地照片"
+                  name="uploadLocal"
+                >
                   <el-upload
                     :show-file-list="false"
                     accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
                     :before-upload="beforeAvatarUpload"
+                    action=""
                   >
-                    <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon" />
+                    <img
+                      v-if="form.avatarUrl"
+                      :src="form.avatarUrl"
+                      class="avatar"
+                    >
+                    <i
+                      v-else
+                      class="el-icon-plus avatar-uploader-icon"
+                    />
                   </el-upload>
                 </el-tab-pane>
               </el-tabs>
             </el-card>
-            <div slot="footer" class="dialog-footer">
+            <div
+              slot="footer"
+              class="dialog-footer"
+            >
               <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" dialog-form-visible="false" @click="submitProfile()">确 定</el-button>
+              <el-button
+                type="primary"
+                dialog-form-visible="false"
+                @click="submitProfile()"
+              >确 定</el-button>
             </div>
           </el-dialog>
         </div>
@@ -135,10 +180,10 @@ export default {
       return false
     },
     submitProfile() {
-      console.log(this.form.avatarUrl)
+      // console.log(this.form.avatarUrl)
       this.dialogFormVisible = false
       submitProfile(this.form).then(response => {
-        console.log(response)
+        // console.log(response)
         if (response.status === 204) {
           this.$message.success('修改成功')
         }
@@ -172,7 +217,7 @@ avatar-uploader .el-upload {
   overflow: hidden;
 }
 .avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
+  border-color: #409eff;
 }
 .avatar-uploader-icon {
   font-size: 28px;

@@ -34,10 +34,9 @@ export function answer(data) {
 }
 
 export function newpassword(data) {
-  console.log(data)
   return request({
     url: '/users/password',
-    method: 'post',
+    method: 'put',
     data
   })
 }

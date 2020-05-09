@@ -1,8 +1,11 @@
 <template>
   <div class="content">
-    <h1>重置密码</h1>
-    <div class="index">
-      <el-link type="primary" @click="backToLogin()">返回</el-link>
+    <div class="Form">
+      <el-link
+        type="primary"
+        @click="backToLogin()"
+      >返回</el-link>
+      <h3 class="form-title">重置密码</h3>
       <el-steps
         :active="name"
         finish-status="success"
@@ -26,7 +29,10 @@
               label="用户名"
               prop="username"
             >
-              <el-input v-model="form1.username" />
+              <el-input
+                v-model="form1.username"
+                placeholder="请输入用户名"
+              />
             </el-form-item>
             <el-form-item>
               <el-button @click="handleClick(2)">下一步</el-button>
@@ -46,7 +52,10 @@
               label="保密回答"
               prop="login_aswer"
             >
-              <el-input v-model="form2.login_aswer" />
+              <el-input
+                v-model="form2.login_aswer"
+                placeholder="请输入回答"
+              />
             </el-form-item>
             <el-form-item>
               <el-button @click="handleClick(3)">下一步</el-button>
@@ -66,6 +75,7 @@
             >
               <el-input
                 v-model="form3.newpassword"
+                placeholder="请输入新密码"
                 type="password"
               />
             </el-form-item>
@@ -90,14 +100,14 @@ export default {
   data() {
     return {
       form1: {
-        username: 'test2'
+        username: ''
       },
       form2: {
-        login_question: 'test',
-        login_aswer: 'test'
+        login_question: '',
+        login_aswer: ''
       },
       form3: {
-        newpassword: 'test'
+        newpassword: ''
       },
       activeName: '1',
       name: 0,
@@ -158,8 +168,8 @@ export default {
           if (valid) {
             const data = {
               username: this.form1.username,
-              oldPassword: this.form2.login_aswer,
-              newPassword: this.form3.newpassword
+              answer: this.form2.login_aswer,
+              password: this.form3.newpassword
             }
             newpassword(data).then(response => {
               console.log('@forget newpassword response:')
@@ -182,35 +192,27 @@ export default {
     },
     back(i) {
       this.activeName = i.toString()
-      this.name = i
+      this.name = i - 1
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-html body {
-  margin: 0;
-  padding: 0;
-}
 .content {
-  position: absolute;
-  background-color: #2d3a4b;
-  width: 100%;
-  height: 100%;
+  margin: 150px auto;
+  padding: 0;
+  /*overflow: hidden;*/
 }
-.index {
-  width: 65%;
-  padding: 20px;
-  border-radius: 5px;
-  background-color: aliceblue;
-  margin: 0 auto;
-  margin-top: 30px;
-}
-h1 {
-  margin-top: 150px;
-  padding: 8px;
+.form-title {
   text-align: center;
-  color: #eee;
+  margin-bottom: 30px;
+}
+.Form {
+  width: 45%;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #dcdfe6;
 }
 </style>
