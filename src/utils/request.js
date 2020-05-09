@@ -71,7 +71,9 @@ service.interceptors.response.use(
     }
   },
   error => {
-    if (error.response.status === 401) {
+    if (error.response.status === 400) {
+      Message.error(error.response.data.message)
+    } else if (error.response.status === 401) {
       // to re-login
       MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
         confirmButtonText: '重新登录',
@@ -83,14 +85,15 @@ service.interceptors.response.use(
           location.reload()// 为了重新实例化 vue-router 对象 避免 bug
         })
       })
+    } else {
+      Message({
+        message: error.message,
+        type: 'error',
+        duration: 3 * 1000
+      })
     }
 
     console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 3 * 1000
-    })
     return Promise.reject(error)
   }
 )
