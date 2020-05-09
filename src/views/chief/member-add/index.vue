@@ -183,12 +183,12 @@ export default {
       this.queryInfo.page = newPage
       this.getAddsList()
     },
-    joinAudit(id, state) {
+    async joinAudit(id, state) {
       const input = {
         id: id,
         state: state
       }
-      joinAudit(input).then(response => {
+      await joinAudit(input).then(response => {
         this.$message.success('已审批')
       })
       this.getAddsList()
