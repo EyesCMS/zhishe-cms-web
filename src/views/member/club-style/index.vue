@@ -218,12 +218,12 @@ export default {
     },
 
     // 退出社团
-    quitClubConfirm() {
+    async quitClubConfirm() {
       const param = {
         clubId: this.clubId,
         reason: this.quitReason
       }
-      quitClub(param).then(response => {
+      await quitClub(param).then(response => {
         if (response.status === 201) {
           this.$message.success('退出社团成功')
           // console.log('123' + response.data)
@@ -234,6 +234,7 @@ export default {
       })
       this.quitClubDialogVisible = false
       // 跳转到其他页面
+      this.$router.push({ path: '/home' })
     },
     pushToActivityDetail(id) {
       this.$router.push({ path: '/activityforum/detail', query: { id: id }})
