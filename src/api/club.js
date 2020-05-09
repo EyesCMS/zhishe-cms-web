@@ -6,6 +6,13 @@ export function getDissolutionApply(clubId) {
     method: 'get'
   })
 }
+// GET /clubs/:clubId/leaderChange
+export function getLeaderChangeApply(clubId) {
+  return request({
+    url: `/clubs/${clubId}/leaderChange`,
+    method: 'get'
+  })
+}
 export function dissolution(data) {
   return request({
     url: `/clubs/dissolution`,

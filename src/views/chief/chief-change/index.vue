@@ -54,37 +54,82 @@
       v-show="formVisiable"
       class="change"
     >
-      <h3>社长换届申请</h3>
-      <!-- 社长换届表单显示 -->
-      <el-form ref="Form" :model="leaderChange" :rules="rules" label-width="100px">
-        <!-- 社团名称 -->
-        <el-form-item label="社团名称">
-          <el-input v-model="leaderChange.clubname" style="width:550px;" :readonly="readOnly" :disabled="true" />
-        </el-form-item>
-        <!-- 原社长 -->
-        <el-form-item label="原社长">
-          <el-input v-model="leaderChange.oldChiefName" style="width:550px;" :readonly="readOnly" :disabled="true" />
-        </el-form-item>
-        <!-- 新社长 -->
-        <el-form-item label="新社长" prop="newChiefName">
-          <el-input v-model="leaderChange.newChiefName" style="width:550px;" placeholder="请输入新社长姓名" />
-        </el-form-item>
-        <!-- 换届原因 -->
-        <el-form-item label="原因" prop="reason">
-          <el-input v-model="leaderChange.reason" type="textarea" style="width:550px;" placeholder="请输入换届原因">换届原因</el-input>
-        </el-form-item>
-        <!-- 提交按钮 -->
-        <el-form-item>
-          <el-button type="primary" @click="submitForm">提交</el-button>
-        </el-form-item>
-      </el-form>
+      <el-card>
+        <el-row>
+          <h3>社长换届申请</h3>
+          <!-- 社长换届表单显示 -->
+          <el-form
+            ref="Form"
+            :model="leaderChange"
+            :rules="rules"
+            label-width="100px"
+          >
+            <!-- 社团名称 -->
+            <el-form-item label="社团名称">
+              <el-input
+                v-model="leaderChange.clubname"
+                :readonly="readOnly"
+                :disabled="true"
+              />
+            </el-form-item>
+            <!-- 原社长 -->
+            <el-form-item label="原社长">
+              <el-input
+                v-model="leaderChange.oldChiefName"
+                :readonly="readOnly"
+                :disabled="true"
+              />
+            </el-form-item>
+            <!-- 新社长 -->
+            <el-form-item
+              label="新社长"
+              prop="newChiefName"
+            >
+              <el-input
+                v-model="leaderChange.newChiefName"
+                placeholder="请输入新社长姓名"
+              />
+            </el-form-item>
+            <!-- 换届原因 -->
+            <el-form-item
+              label="原因"
+              prop="reason"
+            >
+              <el-input
+                v-model="leaderChange.reason"
+                type="textarea"
+                placeholder="请输入换届原因"
+              >换届原因</el-input>
+            </el-form-item>
+            <!-- 提交按钮 -->
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="submitForm"
+              >提交</el-button>
+            </el-form-item>
+          </el-form>
+        </el-row>
+      </el-card>
+
     </div>
   </div>
 </template>
 
 <script>
-import { leaderchange, getClubDetail } from '@/api/club'
+import { leaderchange, getClubDetail, getLeaderChangeApply } from '@/api/club'
 export default {
+  filters: {
+    statusFilter(value) {
+      if (value === 0) {
+        return '待审核'
+      } else if (value === 1) {
+        return '已批准'
+      } else {
+        return '已退回'
+      }
+    }
+  },
   data() {
     return {
       leaderChange: {
@@ -95,7 +140,7 @@ export default {
         newChiefName: '',
         reason: ''
       },
-      formVisiable: true,
+      formVisiable: false,
       readOnly: true,
       leaderChangeApply: [],
       rules: {
@@ -108,6 +153,13 @@ export default {
     }
   },
   created() {
+    getLeaderChangeApply(window.sessionStorage.getItem('clubId')).then(response => {
+      console.log('@ getLeaderChangeApply response')
+      console.log(response)
+      if (response.data.totalCount === 0) this.formVisiable = true
+      else if (response.data.items[0].state !== 0) this.formVisiable = true
+      this.leaderChangeApply = response.data.items
+    })
     getClubDetail(window.sessionStorage.getItem('clubId')).then(response => {
       console.log('@chief-change created reaponse:')
       console.log(response)
@@ -135,11 +187,18 @@ export default {
           leaderchange(data).then(response => {
             if (response.status === 201) {
               this.$message.success('提交成功！')
+              this.getApply()
+              this.formVisiable = false
             } else {
               this.$message.error('提交失败！')
             }
           })
         } else this.$message.error('error submit!!')
+      })
+    },
+    getApply() {
+      getLeaderChangeApply(window.sessionStorage.getItem('clubId')).then(response => {
+        this.leaderChangeApply = response.data.items
       })
     }
   }
