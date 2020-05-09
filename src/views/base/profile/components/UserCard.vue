@@ -84,6 +84,7 @@
                     :show-file-list="false"
                     accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
                     :before-upload="beforeAvatarUpload"
+                    action=""
                   >
                     <img
                       v-if="form.avatarUrl"
@@ -179,10 +180,10 @@ export default {
       return false
     },
     submitProfile() {
-      console.log(this.form.avatarUrl)
+      // console.log(this.form.avatarUrl)
       this.dialogFormVisible = false
       submitProfile(this.form).then(response => {
-        console.log(response)
+        // console.log(response)
         if (response.status === 204) {
           this.$message.success('修改成功')
         }

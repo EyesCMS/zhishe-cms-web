@@ -2,18 +2,18 @@
   <div>
     <!-- 卡片视图区域1 -->
     <el-card>
-      <el-row>
-        <el-col :span="3">
-          <el-image
-            style="width: 100px; height: 100px"
-            :src="memberInfo.avatarUrl"
-          />
-        </el-col>
+      <div style="float: left">
+        <el-image
+          style="width: 100px; height: 100px"
+          :src="memberInfo.avatarUrl"
+        />
+      </div>
+      <div style="float: left;margin-left:10px">
         <h3>{{ memberInfo.nickname }}</h3>
         <h4>{{ memberInfo.username }}</h4>
         <h4>{{ memberInfo.slogan }}</h4>
         <h4>职位：{{ memberInfo.role }}</h4>
-      </el-row>
+      </div>
     </el-card>
 
     <!-- 卡片视图区域2 -->
@@ -46,17 +46,10 @@ export default {
     }
   },
   created() {
-    // this.userId = this.$route.query.userId
-    // this.clubId = sessionStorage.getItem('clubId')
-    // console.log('ww' + this.clubId)
     this.getMemberDetails()
-    // this.clubId = localStorage.getItem('clubid')
   },
   methods: {
     getMemberDetails() {
-      // this.userId = this.$route.query.userid
-      // console.log('UserId' + this.userId)
-      // console.log(this.userId)
       getMemberDetail(this.clubId, this.userId).then(response => {
         this.memberInfo = response.data
         console.log(this.memberInfo)

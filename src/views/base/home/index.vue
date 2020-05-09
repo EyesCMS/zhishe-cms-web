@@ -19,14 +19,16 @@
     <!-- 社团风采走马灯 -->
     <div class="carousel">
       <el-carousel
-        :interval="3000"
+        :interval="4000"
         arrow="always"
+        type="card"
       >
         <el-carousel-item
           v-for="item in carouselImgList"
           :key="item"
         >
           <img
+            style="width:100%"
             :src="item"
             alt="item"
           >
@@ -185,7 +187,7 @@ export default {
 .carousel {
   margin: 20px auto;
   padding: 20px;
-  width: 40%;
+  width: 90%;
 }
 .el-carousel__item h3 {
   color: #475669;

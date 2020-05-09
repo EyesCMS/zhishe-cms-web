@@ -53,8 +53,8 @@ export default {
     getClubDetial() {
       this.clubId
       getClubDetail(this.clubId).then(response => {
-        console.log('@club-detail getClubDetial reaponse:')
-        console.log(response)
+        // console.log('@club-detail getClubDetial reaponse:')
+        // console.log(response)
         if (response.data) {
           this.clubInfo = response.data
           // console.log('detile=' + this.clubInfo)

@@ -36,7 +36,7 @@
             />
           </el-col>
           <!-- 帖子标题 -->
-          <h2 style="margin-top:0 padding: 0">{{ item.title }}</h2>
+          <h2 style="margin-top:0; padding: 0">{{ item.title }}</h2>
         </el-row>
         <!-- 图片 -->
         <el-row>
@@ -139,7 +139,7 @@
             </el-col>
             <el-col>
               <!-- 评论内容 -->
-              <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
+              <p style="margin-top:0; padding: 0; ">{{ index.content }}</p>
             </el-col>
 
           </el-row>
@@ -283,7 +283,7 @@ export default {
       else return false
     },
     myForum() {
-      this.$router.push('/forumManage/manage')
+      this.$router.push('/forum/postManage')
     },
     removeRemark(element) {
       element.remarkVisiable = false

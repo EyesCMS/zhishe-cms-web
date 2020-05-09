@@ -10,7 +10,7 @@
             style="float: right"
             type="primary"
             size="small"
-            @click="getBulletinsList"
+            @click="handleSearchList"
           >
             查询
           </el-button>
@@ -96,7 +96,6 @@ export default {
     return {
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
-        // keyword: '',
         title: '',
         body: '',
         page: 1,
@@ -111,29 +110,22 @@ export default {
     }
   },
   created() {
-    // this.clubId = sessionStorage.getItem('clubId')
-    // this.clubId = localStorage.getItem('clubid')
     this.getBulletinsList()
   },
   methods: {
     getBulletinsList() {
       listBulletins(this.clubId, this.queryInfo).then(response => {
-        // console.log(response.clubId)
         this.bulletinsList = response.data.items
         this.total = response.data.totalCount
-        console.log(this.bulletinsList)
-        // console.log(this.memberInfo)
       })
     },
     // 监听页值变化
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getBulletinsList()
     },
     // 监听页码变化
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getBulletinsList()
     },
@@ -143,9 +135,6 @@ export default {
       getBulletinDetail(this.clubId, id).then(response => {
         console.log(response)
         this.bulletin = response.data
-        // console.log('123' + response.data)
-        // console.log('公告是' + this.bulletin)
-        // console.log(this.memberInfo)
       })
       this.bulletinDetailDialogVisible = true
     },
@@ -154,6 +143,10 @@ export default {
     queryAnnouncementList() {
       this.getBulletinsList()
       this.queryInfo.keyword = ''
+    },
+    handleSearchList() {
+      this.queryInfo.page = 1
+      this.getBulletinsList()
     },
     reset() {
       this.queryInfo.title = this.queryInfo.body = ''

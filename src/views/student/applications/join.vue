@@ -1,7 +1,7 @@
 <template>
   <div style="margin-top: 20px;">
     <!-- 加入社团申请列表 -->
-    <el-table :data="JoinApplicationsList" stripe border>
+    <el-table v-loading="listLoading" :data="JoinApplicationsList" stripe border>
       <el-table-column label="社团名称" prop="clubName" />
       <el-table-column label="申请原因" prop="reason" />
       <el-table-column label="申请时间" prop="createAt" />
@@ -64,24 +64,23 @@ export default {
       this.listLoading = true
       getJoinApplicationsList(this.queryInfo).then(response => {
         if (response.status === 200) {
-          console.log(111)
           this.JoinApplicationsList = response.data.items
           this.total = response.data.totalCount
+          this.listLoading = false
         } else {
+          this.listLoading = false
           return this.$message.error('获取申请加入社团列表失败')
         }
-        console.log(this.JoinApplicationsList)
+        // console.log(this.JoinApplicationsList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getJoinApplicationsList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getJoinApplicationsList()
     }

@@ -55,7 +55,7 @@
             <el-tag v-else style="text-align:center" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="" width="200px">
+        <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
             <el-button v-if="scope.row.state === 0" type="primary" @click="pushToAgree(scope)">批准</el-button>
             <el-button v-if="scope.row.state === 0" type="primary" @click="pushToRefuse(scope)">退回</el-button>
@@ -130,18 +130,15 @@ export default {
         } else {
           return this.$message.error('获取社团认证申请失败')
         }
-        console.log(this.identifyApplyList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getIdentifyApplyList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getIdentifyApplyList()
     },
@@ -181,6 +178,7 @@ export default {
       this.form.state = ''
     },
     check() {
+      this.queryInfo.page = 1
       this.getIdentifyApplyList()
     }
   }

@@ -1,26 +1,17 @@
 <template>
-  <div style="padding: 20px;">
+  <div style="padding: 15px;">
     <el-card shadow="never">
       <div>
         <i class="el-icon-search" />
         <span>筛选搜索</span>
-        <el-button
-          style="float: right"
-          type="primary"
-          size="small"
-          @click="handleSearchList"
-        >
-          查询
-        </el-button>
+        <el-button style="float: right" type="primary" size="small" @click="handleSearchList">查询</el-button>
         <el-button
           style="float: right;margin-right: 15px"
           size="small"
           @click="handleResetSearch"
-        >
-          重置
-        </el-button>
+        >重置</el-button>
       </div>
-      <div style="margin-top: 25px">
+      <div style="margin-top: 15px">
         <el-form :inline="true" :model="form" size="small" label-width="140px">
           <div style="text-align:center">
             <el-form-item label="输入搜索：">
@@ -45,22 +36,19 @@
         </el-form>
       </div>
     </el-card>
-    <el-card style="margin-top: 20px;" shadow="never">
-      <i class="el-icon-tickets" />
-      <span>创建社团</span>
-      <el-button style="float:right" size="small" type="primary" @click="ApplyToCreate()">创建</el-button>
-    </el-card>
+    <!--    <el-card style="margin-top: 20px;" shadow="never">-->
+    <!--      <i class="el-icon-tickets" />-->
+    <!--      <span>创建社团</span>-->
+    <!--      <el-button style="float:right" size="small" type="primary" @click="ApplyToCreate()">创建</el-button>-->
+    <!--    </el-card>-->
 
     <!-- 社团列表 -->
     <div style="margin-top: 20px;">
-      <el-table :data="clubsList" stripe border>
+      <el-table v-loading="listLoading" :data="clubsList" stripe border>
         <el-table-column label="社团ID" prop="id" />
         <el-table-column label="社团头像" prop="avatarUrl">
           <template slot-scope="scope" width="40">
-            <el-image
-              :src="scope.row.avatarUrl"
-              style="width: 50px; height: 50px"
-            />
+            <el-image :src="scope.row.avatarUrl" style="width: 50px; height: 50px" />
           </template>
         </el-table-column>
         <el-table-column label="社团名称" prop="name" />
@@ -74,8 +62,16 @@
         </el-table-column>
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="LookForDetail(scope.row.id,scope.row.name,scope.row.chiefName,scope.row.avatarUrl)">查看详情</el-button>
-            <el-button type="primary" size="mini" @click="ApplyToJoin(scope.row.id,scope.row.name)">申请加入</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="LookForDetail(scope.row.id,scope.row.name,scope.row.chiefName,scope.row.avatarUrl)"
+            >查看详情</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="ApplyToJoin(scope.row.id,scope.row.name)"
+            >申请加入</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -98,11 +94,11 @@
 
 <style>
 .el-select .el-input {
-    width: 130px;
-  }
-  .input-with-select .el-input-group__prepend {
-    background-color: #fff;
-  }
+  width: 130px;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
 </style>
 <script>
 import { getClubsList } from '@/api/club'
@@ -147,31 +143,38 @@ export default {
         limit: this.queryInfo.limit
       }
       getClubsList(params).then(response => {
-        console.log(response)
         if (response.status === 200) {
           this.clubsList = response.data.items
           this.total = response.data.totalCount
+          this.listLoading = false
         } else {
+          this.listLoading = false
           return this.$message.error('获取社团列表失败')
         }
-        console.log(this.clubsList)
+        // console.log(this.clubsList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
-      console.log(newSize)
       this.queryInfo.limit = newSize
       this.getClubsList()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
-      console.log(newPage)
       this.queryInfo.page = newPage
       this.getClubsList()
     },
     // 跳转到社团信息详细页面
     LookForDetail(id, name, chiefName, avatarUrl) {
-      this.$router.push({ path: '/clubDetail', query: { id: id, name: name, chiefName: chiefName, avatarUrl: avatarUrl }})
+      this.$router.push({
+        path: '/clubDetail',
+        query: {
+          id: id,
+          name: name,
+          chiefName: chiefName,
+          avatarUrl: avatarUrl
+        }
+      })
     },
     ApplyToCreate() {
       this.$router.replace('/createClub')

@@ -97,7 +97,6 @@ export function changeBulletinDetail(cid, id, data) {
 }
 // 创建社团申请
 export function pushToCreateApply(data) {
-  console.log(data)
   return request({
     url: '/clubs/creations/audit',
     method: 'put',
@@ -105,7 +104,6 @@ export function pushToCreateApply(data) {
   })
 }
 export function getCreateApplyList(params) {
-  console.log(params)
   return request({
     url: `/clubs/creations`,
     method: 'get',
@@ -114,7 +112,6 @@ export function getCreateApplyList(params) {
 }
 // 社团解散申请
 export function pushToDismissApply(data) {
-  console.log(data)
   return request({
     url: '/clubs/dissolution/audit',
     method: 'put',
@@ -130,7 +127,6 @@ export function getDismissApplyList(params) {
 }
 // 社长换届申请
 export function pushToChangeApply(data) {
-  console.log(data)
   return request({
     url: '/clubs/leader/changes',
     method: 'put',
@@ -153,7 +149,6 @@ export function getMyIdentifyApplyList(clubid, query) {
   })
 }
 export function pushToIdentifyApply(data) {
-  console.log(data)
   return request({
     url: '/clubs/certifications',
     method: 'put',
@@ -169,7 +164,6 @@ export function getIdentifyApplyList(params) {
 }
 // 社团活动申请
 export function pushToActivityApply(data) {
-  console.log(data)
   return request({
     url: '/clubs/activities/audit',
     method: 'put',
@@ -232,7 +226,6 @@ export function postSubmit(data) {
 }
 
 export function postIdentifyApply(data) {
-  console.log(data)
   return request({
     url: `/clubs/certifications`,
     method: 'post',
@@ -242,7 +235,6 @@ export function postIdentifyApply(data) {
 
 // 获取退社通知
 export function getQuitList(clubid, query) {
-  console.log(clubid)
   return request({
     url: `/clubs/${clubid}/quit`,
     method: 'get',
@@ -251,7 +243,6 @@ export function getQuitList(clubid, query) {
 }
 
 export function getClubsList(params) {
-  console.log(params)
   return request({
     url: `/clubs`,
     method: 'get',
@@ -260,7 +251,6 @@ export function getClubsList(params) {
 }
 // 获取申请加入列表
 export function getAddList(clubid, query) {
-  console.log(1234)
   // clubid = '10016'
   return request({
     url: `/clubs/${clubid}/joins`,

@@ -1,20 +1,13 @@
 <template>
   <div>
     <el-card>
-      <el-row style="margin-top:30px width:60%">
-        <el-button
-          type="primary"
-          @click="publishAnnouncement()"
-        >发布公告</el-button>
+      <el-row style="margin-top:30px; width:60%">
+        <el-button type="primary" @click="publishAnnouncement()">发布公告</el-button>
       </el-row>
       <!-- 公告列表 -->
-      <div
-        v-for="(item, index) in bulletinsList"
-        :key="index"
-        class="bulletions"
-      >
+      <div v-for="(item, index) in bulletinsList" :key="index" class="bulletions">
         <h2>{{ item.title }}</h2>
-        <p>{{ item.createAt }} </p>
+        <p>{{ item.createAt }}</p>
         <p>{{ item.body }}</p>
         <el-link
           type="primary"
@@ -29,15 +22,17 @@
       </div>
 
       <!-- 分页 -->
-      <el-pagination
-        :current-page="queryInfo.page"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="queryInfo.limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      <div style="text-align:center;margin-top: 10px;">
+        <el-pagination
+          :current-page="queryInfo.page"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="queryInfo.limit"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
       <!-- 发布公告对话框 -->
       <el-dialog
         title="发布公告"
@@ -46,75 +41,30 @@
         center
         modal
       >
-        <el-form
-          ref="publishFormRef"
-          :model="publishForm"
-          :rules="publishRules"
-          label-width="90px"
-        >
-          <el-form-item
-            label="公告标题"
-            prop="title"
-          >
+        <el-form ref="publishFormRef" :model="publishForm" :rules="publishRules" label-width="90px">
+          <el-form-item label="公告标题" prop="title">
             <el-input v-model="publishForm.title" />
           </el-form-item>
-          <el-form-item
-            label="公告内容"
-            prop="body"
-          >
-            <el-input
-              v-model="publishForm.body"
-              :rows="5"
-              type="textarea"
-            />
+          <el-form-item label="公告内容" prop="body">
+            <el-input v-model="publishForm.body" :rows="5" type="textarea" />
           </el-form-item>
         </el-form>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
-          <el-button
-            type="primary"
-            @click="publishBulletin"
-          >发 布</el-button>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="publishBulletin">发 布</el-button>
         </span>
       </el-dialog>
       <!-- 修改公告框 -->
-      <el-dialog
-        title="修改公告"
-        :visible.sync="bulletinDetailDialogVisible"
-        width="55%"
-        center
-        modal
-      >
-        <el-form
-          ref="changeForm"
-          :model="bulletin"
-          :rules="bulletinRules"
-          label-width="90px"
-        >
-          <el-form-item
-            prop="title"
-            label="公告标题"
-          >
+      <el-dialog title="修改公告" :visible.sync="bulletinDetailDialogVisible" width="55%" center modal>
+        <el-form ref="changeForm" :model="bulletin" :rules="bulletinRules" label-width="90px">
+          <el-form-item prop="title" label="公告标题">
             <el-input v-model="bulletin.title" />
           </el-form-item>
-          <el-form-item
-            prop="content"
-            label="公告内容"
-          >
-            <el-input
-              v-model="bulletin.body"
-              rows="5"
-              type="textarea"
-            />
+          <el-form-item prop="content" label="公告内容">
+            <el-input v-model="bulletin.body" rows="5" type="textarea" />
           </el-form-item>
           <el-form-item>
             <span class="dialog-footer">
-              <el-button
-                type="primary"
-                @click="changeBulletinDetail"
-              >确 定</el-button>
+              <el-button type="primary" @click="changeBulletinDetail">确 定</el-button>
             </span>
           </el-form-item>
         </el-form>
@@ -124,7 +74,13 @@
 </template>
 
 <script>
-import { listBulletins, getBulletinDetail, publishBulletin, deleteBulletin, changeBulletinDetail } from '@/api/club'
+import {
+  listBulletins,
+  getBulletinDetail,
+  publishBulletin,
+  deleteBulletin,
+  changeBulletinDetail
+} from '@/api/club'
 export default {
   name: 'ActivityManage',
   data() {
@@ -149,20 +105,12 @@ export default {
         body: ''
       },
       publishRules: {
-        title: [
-          { required: true, message: '请输入公告标题', trigger: 'blur' }
-        ],
-        body: [
-          { required: true, message: '请输入公告内容', trigger: 'blur' }
-        ]
+        title: [{ required: true, message: '请输入公告标题', trigger: 'blur' }],
+        body: [{ required: true, message: '请输入公告内容', trigger: 'blur' }]
       },
       bulletinRules: {
-        title: [
-          { required: true, message: '请输入公告标题', trigger: 'blur' }
-        ],
-        body: [
-          { required: true, message: '请输入公告内容', trigger: 'blur' }
-        ]
+        title: [{ required: true, message: '请输入公告标题', trigger: 'blur' }],
+        body: [{ required: true, message: '请输入公告内容', trigger: 'blur' }]
       }
     }
   },
@@ -215,7 +163,7 @@ export default {
         console.log('@announcement-mamage getBulletinList:')
         console.log(response)
         this.bulletinsList = response.data.items
-        this.total = response.totalCount
+        this.total = response.data.totalCount
       })
     },
     // 点击详情
@@ -238,11 +186,13 @@ export default {
         if (valid) {
           const cid = this.clubId
           this.bulletin.update_at = new Date().toLocaleString()
-          changeBulletinDetail(cid, this.bulletin.id, this.bulletin).then(response => {
-            this.$message.success('修改成功')
-            this.bulletinDetailDialogVisible = false
-            this.getBulletinsList()
-          })
+          changeBulletinDetail(cid, this.bulletin.id, this.bulletin).then(
+            response => {
+              this.$message.success('修改成功')
+              this.bulletinDetailDialogVisible = false
+              this.getBulletinsList()
+            }
+          )
         } else {
           this.$message.error('提交失败')
         }
