@@ -371,7 +371,6 @@ export const asyncRoutes = [
   {
     path: '/Detailmanage',
     component: Layout,
-    name: 'Detail',
     children: [
       {
         path: 'Detail',
@@ -407,7 +406,6 @@ export const asyncRoutes = [
   {
     path: '/dissolution',
     component: Layout,
-    name: 'Dissolution',
     children: [
       {
         path: 'dissolution',
@@ -421,7 +419,6 @@ export const asyncRoutes = [
   {
     path: '/chiefChange',
     component: Layout,
-    name: 'chiefChange',
     children: [
       {
         path: 'Change',

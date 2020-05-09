@@ -117,14 +117,18 @@ export default {
         postId: this.id,
         content: this.comment
       }
-      await postComment(data).then(response => {
-        // console.log(response)
-        this.$message.success('发表成功')
-      })
-      this.comment = ''
-      this.getRemarksList()
-      var element = document.getElementById('comment')
-      element.scrollIntoView()
+      if (data.content === '') {
+        this.$message.error('评论不能为空')
+      } else {
+        await postComment(data).then(response => {
+          // console.log(response)
+          this.$message.success('发表成功')
+        })
+        this.comment = ''
+        this.getRemarksList()
+        var element = document.getElementById('comment')
+        element.scrollIntoView()
+      }
     }
   }
 }

@@ -373,7 +373,7 @@ export default {
       this.listLoading = true
       getActivitiesList(this.clubId, this.queryInfo).then(response => {
         this.activitiesList = response.data.items
-        this.total = response.totalCount
+        this.total = response.data.totalCount
         this.listLoading = false
       })
     },
