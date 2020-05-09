@@ -109,16 +109,18 @@
     <el-dialog
       title="退社申请"
       :visible.sync="quitClubDialogVisible"
-      width="70%"
+      width="30%"
       center
       modal
+      @closed="quitClubDialogClosed"
     >
       <el-form>
         <el-form-item label="退社理由">
           <el-input
             v-model="quitReason"
+            style="width: 400px;margin-top:30px"
             type="textarea"
-          >1</el-input>
+          />
         </el-form-item>
       </el-form>
       <span
@@ -247,6 +249,9 @@ export default {
     },
     isMember() {
       return sessionStorage.getItem('roles') === 'member'
+    },
+    quitClubDialogClosed() {
+      this.quitReason = ''
     }
   }
 }
