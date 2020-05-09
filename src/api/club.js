@@ -337,3 +337,11 @@ export function switchRole(data) {
     data
   })
 }
+
+export function uploadLocalAvatar(clubId, data) {
+  return request({
+    url: `/clubs/${clubId}/info/avatar`,
+    method: 'post',
+    data
+  })
+}

@@ -20,7 +20,6 @@
       </div>
       <div class="box-center">
         <div class="user-name text-center">{{ clubinfo.name }}</div>
-        <!--<div class="user-role text-center text-muted">{{ user.role }}</div>-->
       </div>
     </div>
 
@@ -118,6 +117,8 @@
 <script>
 import PanThumb from '@/components/PanThumb'
 import { submitPic } from '@/api/club'
+import { getClubDetail } from '@/api/club'
+import { uploadLocalAvatar } from '@/api/club'
 export default {
   components: { PanThumb },
   props: {
@@ -135,6 +136,7 @@ export default {
   },
   data() {
     return {
+      clubId: window.sessionStorage.getItem('clubId'),
       activeTab: 'uploadWeb',
       imagecropperShow: false,
       imagecropperKey: 0,
@@ -143,6 +145,9 @@ export default {
       },
       dialogFormVisible: false
     }
+  },
+  created() {
+    this.getClubDetail()
   },
   methods: {
     beforeAvatarUpload(file) {
@@ -156,36 +161,32 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       if (isJPG && isLt2M) {
-        const fd = new FormData()
-        fd.append('image', file)
-        submitPic(this.clubinfo.id, fd).then(response => {
+        const image = new FormData()
+        image.append('image', file)
+        uploadLocalAvatar(this.clubId, image).then(response => {
           this.form.avatarUrl = response.data.avatarUrl
           this.$message.success('修改头像成功')
           this.imagecropperShow = false
-          // FIXME: 修改成功后右上角的头像没有变化
         })
       }
-
       // 不自动上传
       return false
     },
     submitProfile() {
-      console.log(this.form.avatarUrl)
       this.dialogFormVisible = false
-      submitPic(this.clubinfo.id, this.form).then(response => {
-        console.log(response)
+      submitPic(this.clubId, this.form).then(response => {
+        // console.log(response)
         if (response.status === 204) {
           this.$message.success('修改成功')
         }
       })
-      this.getClubDetial()
-      // this.getInfo()
+      this.getClubDetail()
+    },
+    getClubDetail() {
+      getClubDetail(this.clubId).then(response => {
+        this.form.avatarUrl = response.data.avatarUrl
+      })
     }
-    // getInfo() {
-    //   getInfo().then(response => {
-    //     this.form.avatarUrl = response.data.avatar
-    //   })
-    // }
   }
 }
 </script>
