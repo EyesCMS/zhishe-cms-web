@@ -76,7 +76,11 @@
       </h2>
       <el-card style="margin: 30px 15px 30px 30px">
         <div>
-          <el-form :model="clubDetail" label-position="left" label-width="300px">
+          <el-form
+            :model="clubDetail"
+            label-position="left"
+            label-width="300px"
+          >
             <el-form-item label="社长">{{ clubDetail.chiefName }}</el-form-item>
             <el-divider />
             <el-form-item label="社团人数">{{ clubDetail.memberCount }}</el-form-item>
@@ -109,7 +113,7 @@ export default {
     return {
       queryInfo: {
         page: 1,
-        limit: 5,
+        limit: 6,
         sort: 'update_at',
         order: 'desc'
       },

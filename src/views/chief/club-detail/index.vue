@@ -17,7 +17,7 @@
           <el-card>
             <el-tabs v-model="activeTab">
               <el-tab-pane
-                label="社团信息"
+                label="社团信杯"
                 name="account"
               >
                 <account :clubinfo="clubInfo" />
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       clubInfo: {},
-      clubId: 10000,
+      clubId: window.sessionStorage.getItem('clubId'),
       activeTab: 'account'
     }
   },

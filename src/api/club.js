@@ -1,4 +1,11 @@
 import request from '@/utils/request'
+// GET /clubs/:clubId/dissolution
+export function getDissolutionApply(clubId) {
+  return request({
+    url: `/clubs/${clubId}/dissolution`,
+    method: 'get'
+  })
+}
 export function dissolution(data) {
   return request({
     url: `/clubs/dissolution`,
@@ -13,7 +20,23 @@ export function leaderchange(data) {
     data
   })
 }
+// PUT /clubs/:clubId/pic
+export function submitPic(clubId, data) {
+  return request({
+    url: `/clubs/${clubId}/pic`,
+    method: 'put',
+    data
+  })
+}
+// POST /clubs/:clubId/alter/info
 
+export function changeClubInfo(clubId, data) {
+  return request({
+    url: `/clubs/${clubId}/info`,
+    method: 'put',
+    data
+  })
+}
 export function getMemberList(clubid, query) {
   return request({
     url: `/clubs/${clubid}/members`,

@@ -1,6 +1,59 @@
 <template>
   <div>
-    <div class="change">
+    <el-card>
+      <el-row>
+        <el-table
+          :data="leaderChangeApply"
+          stripe
+          border
+        >
+          <el-table-column
+            type="index"
+            label="#"
+          />
+          <el-table-column
+            label="申请时间"
+            prop="createAt"
+          />
+          <el-table-column
+            label="申请原因"
+            prop="reason"
+          />
+          <el-table-column
+            label="申请状态"
+            prop="state"
+          >
+            <template slot-scope="scope">
+              <el-tag
+                v-if="scope.row.state === 0"
+                style="text-align:center"
+                type="warning"
+                :disable-transitions="true"
+                effect="dark"
+              >{{ scope.row.state | statusFilter }}</el-tag>
+              <el-tag
+                v-else-if="scope.row.state === 1"
+                style="text-align:center"
+                type="success"
+                :disable-transitions="true"
+                effect="dark"
+              >{{ scope.row.state | statusFilter }}</el-tag>
+              <el-tag
+                v-else
+                style="text-align:center"
+                type="danger"
+                :disable-transitions="true"
+                effect="dark"
+              >{{ scope.row.state | statusFilter }}</el-tag>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-row>
+    </el-card>
+    <div
+      v-show="formVisiable"
+      class="change"
+    >
       <h3>社长换届申请</h3>
       <!-- 社长换届表单显示 -->
       <el-form
@@ -72,7 +125,9 @@ export default {
         newChiefName: '',
         reason: ''
       },
+      formVisiable: true,
       readOnly: true,
+      leaderChangeApply: [],
       rules: {
         newChiefName: [
           { required: true, message: '请输新社长名字', trigger: 'blur' },

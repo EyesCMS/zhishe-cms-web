@@ -20,7 +20,7 @@
       </div>
       <div class="box-center">
         <div class="user-name text-center">{{ clubinfo.name }}</div>
-        <div class="user-role text-center text-muted">{{ clubinfo.role | uppercaseFirst }}</div>
+        <!--<div class="user-role text-center text-muted">{{ user.role }}</div>-->
       </div>
     </div>
 
@@ -28,63 +28,96 @@
       <div class="user-education user-bio-section">
         <div class="user-bio-section-header">
           <svg-icon icon-class="skill" /><span>头像修改</span></div>
-        <div class="user-bio-section-body">
-          <div style="text-align:center">
+
+        <div
+          class="user-bio-section-body"
+          style="text-align:center"
+        >
+          <!--<el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
+            上传头像图片
+          </el-button>
+          <el-dialog title="上传头像图片" :visible.sync="imagecropperShow">
             <el-upload
-              class="upload-demo"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :on-preview="handlePreview1"
-              :on-remove="handleRemove1"
-              :before-upload="beforeAvatarUpload1"
-              list-type="picture"
-              :limit="1"
+              :show-file-list="false"
+              accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
+              :before-upload="beforeAvatarUpload"
             >
-              <el-button
-                size="small"
-                type="primary"
-              >点击上传</el-button>
-              <div
-                slot="tip"
-                class="el-upload__tip"
-              >只能上传jpg/png文件，且不超过500kb</div>
+              <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
-            <p />
-            <el-button
-              size="small"
-              type="primary"
-            >确认</el-button>
-          </div>
+          </el-dialog>-->
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-upload"
+            @click="dialogFormVisible = true"
+          >上传头像</el-button>
+          <el-dialog
+            title="修改头像"
+            :visible.sync="dialogFormVisible"
+          >
+            <el-card>
+              <el-tabs v-model="activeTab">
+                <el-tab-pane
+                  label="上传网络照片"
+                  name="uploadWeb"
+                >
+                  <el-form :model="form">
+                    <el-form-item
+                      label="头像地址"
+                      label-width="80px"
+                    >
+                      <el-input
+                        v-model="form.avatarUrl"
+                        autocomplete="off"
+                        style="width:500px;"
+                      />
+                    </el-form-item>
+                  </el-form>
+                </el-tab-pane>
+                <el-tab-pane
+                  label="上传本地照片"
+                  name="uploadLocal"
+                >
+                  <el-upload
+                    :show-file-list="false"
+                    accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
+                    :before-upload="beforeAvatarUpload"
+                  >
+                    <img
+                      v-if="form.avatarUrl"
+                      :src="form.avatarUrl"
+                      class="avatar"
+                    >
+                    <i
+                      v-else
+                      class="el-icon-plus avatar-uploader-icon"
+                    />
+                  </el-upload>
+                </el-tab-pane>
+              </el-tabs>
+            </el-card>
+            <div
+              slot="footer"
+              class="dialog-footer"
+            >
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button
+                type="primary"
+                dialog-form-visible="false"
+                @click="submitProfile()"
+              >确 定</el-button>
+            </div>
+          </el-dialog>
         </div>
       </div>
-
-      <!-- <div class="user-skills user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>技能</span></div>
-        <div class="user-bio-section-body">
-          <div class="progress-item">
-            <span>Vue</span>
-            <el-progress :percentage="70" />
-          </div>
-          <div class="progress-item">
-            <span>JavaScript</span>
-            <el-progress :percentage="62" />
-          </div>
-          <div class="progress-item">
-            <span>Css</span>
-            <el-progress :percentage="72" />
-          </div>
-          <div class="progress-item">
-            <span>Spring Boot</span>
-            <el-progress :percentage="100" status="success" />
-          </div>
-        </div>
-      </div> -->
     </div>
   </el-card>
 </template>
 
 <script>
 import PanThumb from '@/components/PanThumb'
-// import { submitProfile } from '@/api/user'
+import { submitPic } from '@/api/club'
 export default {
   components: { PanThumb },
   props: {
@@ -92,25 +125,28 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: '社团名',
-          chiefName: '社长',
-          memberCount: 122,
-          slogan: '个性签名',
-          qqGroup: '122333322',
-          avatarUrl: ''
+          name: '',
+          chiefName: '',
+          avatarUrl: '',
+          id: ''
         }
       }
     }
   },
+  data() {
+    return {
+      activeTab: 'uploadWeb',
+      imagecropperShow: false,
+      imagecropperKey: 0,
+      form: {
+        avatarUrl: this.clubinfo.avatarUrl
+      },
+      dialogFormVisible: false
+    }
+  },
   methods: {
-    handleRemove1(file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview1(file) {
-      console.log(file)
-    },
-    beforeAvatarUpload1(file) {
-      const isJPG = file.type === 'image/jpeg'
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg' || file.type === 'image/jpg'
       const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isJPG) {
@@ -119,21 +155,35 @@ export default {
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M
+      if (isJPG && isLt2M) {
+        const fd = new FormData()
+        fd.append('image', file)
+        submitPic(this.clubinfo.id, fd).then(response => {
+          this.form.avatarUrl = response.data.avatarUrl
+          this.$message.success('修改头像成功')
+          this.imagecropperShow = false
+          // FIXME: 修改成功后右上角的头像没有变化
+        })
+      }
+
+      // 不自动上传
+      return false
+    },
+    submitProfile() {
+      console.log(this.form.avatarUrl)
+      this.dialogFormVisible = false
+      submitPic(this.clubinfo.id, this.form).then(response => {
+        console.log(response)
+        if (response.status === 204) {
+          this.$message.success('修改成功')
+        }
+      })
+      this.getClubDetial()
+      // this.getInfo()
     }
-    // submitProfile(nickname, major, email, slogan, phone, avatar) {
-    //   const input = {
-    //     nickname: nickname,
-    //     major: major,
-    //     email: email,
-    //     slogan: slogan,
-    //     phone: phone,
-    //     avatar: avatar
-    //   }
-    //   submitProfile(input).then(response => {
-    //     if (response.status === 204) {
-    //       this.$message.success('修改成功')
-    //     }
+    // getInfo() {
+    //   getInfo().then(response => {
+    //     this.form.avatarUrl = response.data.avatar
     //   })
     // }
   }
@@ -148,6 +198,30 @@ export default {
 
 .text-muted {
   color: #777;
+}
+
+avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 252px;
+  height: 252px;
+  display: block;
 }
 
 .user-profile {
