@@ -47,6 +47,7 @@
         width="50%"
         center
         modal
+        @closed="publishAnnouncementDialogClosed"
       >
         <el-form
           ref="publishFormRef"
@@ -102,7 +103,7 @@
             <el-input v-model="bulletin.title" />
           </el-form-item>
           <el-form-item
-            prop="content"
+            prop="body"
             label="公告内容"
           >
             <el-input
@@ -191,7 +192,7 @@ export default {
       bulletinRules: {
         title: [{ required: true, message: '请输入公告标题', trigger: 'blur' }],
         body: [{ required: true, message: '请输入公告内容', trigger: 'blur' }]
-      }
+      },
     }
   },
   created() {
@@ -285,6 +286,9 @@ export default {
           this.$message.error('提交失败')
         }
       })
+    },
+    publishAnnouncementDialogClosed() {
+      this.publishForm.title = this.publishForm.body = ''
     }
   }
 }
