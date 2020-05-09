@@ -2,10 +2,17 @@
   <div>
     <el-card>
       <el-row style="margin-top:30px; width:60%">
-        <el-button type="primary" @click="publishAnnouncement()">发布公告</el-button>
+        <el-button
+          type="primary"
+          @click="publishAnnouncement()"
+        >发布公告</el-button>
       </el-row>
       <!-- 公告列表 -->
-      <div v-for="(item, index) in bulletinsList" :key="index" class="bulletions">
+      <div
+        v-for="(item, index) in bulletinsList"
+        :key="index"
+        class="bulletions"
+      >
         <h2>{{ item.title }}</h2>
         <p>{{ item.createAt }}</p>
         <p>{{ item.body }}</p>
@@ -17,7 +24,7 @@
         <el-link
           type="primary"
           style="float:right;margin-left:5px"
-          @click="deleteBulletin(item.id)"
+          @click="showDelete(item)"
         >删除</el-link>
       </div>
 
@@ -41,33 +48,99 @@
         center
         modal
       >
-        <el-form ref="publishFormRef" :model="publishForm" :rules="publishRules" label-width="90px">
-          <el-form-item label="公告标题" prop="title">
+        <el-form
+          ref="publishFormRef"
+          :model="publishForm"
+          :rules="publishRules"
+          label-width="90px"
+        >
+          <el-form-item
+            label="公告标题"
+            prop="title"
+          >
             <el-input v-model="publishForm.title" />
           </el-form-item>
-          <el-form-item label="公告内容" prop="body">
-            <el-input v-model="publishForm.body" :rows="5" type="textarea" />
+          <el-form-item
+            label="公告内容"
+            prop="body"
+          >
+            <el-input
+              v-model="publishForm.body"
+              :rows="5"
+              type="textarea"
+            />
           </el-form-item>
         </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="publishBulletin">发 布</el-button>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button
+            type="primary"
+            @click="publishBulletin"
+          >发 布</el-button>
         </span>
       </el-dialog>
       <!-- 修改公告框 -->
-      <el-dialog title="修改公告" :visible.sync="bulletinDetailDialogVisible" width="55%" center modal>
-        <el-form ref="changeForm" :model="bulletin" :rules="bulletinRules" label-width="90px">
-          <el-form-item prop="title" label="公告标题">
+      <el-dialog
+        title="修改公告"
+        :visible.sync="bulletinDetailDialogVisible"
+        width="55%"
+        center
+        modal
+      >
+        <el-form
+          ref="changeForm"
+          :model="bulletin"
+          :rules="bulletinRules"
+          label-width="90px"
+        >
+          <el-form-item
+            prop="title"
+            label="公告标题"
+          >
             <el-input v-model="bulletin.title" />
           </el-form-item>
-          <el-form-item prop="content" label="公告内容">
-            <el-input v-model="bulletin.body" rows="5" type="textarea" />
+          <el-form-item
+            prop="content"
+            label="公告内容"
+          >
+            <el-input
+              v-model="bulletin.body"
+              rows="5"
+              type="textarea"
+            />
           </el-form-item>
           <el-form-item>
             <span class="dialog-footer">
-              <el-button type="primary" @click="changeBulletinDetail">确 定</el-button>
+              <el-button
+                type="primary"
+                @click="changeBulletinDetail"
+              >确 定</el-button>
             </span>
           </el-form-item>
         </el-form>
+      </el-dialog>
+      <!-- 删除对话框 -->
+      <el-dialog
+        title="删除公告"
+        :visible.sync="delteAnnouncementDialogVisible"
+        width="50%"
+        center
+        modal
+      >
+        <h3>{{ DeleteBulletin.title }}</h3>
+        <p>{{ DeleteBulletin.createAt }}</p>
+        <p>{{ DeleteBulletin.body }}</p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button
+            type="primary"
+            @click="deleteBulletin(DeleteBulletin.id)"
+          >确认删除</el-button>
+        </span>
       </el-dialog>
     </el-card>
   </div>
@@ -95,9 +168,16 @@ export default {
         order: ''
       },
       bulletin: {},
+      DeleteBulletin: {
+        title: '',
+        body: '',
+        createAt: '',
+        id: ''
+      },
       bulletinsList: [],
       publishAnnouncementDialogVisible: false,
       bulletinDetailDialogVisible: false,
+      delteAnnouncementDialogVisible: false,
       dialogVisible: false,
       dialogImageUrl: '',
       publishForm: {
@@ -134,12 +214,20 @@ export default {
         }
       })
     },
+    showDelete(item) {
+      this.delteAnnouncementDialogVisible = true
+      this.DeleteBulletin.title = item.title
+      this.DeleteBulletin.body = item.body
+      this.DeleteBulletin.createAt = item.createAt
+      this.DeleteBulletin.id = item.id
+    },
     // 删除公告
     deleteBulletin(id) {
       deleteBulletin(id).then(response => {
         this.$message.success('删除成功')
         this.getBulletinsList()
       })
+      this.delteAnnouncementDialogVisible = false
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
