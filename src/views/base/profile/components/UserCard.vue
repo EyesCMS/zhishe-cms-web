@@ -16,7 +16,7 @@
           :hoverable="false"
         >
           <div>Hello</div>
-          {{ user.role }}
+          {{ user.role[0] }}
         </pan-thumb>
       </div>
       <div class="box-center">

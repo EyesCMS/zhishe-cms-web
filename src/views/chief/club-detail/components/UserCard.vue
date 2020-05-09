@@ -141,7 +141,7 @@ export default {
       imagecropperShow: false,
       imagecropperKey: 0,
       form: {
-        avatarUrl: this.clubinfo.avatarUrl
+        avatarUrl: ''
       },
       dialogFormVisible: false
     }
