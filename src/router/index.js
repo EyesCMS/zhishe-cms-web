@@ -435,7 +435,6 @@ export const asyncRoutes = [
   {
     path: '/chief',
     component: Layout,
-    name: 'chiefChange',
     children: [
       {
         path: 'list',
