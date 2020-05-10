@@ -34,14 +34,14 @@
       <el-dialog
         title="申请认证"
         :visible.sync="applyIdentifyDialogVisible"
-        width="70%"
+        width="60%"
         center
         modal
         @close="applyIdentifyDialogClosed"
       >
         <el-form ref="form" :model="form">
-          <el-form-item label="申请原因" label-width="70px">
-            <el-input v-model="form.reason" placeholder="请输入申请原因" />
+          <el-form-item label="申请原因" label-width="20%">
+            <el-input v-model="form.reason" style="width:80%" placeholder="请输入申请原因" />
           </el-form-item>
           <div style="text-align:center">
             <el-button type="primary" @click="postIdentifyApply">申请认证</el-button>
