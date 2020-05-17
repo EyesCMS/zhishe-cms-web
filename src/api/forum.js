@@ -74,3 +74,24 @@ export function deleteForum(id) {
     method: 'delete'
   })
 }
+export function like(data) {
+  return request({
+    url: `/users/like`,
+    method: 'post',
+    params: data
+  })
+}
+export function unlike(data) {
+  return request({
+    url: `/users/unlike`,
+    method: 'post',
+    params: data
+  })
+}
+export function getUserLike(data) {
+  return request({
+    url: `/users/like`,
+    method: 'get',
+    params: data
+  })
+}
