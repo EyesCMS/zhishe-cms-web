@@ -72,6 +72,8 @@
             <h4>成员数：{{ clubDetail.memberCount }}</h4>
             <h4>qq群：{{ clubDetail.qqGroup }}</h4>
             <h4>简介：{{ clubDetail.slogan }}</h4>
+            <el-button v-show="SignInShow" style="width:100px" type="primary" @click="SignIn()">签到</el-button>
+            <el-button v-show="AlreadySignInShow" style="width:100px" type="primary" disabled>已签到</el-button>
           </el-card>
           <el-button
             v-show="isMember()"
@@ -154,6 +156,8 @@ export default {
   },
   data() {
     return {
+      SignInShow: true,
+      AlreadySignInShow: false,
       userId: this.$store.getters.userId,
       clubId: 5000,
       queryInfo: {
@@ -252,6 +256,10 @@ export default {
     },
     quitClubDialogClosed() {
       this.quitReason = ''
+    },
+    SignIn() {
+      this.SignInShow = false
+      this.AlreadySignInShow = true
     }
   }
 }
