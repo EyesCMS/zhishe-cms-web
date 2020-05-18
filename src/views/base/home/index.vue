@@ -175,6 +175,8 @@ export default {
       getInfo().then(response => {
         if (response.data.roles[0] === 'student') {
           this.pushToHomePage()
+        } else if (response.data.roles[0] === 'admin') {
+          this.$router.push({ path: 'adminHome' })
         }
         // console.log(response.data.roles[0])
       })

@@ -443,6 +443,25 @@ export const asyncRoutes = [
   },
   // 管理员菜单
   {
+    path: '',
+    redirect: '/adminhome',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'adminHome',
+        name: 'adminHome',
+        component: () => import('@/views/administrator/index'),
+        meta: {
+          // title: '首页',
+          // icon: 'home',
+          breadcrumb: false,
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
+  {
     path: '/administrator/check',
     component: Layout,
     redirect: '/administrator/check/createApply',
