@@ -91,17 +91,20 @@
         </el-row>
         <!-- 查看评论 -->
         <el-row>
-          <p
+          <el-badge
             v-show="!forumsList[key].remarkVisiable"
+            :value="forumsList[key].remark.totalCount"
             style="display: inline;float:right;cursor:pointer"
-            @click="getRemarkList(item)"
+            class="item"
           >
-            查看评论
-            <i
-              style="display: inline; float:right;cursor:pointer"
-              class="el-icon-s-comment"
-            />
-          </p>
+            <p @click="getRemarkList(item)">
+              查看评论
+              <i
+                style="display: inline; float:right;cursor:pointer"
+                class="el-icon-s-comment"
+              />
+            </p>
+          </el-badge>
           <p
             v-show="forumsList[key].remarkVisiable"
             style="display: inline;float:right;cursor:pointer"
@@ -113,6 +116,19 @@
               class="el-icon-s-comment"
             />
           </p>
+          <el-badge
+            :value="23"
+            :max="99"
+            class="item"
+          >
+            <p style="display: inline;float:right;cursor:pointer">
+              赞
+              <i
+                style="display: inline; float:right;cursor:pointer; color:blue;font-size:10"
+                class="el-icon-star-on"
+              />
+            </p>
+          </el-badge>
         </el-row>
         <div
           v-for="(index, I) in forumsList[key].remark.items"
@@ -214,10 +230,10 @@ export default {
         this.forumsList.forEach(element => {
           element['query'] = {
             page: 1,
-            limit: 5
+            limit: 100
           }
           element['remark'] = {
-            items: [],
+            items: null,
             totalCount: 100
           }
           element['remarkVisiable'] = true
@@ -230,37 +246,18 @@ export default {
     },
     // 获取评论列表
     getRemarkList(element) {
-      console.log('@getRemarkList element')
-      console.log(element.remark.items)
+      // console.log('@getRemarkList element')
+      // console.log(element.remark.items)
       element.remarkVisiable = true
       this.$forceUpdate()
-      if (element.remark.items !== []) {
-        element.query.limit = element.query.limit * 2
+      if (element.remark.items === null) {
+        getRemarksList(element.id, element.query).then(response => {
+          console.log('@forum index getRemarkList response')
+          console.log(response)
+          element.remark = response.data
+          this.$forceUpdate()
+        })
       }
-      // if (element.query.limit > element.remark.totalCount) {
-      //   this.$message.success('已加载完')
-      //   return
-      // }
-      getRemarksList(element.id, element.query).then(response => {
-        console.log('@forum index getRemarkList response')
-        console.log(response)
-        element.remark = response.data
-        this.$forceUpdate()
-        console.log(element.remark.items)
-        // response.data.items.forEach(Element => {
-        //   var check = false
-        //   Element['id'] = element.id
-        //   this.remarklist.forEach(element => {
-        //     if (this.deepEquals(element, Element)) {
-        //       check = true
-        //     }
-        //   })
-        //   if (!check) {
-        //     this.remarklist.push(Element)
-        //   }
-        // })
-        // this.length = this.remarklist.length
-      })
     },
     // 发表评论
     publishRemark(element) {
