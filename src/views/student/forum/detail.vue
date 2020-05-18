@@ -13,8 +13,8 @@
           <p>{{ detailInfo.createAt }}</p>
         </div>
         <div style="text-align:center;">
-          <el-button v-show="unlikeShow" type="info" icon="el-icon-star-off" circle @click="like()" />
-          <el-button v-show="likeShow" type="danger" icon="el-icon-star-off" circle @click="unlike()" />
+          <el-button v-if="unlikeShow" type="info" icon="el-icon-star-off" circle @click="like()" />
+          <el-button v-else type="danger" icon="el-icon-star-off" circle @click="unlike()" />
         </div>
       </el-card>
 
@@ -75,7 +75,6 @@ export default {
       likeInfo: {
         likedPostId: this.$route.query.id
       },
-      likeShow: false,
       unlikeShow: true,
       detailQuery: {
         type: 1
@@ -146,9 +145,8 @@ export default {
     getUserLike() {
       getUserLike(this.likeInfo).then(response => {
         console.log(response)
-        if (response.status === 204) {
+        if (response.status === 200) {
           if (response.data.status === 1) {
-            this.likeShow = true
             this.unlikeShow = false
           } else {
             this.unlikeShow = true
@@ -164,7 +162,6 @@ export default {
       like(this.likeInfo).then(response => {
         console.log(response)
         if (response.status === 204) {
-          this.likeShow = true
           this.unlikeShow = false
           return this.$message.success('点赞成功')
         } else {
@@ -178,7 +175,6 @@ export default {
         console.log(response)
         if (response.status === 204) {
           this.unlikeShow = true
-          this.likeShow = false
           return this.$message.success('取消点赞成功')
         } else {
           return this.$message.error('取消点赞失败')

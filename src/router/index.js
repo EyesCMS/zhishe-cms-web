@@ -245,6 +245,19 @@ export const asyncRoutes = [
       }
     ]
   },
+  // 社团简介管理
+  {
+    path: '/Detailmanage',
+    component: Layout,
+    children: [
+      {
+        path: 'Detail',
+        name: 'Detailmanage',
+        component: () => import('@/views/chief/club-detail/index'),
+        meta: { title: '社团信息', icon: 'edit', roles: ['chief'] }
+      }
+    ]
+  },
   // 社团成员
   {
     path: '/clubmember',
@@ -343,7 +356,7 @@ export const asyncRoutes = [
         path: 'list',
         name: 'activityList',
         component: () => import('@/views/chief/activity-manage/index.vue'),
-        meta: { title: '社团活动管理', icon: 'people', roles: ['chief'] }
+        meta: { title: '社团活动管理', icon: 'list', roles: ['chief'] }
       }
     ]
   },
@@ -367,19 +380,6 @@ export const asyncRoutes = [
   //     }
   //   ]
   // },
-  // 社团简介管理
-  {
-    path: '/Detailmanage',
-    component: Layout,
-    children: [
-      {
-        path: 'Detail',
-        name: 'Detailmanage',
-        component: () => import('@/views/chief/club-detail/index'),
-        meta: { title: '社团信息', icon: 'message', roles: ['chief'] }
-      }
-    ]
-  },
   // 社团公告管理
   {
     path: '/Announcement',
@@ -402,19 +402,6 @@ export const asyncRoutes = [
       }
     ]
   },
-  // 社团解散管理
-  {
-    path: '/dissolution',
-    component: Layout,
-    children: [
-      {
-        path: 'dissolution',
-        name: 'dissolution',
-        component: () => import('@/views/chief/club-dissolution/index'),
-        meta: { title: '解散社团', icon: 'message', roles: ['chief'] }
-      }
-    ]
-  },
   // 社团换届管理
   {
     path: '/chiefChange',
@@ -424,7 +411,7 @@ export const asyncRoutes = [
         path: 'Change',
         name: 'chiefchange',
         component: () => import('@/views/chief/chief-change/index'),
-        meta: { title: '换届管理', icon: 'message', roles: ['chief'] }
+        meta: { title: '换届管理', icon: 'peoples', roles: ['chief'] }
       }
     ]
   },
@@ -438,6 +425,19 @@ export const asyncRoutes = [
         name: 'IdentifyApply',
         component: () => import('@/views/chief/club-identify/index'),
         meta: { title: '社团认证申请', icon: 'form', roles: ['chief'] }
+      }
+    ]
+  },
+  // 社团解散管理
+  {
+    path: '/dissolution',
+    component: Layout,
+    children: [
+      {
+        path: 'dissolution',
+        name: 'dissolution',
+        component: () => import('@/views/chief/club-dissolution/index'),
+        meta: { title: '解散社团', icon: 'message', roles: ['chief'] }
       }
     ]
   },
