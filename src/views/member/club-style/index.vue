@@ -2,13 +2,6 @@
   <div>
     <el-card>
       <!-- 社团风采走马灯 -->
-<<<<<<< Updated upstream
-      <el-carousel :interval="5000" arrow="always">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <h3>{{ item }}</h3>
-        </el-carousel-item>
-      </el-carousel>
-=======
       <div class="carousel">
         <el-carousel
           :interval="4000"
@@ -27,7 +20,6 @@
           </el-carousel-item>
         </el-carousel>
       </div>
->>>>>>> Stashed changes
       <el-row :gutter="25">
         <el-col :span="8">
           <el-card style="margin-top:30px">
