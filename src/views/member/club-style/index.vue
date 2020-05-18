@@ -2,11 +2,32 @@
   <div>
     <el-card>
       <!-- 社团风采走马灯 -->
+<<<<<<< Updated upstream
       <el-carousel :interval="5000" arrow="always">
         <el-carousel-item v-for="item in 4" :key="item">
           <h3>{{ item }}</h3>
         </el-carousel-item>
       </el-carousel>
+=======
+      <div class="carousel">
+        <el-carousel
+          :interval="4000"
+          arrow="always"
+          type="card"
+        >
+          <el-carousel-item
+            v-for="item in carouselImgList"
+            :key="item"
+          >
+            <img
+              style="width:100%"
+              :src="item"
+              alt="item"
+            >
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+>>>>>>> Stashed changes
       <el-row :gutter="25">
         <el-col :span="8">
           <el-card style="margin-top:30px">
@@ -147,10 +168,14 @@
 
 <script>
 import { listBulletins } from '@/api/club'
+import { listClubImgs } from '@/api/club'
 import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
 import { quitClub } from '@/api/club'
+import clubImg1 from '@/assets/images/club1.jpg'
+import clubImg2 from '@/assets/images/club2.jpeg'
+import clubImg3 from '@/assets/images/club3.jpeg'
 export default {
   name: 'MemClubStyle',
   filters: {
@@ -175,6 +200,12 @@ export default {
         sort: 'updateAt',
         order: 'desc'
       },
+      // 走马灯图片
+      carouselImgList: [
+        clubImg1,
+        clubImg2,
+        clubImg3
+      ],
       // 公告列表
       bulletinsList: [],
       // 帖子列表
@@ -200,6 +231,11 @@ export default {
     this.getClubDetail()
   },
   methods: {
+    getClubImgs() {
+      listClubImgs(this.clubId).then(response => {
+        this.carouselImgList = response.data
+      })
+    },
     getBulletinsList() {
       listBulletins(this.clubId, this.queryInfo).then(response => {
         this.bulletinsList = response.data.items
@@ -273,11 +309,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.carousel {
+  margin: 20px auto;
+  padding: 20px;
+  width: 90%;
+}
 .el-carousel__item h3 {
   color: #475669;
   font-size: 18px;
   opacity: 0.75;
-  line-height: 300px;
+  line-height: 400px;
   margin: 0;
 }
 

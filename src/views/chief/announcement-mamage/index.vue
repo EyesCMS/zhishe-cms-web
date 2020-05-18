@@ -192,7 +192,7 @@ export default {
       bulletinRules: {
         title: [{ required: true, message: '请输入公告标题', trigger: 'blur' }],
         body: [{ required: true, message: '请输入公告内容', trigger: 'blur' }]
-      },
+      }
     }
   },
   created() {

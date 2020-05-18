@@ -345,3 +345,11 @@ export function uploadLocalAvatar(clubId, data) {
     data
   })
 }
+
+// GET /clubs/:clubId/pictures
+export function listClubImgs(clubId) {
+  return request({
+    url: `/clubs/${clubId}/pictures`,
+    method: 'get'
+  })
+}
