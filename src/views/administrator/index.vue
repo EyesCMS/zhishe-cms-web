@@ -52,19 +52,19 @@
           <el-card>>
             <i class="el-icon-search" />
             <span>筛选搜索</span>
-            <div style="padding: 0px;border-left:1px solid #DCDFE6">
-              <el-form :inline="true" :model="form" label-width="200px">
+            <div style="padding: 5px;margin-top:10px">
+              <el-form :inline="true" :model="form" label-width="500px">
                 <el-form-item prop="startDate">
                   <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date" placeholder="开始日期" style="width: 90%;" />
                 </el-form-item>
                 <el-form-item prop="endDate">
                   <el-date-picker v-model="form.endDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date" placeholder="结束日期" style="width: 90%;" />
                 </el-form-item>
+                <el-button type="primary" size="small" @click="check()">查询</el-button>
               </el-form>
-              <el-button type="primary" size="small" @click="check()">查询</el-button>
             </div>
           </el-card>
-          <div id="chartLineBox" style="width: 100%;height: 70vh;" />
+          <div id="chartLineBox" style="width: 100%;height: 70vh;margin-top: 10px;" />
         </el-col>
       </el-row>
       <el-row>
@@ -381,7 +381,7 @@ export default {
   }
 
   .el-card {
-    padding: 0px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+    padding: 5px;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15) !important;
   }
 </style>
