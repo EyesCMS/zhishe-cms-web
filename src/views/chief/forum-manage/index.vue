@@ -124,8 +124,16 @@
             <p style="display: inline;float:right;cursor:pointer">
               赞
               <i
-                style="display: inline; float:right;cursor:pointer; color:blue;font-size:10"
+                v-show="forumsList[key].status"
+                style="display: inline; float:right;cursor:pointer;color:blue;font-size:10"
                 class="el-icon-star-on"
+                @click="unlikeForum(item)"
+              />
+              <i
+                v-show="!forumsList[key].status"
+                style="display: inline; float:right;cursor:pointer; "
+                class="el-icon-star-on"
+                @click="likeForum(item)"
               />
             </p>
           </el-badge>
@@ -179,7 +187,7 @@
 </template>
 
 <script>
-import { getRemarksList, getForumList, postComment } from '@/api/forum'
+import { getRemarksList, getForumList, postComment, getUserLike, like, unlike } from '@/api/forum'
 import '../../../../time.js'
 export default {
   data() {
@@ -222,10 +230,9 @@ export default {
     },
     // 获取帖子列表
     getForumsList() {
-      console.log(this.queryInfo)
       getForumList(this.queryInfo, this.originState).then(response => {
         console.log('@club forum-mamage getForumsList response')
-        console.log(response)
+        // console.log(response)
         this.forumsList = response.data.items
         this.forumsList.forEach(element => {
           element['query'] = {
@@ -237,11 +244,12 @@ export default {
             totalCount: 100
           }
           element['remarkVisiable'] = true
+          this.getUserLike(element)
           this.getRemarkList(element)
         })
-        // console.log(this.remark)
-        this.total = response.data.totalCount
-        return response.data.items
+        console.log(this.forumsList)
+        // this.total = response.data.totalCount
+        // return response.data.items
       })
     },
     // 获取评论列表
@@ -252,8 +260,8 @@ export default {
       this.$forceUpdate()
       if (element.remark.items === null) {
         getRemarksList(element.id, element.query).then(response => {
-          console.log('@forum index getRemarkList response')
-          console.log(response)
+          // console.log('@forum index getRemarkList response')
+          // console.log(response)
           element.remark = response.data
           this.$forceUpdate()
         })
@@ -266,7 +274,11 @@ export default {
         this.remark['postId'] = element.id
         postComment(this.remark).then(response => {
           this.remark.content = ''
-          this.getRemarkList(element)
+          getRemarksList(element.id, element.query).then(response => {
+            // console.log('@forum index publish response')
+            // console.log(response)
+            element.remark = response.data
+          })
           this.$forceUpdate()
         })
       }
@@ -285,6 +297,32 @@ export default {
     removeRemark(element) {
       element.remarkVisiable = false
       this.$forceUpdate()
+    },
+    getUserLike(element) { // 获取当前用户是否对帖子点赞
+      const data = { postId: element.id }
+      getUserLike(data).then(response => {
+        console.log('@getUserLike response:')
+        console.log(response)
+        element['status'] = response.data.status
+      })
+    },
+    likeForum(element) {
+      const data = { likedPostId: element.id }
+      like(data).then(response => {
+        console.log('@likeForum response:')
+        console.log(response)
+        element['status'] = 1
+        this.$forceUpdate()
+      })
+    },
+    unlikeForum(element) {
+      const data = { likedPostId: element.id }
+      unlike(data).then(response => {
+        console.log('@unlikeForum response:')
+        console.log(response)
+        element['status'] = 0
+        this.$forceUpdate()
+      })
     }
   }
 }
