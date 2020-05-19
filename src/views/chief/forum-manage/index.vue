@@ -39,7 +39,7 @@
           <h2 style="margin-top:0; padding: 0">{{ item.title }}</h2>
         </el-row>
         <!-- 图片 -->
-        <el-row>
+        <el-row v-show="item.imgUrl">
           <!--cursor:pointer,鼠标滑过变成手指-->
           <el-image
             style="width: 100px; height: 100px;"
@@ -77,6 +77,7 @@
                   v-model="remark.content"
                   placeholder="发表评论"
                   class="input-with-select"
+                  @keyup.enter.native="publishRemark(item)"
                 >
                   <el-button
                     slot="append"
@@ -278,18 +279,14 @@ export default {
             // console.log('@forum index publish response')
             // console.log(response)
             element.remark = response.data
+            this.$forceUpdate()
           })
-          this.$forceUpdate()
         })
       }
     },
     state(id) {
       this.remark.content = ''
       this.remark.id = id
-    },
-    deepEquals(x, y) {
-      if (x.createAt === y.createAt && x.content === y.content && x.id === y.id) return true
-      else return false
     },
     myForum() {
       this.$router.push('/forum/postManage')
@@ -301,16 +298,16 @@ export default {
     getUserLike(element) { // 获取当前用户是否对帖子点赞
       const data = { postId: element.id }
       getUserLike(data).then(response => {
-        console.log('@getUserLike response:')
-        console.log(response)
+        // console.log('@getUserLike response:')
+        // console.log(response)
         element['status'] = response.data.status
       })
     },
     likeForum(element) {
       const data = { likedPostId: element.id }
       like(data).then(response => {
-        console.log('@likeForum response:')
-        console.log(response)
+        // console.log('@likeForum response:')
+        // console.log(response)
         element['status'] = 1
         this.$forceUpdate()
       })
@@ -318,8 +315,8 @@ export default {
     unlikeForum(element) {
       const data = { likedPostId: element.id }
       unlike(data).then(response => {
-        console.log('@unlikeForum response:')
-        console.log(response)
+        // console.log('@unlikeForum response:')
+        // console.log(response)
         element['status'] = 0
         this.$forceUpdate()
       })
