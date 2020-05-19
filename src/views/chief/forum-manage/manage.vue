@@ -97,17 +97,32 @@
           <p>{{ item.content }}</p>
         </el-row>
         <el-row>
-          <p
+          <el-badge
+            :value="23"
+            class="item"
+          >
+            <p style="display: inline;float:right;cursor:pointer">
+              赞
+              <i
+                style="display: inline; float:right;cursor:pointer;"
+                class="el-icon-star-on"
+              />
+            </p>
+          </el-badge>
+          <el-badge
             v-show="!forumsList[key].remarkVisiable"
             style="display: inline;float:right;cursor:pointer"
-            @click="getRemarkList(item)"
+            :value="item.remark.totalCount"
+            class="item"
           >
-            查看评论
-            <i
-              style="display: inline; float:right;cursor:pointer"
-              class="el-icon-s-comment"
-            />
-          </p>
+            <p @click="getRemarkList(item)">
+              查看评论
+              <i
+                style="display: inline; float:right;cursor:pointer"
+                class="el-icon-s-comment"
+              />
+            </p>
+          </el-badge>
           <p
             v-show="forumsList[key].remarkVisiable"
             style="display: inline;float:right;cursor:pointer"
@@ -119,6 +134,7 @@
               class="el-icon-s-comment"
             />
           </p>
+
         </el-row>
         <div
           v-for="(index, I) in forumsList[key].remark.items"
@@ -259,7 +275,7 @@
 </template>
 
 <script>
-import { getMyForums, getRemarksList, getInvitationDetail, changeForum, publishForum, deleteForum, getInvitationList } from '@/api/forum'
+import { getMyForums, getRemarksList, getInvitationDetail, changeForum, publishForum, deleteForum } from '@/api/forum'
 import '../../../../time.js'
 export default {
   data() {
@@ -314,84 +330,43 @@ export default {
       this.getForumsList()
     },
     getForumsList() {
-      const clubId = window.sessionStorage.getItem('clubId')
-      if (clubId) {
-        getInvitationList(clubId, this.queryInfo).then(response => {
-          console.log('@club forum-mamage getForumsList response')
-          console.log(response)
-          this.forumsList = response.data.items
-          this.forumsList.forEach(element => {
-            element['query'] = {
-              page: 1,
-              limit: 5
-            }
-            element['remark'] = {
-              items: [],
-              totalCount: 100
-            }
-            element['remarkVisiable'] = true
-            this.getRemarkList(element)
-          })
-          // console.log(this.remark)
-          this.total = response.data.totalCount
-          return response.data.items
+      getMyForums(this.queryInfo, this.originState).then(response => {
+        // console.log('@club forum-mamage getForumsList response')
+        // console.log(response)
+        this.forumsList = response.data.items
+        this.forumsList.forEach(element => {
+          element['query'] = {
+            page: 1,
+            limit: 5
+          }
+          element['remark'] = {
+            items: null,
+            totalCount: 100
+          }
+          element['remarkVisiable'] = true
+          this.getRemarkList(element)
         })
-      } else {
-        getMyForums(this.queryInfo, this.originState).then(response => {
-          console.log('@club forum-mamage getForumsList response')
-          console.log(response)
-          this.forumsList = response.data.items
-          this.forumsList.forEach(element => {
-            element['query'] = {
-              page: 1,
-              limit: 5
-            }
-            element['remark'] = {
-              items: [],
-              totalCount: 100
-            }
-            element['remarkVisiable'] = true
-            this.getRemarkList(element)
-          })
-          // console.log(this.remark)
-          this.total = response.data.totalCount
-          return response.data.items
-        })
-      }
+        // console.log(this.remark)
+        // this.total = response.data.totalCount
+        // return response.data.items
+      })
     },
     // 获取评论列表
     getRemarkList(element) {
-      console.log('@getRemarkList element')
-      console.log(element.remark.items)
+      // console.log('@getRemarkList element')
+      // console.log(element.remark.items)
       element.remarkVisiable = true
       this.$forceUpdate()
-      if (element.remark.items !== []) {
-        element.query.limit = element.query.limit * 2
+      if (element.remark.items === null) {
+        getRemarksList(element.id, element.query).then(response => {
+          // console.log('@forum index getRemarkList response')
+          // console.log(response)
+          element.remark = response.data
+          // console.log(element)
+          this.$forceUpdate()
+          // console.log(element.remark.items)
+        })
       }
-      // if (element.query.limit > element.remark.totalCount) {
-      //   this.$message.success('已加载完')
-      //   return
-      // }
-      getRemarksList(element.id, element.query).then(response => {
-        console.log('@forum index getRemarkList response')
-        console.log(response)
-        element.remark = response.data
-        this.$forceUpdate()
-        console.log(element.remark.items)
-        // response.data.items.forEach(Element => {
-        //   var check = false
-        //   Element['id'] = element.id
-        //   this.remarklist.forEach(element => {
-        //     if (this.deepEquals(element, Element)) {
-        //       check = true
-        //     }
-        //   })
-        //   if (!check) {
-        //     this.remarklist.push(Element)
-        //   }
-        // })
-        // this.length = this.remarklist.length
-      })
     },
     addForum() {
       this.addForumDialogVisible = true
