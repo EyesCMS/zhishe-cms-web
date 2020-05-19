@@ -115,19 +115,19 @@ export default {
       chartLine: '',
       pie: '',
       unaudited: {
-        createNumber: 10,
-        dismissNumber: 20,
-        activityNumber: 0,
-        changeNumber: 5,
-        identifyNumber: 1
+        createNumber: '',
+        changeNumber: '',
+        activityNumber: '',
+        dismissNumber: '',
+        identifyNumber: ''
       },
       newUser: {
-        date: ['2020-5-1', '2020-5-2', '2020-5-3', '2020-5-4'],
-        newUsers: [10, 20, 30, 0]
+        date: [],
+        newUsers: []
       },
       clubSpecie: {
-        clubSpecies: ['艺术', '运动', '学习', '休闲', '其他'],
-        clubSpeciesNumber: [30, 50, 20, 10]
+        clubSpecies: [],
+        clubSpeciesNumber: []
       }
     }
   },
@@ -143,7 +143,11 @@ export default {
       this.Loading = true
       getUnaudited(this.loading).then(response => {
         if (response.status === 200) {
-          this.unaudited = response.data.items
+          this.unaudited.createNumber = response.data.createNumber
+          this.unaudited.changeNumber = response.data.changeNumber
+          this.unaudited.activityNumber = response.data.activityNumber
+          this.unaudited.dismissNumber = response.data.dismissNumber
+          this.unaudited.identifyNumber = response.data.identifyNumber
         }
       })
     },
@@ -156,7 +160,8 @@ export default {
       }
       getNewUser(param).then(response => {
         if (response.status === 200) {
-          this.newUser = response.data.items
+          this.newUser.date = response.data.date
+          this.newUser.newUsers = response.data.newUsers
         }
       })
     },
@@ -165,7 +170,8 @@ export default {
       this.Loading = true
       getClubSpecie(this.loading).then(response => {
         if (response.status === 200) {
-          this.clubSpecie = response.data.items
+          this.clubSpecie.clubSpecies = response.data.clubSpecies
+          this.clubSpecie.clubSpeciesNumber = response.data.clubSpeciesNumber
         }
       })
     },
