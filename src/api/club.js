@@ -362,19 +362,19 @@ export function listClubImgs(clubId) {
   })
 }
 
-<<<<<<< Updated upstream
 // 签到获取积分
 export function signIn(clubId) {
   return request({
     url: `/credit/${clubId}/checkin`,
     method: 'post'
-=======
+  })
+}
+
 // POST /clubs/:clubId/pictures
 export function postCarousel(clubId, data) {
   return request({
     url: `/clubs/${clubId}/pictureUrls`,
     method: 'post',
     data
->>>>>>> Stashed changes
   })
 }

@@ -12,6 +12,10 @@
           <p>{{ detailInfo.content }}</p>
           <p>{{ detailInfo.createAt }}</p>
         </div>
+        <div style="text-align:center;">
+          <el-button v-if="unlikeShow" type="info" icon="el-icon-star-off" circle @click="like()" />
+          <el-button v-else type="danger" icon="el-icon-star-off" circle @click="unlike()" />
+        </div>
       </el-card>
 
       <!-- 评论区 -->
@@ -53,6 +57,9 @@
 import { getInvitationDetail } from '@/api/forum'
 import { getRemarksList } from '@/api/forum'
 import { postComment } from '@/api/forum'
+import { getUserLike } from '@/api/forum'
+import { like } from '@/api/forum'
+import { unlike } from '@/api/forum'
 export default {
   name: 'ActivityDetail',
   data() {
@@ -68,6 +75,13 @@ export default {
       detailQuery: {
         type: 1
       },
+      likeInfo: {
+        likedPostId: this.$route.query.id
+      },
+      getLikeInfo: {
+        postId: this.$route.query.id
+      },
+      unlikeShow: true,
       detailInfo: {},
       remarksList: [],
       // 评论条数
@@ -82,6 +96,7 @@ export default {
     this.userId = this.$store.getters.userid
     this.getInvitationDetail()
     this.getRemarksList()
+    this.getUserLike()
   },
   methods: {
     // 获取帖子详情
@@ -116,6 +131,44 @@ export default {
         var element = document.getElementById('comment')
         element.scrollIntoView()
       }
+    },
+    getUserLike() {
+      getUserLike(this.getLikeInfo).then(response => {
+        if (response.status === 200) {
+          if (response.data.status === 1) {
+            this.unlikeShow = false
+          } else {
+            this.unlikeShow = true
+            this.likeShow = false
+          }
+        } else {
+          return this.$message.error('获取点赞信息失败')
+        }
+      })
+    },
+    // 点赞
+    like() {
+      like(this.likeInfo).then(response => {
+        console.log(response)
+        if (response.status === 204) {
+          this.unlikeShow = false
+          return this.$message.success('点赞成功')
+        } else {
+          return this.$message.error('点赞失败')
+        }
+      })
+    },
+    // 取消点赞
+    unlike() {
+      unlike(this.likeInfo).then(response => {
+        console.log(response)
+        if (response.status === 204) {
+          this.unlikeShow = true
+          return this.$message.success('取消点赞成功')
+        } else {
+          return this.$message.error('取消点赞失败')
+        }
+      })
     }
   }
 }
