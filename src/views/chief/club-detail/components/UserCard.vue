@@ -173,6 +173,7 @@ export default {
       return false
     },
     submitProfile() {
+      console.log(this.form)
       this.dialogFormVisible = false
       submitPic(this.clubId, this.form).then(response => {
         // console.log(response)
