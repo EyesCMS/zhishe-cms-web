@@ -135,6 +135,34 @@ export default {
     this.getUnaudited()
   },
   mounted() {
+    var nowD1 = new Date()
+    var nowD2 = {
+      year: nowD1.getFullYear(),
+      month: (nowD1.getMonth() + 1) < 10 ? '0' + (nowD1.getMonth() + 1 + '') : nowD1.getMonth() + 1,
+      date1: nowD1.getDate() < 10 ? '0' + (nowD1.getDate() + '') : nowD1.getDate()
+    }
+    nowD1 = nowD1.getTime() - 1000 * 60 * 60 * 24 * 10
+    var nowD3 = new Date()
+    nowD3.setTime(nowD1)
+    var nowD4 = {
+      year: nowD3.getFullYear(),
+      month: (nowD3.getMonth() + 1) < 10 ? '0' + (nowD3.getMonth() + 1 + '') : nowD3.getMonth() + 1,
+      date1: nowD3.getDate() < 10 ? '0' + (nowD3.getDate() + '') : nowD3.getDate()
+    }
+    var startD = ''
+    var endD = ''
+    endD = nowD2.year + '-' + nowD2.month + '-' + nowD2.date1
+    startD = nowD4.year + '-' + nowD4.month + '-' + nowD4.date1
+    const first = {
+      startDate: startD,
+      endDate: endD
+    }
+    getNewUser(first).then(response => {
+      if (response.status === 200) {
+        this.newUser.date = response.data.date
+        this.newUser.newUsers = response.data.newUsers
+      }
+    })
     this.showChartLine()
   },
   methods: {
@@ -164,6 +192,7 @@ export default {
           this.newUser.newUsers = response.data.newUsers
         }
       })
+      this.showChartLine()
     },
     // 获取各类别社团占比
     getClubSpecie() {
@@ -177,7 +206,6 @@ export default {
     },
     // 生成折线图
     showChartLine() {
-      this.getNewUser()
       this.chartLine = echarts.init(document.getElementById('chartLineBox'))
       // 指定图表的配置项和数据
       this.chartLine.setOption({
@@ -282,11 +310,11 @@ export default {
     newUsers() {
       this.clubSpeciesVisible = false
       this.newUsersVisible = true
-      this.showChartLine()
+      this.getNewUser()
     },
     // 切换折线图日期
     check() {
-      this.showChartLine()
+      this.getNewUser()
     }
   }
 }
