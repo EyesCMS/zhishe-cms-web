@@ -75,6 +75,9 @@ export default {
       likeInfo: {
         likedPostId: this.$route.query.id
       },
+      getLikeInfo: {
+        postId: this.$route.query.id
+      },
       unlikeShow: true,
       detailQuery: {
         type: 1
@@ -143,8 +146,7 @@ export default {
       }
     },
     getUserLike() {
-      getUserLike(this.likeInfo).then(response => {
-        console.log(response)
+      getUserLike(this.getLikeInfo).then(response => {
         if (response.status === 200) {
           if (response.data.status === 1) {
             this.unlikeShow = false

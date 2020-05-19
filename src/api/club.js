@@ -353,3 +353,11 @@ export function listClubImgs(clubId) {
     method: 'get'
   })
 }
+
+// 签到获取积分
+export function signIn(clubId) {
+  return request({
+    url: `/credit/${clubId}/checkin`,
+    method: 'post'
+  })
+}

@@ -98,7 +98,7 @@
                   </div>
                 </div>
                 <p />
-                <el-button v-if="SignInShow" style="width:80px" type="primary" @click="SignIn()">签到</el-button>
+                <el-button v-if="SignInShow" style="width:80px" type="primary" @click="signIn()">签到</el-button>
                 <el-button v-else style="width:80px" type="primary" disabled>已签到</el-button>
               </el-col>
             </el-row>
@@ -164,6 +164,7 @@ import { listClubImgs } from '@/api/club'
 import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
+import { signIn } from '@/api/club'
 import { quitClub } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
 import clubImg2 from '@/assets/images/club2.jpeg'
@@ -293,8 +294,16 @@ export default {
     quitClubDialogClosed() {
       this.quitReason = ''
     },
-    SignIn() {
-      this.SignInShow = false
+    signIn() {
+      // this.SignInShow = false
+      signIn(this.clubId).then(response => {
+        if (response.status === 201) {
+          this.SignInShow = false
+          return this.$message.success('签到成功')
+        } else {
+          return this.$message.error('签到失败')
+        }
+      })
     }
   }
 }

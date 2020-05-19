@@ -15,6 +15,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
+          style="width:340px;"
           placeholder="请输入用户名"
           name="username"
           type="text"
@@ -28,6 +29,7 @@
           :key="passwordType"
           ref="password"
           v-model="loginForm.password"
+          style="width:340px;"
           :type="passwordType"
           placeholder="请输入密码"
           name="password"
