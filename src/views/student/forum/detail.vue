@@ -152,7 +152,6 @@ export default {
             this.unlikeShow = false
           } else {
             this.unlikeShow = true
-            this.likeShow = false
           }
         } else {
           return this.$message.error('获取点赞信息失败')

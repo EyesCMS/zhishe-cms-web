@@ -164,6 +164,7 @@ import { listClubImgs } from '@/api/club'
 import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
+import { getSignInInfo } from '@/api/club'
 import { signIn } from '@/api/club'
 import { quitClub } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
@@ -222,6 +223,7 @@ export default {
     this.getBulletinsList()
     this.getInvitationsList()
     this.getClubDetail()
+    this.getSignInInfo()
   },
   methods: {
     getClubImgs() {
@@ -302,6 +304,19 @@ export default {
           return this.$message.success('签到成功')
         } else {
           return this.$message.error('签到失败')
+        }
+      })
+    },
+    getSignInInfo() {
+      getSignInInfo(this.clubId).then(response => {
+        if (response.status === 200) {
+          if (response.data.status === 1) {
+            this.SignInShow = true
+          } else {
+            this.SignInShow = false
+          }
+        } else {
+          return this.$message.error('获取签到信息失败')
         }
       })
     }

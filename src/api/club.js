@@ -369,6 +369,13 @@ export function signIn(clubId) {
     method: 'post'
   })
 }
+// 获取签到信息
+export function getSignInInfo(clubId) {
+  return request({
+    url: `/credit/${clubId}/ischeckin`,
+    method: 'get'
+  })
+}
 
 // POST /clubs/:clubId/pictures
 export function postCarousel(clubId, data) {
@@ -378,3 +385,4 @@ export function postCarousel(clubId, data) {
     data
   })
 }
+
