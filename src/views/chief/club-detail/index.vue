@@ -32,6 +32,7 @@
                 <el-upload
                   action="https://jsonplaceholder.typicode.com/posts/"
                   list-type="picture-card"
+                  :http-request="uploadFile"
                   :on-preview="handlePictureCardPreview"
                   :on-remove="handleRemove"
                 >
@@ -80,6 +81,9 @@ export default {
     this.getClubDetial()
   },
   methods: {
+    uploadFile(file) {
+      this.fileList.push(file.file)
+    },
     getClubDetial() {
       this.clubId
       getClubDetail(this.clubId).then(response => {
@@ -122,17 +126,21 @@ export default {
       this.dialogVisible = true
     },
     // 确认添加
-    async addEnsure() {
+    addEnsure: async function() {
       if (!this.uploadComplete) {
         this.$message.error('图片正在上传，请稍等')
         return
       }
-      console.log(this.images)
-      const image = new FormData()
-      for (var i = 0; i < this.fileList.length; ++i) {
-        image.append(this.fileList[i].name, this.fileList[i])
+      // console.log(this.images)
+      const fd = new FormData()
+      // console.log(this.fileList)
+      for (var i = 0; i < this.fileList.length; i++) {
+        fd.append('image', this.fileList[i])
+        fd.append('index', i.toString())
       }
-      await uploadLocalImages(this.clubId, image).then(response => {
+
+      await uploadLocalImages(this.clubId, fd).then(response => {
+        console.log(response)
         this.imgsUrl = response.data
         // this.$message.success('上传成功')
       })
