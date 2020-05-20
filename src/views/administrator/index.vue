@@ -166,6 +166,7 @@ export default {
       }
     })
     this.showChartLine()
+    this.getClubSpecie()
   },
   methods: {
     // 获取未审核申请数
