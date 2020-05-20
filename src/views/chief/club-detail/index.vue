@@ -34,16 +34,10 @@
                   action="${pageContext.request.contextPath}/lookup/editEvidence/123"
                   :multiple="multiple"
                   list-type="picture-card"
-<<<<<<< Updated upstream
-                  :http-request="uploadFile"
-                  :on-preview="handlePictureCardPreview"
-                  :on-remove="handleRemove"
-=======
                   :auto-upload="false"
                   :http-request="uploadFile"
                   :headers="headers"
                   :limit="5"
->>>>>>> Stashed changes
                 >
                   <i class="el-icon-plus" />
                 </el-upload>
@@ -97,9 +91,9 @@ export default {
     this.getClubDetial()
   },
   methods: {
-    uploadFile(file) {
-      this.fileList.push(file.file)
-    },
+    // uploadFile(file) {
+    //   this.fileList.push(file.file)
+    // },
     getClubDetial() {
       this.clubId
       getClubDetail(this.clubId).then(response => {
@@ -168,23 +162,10 @@ export default {
         this.$message.error('图片正在上传，请稍等')
         return
       }
-<<<<<<< Updated upstream
-      // console.log(this.images)
-      const fd = new FormData()
-      // console.log(this.fileList)
-      for (var i = 0; i < this.fileList.length; i++) {
-        fd.append('image', this.fileList[i])
-        fd.append('index', i.toString())
-      }
-
-      await uploadLocalImages(this.clubId, fd).then(response => {
-        console.log(response)
-=======
       console.log(this.images)
       const image = new FormData()
       image.append('image', this.fileList)
       await uploadLocalImages(this.clubId, image).then(response => {
->>>>>>> Stashed changes
         this.imgsUrl = response.data
         // this.$message.success('上传成功')
       })
