@@ -64,7 +64,7 @@
               </el-form>
             </div>
           </el-card>
-          <div id="chartLineBox" style="width: 200%;height: 70vh;margin-top: 10px;" />
+          <div id="chartLineBox" style="width: 100%;height: 70vh;margin-top: 10px;" />
         </el-col>
       </el-row>
       <el-row>
@@ -82,7 +82,7 @@
           <el-col :span="20">
             <div style="padding: 10px;border-left:1px solid #DCDFE6">
               <div style="text-align:center">
-                <div id="pieBox" style="width: 1200%;height: 300px" />
+                <div id="pieBox" style="width: 650%;height: 300px" />
               </div>
             </div>
           </el-col>
@@ -200,7 +200,7 @@ export default {
     getClubSpecie() {
       this.Loading = true
       getClubSpecie(this.loading).then(response => {
-        if (response.data.status === 200) {
+        if (response.status === 200) {
           this.clubSpecie.clubSpecies = response.data.clubSpecies
           this.clubSpecie.clubSpeciesNumber = response.data.clubSpeciesNumber
         }
@@ -284,7 +284,7 @@ export default {
             name: '社团数目',
             type: 'pie',
             radius: '50%',
-            center: ['50%', '50%'],
+            center: ['60%', '50%'],
             data: [
               { value: this.clubSpecie.clubSpeciesNumber[0], name: this.clubSpecie.clubSpecies[0] },
               { value: this.clubSpecie.clubSpeciesNumber[1], name: this.clubSpecie.clubSpecies[1] },
