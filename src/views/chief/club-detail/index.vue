@@ -34,10 +34,8 @@
                   action="${pageContext.request.contextPath}/lookup/editEvidence/123"
                   :multiple="multiple"
                   list-type="picture-card"
-                  :auto-upload="false"
-                  :http-request="uploadFile"
-                  :headers="headers"
-                  :limit="5"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="handleRemove"
                 >
                   <i class="el-icon-plus" />
                 </el-upload>
@@ -91,9 +89,6 @@ export default {
     this.getClubDetial()
   },
   methods: {
-    // uploadFile(file) {
-    //   this.fileList.push(file.file)
-    // },
     getClubDetial() {
       this.clubId
       getClubDetail(this.clubId).then(response => {
@@ -157,14 +152,16 @@ export default {
       this.dialogVisible = true
     },
     // 确认添加
-    addEnsure: async function() {
+    async addEnsure() {
       if (!this.uploadComplete) {
         this.$message.error('图片正在上传，请稍等')
         return
       }
       console.log(this.images)
       const image = new FormData()
-      image.append('image', this.fileList)
+      for (var i = 0; i < this.fileList.length; ++i) {
+        image.append(this.fileList[i].name, this.fileList[i])
+      }
       await uploadLocalImages(this.clubId, image).then(response => {
         this.imgsUrl = response.data
         // this.$message.success('上传成功')
