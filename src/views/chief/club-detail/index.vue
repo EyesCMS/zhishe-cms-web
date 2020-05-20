@@ -30,18 +30,27 @@
                 <p>选择图片上传相册</p>
 
                 <el-upload
-                  action="https://jsonplaceholder.typicode.com/posts/"
+                  ref="upload"
+                  action="${pageContext.request.contextPath}/lookup/editEvidence/123"
+                  :multiple="multiple"
                   list-type="picture-card"
+<<<<<<< Updated upstream
                   :http-request="uploadFile"
                   :on-preview="handlePictureCardPreview"
                   :on-remove="handleRemove"
+=======
+                  :auto-upload="false"
+                  :http-request="uploadFile"
+                  :headers="headers"
+                  :limit="5"
+>>>>>>> Stashed changes
                 >
                   <i class="el-icon-plus" />
                 </el-upload>
-                <el-dialog :visible.sync="dialogVisible">
+                <!-- <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt="">
-                </el-dialog>
-                <el-button @click="addEnsure">确定上传</el-button>
+                </el-dialog> -->
+                <el-button @click="subPicForm">确定上传</el-button>
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -55,9 +64,10 @@
 <script>
 import { getClubDetail } from '@/api/club'
 import { uploadLocalImages } from '@/api/club'
-import { postCarousel } from '@/api/club'
+// import { postCarousel } from '@/api/club'
 import UserCard from './components/UserCard'
 import Account from './components/Account'
+// import { config } from '@vue/test-utils'
 
 export default {
   name: 'Profile',
@@ -74,6 +84,12 @@ export default {
       dialogVisible: false,
       fileList: [],
       imgsUrl: [],
+      formData: '',
+      // test: '',
+      multiple: true,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
       uploadComplete: true // 图片上传完成状态
     }
   },
@@ -101,6 +117,27 @@ export default {
       console.log(123)
       console.log(this.imgsList)
     },
+    uploadFile(file) {
+      this.formData.append('image', file.file)
+      // this.test = '123abc'
+      console.log(file.file)
+    },
+    subPicForm() {
+      this.formData = new FormData()
+      this.$refs.upload.submit()
+      this.formData.append('WS_CODE', '12133')
+      // const config = {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      // }
+      console.log(this.formData)
+      uploadLocalImages(this.clubId, this.formData).then(response => {
+        this.imgsUrl = response.data
+        console.log(response)
+        // this.$message.success('上传成功')
+      })
+    },
     // 上传图片前调用
     beforeAvatarUpload(file) {
       const isValidStyle = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
@@ -116,7 +153,7 @@ export default {
         this.fileList.push(file)
       }
       // 不自动上传
-      return false
+      return isValidStyle && isLt2M
     },
     handleRemove(file, fileList) {
       console.log(file, fileList)
@@ -131,6 +168,7 @@ export default {
         this.$message.error('图片正在上传，请稍等')
         return
       }
+<<<<<<< Updated upstream
       // console.log(this.images)
       const fd = new FormData()
       // console.log(this.fileList)
@@ -141,15 +179,21 @@ export default {
 
       await uploadLocalImages(this.clubId, fd).then(response => {
         console.log(response)
+=======
+      console.log(this.images)
+      const image = new FormData()
+      image.append('image', this.fileList)
+      await uploadLocalImages(this.clubId, image).then(response => {
+>>>>>>> Stashed changes
         this.imgsUrl = response.data
         // this.$message.success('上传成功')
       })
       // 调用接口
-      await postCarousel(this.clubId, this.imgsUrl).then(response => {
-        if (response.status === 204) {
-          this.$message.success('上传成功')
-        }
-      })
+      // await postCarousel(this.clubId, this.imgsUrl).then(response => {
+      //   if (response.status === 204) {
+      //     this.$message.success('上传成功')
+      //   }
+      // })
     //  postCarousel(this.clubId, )
     }
   }
