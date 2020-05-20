@@ -260,6 +260,7 @@ export default {
       this.clubId = sessionStorage.getItem('clubId')
     }
     // this.clubId = this.$route.query.cid
+    this.getClubImgs()
     this.getBulletinsList()
     this.getInvitationsList()
     this.getClubDetail()

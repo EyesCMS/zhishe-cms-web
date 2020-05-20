@@ -26,23 +26,24 @@
               >
                 <account :clubinfo="clubInfo" />
               </el-tab-pane>
-              <el-tab-pane label="相册展示" name="carousel">
+              <el-tab-pane label="相册展示" name="carousel" @tab-click="getClubImgs">
                 <p>选择图片上传相册</p>
 
                 <el-upload
                   ref="upload"
-                  action="${pageContext.request.contextPath}/lookup/editEvidence/123"
-                  :multiple="multiple"
+                  action="https://jsonplaceholder.typicode.com/posts/"
                   list-type="picture-card"
+                  :http-request="uploadFile"
                   :on-preview="handlePictureCardPreview"
                   :on-remove="handleRemove"
+                  :limit="5"
                 >
                   <i class="el-icon-plus" />
                 </el-upload>
-                <!-- <el-dialog :visible.sync="dialogVisible">
-                  <img width="100%" :src="dialogImageUrl" alt="">
-                </el-dialog> -->
-                <el-button @click="subPicForm">确定上传</el-button>
+                <el-dialog v-for="(index, item) in carouselImgList" :key="index">
+                  <img width="100%" :src="item" alt="社团图片">
+                </el-dialog>
+                <el-button @click="addEnsure">确定上传</el-button>
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -59,6 +60,7 @@ import { uploadLocalImages } from '@/api/club'
 // import { postCarousel } from '@/api/club'
 import UserCard from './components/UserCard'
 import Account from './components/Account'
+import { listClubImgs } from '@/api/club'
 // import { config } from '@vue/test-utils'
 
 export default {
@@ -82,6 +84,7 @@ export default {
       headers: {
         'Content-Type': 'multipart/form-data'
       },
+      carouselImgList: [],
       uploadComplete: true // 图片上传完成状态
     }
   },
@@ -89,6 +92,11 @@ export default {
     this.getClubDetial()
   },
   methods: {
+    getClubImgs() {
+      listClubImgs(this.clubId).then(response => {
+        this.carouselImgList = response.data
+      })
+    },
     getClubDetial() {
       this.clubId
       getClubDetail(this.clubId).then(response => {
@@ -107,9 +115,8 @@ export default {
       console.log(this.imgsList)
     },
     uploadFile(file) {
-      this.formData.append('image', file.file)
-      // this.test = '123abc'
-      console.log(file.file)
+      this.fileList.push(file.file)
+      console.log(this.fileList)
     },
     subPicForm() {
       this.formData = new FormData()
@@ -152,19 +159,23 @@ export default {
       this.dialogVisible = true
     },
     // 确认添加
-    async addEnsure() {
+    addEnsure: function() {
       if (!this.uploadComplete) {
         this.$message.error('图片正在上传，请稍等')
         return
       }
-      console.log(this.images)
-      const image = new FormData()
+      // console.log(this.images)
+      const fd = new FormData()
+      console.log('123是' + this.fileList)
       for (var i = 0; i < this.fileList.length; ++i) {
-        image.append(this.fileList[i].name, this.fileList[i])
+        fd.append('image', this.fileList[i])
+        fd.append('index', i.toString())
       }
-      await uploadLocalImages(this.clubId, image).then(response => {
+      console.log(fd)
+      uploadLocalImages(this.clubId, fd).then(response => {
+        console.log(response)
         this.imgsUrl = response.data
-        // this.$message.success('上传成功')
+        this.$message.success('上传成功')
       })
       // 调用接口
       // await postCarousel(this.clubId, this.imgsUrl).then(response => {

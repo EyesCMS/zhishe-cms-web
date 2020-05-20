@@ -350,10 +350,7 @@ export function uploadLocalImages(clubId, data) {
   return request({
     url: `/clubs/${clubId}/pictures`,
     method: 'post',
-    params: data,
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
+    data
   })
 }
 
