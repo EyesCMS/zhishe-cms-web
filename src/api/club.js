@@ -377,6 +377,22 @@ export function getSignInInfo(clubId) {
   })
 }
 
+// 获取用户积分信息
+export function getUserScore(clubId) {
+  return request({
+    url: `/credit/${clubId}/userhonor`,
+    method: 'get'
+  })
+}
+
+// 获取社团积分信息
+export function getClubScore(clubId) {
+  return request({
+    url: `/credit/${clubId}/clubhonor`,
+    method: 'get'
+  })
+}
+
 // POST /clubs/:clubId/pictures
 export function postCarousel(clubId, data) {
   return request({

@@ -84,18 +84,24 @@
             <el-row>
               <el-col :span="6">
                 <el-avatar :size="50" :src="avatar" />
-                <el-tag>冒泡</el-tag>
+                <el-tag>{{ userInfo.grade }}</el-tag>
               </el-col>
               <el-col :span="14">
                 <div>
+                  <el-tooltip class="item" effect="dark" placement="top-start">
+                    <div slot="content">多行信息<br>第二行信息</div>
+                    <el-link type="primary">积分规则</el-link>
+                  </el-tooltip>
+                  <p />
                   <div class="progress-item">
-                    <span>积分</span>
-                    <el-progress :percentage="percentage" />
+                    <span>积分：{{ userInfo.score }}</span>
+                    <el-progress :percentage="userInfo.percentage" />
                   </div>
+                  <!--
                   <div class="progress-item">
                     <span>另一个测试样式</span>
                     <el-progress :percentage="100" status="success" />
-                  </div>
+                  </div>-->
                 </div>
                 <p />
                 <el-button v-if="SignInShow" style="width:80px" type="primary" @click="signIn()">签到</el-button>
@@ -105,17 +111,40 @@
           </el-card>
           <el-card style="margin-top:20px">
             <el-row>
+              <el-col :span="6">
+                <el-avatar :size="50" :src="clubDetail.avatarUrl" />
+                <el-tag>LV{{ clubInfo.grade }}</el-tag>
+              </el-col>
+              <el-col :span="14">
+                <div>
+                  <el-tooltip class="item" effect="dark" placement="top-start">
+                    <div slot="content">多行信息<br>第二行信息</div>
+                    <el-link type="primary">积分规则</el-link>
+                  </el-tooltip>
+                  <p />
+                  <div class="progress-item">
+                    <span>积分：{{ clubInfo.score }}</span>
+                    <el-progress :percentage="clubInfo.percentage" />
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+            <el-card style="margin-top:20px">
+              <!--
+            <el-row>
               <el-col :span="10">
                 <el-avatar :size="50" :src="clubDetail.avatarUrl" />
               </el-col>
               <el-col :span="14">
-                <h3>{{ clubDetail.name }}<el-tag>LV2</el-tag></h3>
+                <h3>{{ clubDetail.name }}<el-tag>LV{{ clubInfo.grade }}</el-tag></h3>
               </el-col>
-            </el-row>
-            <h4>社长：{{ clubDetail.chiefName }}</h4>
-            <h4>成员数：{{ clubDetail.memberCount }}</h4>
-            <h4>QQ群：{{ clubDetail.qqGroup }}</h4>
-            <h4>简介：{{ clubDetail.slogan }}</h4>
+            </el-row>-->
+              <h4>社团名称：{{ clubDetail.name }}</h4>
+              <h4>社长：{{ clubDetail.chiefName }}</h4>
+              <h4>成员数：{{ clubDetail.memberCount }}</h4>
+              <h4>QQ群：{{ clubDetail.qqGroup }}</h4>
+              <h4>简介：{{ clubDetail.slogan }}</h4>
+            </el-card>
           </el-card>
           <el-button
             v-show="isMember()"
@@ -165,6 +194,7 @@ import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
 import { getSignInInfo } from '@/api/club'
+import { getUserScore, getClubScore } from '@/api/club'
 import { signIn } from '@/api/club'
 import { quitClub } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
@@ -182,7 +212,17 @@ export default {
   },
   data() {
     return {
-      percentage: 70,
+      // 暂时死数据
+      userInfo: {
+        percentage: 30,
+        score: 6,
+        grade: '冒泡'
+      },
+      clubInfo: {
+        percentage: 40,
+        score: 8,
+        grade: 1
+      },
       SignInShow: true,
       avatar: this.$store.getters.avatar,
       userId: this.$store.getters.userId,
@@ -224,6 +264,8 @@ export default {
     this.getInvitationsList()
     this.getClubDetail()
     this.getSignInInfo()
+    this.getUserScore()
+    this.getClubScore()
   },
   methods: {
     getClubImgs() {
@@ -317,6 +359,26 @@ export default {
           }
         } else {
           return this.$message.error('获取签到信息失败')
+        }
+      })
+    },
+    getUserScore() {
+      getUserScore(this.clubId).then(response => {
+        if (response.status === 200) {
+          console.log(response)
+          this.userInfo = response.data
+        } else {
+          return this.$message.error('获取用户积分信息失败')
+        }
+      })
+    },
+    getClubScore() {
+      getClubScore(this.clubId).then(response => {
+        if (response.status === 200) {
+          console.log(response)
+          this.clubInfo = response.data
+        } else {
+          return this.$message.error('获取社团积分信息失败')
         }
       })
     }
