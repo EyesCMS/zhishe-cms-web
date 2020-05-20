@@ -64,7 +64,7 @@
               </el-form>
             </div>
           </el-card>
-          <div id="chartLineBox" style="width: 100%;height: 70vh;margin-top: 10px;" />
+          <div id="chartLineBox" style="width: 200%;height: 70vh;margin-top: 10px;" />
         </el-col>
       </el-row>
       <el-row>
@@ -82,14 +82,16 @@
           <el-col :span="20">
             <div style="padding: 10px;border-left:1px solid #DCDFE6">
               <div style="text-align:center">
-                <div id="pieBox" style="float:middle;width:800%;height: 300px" />
+                <div id="pieBox" style="width: 1200%;height: 300px" />
               </div>
             </div>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="20">
-            <el-button type="primary" @click="newUsers()">注册人数统计</el-button>
+            <div style="text-align:center">
+              <el-button type="primary" @click="newUsers()">注册人数统计</el-button>
+            </div>
           </el-col>
         </el-row>
       </div>
@@ -198,11 +200,12 @@ export default {
     getClubSpecie() {
       this.Loading = true
       getClubSpecie(this.loading).then(response => {
-        if (response.status === 200) {
+        if (response.data.status === 200) {
           this.clubSpecie.clubSpecies = response.data.clubSpecies
           this.clubSpecie.clubSpeciesNumber = response.data.clubSpeciesNumber
         }
       })
+      this.showPie()
     },
     // 生成折线图
     showChartLine() {
@@ -262,7 +265,6 @@ export default {
     },
     // 生成饼图
     showPie() {
-      this.getClubSpecie()
       this.pie = echarts.init(document.getElementById('pieBox'))
       this.pie.setOption({
         title: {
@@ -305,7 +307,7 @@ export default {
     clubSpecies() {
       this.newUsersVisible = false
       this.clubSpeciesVisible = true
-      this.showPie()
+      this.getClubSpecie()
     },
     newUsers() {
       this.clubSpeciesVisible = false
