@@ -88,10 +88,7 @@
               </el-col>
               <el-col :span="14">
                 <div>
-                  <el-tooltip class="item" effect="dark" placement="top-start">
-                    <div slot="content">多行信息<br>第二行信息</div>
-                    <el-link type="primary">积分规则</el-link>
-                  </el-tooltip>
+                  <el-link type="primary" @click="getUserScoreDetail()">积分规则</el-link>
                   <p />
                   <div class="progress-item">
                     <span>积分：{{ userInfo.score }}</span>
@@ -155,6 +152,30 @@
         </el-col>
       </el-row>
     </el-card>
+    <!-- 积分规则-->
+    <el-dialog
+      :visible.sync="scoreShow"
+      width="50%"
+      center
+      modal
+    >
+      <h2 style="text-align:center;margin-bottom:50px;font-family:'微软雅黑';font-size:32px;font-weight:lighter;">
+        成员积分规则
+      </h2>
+      <el-card style="margin: 30px 15px 30px 30px">
+        <div>
+          <p v-for="item in UserScoreDetailList" :key="item.grade">
+            {{ item.grade }}:{{ item.lowerlimit }}~{{ item.upperlimit }}
+          </p>
+        </div>
+      </el-card>
+      <div style="text-align:center">
+        <el-button
+          type="primary"
+          @click="scoreShow = false"
+        >确 定</el-button>
+      </div>
+    </el-dialog>
     <!-- 公告详情对话框 -->
     <el-dialog title="公告" :visible.sync="bulletinDetailDialogVisible" width="70%" center modal>
       <h2 style="text-align:center;margin-bottom:50px">{{ bulletin.title }}</h2>
@@ -194,7 +215,7 @@ import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
 import { getSignInInfo } from '@/api/club'
-import { getUserScore, getClubScore } from '@/api/club'
+import { getUserScore, getClubScore, getUserScoreDetail } from '@/api/club'
 import { signIn } from '@/api/club'
 import { quitClub } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
@@ -223,6 +244,8 @@ export default {
         score: 8,
         grade: 1
       },
+      UserScoreDetailList: [],
+      scoreShow: false,
       SignInShow: true,
       avatar: this.$store.getters.avatar,
       userId: this.$store.getters.userId,
@@ -314,8 +337,6 @@ export default {
       await quitClub(param).then(response => {
         if (response.status === 201) {
           this.$message.success('退出社团成功')
-          // console.log('123' + response.data)
-          // console.log('公告是' + this.bulletin)
         } else {
           return this.$message.error('退出社团失败')
         }
@@ -353,7 +374,7 @@ export default {
     getSignInInfo() {
       getSignInInfo(this.clubId).then(response => {
         if (response.status === 200) {
-          if (response.data.status === 1) {
+          if (response.data.state === 1) {
             this.SignInShow = true
           } else {
             this.SignInShow = false
@@ -380,6 +401,17 @@ export default {
           this.clubInfo = response.data
         } else {
           return this.$message.error('获取社团积分信息失败')
+        }
+      })
+    },
+    getUserScoreDetail() {
+      this.scoreShow = true
+      getUserScoreDetail().then(response => {
+        if (response.status === 200) {
+          console.log(response)
+          this.UserScoreDetailList = response.data.items
+        } else {
+          return this.$message.error('获取用户积分规则失败')
         }
       })
     }

@@ -393,6 +393,14 @@ export function getClubScore(clubId) {
   })
 }
 
+// 获取用户积分规则
+export function getUserScoreDetail() {
+  return request({
+    url: `/credit/userhonor`,
+    method: 'get'
+  })
+}
+
 // POST /clubs/:clubId/pictures
 export function postCarousel(clubId, data) {
   return request({
