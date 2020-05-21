@@ -235,6 +235,7 @@ export default {
         console.log('@club forum-mamage getForumsList response')
         // console.log(response)
         this.forumsList = response.data.items
+        this.total = response.data.totalCount
         this.forumsList.forEach(element => {
           element['query'] = {
             page: 1,

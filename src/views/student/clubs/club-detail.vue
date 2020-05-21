@@ -217,7 +217,7 @@ export default {
       })
     },
     pushToActivityDetail(id) {
-      this.$router.push({ path: '/forum/activityDetail', query: { id: id } })
+      this.$router.push({ path: '/forum/activityDetail', query: { id: id }})
     },
     getClubScore() {
       getClubScore(this.$route.query.id).then(response => {

@@ -26,7 +26,7 @@
               >
                 <account :clubinfo="clubInfo" />
               </el-tab-pane>
-              <el-tab-pane label="相册展示" name="carousel" @tab-click="getClubImgs">
+              <el-tab-pane label="相册展示" name="carousel">
                 <p>选择图片上传相册</p>
 
                 <el-upload
@@ -40,9 +40,7 @@
                 >
                   <i class="el-icon-plus" />
                 </el-upload>
-                <el-dialog v-for="(index, item) in carouselImgList" :key="index">
-                  <img width="100%" :src="item" alt="社团图片">
-                </el-dialog>
+                <img v-for="(index, item) in carouselImgList" :key="index" width="100%" :src="item" alt="社团图片">
                 <el-button @click="addEnsure">确定上传</el-button>
               </el-tab-pane>
             </el-tabs>
@@ -61,6 +59,9 @@ import { uploadLocalImages } from '@/api/club'
 import UserCard from './components/UserCard'
 import Account from './components/Account'
 import { listClubImgs } from '@/api/club'
+import clubImg1 from '@/assets/images/club1.jpg'
+import clubImg2 from '@/assets/images/club2.jpeg'
+import clubImg3 from '@/assets/images/club3.jpeg'
 // import { config } from '@vue/test-utils'
 
 export default {
@@ -84,12 +85,17 @@ export default {
       headers: {
         'Content-Type': 'multipart/form-data'
       },
-      carouselImgList: [],
+      carouselImgList: [
+        clubImg1,
+        clubImg2,
+        clubImg3
+      ],
       uploadComplete: true // 图片上传完成状态
     }
   },
   created() {
     this.getClubDetial()
+    this.getClubImgs()
   },
   methods: {
     getClubImgs() {
