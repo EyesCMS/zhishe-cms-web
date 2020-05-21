@@ -130,7 +130,9 @@ export default {
       clubSpecie: {
         clubSpecies: [],
         clubSpeciesNumber: []
-      }
+      },
+      tolerationSD: '',
+      tolerationED: ''
     }
   },
   created() {
@@ -155,6 +157,8 @@ export default {
     var endD = ''
     endD = nowD2.year + '-' + nowD2.month + '-' + nowD2.date1
     startD = nowD4.year + '-' + nowD4.month + '-' + nowD4.date1
+    this.tolerationSD = startD
+    this.tolerationED = endD
     const first = {
       startDate: startD,
       endDate: endD
@@ -185,9 +189,21 @@ export default {
     // 获取每日新注册用户数
     getNewUser() {
       this.Loading = true
+      var sD = ''
+      var eD = ''
+      if (this.form.startDate === '') {
+        sD = this.tolerationSD
+      } else {
+        sD = this.form.startDate
+      }
+      if (this.form.endDate === '') {
+        eD = this.tolerationED
+      } else {
+        eD = this.form.endDate
+      }
       const param = {
-        startDate: this.form.startDate,
-        endDate: this.form.endDate
+        startDate: sD,
+        endDate: eD
       }
       getNewUser(param).then(response => {
         if (response.status === 200) {
