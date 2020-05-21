@@ -127,7 +127,7 @@ export const asyncRoutes = [
       {
         path: '/clubDetail',
         name: 'ClubDetail',
-        component: () => import('@/views/student/club-detail/index'),
+        component: () => import('@/views/student/clubs/club-detail'),
         meta: { title: '社团详情', noCache: true, roles: ['student'] },
         hidden: true
       },

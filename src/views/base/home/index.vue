@@ -1,22 +1,5 @@
 <template>
   <div>
-    <!--    <el-button-->
-    <!--      type="primary"-->
-    <!--      @click="chief"-->
-    <!--    >切换到chief</el-button>-->
-    <!--    <el-button-->
-    <!--      type="primary"-->
-    <!--      @click="member"-->
-    <!--    >切换到clubMember</el-button>-->
-    <!--    <el-button-->
-    <!--      type="primary"-->
-    <!--      @click="student"-->
-    <!--    >切换到student</el-button>-->
-    <!--    <el-button-->
-    <!--      type="primary"-->
-    <!--      @click="admin"-->
-    <!--    >切换到admin</el-button>-->
-    <!-- 社团风采走马灯 -->
     <div class="carousel">
       <el-carousel
         :interval="4000"
@@ -60,46 +43,13 @@
                 社长：{{ item.chiefName }}
               </div>
               <div class="bottom">
-                <button @click="getClubDetail(item.id)">查看详情</button>
+                <button @click="LookForDetail(item.id,item.name,item.chiefName,item.avatarUrl)">查看详情</button>
               </div>
             </div>
           </div>
         </el-col>
       </el-row>
     </div>
-    <el-dialog
-      :visible.sync="bulletinDetailDialogVisible"
-      width="50%"
-      center
-      modal
-    >
-      <h2 style="text-align:center;margin-bottom:50px;font-family:'微软雅黑';font-size:32px;font-weight:lighter;">
-        {{ clubDetail.name }}
-      </h2>
-      <el-card style="margin: 30px 15px 30px 30px">
-        <div>
-          <el-form
-            :model="clubDetail"
-            label-position="left"
-            label-width="300px"
-          >
-            <el-form-item label="社长">{{ clubDetail.chiefName }}</el-form-item>
-            <el-divider />
-            <el-form-item label="社团人数">{{ clubDetail.memberCount }}</el-form-item>
-            <el-divider />
-            <el-form-item label="社团Q群">{{ clubDetail.qqGroup }}</el-form-item>
-            <el-divider />
-            <el-form-item label="社团简介">{{ clubDetail.slogan }}</el-form-item>
-          </el-form>
-        </div>
-      </el-card>
-      <div style="text-align:center">
-        <el-button
-          type="primary"
-          @click="bulletinDetailDialogVisible = false"
-        >确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -180,7 +130,19 @@ export default {
         }
         // console.log(response.data.roles[0])
       })
-    }
+    },
+    // 跳转到社团信息详细页面
+    LookForDetail(id, name, chiefName, avatarUrl) {
+      this.$router.push({
+        path: '/clubDetail',
+        query: {
+          id: id,
+          name: name,
+          chiefName: chiefName,
+          avatarUrl: avatarUrl
+        }
+      })
+    },
   }
 }
 </script>

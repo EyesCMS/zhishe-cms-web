@@ -294,7 +294,7 @@ export default {
         keyword: '',
         page: 1,
         limit: 5,
-        type: window.sessionStorage.getItem('roles') === 'chief' ? 1 : 0,
+        type: 0,
         sort: 'created_at',
         order: 'desc'
       },
@@ -337,7 +337,7 @@ export default {
         this.forumsList.forEach(element => {
           element['query'] = {
             page: 1,
-            limit: 5
+            limit: 100
           }
           element['remark'] = {
             items: null,

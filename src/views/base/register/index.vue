@@ -4,7 +4,7 @@
       ref="ruleForm"
       :model="ruleForm"
       :rules="rules"
-      label-width="100px"
+      label-width="20%"
       class="Form"
     >
       <el-link
@@ -16,13 +16,19 @@
         label="用户名"
         prop="username"
       >
-        <el-input v-model="ruleForm.username" style="width:500px;" />
+        <el-input
+          v-model="ruleForm.username"
+          style="width:75%;"
+        />
       </el-form-item>
       <el-form-item
         label="昵称"
         prop="nickname"
       >
-        <el-input v-model="ruleForm.nickname" style="width:500px;" />
+        <el-input
+          v-model="ruleForm.nickname"
+          style="width:75%;"
+        />
       </el-form-item>
       <el-form-item
         label="密码"
@@ -32,7 +38,7 @@
           v-model="ruleForm.password"
           type="password"
           placeholder="至少6位密码"
-          style="width:500px;"
+          style="width:75%;"
         />
       </el-form-item>
       <el-form-item
@@ -42,38 +48,53 @@
         <el-input
           v-model="ruleForm.password2"
           type="password"
-          style="width:500px;"
+          style="width:75%;"
         />
       </el-form-item>
       <el-form-item
         label="密保问题"
         prop="question"
       >
-        <el-input v-model="ruleForm.question" style="width:500px;" />
+        <el-input
+          v-model="ruleForm.question"
+          style="width:75%;"
+        />
       </el-form-item>
       <el-form-item
         label="密保回答"
         prop="answer"
       >
-        <el-input v-model="ruleForm.answer" style="width:500px;" />
+        <el-input
+          v-model="ruleForm.answer"
+          style="width:75%;"
+        />
       </el-form-item>
       <el-form-item
         label="专业"
         prop="major"
       >
-        <el-input v-model="ruleForm.major" style="width:500px;" />
+        <el-input
+          v-model="ruleForm.major"
+          style="width:75%;"
+        />
       </el-form-item>
       <el-form-item
         label="电话"
         prop="phone"
       >
-        <el-input v-model="ruleForm.phone" style="width:500px;" />
+        <el-input
+          v-model="ruleForm.phone"
+          style="width:75%;"
+        />
       </el-form-item>
       <el-form-item
         label="邮箱"
         prop="email"
       >
-        <el-input v-model="ruleForm.email" style="width:500px;" />
+        <el-input
+          v-model="ruleForm.email"
+          style="width:75%;"
+        />
       </el-form-item>
       <div style="text-align:center">
         <el-button
