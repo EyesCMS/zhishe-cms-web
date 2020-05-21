@@ -201,6 +201,7 @@ export default {
     getClubImgs() {
       listClubImgs(this.clubId).then(response => {
         this.carouselImgList = response.data
+        this.solveImgs(this.carouselImgList)
       })
     },
     getInvitationsList() {
@@ -245,6 +246,18 @@ export default {
     },
     back() {
       this.$router.go(-1)
+    },
+    solveImgs(carouselImgList) {
+      for (var i = 0; i < carouselImgList.length; ++i) {
+        if (carouselImgList[i] === null) {
+          carouselImgList.remove(carouselImgList[i])
+        }
+      }
+      if (carouselImgList.length === 0) {
+        carouselImgList.push(clubImg1)
+        carouselImgList.push(clubImg2)
+        carouselImgList.push(clubImg3)
+      }
     }
   }
 }

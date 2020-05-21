@@ -40,8 +40,18 @@
                 >
                   <i class="el-icon-plus" />
                 </el-upload>
-                <img v-for="(index, item) in carouselImgList" :key="index" width="100%" :src="item" alt="社团图片">
-                <el-button @click="addEnsure">确定上传</el-button>
+                <div style="text-align:center;margin-top:20px">
+                  <el-button type="primary" @click="addEnsure">确定上传</el-button>
+                </div>
+                <div style="margin-top:20px">
+                  <p>已上传图片</p>
+                  <el-image v-for="(index, item) in carouselImgList" :key="index" :src="item" :fit="cover" style="width: 100px; height: 100px">
+                    <div slot="error" class="image-slot">
+                      <i class="el-icon-picture-outline" />
+                    </div>
+                  </el-image>
+                  <!-- <img   width="100%"  alt="社团图片"> -->
+                </div>
               </el-tab-pane>
             </el-tabs>
           </el-card>
