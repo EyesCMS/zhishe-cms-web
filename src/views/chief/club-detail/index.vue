@@ -45,8 +45,9 @@
                 </div>
                 <div style="margin-top:20px">
                   <p>已上传图片</p>
-                  <el-image v-for="(index, item) in carouselImgList" :key="index" :src="item" :fit="cover" style="width: 100px; height: 100px">
+                  <el-image v-for="(item, index) in carouselImgList" :key="index" :src="item" :fit="cover" style="width: 100px; height: 100px">
                     <div slot="error" class="image-slot">
+                      {{ item }}
                       <i class="el-icon-picture-outline" />
                     </div>
                   </el-image>
@@ -110,7 +111,9 @@ export default {
   methods: {
     getClubImgs() {
       listClubImgs(this.clubId).then(response => {
+        console.log(response.data)
         this.carouselImgList = response.data
+        console.log(this.carouselImgList)
       })
     },
     getClubDetial() {
@@ -192,6 +195,7 @@ export default {
         console.log(response)
         this.imgsUrl = response.data
         this.$message.success('上传成功')
+        this.getClubImgs()
       })
       // 调用接口
       // await postCarousel(this.clubId, this.imgsUrl).then(response => {
@@ -204,3 +208,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.el-image{
+  margin-left: 20px;
+}
+</style>
