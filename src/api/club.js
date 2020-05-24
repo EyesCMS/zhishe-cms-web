@@ -401,6 +401,14 @@ export function getUserScoreDetail() {
   })
 }
 
+// 获取社团积分规则
+export function getClubScoreDetail() {
+  return request({
+    url: `/credit/clubhonor`,
+    method: 'get'
+  })
+}
+
 // POST /clubs/:clubId/pictures
 export function postCarousel(clubId, data) {
   return request({

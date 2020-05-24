@@ -114,10 +114,7 @@
               </el-col>
               <el-col :span="14">
                 <div>
-                  <el-tooltip class="item" effect="dark" placement="top-start">
-                    <div slot="content">多行信息<br>第二行信息</div>
-                    <el-link type="primary">积分规则</el-link>
-                  </el-tooltip>
+                  <el-link type="primary" @click="getClubScoreDetail()">积分规则</el-link>
                   <p />
                   <div class="progress-item">
                     <span>积分：{{ clubInfo.score }}</span>
@@ -127,15 +124,6 @@
               </el-col>
             </el-row>
             <el-card style="margin-top:20px">
-              <!--
-            <el-row>
-              <el-col :span="10">
-                <el-avatar :size="50" :src="clubDetail.avatarUrl" />
-              </el-col>
-              <el-col :span="14">
-                <h3>{{ clubDetail.name }}<el-tag>LV{{ clubInfo.grade }}</el-tag></h3>
-              </el-col>
-            </el-row>-->
               <h4>社团名称：{{ clubDetail.name }}</h4>
               <h4>社长：{{ clubDetail.chiefName }}</h4>
               <h4>成员数：{{ clubDetail.memberCount }}</h4>
@@ -152,9 +140,9 @@
         </el-col>
       </el-row>
     </el-card>
-    <!-- 积分规则-->
+    <!-- 成员积分规则-->
     <el-dialog
-      :visible.sync="scoreShow"
+      :visible.sync="userScoreShow"
       width="50%"
       center
       modal
@@ -172,7 +160,31 @@
       <div style="text-align:center">
         <el-button
           type="primary"
-          @click="scoreShow = false"
+          @click="userScoreShow = false"
+        >确 定</el-button>
+      </div>
+    </el-dialog>
+    <!-- 社团积分规则-->
+    <el-dialog
+      :visible.sync="clubScoreShow"
+      width="50%"
+      center
+      modal
+    >
+      <h2 style="text-align:center;margin-bottom:50px;font-family:'微软雅黑';font-size:32px;font-weight:lighter;">
+        社团积分规则
+      </h2>
+      <el-card style="margin: 30px 15px 30px 30px">
+        <div>
+          <p v-for="item in ClubScoreDetailList" :key="item.grade">
+            {{ item.grade }}:{{ item.lowerlimit }}~{{ item.upperlimit }}
+          </p>
+        </div>
+      </el-card>
+      <div style="text-align:center">
+        <el-button
+          type="primary"
+          @click="clubScoreShow = false"
         >确 定</el-button>
       </div>
     </el-dialog>
@@ -215,7 +227,7 @@ import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
 import { getSignInInfo } from '@/api/club'
-import { getUserScore, getClubScore, getUserScoreDetail } from '@/api/club'
+import { getUserScore, getClubScore, getUserScoreDetail, getClubScoreDetail } from '@/api/club'
 import { signIn } from '@/api/club'
 import { quitClub } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
@@ -245,7 +257,9 @@ export default {
         grade: 1
       },
       UserScoreDetailList: [],
-      scoreShow: false,
+      ClubScoreDetailList: [],
+      userScoreShow: false,
+      clubScoreShow: false,
       SignInShow: true,
       avatar: this.$store.getters.avatar,
       userId: this.$store.getters.userId,
@@ -365,6 +379,7 @@ export default {
       signIn(this.clubId).then(response => {
         if (response.status === 201) {
           this.SignInShow = false
+          this.getUserScore()
           return this.$message.success('签到成功')
         } else {
           return this.$message.error('签到失败')
@@ -405,13 +420,24 @@ export default {
       })
     },
     getUserScoreDetail() {
-      this.scoreShow = true
+      this.userScoreShow = true
       getUserScoreDetail().then(response => {
         if (response.status === 200) {
           console.log(response)
           this.UserScoreDetailList = response.data.items
         } else {
           return this.$message.error('获取用户积分规则失败')
+        }
+      })
+    },
+    getClubScoreDetail() {
+      this.clubScoreShow = true
+      getClubScoreDetail().then(response => {
+        if (response.status === 200) {
+          console.log(response)
+          this.ClubScoreDetailList = response.data.items
+        } else {
+          return this.$message.error('获取社团积分规则失败')
         }
       })
     }
