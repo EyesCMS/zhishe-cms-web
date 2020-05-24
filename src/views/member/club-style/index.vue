@@ -306,10 +306,11 @@ export default {
     this.getClubScore()
   },
   methods: {
-    getClubImgs() {
-      listClubImgs(this.clubId).then(response => {
+    async getClubImgs() {
+      await listClubImgs(this.clubId).then(response => {
         this.carouselImgList = response.data
       })
+      this.solveImgs(this.carouselImgList)
     },
     getBulletinsList() {
       listBulletins(this.clubId, this.queryInfo).then(response => {
@@ -440,6 +441,33 @@ export default {
           return this.$message.error('获取社团积分规则失败')
         }
       })
+    },
+    solveImgs(carouselImgList) {
+      // const tmp = []
+      // 清除数组中的null
+      console.log(carouselImgList.length)
+      for (var i = 0; i < carouselImgList.length; i++) {
+        console.log(i)
+        if (carouselImgList[i] == null) {
+          carouselImgList.splice(i, 1)
+          i--
+        }
+      }
+
+      // 如果长度小于3，则补至3
+      if (carouselImgList.length === 0) {
+        carouselImgList.push(clubImg1)
+        carouselImgList.push(clubImg2)
+        carouselImgList.push(clubImg3)
+      }
+      if (carouselImgList.length === 1) {
+        carouselImgList.push(clubImg1)
+        carouselImgList.push(clubImg2)
+      }
+      if (carouselImgList.length === 2) {
+        carouselImgList.push(clubImg1)
+      }
+      console.log(carouselImgList)
     }
   }
 }
