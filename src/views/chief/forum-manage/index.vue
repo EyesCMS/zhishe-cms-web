@@ -1,18 +1,12 @@
 <template>
   <div>
-    <!-- 我的帖子button -->
-    <div
-      v-show="btnShow"
-      style="text-align:center"
-    >
-      <el-button
-        style="margin-top:20px;"
-        type="primary"
-        @click="myForum"
-      >我的帖子</el-button>
-    </div>
     <!-- 帖子部分 -->
     <el-card style="margin-top:20px">
+      <p
+        style="margin-top:10px;color:blue;float:right;cursor:pointer"
+        type="primary"
+        @click="myForum"
+      >我的帖子></p>
       <div
         v-for="(item, key) in forumsList"
         :key="key"
@@ -118,7 +112,7 @@
             />
           </p>
           <el-badge
-            :value="23"
+            :value="item.likeCount"
             :max="99"
             class="item"
           >
@@ -233,8 +227,9 @@ export default {
     getForumsList() {
       getForumList(this.queryInfo, this.originState).then(response => {
         console.log('@club forum-mamage getForumsList response')
-        // console.log(response)
+        console.log(response)
         this.forumsList = response.data.items
+        this.total = response.data.totalCount
         this.forumsList.forEach(element => {
           element['query'] = {
             page: 1,
@@ -248,7 +243,7 @@ export default {
           this.getUserLike(element)
           this.getRemarkList(element)
         })
-        console.log(this.forumsList)
+        // console.log(this.forumsList)
         // this.total = response.data.totalCount
         // return response.data.items
       })
@@ -304,6 +299,8 @@ export default {
       })
     },
     likeForum(element) {
+      element.likeCount++
+      this.$forceUpdate()
       const data = { likedPostId: element.id }
       like(data).then(response => {
         // console.log('@likeForum response:')
@@ -313,6 +310,8 @@ export default {
       })
     },
     unlikeForum(element) {
+      element.likeCount--
+      this.$forceUpdate()
       const data = { likedPostId: element.id }
       unlike(data).then(response => {
         // console.log('@unlikeForum response:')

@@ -1,23 +1,33 @@
 <template>
   <div>
     <!-- 发布活动的button -->
-    <div
+    <!-- <div
       v-show="btnShow"
       style="text-align:center"
     >
-      <el-button
-        style="margin-top:20px;"
+      <p
+        style="margin-top:20px;color:blue;float:left;"
         type="primary"
         @click="back"
-      >返回</el-button>
-      <el-button
-        style="margin-top:20px;"
+      >&lt;返回</p>
+      <p
+        style="margin-top:20px;color:blue;float:right;"
         type="primary"
         @click="addForum"
-      >发布动态</el-button>
-    </div>
+      >发布动态</p>
+    </div> -->
     <!-- 帖子部分 -->
     <el-card style="margin-top:20px">
+      <p
+        style="margin-top:10px;color:blue;float:left;cursor:pointer"
+        type="primary"
+        @click="back"
+      >&lt;返回</p>
+      <p
+        style="margin-top:10px;color:blue;float:right;cursor:pointer"
+        type="primary"
+        @click="addForum"
+      >发布动态</p>
       <div
         v-for="(item, key) in forumsList"
         :key="key"
@@ -98,7 +108,7 @@
         </el-row>
         <el-row>
           <el-badge
-            :value="23"
+            :value="item.likeCount"
             class="item"
           >
             <p style="display: inline;float:right;cursor:pointer">
@@ -334,6 +344,7 @@ export default {
         // console.log('@club forum-mamage getForumsList response')
         // console.log(response)
         this.forumsList = response.data.items
+        this.total = response.data.totalCount
         this.forumsList.forEach(element => {
           element['query'] = {
             page: 1,
