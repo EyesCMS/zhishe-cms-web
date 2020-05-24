@@ -123,22 +123,72 @@ export default {
         dismissNumber: '',
         identifyNumber: ''
       },
-      newUser: {
-        date: [],
-        newUsers: []
-      },
       clubSpecie: {
         clubSpecies: [],
         clubSpeciesNumber: []
       },
       tolerationSD: '',
-      tolerationED: ''
+      tolerationED: '',
+      option: {
+        tooltip: { // 设置tip提示
+          trigger: 'axis'
+        },
+        legend: { // 设置区分（哪条线属于什么）
+          data: ['注册人数']
+        },
+        color: ['#8AE09F'], // 设置区分（每条线是什么颜色，和 legend 一一对应）
+        xAxis: { // 设置x轴
+          type: 'category',
+          boundaryGap: false, // 坐标轴两边不留白
+          data: [],
+          name: '日期', // X轴 name
+          nameTextStyle: { // 坐标轴名称的文字样式
+            color: '#FA6F53',
+            fontSize: 16,
+            padding: [0, 0, 0, 20]
+          },
+          axisLine: { // 坐标轴轴线相关设置。
+            lineStyle: {
+              color: '#FA6F53'
+            }
+          }
+        },
+        yAxis: {
+          name: '注册人数',
+          nameTextStyle: {
+            color: '#FA6F53',
+            fontSize: 16,
+            padding: [0, 0, 10, 0]
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#FA6F53'
+            }
+          },
+          type: 'value'
+        },
+        series: [
+          {
+            name: '注册人数',
+            data: [],
+            type: 'line', // 类型为折线图
+            lineStyle: { // 线条样式 => 必须使用normal属性
+              normal: {
+                color: '#8AE09F'
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  watch: {
+    'option.xAxis.data': function() {
+      this.showChartLine()
     }
   },
   created() {
     this.getUnaudited()
-  },
-  mounted() {
     var nowD1 = new Date()
     var nowD2 = {
       year: nowD1.getFullYear(),
@@ -159,18 +209,12 @@ export default {
     startD = nowD4.year + '-' + nowD4.month + '-' + nowD4.date1
     this.tolerationSD = startD
     this.tolerationED = endD
-    const first = {
-      startDate: startD,
-      endDate: endD
-    }
-    getNewUser(first).then(response => {
-      if (response.status === 200) {
-        this.newUser.date = response.data.date
-        this.newUser.newUsers = response.data.newUsers
-      }
-    })
-    this.showChartLine()
+    this.getNewUser()
     this.getClubSpecie()
+  },
+  updated() {
+    this.showChartLine()
+    this.showPie()
   },
   methods: {
     // 获取未审核申请数
@@ -207,11 +251,10 @@ export default {
       }
       getNewUser(param).then(response => {
         if (response.status === 200) {
-          this.newUser.date = response.data.date
-          this.newUser.newUsers = response.data.newUsers
+          this.option.xAxis.data = response.data.date
+          this.option.series[0].data = response.data.newUsers
         }
       })
-      this.showChartLine()
     },
     // 获取各类别社团占比
     getClubSpecie() {
@@ -222,63 +265,12 @@ export default {
           this.clubSpecie.clubSpeciesNumber = response.data.clubSpeciesNumber
         }
       })
-      this.showPie()
     },
     // 生成折线图
     showChartLine() {
       this.chartLine = echarts.init(document.getElementById('chartLineBox'))
+      this.chartLine.setOption(this.option)
       // 指定图表的配置项和数据
-      this.chartLine.setOption({
-        tooltip: { // 设置tip提示
-          trigger: 'axis'
-        },
-        legend: { // 设置区分（哪条线属于什么）
-          data: ['注册人数']
-        },
-        color: ['#8AE09F'], // 设置区分（每条线是什么颜色，和 legend 一一对应）
-        xAxis: { // 设置x轴
-          type: 'category',
-          boundaryGap: false, // 坐标轴两边不留白
-          data: this.newUser.date,
-          name: '日期', // X轴 name
-          nameTextStyle: { // 坐标轴名称的文字样式
-            color: '#FA6F53',
-            fontSize: 16,
-            padding: [0, 0, 0, 20]
-          },
-          axisLine: { // 坐标轴轴线相关设置。
-            lineStyle: {
-              color: '#FA6F53'
-            }
-          }
-        },
-        yAxis: {
-          name: '注册人数',
-          nameTextStyle: {
-            color: '#FA6F53',
-            fontSize: 16,
-            padding: [0, 0, 10, 0]
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#FA6F53'
-            }
-          },
-          type: 'value'
-        },
-        series: [
-          {
-            name: '注册人数',
-            data: this.newUser.newUsers,
-            type: 'line', // 类型为折线图
-            lineStyle: { // 线条样式 => 必须使用normal属性
-              normal: {
-                color: '#8AE09F'
-              }
-            }
-          }
-        ]
-      })
     },
     // 生成饼图
     showPie() {
@@ -325,11 +317,13 @@ export default {
       this.newUsersVisible = false
       this.clubSpeciesVisible = true
       this.getClubSpecie()
+      this.showPie()
     },
     newUsers() {
       this.clubSpeciesVisible = false
       this.newUsersVisible = true
       this.getNewUser()
+      this.showChartLine()
     },
     // 切换折线图日期
     check() {
