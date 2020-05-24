@@ -124,11 +124,28 @@
               </el-col>
             </el-row>
             <el-card style="margin-top:20px">
-              <h4>社团名称：{{ clubDetail.name }}</h4>
-              <h4>社长：{{ clubDetail.chiefName }}</h4>
+              <el-divider>
+                <p style="font-family:'微软雅黑';font-size:22px;font-weight:lighter;">
+                  {{ clubDetail.name }}
+                  <i
+                    v-if="isMember()"
+                    class="el-icon-user"
+                  />
+                  <i
+                    v-else
+                    class="el-icon-edit"
+                    style="cursor:pointer"
+                    @click="edit()"
+                  />
+                </p>
+              </el-divider>
+              <h4>社 长：{{ clubDetail.chiefName }}</h4>
+              <el-divider />
               <h4>成员数：{{ clubDetail.memberCount }}</h4>
-              <h4>QQ群：{{ clubDetail.qqGroup }}</h4>
-              <h4>简介：{{ clubDetail.slogan }}</h4>
+              <el-divider />
+              <h4>QQ 群：{{ clubDetail.qqGroup }}</h4>
+              <el-divider />
+              <h4>简 介：{{ clubDetail.slogan }}</h4>
             </el-card>
           </el-card>
           <el-button
@@ -374,6 +391,9 @@ export default {
     },
     quitClubDialogClosed() {
       this.quitReason = ''
+    },
+    edit() {
+      this.$router.replace('/Detailmanage/Detail')
     },
     signIn() {
       // this.SignInShow = false

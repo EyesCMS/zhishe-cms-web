@@ -1,59 +1,35 @@
 <template>
   <div>
-    <p
-      style="color:blue;margin:3px"
-      @click="back"
-    >返回</p>
     <el-card>
       <el-card style="margin:15px 15px">
         <el-row>
-          <el-avatar
-            style="float:left"
-            :src="detailInfo.avatarUrl"
-          />
+          <el-avatar style="float:left" :src="detailInfo.avatarUrl" />
           <p style="float: left">{{ detailInfo.posterName }}</p>
         </el-row>
         <div style="text-align:center;">
           <p style="font-size:22px;font-weight:bold;">{{ detailInfo.title }}</p>
-          <el-image
-            :src="detailInfo.imgUrl"
-            lazy
-          />
+          <el-image :src="detailInfo.imgUrl" lazy />
           <p>{{ detailInfo.content }}</p>
           <p>{{ detailInfo.createAt }}</p>
         </div>
         <div style="text-align:center;">
-          <el-button
-            v-if="unlikeShow"
-            type="info"
-            icon="el-icon-star-off"
-            circle
-            @click="like()"
-          />
-          <el-button
-            v-else
-            type="danger"
-            icon="el-icon-star-off"
-            circle
-            @click="unlike()"
-          />
+          <el-badge :value="detailInfo.likeCount" class="item" type="warning">
+            <el-button
+              v-if="unlikeShow"
+              type="info"
+              icon="el-icon-star-off"
+              @click="like()"
+            />
+            <el-button v-else type="danger" icon="el-icon-star-off" @click="unlike()" />
+          </el-badge>
         </div>
       </el-card>
 
       <!-- 评论区 -->
-      <el-card
-        id="comment"
-        style="margin:15px 15px"
-      >
-        <div
-          v-for="(item, index) in remarksList"
-          :key="index"
-        >
+      <el-card id="comment" style="margin:15px 15px">
+        <div v-for="(item, index) in remarksList" :key="index">
           <el-row>
-            <el-avatar
-              style="float:left"
-              :src="item.avatarUrl"
-            />
+            <el-avatar style="float:left" :src="item.avatarUrl" />
             <p style="float: left;margin-left:5px">{{ item.nickname }}</p>
           </el-row>
           <p>{{ item.content }}</p>
@@ -77,11 +53,7 @@
           />
         </el-row>
         <el-row style="margin-top:15px">
-          <el-button
-            id="postButton"
-            type="primary"
-            @click="postComment"
-          >发表</el-button>
+          <el-button id="postButton" type="primary" @click="postComment">发表</el-button>
         </el-row>
       </el-card>
     </el-card>
@@ -117,15 +89,7 @@ export default {
       detailQuery: {
         type: 1
       },
-      detailInfo: {
-        // id: '',
-        posterName: '',
-        avatarUrl: '',
-        title: '',
-        content: '',
-        imgUrl: '',
-        createAt: ''
-      },
+      detailInfo: {},
       remarksList: [],
       // 评论条数
       remarksTotal: 0,
@@ -143,12 +107,7 @@ export default {
     // 获取帖子详情
     getInvitationDetail() {
       getInvitationDetail(this.id, this.detailQuery).then(response => {
-        this.detailInfo.posterName = response.data.posterName
-        this.detailInfo.avatarUrl = response.data.avatarUrl
-        this.detailInfo.title = response.data.title
-        this.detailInfo.content = response.data.content
-        this.detailInfo.imgUrl = response.data.imgUrl
-        this.detailInfo.createAt = response.data.createAt
+        this.detailInfo = response.data
       })
     },
     getRemarksList() {
@@ -199,6 +158,7 @@ export default {
         console.log(response)
         if (response.status === 204) {
           this.unlikeShow = false
+          this.getInvitationDetail()
           return this.$message.success('点赞成功')
         } else {
           return this.$message.error('点赞失败')
@@ -211,6 +171,7 @@ export default {
         console.log(response)
         if (response.status === 204) {
           this.unlikeShow = true
+          this.getInvitationDetail()
           return this.$message.success('取消点赞成功')
         } else {
           return this.$message.error('取消点赞失败')
