@@ -26,7 +26,7 @@
               >
                 <account :clubinfo="clubInfo" />
               </el-tab-pane>
-              <el-tab-pane label="相册展示" name="carousel" @tab-click="getClubImgs">
+              <el-tab-pane label="相册展示" name="carousel">
                 <p>选择图片上传相册</p>
 
                 <el-upload
@@ -40,10 +40,19 @@
                 >
                   <i class="el-icon-plus" />
                 </el-upload>
-                <el-dialog v-for="(index, item) in carouselImgList" :key="index">
-                  <img width="100%" :src="item" alt="社团图片">
-                </el-dialog>
-                <el-button @click="addEnsure">确定上传</el-button>
+                <div style="text-align:center;margin-top:20px">
+                  <el-button type="primary" @click="addEnsure">确定上传</el-button>
+                </div>
+                <div style="margin-top:20px">
+                  <p>已上传图片</p>
+                  <el-image v-for="(item, index) in carouselImgList" :key="index" :src="item" :fit="cover" style="width: 100px; height: 100px">
+                    <div slot="error" class="image-slot">
+                      {{ item }}
+                      <i class="el-icon-picture-outline" />
+                    </div>
+                  </el-image>
+                  <!-- <img   width="100%"  alt="社团图片"> -->
+                </div>
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -61,6 +70,9 @@ import { uploadLocalImages } from '@/api/club'
 import UserCard from './components/UserCard'
 import Account from './components/Account'
 import { listClubImgs } from '@/api/club'
+import clubImg1 from '@/assets/images/club1.jpg'
+import clubImg2 from '@/assets/images/club2.jpeg'
+import clubImg3 from '@/assets/images/club3.jpeg'
 // import { config } from '@vue/test-utils'
 
 export default {
@@ -84,17 +96,24 @@ export default {
       headers: {
         'Content-Type': 'multipart/form-data'
       },
-      carouselImgList: [],
+      carouselImgList: [
+        clubImg1,
+        clubImg2,
+        clubImg3
+      ],
       uploadComplete: true // 图片上传完成状态
     }
   },
   created() {
     this.getClubDetial()
+    this.getClubImgs()
   },
   methods: {
     getClubImgs() {
       listClubImgs(this.clubId).then(response => {
+        console.log(response.data)
         this.carouselImgList = response.data
+        console.log(this.carouselImgList)
       })
     },
     getClubDetial() {
@@ -176,6 +195,7 @@ export default {
         console.log(response)
         this.imgsUrl = response.data
         this.$message.success('上传成功')
+        this.getClubImgs()
       })
       // 调用接口
       // await postCarousel(this.clubId, this.imgsUrl).then(response => {
@@ -188,3 +208,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.el-image{
+  margin-left: 20px;
+}
+</style>

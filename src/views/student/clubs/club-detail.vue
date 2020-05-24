@@ -1,9 +1,10 @@
 <template>
   <div>
+    <!--
     <p
       style="color:blue;margin:3px"
       @click="back"
-    >返回</p>
+    >返回</p>-->
     <el-card>
       <!-- 社团风采走马灯 -->
       <div class="carousel">
@@ -56,18 +57,25 @@
             </el-row>
             <!-- 社团详情简介 -->
             <el-card style="margin-top:20px">
-              <h4>社团名称：{{ clubDetail.name }}</h4>
-              <h4>社长：{{ clubDetail.chiefName }}</h4>
+              <el-divider>
+                <p style="font-family:'微软雅黑';font-size:17px;font-weight:lighter;">
+                  {{ clubDetail.name }}
+                </p>
+              </el-divider>
+              <h4>社 长：{{ clubDetail.chiefName }}</h4>
+              <el-divider />
               <h4>成员数：{{ clubDetail.memberCount }}</h4>
-              <h4>QQ群：{{ clubDetail.qqGroup }}</h4>
-              <h4>简介：{{ clubDetail.slogan }}</h4>
+              <el-divider />
+              <h4>QQ 群：{{ clubDetail.qqGroup }}</h4>
+              <el-divider />
+              <h4>简 介：{{ clubDetail.slogan }}</h4>
             </el-card>
             <p style="color:#9E9E9E;font-family:'微软雅黑';font-size:14px">
               如果你感兴趣的话就
               <el-link
                 type="primary"
                 @click="ApplyToJoin()"
-              >加入我们</el-link> 吧！
+              > 加入我们 </el-link> 吧！
             </p>
           </el-card>
         </el-col>
@@ -166,7 +174,7 @@ export default {
       queryInfo: {
         type: 1,
         page: 1,
-        limit: 10,
+        limit: 5,
         sort: 'updateAt',
         order: 'desc'
       },
@@ -198,10 +206,12 @@ export default {
     this.getClubScore()
   },
   methods: {
-    getClubImgs() {
-      listClubImgs(this.clubId).then(response => {
+    async getClubImgs() {
+      await listClubImgs(this.clubId).then(response => {
         this.carouselImgList = response.data
+        this.solveImgs(this.carouselImgList)
       })
+      this.solveImgs(this.carouselImgList)
     },
     getInvitationsList() {
       getInvitationList(this.clubId, this.queryInfo).then(response => {
@@ -209,7 +219,6 @@ export default {
         this.total = response.data.totalCount
       })
     },
-
     // 获取社团详情
     getClubDetail() {
       getClubDetail(this.clubId).then(response => {
@@ -217,7 +226,7 @@ export default {
       })
     },
     pushToActivityDetail(id) {
-      this.$router.push({ path: '/forum/activityDetail', query: { id: id } })
+      this.$router.push({ path: '/forum/activityDetail', query: { id: id }})
     },
     getClubScore() {
       getClubScore(this.$route.query.id).then(response => {
@@ -245,6 +254,33 @@ export default {
     },
     back() {
       this.$router.go(-1)
+    },
+    solveImgs(carouselImgList) {
+      // const tmp = []
+      // 清除数组中的null
+      console.log(carouselImgList.length)
+      for (var i = 0; i < carouselImgList.length; i++) {
+        console.log(i)
+        if (carouselImgList[i] == null) {
+          carouselImgList.splice(i, 1)
+          i--
+        }
+      }
+
+      // 如果长度小于3，则补至3
+      if (carouselImgList.length === 0) {
+        carouselImgList.push(clubImg1)
+        carouselImgList.push(clubImg2)
+        carouselImgList.push(clubImg3)
+      }
+      if (carouselImgList.length === 1) {
+        carouselImgList.push(clubImg1)
+        carouselImgList.push(clubImg2)
+      }
+      if (carouselImgList.length === 2) {
+        carouselImgList.push(clubImg1)
+      }
+      console.log(carouselImgList)
     }
   }
 }

@@ -3,20 +3,9 @@
     <el-card>
       <!-- 社团风采走马灯 -->
       <div class="carousel">
-        <el-carousel
-          :interval="4000"
-          arrow="always"
-          type="card"
-        >
-          <el-carousel-item
-            v-for="item in carouselImgList"
-            :key="item"
-          >
-            <img
-              style="width:100%"
-              :src="item"
-              alt="item"
-            >
+        <el-carousel :interval="4000" arrow="always" type="card">
+          <el-carousel-item v-for="item in carouselImgList" :key="item">
+            <img style="width:100%" :src="item" alt="item">
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -114,10 +103,7 @@
               </el-col>
               <el-col :span="14">
                 <div>
-                  <el-tooltip class="item" effect="dark" placement="top-start">
-                    <div slot="content">多行信息<br>第二行信息</div>
-                    <el-link type="primary">积分规则</el-link>
-                  </el-tooltip>
+                  <el-link type="primary" @click="getClubScoreDetail()">积分规则</el-link>
                   <p />
                   <div class="progress-item">
                     <span>积分：{{ clubInfo.score }}</span>
@@ -127,20 +113,20 @@
               </el-col>
             </el-row>
             <el-card style="margin-top:20px">
-              <!--
-            <el-row>
-              <el-col :span="10">
-                <el-avatar :size="50" :src="clubDetail.avatarUrl" />
-              </el-col>
-              <el-col :span="14">
-                <h3>{{ clubDetail.name }}<el-tag>LV{{ clubInfo.grade }}</el-tag></h3>
-              </el-col>
-            </el-row>-->
-              <h4>社团名称：{{ clubDetail.name }}</h4>
-              <h4>社长：{{ clubDetail.chiefName }}</h4>
+              <el-divider>
+                <p style="font-family:'微软雅黑';font-size:22px;font-weight:lighter;">
+                  {{ clubDetail.name }}
+                  <i v-if="isMember()" class="el-icon-user" />
+                  <i v-else class="el-icon-edit" style="cursor:pointer" @click="edit()" />
+                </p>
+              </el-divider>
+              <h4>社 长：{{ clubDetail.chiefName }}</h4>
+              <el-divider />
               <h4>成员数：{{ clubDetail.memberCount }}</h4>
-              <h4>QQ群：{{ clubDetail.qqGroup }}</h4>
-              <h4>简介：{{ clubDetail.slogan }}</h4>
+              <el-divider />
+              <h4>QQ 群：{{ clubDetail.qqGroup }}</h4>
+              <el-divider />
+              <h4>简 介：{{ clubDetail.slogan }}</h4>
             </el-card>
           </el-card>
           <el-button
@@ -152,28 +138,40 @@
         </el-col>
       </el-row>
     </el-card>
-    <!-- 积分规则-->
-    <el-dialog
-      :visible.sync="scoreShow"
-      width="50%"
-      center
-      modal
-    >
-      <h2 style="text-align:center;margin-bottom:50px;font-family:'微软雅黑';font-size:32px;font-weight:lighter;">
-        成员积分规则
-      </h2>
-      <el-card style="margin: 30px 15px 30px 30px">
+    <!-- 成员积分规则-->
+    <el-dialog :visible.sync="userScoreShow" width="50%" center modal>
+      <h2
+        style="text-align:center;margin-bottom:30px;font-family:'微软雅黑';font-size:28px;font-weight:lighter;"
+      >成员积分规则</h2>
+      <el-card style="margin: 20px 15px 20px 20px;">
         <div>
-          <p v-for="item in UserScoreDetailList" :key="item.grade">
-            {{ item.grade }}:{{ item.lowerlimit }}~{{ item.upperlimit }}
-          </p>
+          <el-table v-loading="listLoading" :data="UserScoreDetailList" stripe border>
+            <el-table-column label="等级" prop="name" />
+            <el-table-column label="积分下限" prop="lowerLimit" />
+            <el-table-column label="积分上限" prop="upperLimit" />
+          </el-table>
         </div>
       </el-card>
       <div style="text-align:center">
-        <el-button
-          type="primary"
-          @click="scoreShow = false"
-        >确 定</el-button>
+        <el-button type="primary" @click="userScoreShow = false">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!-- 社团积分规则-->
+    <el-dialog :visible.sync="clubScoreShow" width="50%" center modal>
+      <h2
+        style="text-align:center;margin-bottom:30px;font-family:'微软雅黑';font-size:28px;font-weight:lighter;"
+      >社团积分规则</h2>
+      <el-card style="margin: 20px 15px 20px 20px;">
+        <div>
+          <el-table v-loading="listLoading" :data="ClubScoreDetailList" stripe border>
+            <el-table-column label="等级" prop="name" />
+            <el-table-column label="积分下限" prop="lowerLimit" />
+            <el-table-column label="积分上限" prop="upperLimit" />
+          </el-table>
+        </div>
+      </el-card>
+      <div style="text-align:center">
+        <el-button type="primary" @click="clubScoreShow = false">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 公告详情对话框 -->
@@ -215,7 +213,12 @@ import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
 import { getSignInInfo } from '@/api/club'
-import { getUserScore, getClubScore, getUserScoreDetail } from '@/api/club'
+import {
+  getUserScore,
+  getClubScore,
+  getUserScoreDetail,
+  getClubScoreDetail
+} from '@/api/club'
 import { signIn } from '@/api/club'
 import { quitClub } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
@@ -245,7 +248,9 @@ export default {
         grade: 1
       },
       UserScoreDetailList: [],
-      scoreShow: false,
+      ClubScoreDetailList: [],
+      userScoreShow: false,
+      clubScoreShow: false,
       SignInShow: true,
       avatar: this.$store.getters.avatar,
       userId: this.$store.getters.userId,
@@ -258,11 +263,7 @@ export default {
         order: 'desc'
       },
       // 走马灯图片
-      carouselImgList: [
-        clubImg1,
-        clubImg2,
-        clubImg3
-      ],
+      carouselImgList: [clubImg1, clubImg2, clubImg3],
       // 公告列表
       bulletinsList: [],
       // 帖子列表
@@ -292,10 +293,11 @@ export default {
     this.getClubScore()
   },
   methods: {
-    getClubImgs() {
-      listClubImgs(this.clubId).then(response => {
+    async getClubImgs() {
+      await listClubImgs(this.clubId).then(response => {
         this.carouselImgList = response.data
       })
+      this.solveImgs(this.carouselImgList)
     },
     getBulletinsList() {
       listBulletins(this.clubId, this.queryInfo).then(response => {
@@ -360,11 +362,15 @@ export default {
     quitClubDialogClosed() {
       this.quitReason = ''
     },
+    edit() {
+      this.$router.replace('/Detailmanage/Detail')
+    },
     signIn() {
       // this.SignInShow = false
       signIn(this.clubId).then(response => {
         if (response.status === 201) {
           this.SignInShow = false
+          this.getUserScore()
           return this.$message.success('签到成功')
         } else {
           return this.$message.error('签到失败')
@@ -387,7 +393,6 @@ export default {
     getUserScore() {
       getUserScore(this.clubId).then(response => {
         if (response.status === 200) {
-          console.log(response)
           this.userInfo = response.data
         } else {
           return this.$message.error('获取用户积分信息失败')
@@ -405,15 +410,51 @@ export default {
       })
     },
     getUserScoreDetail() {
-      this.scoreShow = true
+      this.userScoreShow = true
       getUserScoreDetail().then(response => {
         if (response.status === 200) {
-          console.log(response)
-          this.UserScoreDetailList = response.data.items
+          this.UserScoreDetailList = response.data
         } else {
           return this.$message.error('获取用户积分规则失败')
         }
       })
+    },
+    getClubScoreDetail() {
+      this.clubScoreShow = true
+      getClubScoreDetail().then(response => {
+        if (response.status === 200) {
+          this.ClubScoreDetailList = response.data
+        } else {
+          return this.$message.error('获取社团积分规则失败')
+        }
+      })
+    },
+    solveImgs(carouselImgList) {
+      // const tmp = []
+      // 清除数组中的null
+      console.log(carouselImgList.length)
+      for (var i = 0; i < carouselImgList.length; i++) {
+        console.log(i)
+        if (carouselImgList[i] == null) {
+          carouselImgList.splice(i, 1)
+          i--
+        }
+      }
+
+      // 如果长度小于3，则补至3
+      if (carouselImgList.length === 0) {
+        carouselImgList.push(clubImg1)
+        carouselImgList.push(clubImg2)
+        carouselImgList.push(clubImg3)
+      }
+      if (carouselImgList.length === 1) {
+        carouselImgList.push(clubImg1)
+        carouselImgList.push(clubImg2)
+      }
+      if (carouselImgList.length === 2) {
+        carouselImgList.push(clubImg1)
+      }
+      console.log(carouselImgList)
     }
   }
 }

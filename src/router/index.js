@@ -202,7 +202,7 @@ export const asyncRoutes = [
         path: 'activity',
         name: 'activity',
         component: () => import('@/views/student/forum/index'),
-        meta: { title: '活动帖', icon: 'message' }
+        meta: { title: '活动帖', noCache: true }
       },
       {
         path: 'activityDetail',
@@ -215,7 +215,7 @@ export const asyncRoutes = [
         path: 'personalPost',
         name: 'personalPost',
         component: () => import('@/views/chief/forum-manage/index'),
-        meta: { title: '个人帖', icon: 'people', roles: ['chief', 'student'] }
+        meta: { title: '个人帖', noCache: true, roles: ['chief', 'student'] }
       },
       {
         path: 'postManage',

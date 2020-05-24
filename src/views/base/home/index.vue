@@ -142,7 +142,7 @@ export default {
           avatarUrl: avatarUrl
         }
       })
-    },
+    }
   }
 }
 </script>

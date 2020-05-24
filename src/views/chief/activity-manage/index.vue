@@ -164,7 +164,7 @@
               placeholder="选择开始时间"
               align="right"
               value-format="yyyy-MM-dd HH:mm:ss"
-              :picker-options="pickerOptions"
+              :picker-options="startTimePickerOptions"
             />
           </el-form-item>
           <el-form-item label="结束时间" required>
@@ -174,7 +174,8 @@
               placeholder="选择结束时间"
               align="right"
               value-format="yyyy-MM-dd HH:mm:ss"
-              :picker-options="pickerOptions"
+              :picker-options="endTimePickerOptions"
+              :disabled="hasStartTime"
             />
           </el-form-item>
         </el-form>
@@ -324,7 +325,10 @@ export default {
         //   { type: 'date', required: true, message: '请选择结束时间', trigger: 'change' }
         // ]
       },
-      pickerOptions: {
+      startTimePickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now() - 8.64e7
+        },
         shortcuts: [{
           text: '今天',
           onClick(picker) {
@@ -346,6 +350,16 @@ export default {
           }
         }]
       },
+      endTimePickerOptions: {
+        disabledDate: (time) => {
+          const beginDateVal = this.addForm.startDate
+          if (beginDateVal) {
+            return (
+              time.getTime() < new Date(beginDateVal).getTime()
+            )
+          }
+        }
+      },
       options: [{
         value: '青春广场',
         label: '青春广场'
@@ -362,6 +376,12 @@ export default {
         value: '生活三区',
         label: '生活三区'
       }]
+    }
+  },
+  computed: {
+    hasStartTime: function() {
+      if (this.addForm.startDate !== '') { return false }
+      return true
     }
   },
   created() {
@@ -443,7 +463,7 @@ export default {
     },
     applyActivityDialogClosed() {
       // this.$refs.addFormRef.resetFields()
-      // this.addForm.startDate = this.addForm.endDate = ''
+      this.addForm.startDate = this.addForm.endDate = ''
     },
     checkActivityApplyDetail(id) {
       getActivityApplyDetail(id).then(response => {
