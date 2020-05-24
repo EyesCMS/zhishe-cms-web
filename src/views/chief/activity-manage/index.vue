@@ -463,7 +463,7 @@ export default {
     },
     applyActivityDialogClosed() {
       // this.$refs.addFormRef.resetFields()
-      // this.addForm.startDate = this.addForm.endDate = ''
+      this.addForm.startDate = this.addForm.endDate = ''
     },
     checkActivityApplyDetail(id) {
       getActivityApplyDetail(id).then(response => {
