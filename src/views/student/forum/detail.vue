@@ -8,6 +8,9 @@
         </el-row>
         <div style="text-align:center;">
           <p style="font-size:22px;font-weight:bold;">{{ detailInfo.title }}</p>
+          <p style="font-size:15px;text-align:center">
+            评论({{ detailInfo.commentCount }})
+          </p>
           <el-image :src="detailInfo.imgUrl" lazy />
           <p>{{ detailInfo.content }}</p>
           <p>{{ detailInfo.createAt }}</p>
