@@ -3,20 +3,9 @@
     <el-card>
       <!-- 社团风采走马灯 -->
       <div class="carousel">
-        <el-carousel
-          :interval="4000"
-          arrow="always"
-          type="card"
-        >
-          <el-carousel-item
-            v-for="item in carouselImgList"
-            :key="item"
-          >
-            <img
-              style="width:100%"
-              :src="item"
-              alt="item"
-            >
+        <el-carousel :interval="4000" arrow="always" type="card">
+          <el-carousel-item v-for="item in carouselImgList" :key="item">
+            <img style="width:100%" :src="item" alt="item">
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -127,16 +116,8 @@
               <el-divider>
                 <p style="font-family:'微软雅黑';font-size:22px;font-weight:lighter;">
                   {{ clubDetail.name }}
-                  <i
-                    v-if="isMember()"
-                    class="el-icon-user"
-                  />
-                  <i
-                    v-else
-                    class="el-icon-edit"
-                    style="cursor:pointer"
-                    @click="edit()"
-                  />
+                  <i v-if="isMember()" class="el-icon-user" />
+                  <i v-else class="el-icon-edit" style="cursor:pointer" @click="edit()" />
                 </p>
               </el-divider>
               <h4>社 长：{{ clubDetail.chiefName }}</h4>
@@ -158,51 +139,39 @@
       </el-row>
     </el-card>
     <!-- 成员积分规则-->
-    <el-dialog
-      :visible.sync="userScoreShow"
-      width="50%"
-      center
-      modal
-    >
-      <h2 style="text-align:center;margin-bottom:50px;font-family:'微软雅黑';font-size:32px;font-weight:lighter;">
-        成员积分规则
-      </h2>
-      <el-card style="margin: 30px 15px 30px 30px">
+    <el-dialog :visible.sync="userScoreShow" width="50%" center modal>
+      <h2
+        style="text-align:center;margin-bottom:30px;font-family:'微软雅黑';font-size:28px;font-weight:lighter;"
+      >成员积分规则</h2>
+      <el-card style="margin: 20px 15px 20px 20px;">
         <div>
-          <p v-for="item in UserScoreDetailList" :key="item.grade">
-            {{ item.grade }}:{{ item.lowerlimit }}~{{ item.upperlimit }}
-          </p>
+          <el-table v-loading="listLoading" :data="UserScoreDetailList" stripe border>
+            <el-table-column label="等级" prop="name" />
+            <el-table-column label="积分下限" prop="lowerLimit" />
+            <el-table-column label="积分上限" prop="upperLimit" />
+          </el-table>
         </div>
       </el-card>
       <div style="text-align:center">
-        <el-button
-          type="primary"
-          @click="userScoreShow = false"
-        >确 定</el-button>
+        <el-button type="primary" @click="userScoreShow = false">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 社团积分规则-->
-    <el-dialog
-      :visible.sync="clubScoreShow"
-      width="50%"
-      center
-      modal
-    >
-      <h2 style="text-align:center;margin-bottom:50px;font-family:'微软雅黑';font-size:32px;font-weight:lighter;">
-        社团积分规则
-      </h2>
-      <el-card style="margin: 30px 15px 30px 30px">
+    <el-dialog :visible.sync="clubScoreShow" width="50%" center modal>
+      <h2
+        style="text-align:center;margin-bottom:30px;font-family:'微软雅黑';font-size:28px;font-weight:lighter;"
+      >社团积分规则</h2>
+      <el-card style="margin: 20px 15px 20px 20px;">
         <div>
-          <p v-for="item in ClubScoreDetailList" :key="item.grade">
-            {{ item.grade }}:{{ item.lowerlimit }}~{{ item.upperlimit }}
-          </p>
+          <el-table v-loading="listLoading" :data="ClubScoreDetailList" stripe border>
+            <el-table-column label="等级" prop="name" />
+            <el-table-column label="积分下限" prop="lowerLimit" />
+            <el-table-column label="积分上限" prop="upperLimit" />
+          </el-table>
         </div>
       </el-card>
       <div style="text-align:center">
-        <el-button
-          type="primary"
-          @click="clubScoreShow = false"
-        >确 定</el-button>
+        <el-button type="primary" @click="clubScoreShow = false">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 公告详情对话框 -->
@@ -244,7 +213,12 @@ import { getBulletinDetail } from '@/api/club'
 import { getInvitationList } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
 import { getSignInInfo } from '@/api/club'
-import { getUserScore, getClubScore, getUserScoreDetail, getClubScoreDetail } from '@/api/club'
+import {
+  getUserScore,
+  getClubScore,
+  getUserScoreDetail,
+  getClubScoreDetail
+} from '@/api/club'
 import { signIn } from '@/api/club'
 import { quitClub } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
@@ -289,11 +263,7 @@ export default {
         order: 'desc'
       },
       // 走马灯图片
-      carouselImgList: [
-        clubImg1,
-        clubImg2,
-        clubImg3
-      ],
+      carouselImgList: [clubImg1, clubImg2, clubImg3],
       // 公告列表
       bulletinsList: [],
       // 帖子列表
@@ -423,7 +393,6 @@ export default {
     getUserScore() {
       getUserScore(this.clubId).then(response => {
         if (response.status === 200) {
-          console.log(response)
           this.userInfo = response.data
         } else {
           return this.$message.error('获取用户积分信息失败')
@@ -444,8 +413,7 @@ export default {
       this.userScoreShow = true
       getUserScoreDetail().then(response => {
         if (response.status === 200) {
-          console.log(response)
-          this.UserScoreDetailList = response.data.items
+          this.UserScoreDetailList = response.data
         } else {
           return this.$message.error('获取用户积分规则失败')
         }
@@ -455,8 +423,7 @@ export default {
       this.clubScoreShow = true
       getClubScoreDetail().then(response => {
         if (response.status === 200) {
-          console.log(response)
-          this.ClubScoreDetailList = response.data.items
+          this.ClubScoreDetailList = response.data
         } else {
           return this.$message.error('获取社团积分规则失败')
         }
