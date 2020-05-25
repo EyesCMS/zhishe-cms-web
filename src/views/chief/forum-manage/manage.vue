@@ -145,32 +145,41 @@
           </p>
 
         </el-row>
-        <div
-          v-for="(index, I) in forumsList[key].remark.items"
-          v-show="forumsList[key].remarkVisiable"
-          :key="I"
-          style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);border-radius: 5px; padding: 10px"
-        >
-          <!-- 评论具体内容 -->
-          <el-row style="align-items: center;display: flex;background-color: #F2F6FC">
-            <!-- 评论头像 -->
-            <el-col :span="2">
-              <el-avatar
-                :src="index.avatarUrl"
-                style="float:left"
-              />
-            </el-col>
-            <!-- 评论时间和发评论者 -->
-            <el-col :span="3">
-              <p style="font-size:18px">{{ index.nickname }}</p>
-              <p
-                v-time="index.createAt"
-                style=" font-size:10px"
-              />
-            </el-col>
-            <!-- 评论内容 -->
-            <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
-          </el-row>
+        <div v-show="forumsList[key].remarkVisiable">
+          <div
+            v-for="(index, I) in forumsList[key].remark.items"
+            :key="I"
+            style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);border-radius: 5px; padding: 10px"
+          >
+            <!-- 评论具体内容 -->
+            <el-row style="align-items: center;display: flex;background-color: #F2F6FC">
+              <!-- 评论头像 -->
+              <el-col :span="2">
+                <el-avatar
+                  :src="index.avatarUrl"
+                  style="float:left"
+                />
+              </el-col>
+              <!-- 评论时间和发评论者 -->
+              <el-col :span="3">
+                <p style="font-size:18px">{{ index.nickname }}</p>
+                <p
+                  v-time="index.createAt"
+                  style=" font-size:10px"
+                />
+              </el-col>
+              <!-- 评论内容 -->
+              <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
+            </el-row>
+          </div>
+          <div style="text-align:center">
+            <el-link
+              v-if="item.query.limit < item.remark.totalCount"
+              type="primary"
+              @click="showMoreRemarks(item)"
+            >查看更多评论</el-link>
+            <p v-else>已加载全部评论</p>
+          </div>
         </div>
       </div>
 
@@ -325,7 +334,7 @@ export default {
   },
   created: function () {
     this.getForumsList()
-    console.log(this.remarklist)
+    // console.log(this.remarklist)
   },
   methods: {
     handleSizeChange(newSize) {
@@ -347,11 +356,11 @@ export default {
         this.forumsList.forEach(element => {
           element['query'] = {
             page: 1,
-            limit: 100
+            limit: 5
           }
           element['remark'] = {
             items: null,
-            totalCount: 100
+            totalCount: 0
           }
           element['remarkVisiable'] = true
           this.getRemarkList(element)
@@ -367,16 +376,14 @@ export default {
       // console.log(element.remark.items)
       element.remarkVisiable = true
       this.$forceUpdate()
-      if (element.remark.items === null) {
-        getRemarksList(element.id, element.query).then(response => {
-          // console.log('@forum index getRemarkList response')
-          // console.log(response)
-          element.remark = response.data
-          // console.log(element)
-          this.$forceUpdate()
-          // console.log(element.remark.items)
-        })
-      }
+      getRemarksList(element.id, element.query).then(response => {
+        // console.log('@forum index getRemarkList response')
+        // console.log(response)
+        element.remark = response.data
+        // console.log(element)
+        this.$forceUpdate()
+        // console.log(element.remark.items)
+      })
     },
     addForum() {
       this.addForumDialogVisible = true
@@ -387,7 +394,7 @@ export default {
           publishForum(this.forumForm).then(response => {
             this.$message.success('发布成功！')
             this.getForumsList()
-            console.log(this.forumsList)
+            // console.log(this.forumsList)
             this.addForumDialogVisible = false
           })
         } else {
@@ -401,7 +408,7 @@ export default {
         if (response.status === 204) {
           this.getForumsList()
           this.$message.success('删除帖子成功')
-          console.log(this.forumsList)
+          // console.log(this.forumsList)
         } else {
           return this.$message.error('删除帖子失败')
         }
@@ -415,8 +422,8 @@ export default {
         type: window.sessionStorage.getItem('roles') === 'chief' ? 1 : 0
       }
       getInvitationDetail(id, puery).then(response => {
-        console.log('@forum getInvitationDetail')
-        console.log(response)
+        // console.log('@forum getInvitationDetail')
+        // console.log(response)
         this.forumDetile = response.data
       })
     },
@@ -443,6 +450,11 @@ export default {
       this.DeleteForum.id = item.id
       this.DeleteForum.title = item.title
       this.DeleteForum.content = item.content
+    },
+    showMoreRemarks(item) {
+      item.query.limit += 5
+      this.$forceUpdate()
+      this.getRemarkList(item)
     }
   }
 }

@@ -138,35 +138,44 @@
             </p>
           </el-badge>
         </el-row>
-        <div
-          v-for="(index, I) in forumsList[key].remark.items"
-          v-show="forumsList[key].remarkVisiable"
-          :key="I"
-          style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);border-radius: 5px; padding: 10px"
-        >
-          <!-- 评论具体内容 -->
-          <el-row style="align-items: center;display: flex;background-color: #F2F6FC">
-            <!-- 评论头像 -->
-            <el-col :span="2">
-              <el-avatar
-                :src="index.avatarUrl"
-                style="float:left"
-              />
-            </el-col>
-            <!-- 评论时间和发评论者 -->
-            <el-col :span="3">
-              <p style="font-size:18px">{{ index.nickname }}</p>
-              <p
-                v-time="index.createAt"
-                style=" font-size:10px"
-              />
-            </el-col>
-            <el-col>
-              <!-- 评论内容 -->
-              <p style="margin-top:0; padding: 0; ">{{ index.content }}</p>
-            </el-col>
+        <div v-show="forumsList[key].remarkVisiable">
+          <div
+            v-for="(index, I) in forumsList[key].remark.items"
+            :key="I"
+            style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);border-radius: 5px; padding: 10px"
+          >
+            <!-- 评论具体内容 -->
+            <el-row style="align-items: center;display: flex;background-color: #F2F6FC">
+              <!-- 评论头像 -->
+              <el-col :span="2">
+                <el-avatar
+                  :src="index.avatarUrl"
+                  style="float:left"
+                />
+              </el-col>
+              <!-- 评论时间和发评论者 -->
+              <el-col :span="3">
+                <p style="font-size:18px">{{ index.nickname }}</p>
+                <p
+                  v-time="index.createAt"
+                  style=" font-size:10px"
+                />
+              </el-col>
+              <el-col>
+                <!-- 评论内容 -->
+                <p style="margin-top:0; padding: 0; ">{{ index.content }}</p>
+              </el-col>
 
-          </el-row>
+            </el-row>
+          </div>
+          <div style="text-align:center">
+            <el-link
+              v-if="item.query.limit < item.remark.totalCount"
+              type="primary"
+              @click="showMoreRemarks(item)"
+            >查看更多评论</el-link>
+            <p v-else>已加载全部评论</p>
+          </div>
         </div>
       </div>
 
@@ -231,18 +240,18 @@ export default {
     // 获取帖子列表
     getForumsList() {
       getForumList(this.queryInfo, this.originState).then(response => {
-        console.log('@club forum-mamage getForumsList response')
-        console.log(response)
+        // console.log('@club forum-mamage getForumsList response')
+        // console.log(response)
         this.forumsList = response.data.items
         this.total = response.data.totalCount
         this.forumsList.forEach(element => {
           element['query'] = {
             page: 1,
-            limit: 100
+            limit: 5
           }
           element['remark'] = {
             items: null,
-            totalCount: 100
+            totalCount: 0
           }
           element['remarkVisiable'] = true
           this.getUserLike(element)
@@ -259,18 +268,16 @@ export default {
       // console.log(element.remark.items)
       element.remarkVisiable = true
       this.$forceUpdate()
-      if (element.remark.items === null) {
-        getRemarksList(element.id, element.query).then(response => {
-          // console.log('@forum index getRemarkList response')
-          // console.log(response)
-          element.remark = response.data
-          this.$forceUpdate()
-        })
-      }
+      getRemarksList(element.id, element.query).then(response => {
+        // console.log('@forum index getRemarkList response')
+        // console.log(response)
+        element.remark = response.data
+        this.$forceUpdate()
+      })
     },
     // 发表评论
     publishRemark(element) {
-      console.log(element)
+      // console.log(element)
       if (this.remark.content !== '') {
         this.remark['postId'] = element.id
         postComment(this.remark).then(response => {
@@ -324,6 +331,11 @@ export default {
         element['status'] = 0
         this.$forceUpdate()
       })
+    },
+    showMoreRemarks(item) {
+      item.query.limit += 5
+      this.$forceUpdate()
+      this.getRemarkList(item)
     }
   }
 }
