@@ -56,6 +56,9 @@
             <i class="el-icon-date" />
             {{ item.createAt }}
           </p>
+          <p style="font-size:15px;text-align:center">
+            点赞({{ item.likeCount }})  评论({{ item.commentCount }})
+          </p>
           <el-divider />
         </div>
         <el-row>

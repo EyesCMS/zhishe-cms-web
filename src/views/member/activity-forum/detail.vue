@@ -13,8 +13,10 @@
           <p>{{ detailInfo.createAt }}</p>
         </div>
         <div style="text-align:center;">
-          <el-button v-if="unlikeShow" type="info" icon="el-icon-star-off" circle @click="like()" />
-          <el-button v-else type="danger" icon="el-icon-star-off" circle @click="unlike()" />
+          <el-badge :value="detailInfo.likeCount" class="item" type="warning">
+            <el-button v-if="unlikeShow" type="info" icon="el-icon-star-off" circle @click="like()" />
+            <el-button v-else type="danger" icon="el-icon-star-off" circle @click="unlike()" />
+          </el-badge>
         </div>
       </el-card>
 
@@ -154,6 +156,7 @@ export default {
         console.log(response)
         if (response.status === 204) {
           this.unlikeShow = false
+          this.getInvitationDetail()
           return this.$message.success('点赞成功')
         } else {
           return this.$message.error('点赞失败')
@@ -166,6 +169,7 @@ export default {
         console.log(response)
         if (response.status === 204) {
           this.unlikeShow = true
+          this.getInvitationDetail()
           return this.$message.success('取消点赞成功')
         } else {
           return this.$message.error('取消点赞失败')

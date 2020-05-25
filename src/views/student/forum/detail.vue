@@ -12,7 +12,7 @@
             评论({{ detailInfo.commentCount }})
           </p>
           <el-image :src="detailInfo.imgUrl" lazy />
-          <p  style="text-indent: 2em; font-size: 20px;line-height: 37px;text-align:left">{{ detailInfo.content }}</p>
+          <p style="text-indent: 2em; font-size: 20px;line-height: 37px;text-align:left">{{ detailInfo.content }}</p>
           <p>{{ detailInfo.createAt }}</p>
         </div>
         <div style="text-align:center;">
