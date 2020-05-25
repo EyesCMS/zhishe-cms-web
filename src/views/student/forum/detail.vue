@@ -53,6 +53,8 @@
             type="textarea"
             placeholder="请发表评论"
             class="input-with-select"
+            @keyup.enter.exact.native="postComment"
+            @keyup.ctrl.enter="lineFeed()"
           />
         </el-row>
         <el-row style="margin-top:15px">
@@ -183,6 +185,10 @@ export default {
     },
     back() {
       this.$router.go(-1)
+    },
+    // shift+enter换行
+    lineFeed () {
+      this.textContent = this.textContent + '\n'
     }
   }
 }
