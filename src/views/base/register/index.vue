@@ -229,11 +229,11 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  width: 100%;
-  height: 100%;
+    width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: url(../../../assets/images/bg.png) no-repeat;
+  background-size: 100% 100%;
   /*overflow: hidden;*/
 }
 .form-title {
@@ -245,6 +245,7 @@ export default {
   padding: 20px;
   margin: 20px auto;
   border-radius: 20px;
+  background: white;
   box-shadow: 0 0 20px #dcdfe6;
 }
 </style>

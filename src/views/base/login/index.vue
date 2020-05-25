@@ -1,25 +1,28 @@
 <template>
   <div class="login-container">
-    <div style="margin-top:100px;">
-      <img src="../../../assets/images/bg.png" width="100%" height="500px">
-    </div>
-    <div style="position:absolute;right:200px;top:0;">
+    <section>
+      <div class="leftimg">
+        <img src="../../../assets/images/loginLeftImg.png">
+      </div>
       <el-form
         ref="loginForm"
-        style="background:white"
         :model="loginForm"
         :rules="loginRules"
         class="login-page"
         auto-complete="on"
         label-position="left"
       >
-        <h3 class="login-title">Zhishe 社团管理系统</h3>
-        <el-form-item label="Username" prop="username">
+        <h3 class="title">Zhishe 社团管理系统</h3>
+        <p class="tname">基于 vue-element-template 的后台系统</p>
+
+        <el-form-item prop="username">
+          <span class="svg-container">
+            <svg-icon icon-class="user" />
+          </span>
           <el-input
             ref="username"
             v-model="loginForm.username"
-            style="width:340px;"
-            placeholder="请输入用户名"
+            placeholder="Username"
             name="username"
             type="text"
             tabindex="1"
@@ -27,14 +30,16 @@
           />
         </el-form-item>
 
-        <el-form-item label="Password" prop="password">
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
           <el-input
             :key="passwordType"
             ref="password"
             v-model="loginForm.password"
-            style="width:340px;"
             :type="passwordType"
-            placeholder="请输入密码"
+            placeholder="Password"
             name="password"
             tabindex="2"
             auto-complete="on"
@@ -50,18 +55,20 @@
           type="primary"
           style="width:100%;margin-bottom:30px;"
           @click.native.prevent="handleLogin"
-        >Login</el-button>
+        >登录</el-button>
 
-        <div class="tips" style="margin-top:5px">
+        <div class="tips">
           <router-link to="/forget" style="float:left">
-            <span style="color:#104E8B">忘记密码?</span>
+            <span>忘记密码?</span>
           </router-link>
+          <!--          <span style="margin-right:20px;">username: admin</span>-->
+          <!--          <span> password: any</span>-->
           <router-link to="/register" style="float:right">
-            <span style="color:#104E8B">注册</span>
+            <span>注册</span>
           </router-link>
         </div>
       </el-form>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -87,8 +94,8 @@ export default {
     }
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: 'test',
+        password: '123456'
       },
       loginRules: {
         username: [
@@ -148,21 +155,39 @@ export default {
 
 <style scoped>
 .login-container {
-  min-height: 100%;
   width: 100%;
+  height: 100vh;
   overflow: hidden;
+  background: url(../../../assets/images/bg.png) no-repeat;
+  background-size: 100% 100%;
 }
-.login-page {
-  width: 400px;
-  margin: 150px auto;
-  border: #dcdfe6 solid 1px;
-  padding: 30px 40px 20px 20px;
-  border-radius: 20px;
-  box-shadow: 0 0 20px #dcdfe6;
+.leftimg {
+  width: 50%;
+  height: 100%;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.login-title {
-  text-align: center;
-  margin-bottom: 30px;
+.leftimg img {
+  width: 75%;
+  margin-left: 3rem;
+}
+.login-container section {
+  border-radius: 15px;
+  width: 50%;
+  height: 52%;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  left: 25%;
+  top: 27%;
+}
+.el-input {
+  width: 92%;
 }
 .show-pwd {
   position: absolute;
@@ -171,5 +196,52 @@ export default {
   font-size: 16px;
   cursor: pointer;
   user-select: none;
+}
+.login-page {
+  width: 50%;
+  float: right;
+  padding: 1rem 3rem;
+  box-sizing: border-box;
+}
+label.el-checkbox.rememberme {
+  margin: 0px 0px 15px;
+  text-align: left;
+}
+.title {
+  color: #333333;
+  font-weight: normal;
+  font-size: 1.675rem;
+  margin-bottom: 0.4rem;
+}
+.tname {
+  font-size: 1.0rem;
+  color: #a9a9a9;
+  margin: 0;
+  margin-bottom: 1.875rem;
+}
+.el-button {
+  width: 100% !important;
+  display: block;
+  border-radius: 25px;
+  margin-top: 1rem;
+  height: 2.5rem;
+}
+.el-checkbox {
+  color: #666666;
+}
+@media only screen and (min-width: 1920px) {
+  .login-page {
+    padding: 3rem;
+  }
+  .title {
+    font-size: 1.5625rem;
+  }
+  .tname {
+    margin-bottom: 4.375rem;
+  }
+  .el-button {
+    height: 3.125rem;
+    margin-top: 3rem;
+  }
 }
 </style>

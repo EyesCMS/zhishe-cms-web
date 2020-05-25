@@ -200,9 +200,11 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-  margin: 150px auto;
-  padding: 0;
-  /*overflow: hidden;*/
+    width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: url(../../../assets/images/bg.png) no-repeat;
+  background-size: 100% 100%;
 }
 .form-title {
   text-align: center;
@@ -211,8 +213,9 @@ export default {
 .Form {
   width: 45%;
   padding: 20px;
-  margin: 20px auto;
+  margin: 150px auto;
   border-radius: 20px;
+  background: white;
   box-shadow: 0 0 20px #dcdfe6;
 }
 </style>
