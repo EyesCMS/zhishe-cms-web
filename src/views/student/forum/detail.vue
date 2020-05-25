@@ -26,10 +26,38 @@
             <el-button v-else type="danger" icon="el-icon-star-off" @click="unlike()" />
           </el-badge>
         </div>
+        <!-- 折叠评论区 -->
+        <el-row>
+          <el-badge
+            v-show="!showComment"
+            :value="remarksTotal"
+            style="display: inline;float:right;cursor:pointer"
+            class="item"
+          >
+            <p @click="showComment=true">
+              查看评论
+              <i
+                style="display: inline; float:right;cursor:pointer"
+                class="el-icon-s-comment"
+              />
+            </p>
+          </el-badge>
+          <p
+            v-show="showComment"
+            style="display: inline;float:right;cursor:pointer"
+            @click="showComment=false"
+          >
+            收起评论
+            <i
+              style="display: inline; float:right;cursor:pointer"
+              class="el-icon-s-comment"
+            />
+          </p>
+        </el-row>
       </el-card>
 
       <!-- 评论区 -->
-      <el-card id="comment" style="margin:15px 15px">
+      <el-card v-show="showComment" id="comment" style="margin:15px 15px">
         <div v-for="(item, index) in remarksList" :key="index">
           <el-row>
             <el-avatar style="float:left" :src="item.avatarUrl" />
@@ -100,7 +128,8 @@ export default {
       remarksTotal: 0,
       clubAvator:
         'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
-      comment: ''
+      comment: '',
+      showComment: false
     }
   },
   created() {
