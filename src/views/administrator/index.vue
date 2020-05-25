@@ -151,7 +151,8 @@ export default {
             lineStyle: {
               color: '#FA6F53'
             }
-          }
+          },
+          inverse: true
         },
         yAxis: {
           name: '注册人数',
