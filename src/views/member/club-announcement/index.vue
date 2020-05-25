@@ -157,9 +157,9 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  font-family: "PingFang SC";
+  font-family: "PingFang SC",sans-serif;
   text-align: center;
-  font-size: 12px Extra Small
+  font-size: 12px
 }
 .createAt {
   font-size: 14px;

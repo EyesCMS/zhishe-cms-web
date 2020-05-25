@@ -58,7 +58,7 @@
             <!-- 社团详情简介 -->
             <el-card style="margin-top:20px">
               <el-divider>
-                <p style="font-family:'微软雅黑';font-size:17px;font-weight:lighter;">
+                <p style="font-family:'微软雅黑',sans-serif;font-size:17px;font-weight:lighter;">
                   {{ clubDetail.name }}
                 </p>
               </el-divider>
@@ -70,7 +70,7 @@
               <el-divider />
               <h4>简 介：{{ clubDetail.slogan }}</h4>
             </el-card>
-            <p style="color:#9E9E9E;font-family:'微软雅黑';font-size:14px">
+            <p style="color:#9E9E9E;font-family:'微软雅黑',sans-serif;font-size:14px">
               如果你感兴趣的话就
               <el-link
                 type="primary"

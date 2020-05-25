@@ -114,7 +114,7 @@
             </el-row>
             <el-card style="margin-top:20px">
               <el-divider>
-                <p style="font-family:'微软雅黑';font-size:22px;font-weight:lighter;">
+                <p style="font-family:'微软雅黑',sans-serif;font-size:22px;font-weight:lighter;">
                   {{ clubDetail.name }}
                   <i v-if="isMember()" class="el-icon-user" />
                   <i v-else class="el-icon-edit" style="cursor:pointer" @click="edit()" />
@@ -141,7 +141,7 @@
     <!-- 成员积分规则-->
     <el-dialog :visible.sync="userScoreShow" width="50%" center modal>
       <h2
-        style="text-align:center;margin-bottom:30px;font-family:'微软雅黑';font-size:28px;font-weight:lighter;"
+        style="text-align:center;margin-bottom:30px;font-family:'微软雅黑',sans-serif;font-size:28px;font-weight:lighter;"
       >成员积分规则</h2>
       <el-card style="margin: 20px 15px 20px 20px;">
         <div>
@@ -159,7 +159,7 @@
     <!-- 社团积分规则-->
     <el-dialog :visible.sync="clubScoreShow" width="50%" center modal>
       <h2
-        style="text-align:center;margin-bottom:30px;font-family:'微软雅黑';font-size:28px;font-weight:lighter;"
+        style="text-align:center;margin-bottom:30px;font-family:'微软雅黑',sans-serif;font-size:28px;font-weight:lighter;"
       >社团积分规则</h2>
       <el-card style="margin: 20px 15px 20px 20px;">
         <div>
