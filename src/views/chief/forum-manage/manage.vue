@@ -93,8 +93,7 @@
             </span>
           </el-dialog>
         </el-row>
-
-        <el-row>
+        <el-row v-show="item.imgUrl">
           <!--cursor:pointer,鼠标滑过变成手指-->
           <el-image
             style="width: 100px; height: 100px;"

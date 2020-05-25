@@ -21,13 +21,26 @@
         </el-button>
       </div>
       <div style="margin-top: 55px">
-        <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+        <el-form
+          :inline="true"
+          :model="queryInfo"
+          size="small"
+          label-width="140px"
+        >
           <div>
             <el-form-item label="帖子标题">
-              <el-input v-model="queryInfo.title" style="width: 203px" placeholder="请输入帖子标题" />
+              <el-input
+                v-model="queryInfo.title"
+                style="width: 203px"
+                placeholder="请输入帖子标题"
+              />
             </el-form-item>
             <el-form-item label="帖子内容">
-              <el-input v-model="queryInfo.content" style="width: 203px" placeholder="请输入帖子内容" />
+              <el-input
+                v-model="queryInfo.content"
+                style="width: 203px"
+                placeholder="请输入帖子内容"
+              />
             </el-form-item>
             <el-form-item label="发布日期">
               <el-date-picker
@@ -44,10 +57,20 @@
     </el-card>
     <el-card style="margin: 15px 15px">
       <h4>共搜索到 {{ total }} 条帖子</h4>
-      <p v-show="total === 0" style="text-align: center">暂无帖子</p>
-      <el-card v-for="(item, index) in invitationsList" :key="index" style="margin:20px 100px">
+      <p
+        v-show="total === 0"
+        style="text-align: center"
+      >暂无帖子</p>
+      <el-card
+        v-for="(item, index) in invitationsList"
+        :key="index"
+        style="margin:20px 100px"
+      >
         <el-row>
-          <el-avatar style="float:left" :src="item.avatarUrl" />
+          <el-avatar
+            style="float:left"
+            :src="item.avatarUrl"
+          />
           <p style="float: left">{{ item.posterName }}</p>
         </el-row>
         <div>
@@ -57,22 +80,29 @@
             {{ item.createAt }}
           </p>
           <p style="font-size:15px;text-align:center">
-            点赞({{ item.likeCount }})  评论({{ item.commentCount }})
+            点赞({{ item.likeCount }}) 评论({{ item.commentCount }})
           </p>
           <el-divider />
         </div>
         <el-row>
           <div style="margin-left:20px">
-            <el-image :src="item.imgUrl" lazy style="height:200px;width:300px;float:left;margin-right:40px;" />
+            <div v-show="item.imgUrl">
+              <el-image
+                :src="item.imgUrl"
+                lazy
+                style="height:200px;width:300px;float:left;margin-right:40px;"
+              />
+            </div>
             <div style="margin-right:20px;">
-              <p
-                style="float:none; text-indent: 2em; font-size: 20px;text-align:justify; margin-left:20px; line-height: 37px;"
-              >{{ item.content | interceptAbstract }}</p>
+              <p style="float:none; text-indent: 2em; font-size: 20px;text-align:justify; margin-left:20px; line-height: 37px;">{{ item.content | interceptAbstract }}</p>
             </div>
           </div>
         </el-row>
         <div style="text-align:center;margin-top:20px">
-          <el-button type="primary" @click="pushToDetail(item.id)">查看详情</el-button>
+          <el-button
+            type="primary"
+            @click="pushToDetail(item.id)"
+          >查看详情</el-button>
         </div>
       </el-card>
 
@@ -143,7 +173,7 @@ export default {
 
     // 跳转到帖子详情页面
     pushToDetail(id) {
-      this.$router.push({ path: 'detail', query: { id: id }})
+      this.$router.push({ path: 'detail', query: { id: id } })
     },
     queryInvitation() {
       this.getInvitationsList()
