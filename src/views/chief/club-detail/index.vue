@@ -28,7 +28,7 @@
               </el-tab-pane>
               <el-tab-pane label="相册展示" name="carousel">
                 <p>选择图片上传相册</p>
-
+                <p v-show="fileList.length === 5" style="color:red;">上传数已达到最大(5张)</p>
                 <el-upload
                   ref="upload"
                   action="https://jsonplaceholder.typicode.com/posts/"
@@ -129,29 +129,9 @@ export default {
         }
       })
     },
-    uploadImgs() {
-      console.log(123)
-      console.log(this.imgsList)
-    },
     uploadFile(file) {
       this.fileList.push(file.file)
-      console.log(this.fileList)
-    },
-    subPicForm() {
-      this.formData = new FormData()
-      this.$refs.upload.submit()
-      this.formData.append('WS_CODE', '12133')
-      // const config = {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   }
-      // }
-      console.log(this.formData)
-      uploadLocalImages(this.clubId, this.formData).then(response => {
-        this.imgsUrl = response.data
-        console.log(response)
-        // this.$message.success('上传成功')
-      })
+      // console.log(this.fileList)
     },
     // 上传图片前调用
     beforeAvatarUpload(file) {
@@ -171,7 +151,9 @@ export default {
       return isValidStyle && isLt2M
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList)
+      var index = this.fileList.indexOf(file)
+      this.fileList.splice(index, 1)
+      // console.log(file, fileList)
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
@@ -190,7 +172,7 @@ export default {
         fd.append('image', this.fileList[i])
         fd.append('index', i.toString())
       }
-      console.log(fd)
+      // console.log(fd)
       uploadLocalImages(this.clubId, fd).then(response => {
         console.log(response)
         this.imgsUrl = response.data
