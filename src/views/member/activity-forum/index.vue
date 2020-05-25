@@ -173,7 +173,7 @@ export default {
 
     // 跳转到帖子详情页面
     pushToDetail(id) {
-      this.$router.push({ path: 'detail', query: { id: id } })
+      this.$router.push({ path: 'detail', query: { id: id }})
     },
     queryInvitation() {
       this.getInvitationsList()
