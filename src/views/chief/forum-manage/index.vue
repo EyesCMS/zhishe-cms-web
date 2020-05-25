@@ -116,19 +116,24 @@
             :max="99"
             class="item"
           >
-            <p style="display: inline;float:right;cursor:pointer">
-              赞
+            <p
+              v-show="!forumsList[key].status"
+              style="display: inline;float:right;cursor:pointer;background:#DCDFE6;padding:4px;border-radius:2px"
+            >
               <i
-                v-show="forumsList[key].status"
-                style="display: inline; float:right;cursor:pointer;color:blue;font-size:10"
-                class="el-icon-star-on"
-                @click="unlikeForum(item)"
-              />
-              <i
-                v-show="!forumsList[key].status"
                 style="display: inline; float:right;cursor:pointer; "
                 class="el-icon-star-on"
                 @click="likeForum(item)"
+              />
+            </p>
+            <p
+              v-show="forumsList[key].status"
+              style="display: inline;float:right;cursor:pointer;background:#E6A23C;padding:4px;border-radius:2px"
+            >
+              <i
+                style="display: inline; float:right;cursor:pointer;color:blue;"
+                class="el-icon-star-on"
+                @click="unlikeForum(item)"
               />
             </p>
           </el-badge>
