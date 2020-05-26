@@ -32,19 +32,19 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   // homepage
-  {
-    path: '',
-    redirect: '/home',
-    component: Layout,
-    children: [
-      {
-        path: 'home',
-        name: 'home',
-        component: () => import('@/views/base/home/index'),
-        meta: { title: '首页', icon: 'home' }
-      }
-    ]
-  },
+  // {
+  //   path: '',
+  //   redirect: '/home',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'home',
+  //       name: 'home',
+  //       component: () => import('@/views/base/home/index'),
+  //       meta: { title: '首页', icon: 'home' }
+  //     }
+  //   ]
+  // },
   // 个人中心
   {
     path: '/profile',
@@ -110,6 +110,34 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  {
+    path: '',
+    redirect: '/home',
+    component: Layout,
+    children: [
+      {
+        path: 'home',
+        name: 'home',
+        component: () => import('@/views/base/home/index'),
+        meta: {
+          title: '首页',
+          icon: 'home',
+          roles: ['student', 'chief', 'member']
+        }
+      },
+      {
+        path: 'home',
+        name: 'home',
+        component: () => import('@/views/administrator/index'),
+        meta: {
+          title: '首页',
+          icon: 'home',
+          breadcrumb: false,
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
   // clbus
   {
     path: '/student',
@@ -444,7 +472,7 @@ export const asyncRoutes = [
   // 管理员菜单
   {
     path: '',
-    redirect: '/adminhome',
+    redirect: '/home',
     component: Layout,
     hidden: true,
     children: [
