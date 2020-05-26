@@ -1,10 +1,10 @@
 <template>
   <div>
-    <el-card style="margin: 15px 15px">
+    <el-card style="margin: 15px 15px;">
       <el-row>
         <i class="el-icon-search">筛选结果</i>
       </el-row>
-      <el-row style="margin-top: 25px" :gutter="20">
+      <el-row style="margin-top: 25px;" :gutter="20">
         <el-form ref="form" :model="queryInfo" label-width="80px">
           <el-col :span="10">
             <el-form-item label="社团名">
@@ -18,7 +18,7 @@
           </el-col>
         </el-form>
       </el-row>
-      <el-row style="margin-top: 15px" :gutter="20">
+      <el-row style="margin-top: 15px;" :gutter="20">
         <el-form ref="form" :model="queryInfo" label-width="80px">
           <el-col :span="10">
             <el-form-item label="内容">
@@ -38,32 +38,32 @@
           </el-col>
         </el-form>
       </el-row>
-      <el-row style="text-align: center; margin-top: 15px">
+      <el-row style="text-align: center; margin-top: 15px;">
         <el-button type="primary" @click="searchInvitationList">查询</el-button>
         <el-button type="info" @click="reset">重置</el-button>
       </el-row>
     </el-card>
-    <el-card style="margin: 15px 15px">
+    <el-card style="margin: 15px 15px;">
       <h4>共搜索到 {{ total }} 条帖子</h4>
       <p v-show="total === 0" style="text-align: center">暂无帖子</p>
-      <el-card v-for="(item, index) in AllinvitationsList" :key="index" style="margin:20px 100px">
+      <el-card v-for="(item, index) in AllinvitationsList" :key="index" style="margin:20px 100px;">
         <el-row>
-          <el-avatar style="float:left" :src="item.avatarUrl" />
+          <el-avatar style="float:left;" :src="item.avatarUrl" />
           <p style="float: left">{{ item.posterName }}</p>
         </el-row>
         <div>
-          <h2 style="text-align:center;font-size: 25px">{{ item.title }}</h2>
-          <p style="font-size:15px;text-align:center">
+          <h2 style="text-align:center;font-size: 25px;">{{ item.title }}</h2>
+          <p style="font-size:15px;text-align:center;">
             <i class="el-icon-date" />
             {{ item.createAt }}
           </p>
-          <p style="font-size:15px;text-align:center">
+          <p style="font-size:15px;text-align:center;">
             点赞({{ item.likeCount }})  评论({{ item.commentCount }})
           </p>
           <el-divider />
         </div>
         <el-row>
-          <div style="margin-left:20px">
+          <div style="margin-left:20px;">
             <el-image :src="item.imgUrl" lazy style="height:200px;width:300px;float:left;margin-right:40px;" />
             <div style="margin-right:20px">
               <p
@@ -72,13 +72,13 @@
             </div>
           </div>
         </el-row>
-        <div style="text-align:center;margin-top:20px">
+        <div style="text-align:center;margin-top:20px;">
           <el-button type="primary" @click="pushToDetail(item.id)">查看详情</el-button>
         </div>
       </el-card>
 
       <!-- 分页区域 -->
-      <div style="text-align:center">
+      <div style="text-align:center;">
         <el-pagination
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 15, 20]"

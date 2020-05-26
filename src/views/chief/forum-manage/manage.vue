@@ -18,16 +18,8 @@
     </div> -->
     <!-- 帖子部分 -->
     <el-card style="margin-top:20px">
-      <p
-        style="margin-top:10px;color:blue;float:left;cursor:pointer"
-        type="primary"
-        @click="back"
-      >&lt;返回</p>
-      <p
-        style="margin-top:10px;color:blue;float:right;cursor:pointer"
-        type="primary"
-        @click="addForum"
-      >发布动态</p>
+      <el-button type="primary" style="margin-top:10px;float:left;cursor:pointer;" @click="back">&lt;返回</el-button>
+      <el-button type="primary" style="margin-top:10px;float:right;cursor:pointer;" @click="addForum">发布动态</el-button>
       <div
         v-for="(item, key) in forumsList"
         :key="key"
@@ -59,19 +51,23 @@
             style="display:inline;float:right;margin:10px;"
             @click="changeForum(item.id)"
           >
-            <i
-              style="cursor:pointer"
-              class="el-icon-edit icon"
-            />
+            <el-tooltip class="item" effect="dark" content="编辑" placement="top">
+              <i
+                style="cursor:pointer"
+                class="el-icon-edit icon"
+              />
+            </el-tooltip>
           </div>
           <div
             style="display:inline;float:right;margin:10px;"
             @click="showDeleteForum(item);dialogVisible = true"
           >
-            <i
-              style="cursor:pointer"
-              class="el-icon-delete icon"
-            />
+            <el-tooltip class="item" effect="dark" content="删除" placement="top">
+              <i
+                style="cursor:pointer"
+                class="el-icon-delete icon"
+              />
+            </el-tooltip>
           </div>
           <el-dialog
             title="提示"

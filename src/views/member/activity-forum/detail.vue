@@ -3,44 +3,32 @@
     <el-card>
       <el-card style="margin:15px 15px">
         <el-row>
-          <el-avatar
-            style="float:left"
-            :src="detailInfo.avatarUrl"
-          />
+          <el-avatar style="float:left" :src="detailInfo.avatarUrl" />
           <p style="float: left">{{ detailInfo.posterName }}</p>
         </el-row>
         <div style="text-align:center;">
           <p style="font-size:22px;font-weight:bold;">{{ detailInfo.title }}</p>
           <div v-show="detailInfo.imgUrl">
-            <el-image
-              :src="detailInfo.imgUrl"
-              lazy
-            />
+            <el-image :src="detailInfo.imgUrl" lazy />
           </div>
-          <p style="text-indent: 2em; font-size: 20px;line-height: 37px;text-align:left">{{ detailInfo.content }}</p>
+          <p
+            style="text-indent: 2em; font-size: 20px;line-height: 37px;text-align:left"
+          >{{ detailInfo.content }}</p>
           <p>{{ detailInfo.createAt }}</p>
         </div>
         <div style="text-align:center;">
-          <el-badge
-            :value="detailInfo.likeCount"
-            class="item"
-            type="warning"
-          >
-            <el-button
-              v-if="unlikeShow"
-              type="info"
-              icon="el-icon-star-off"
-              circle
-              @click="like()"
-            />
-            <el-button
-              v-else
-              type="danger"
-              icon="el-icon-star-off"
-              circle
-              @click="unlike()"
-            />
-          </el-badge>
+          <el-tooltip class="item" effect="dark" content="点赞" placement="top">
+            <el-badge :value="detailInfo.likeCount" class="item" type="warning">
+              <el-button
+                v-if="unlikeShow"
+                type="info"
+                icon="el-icon-star-off"
+                circle
+                @click="like()"
+              />
+              <el-button v-else type="danger" icon="el-icon-star-off" circle @click="unlike()" />
+            </el-badge>
+          </el-tooltip>
         </div>
 
         <!-- 折叠评论区 -->
@@ -53,10 +41,7 @@
           >
             <p @click="showComment=true">
               查看评论
-              <i
-                style="display: inline; float:right;cursor:pointer"
-                class="el-icon-s-comment"
-              />
+              <i style="display: inline; float:right;cursor:pointer" class="el-icon-s-comment" />
             </p>
           </el-badge>
           <p
@@ -65,29 +50,16 @@
             @click="showComment=false"
           >
             收起评论
-            <i
-              style="display: inline; float:right;cursor:pointer"
-              class="el-icon-s-comment"
-            />
+            <i style="display: inline; float:right;cursor:pointer" class="el-icon-s-comment" />
           </p>
         </el-row>
       </el-card>
 
       <!-- 评论区 -->
-      <el-card
-        v-show="showComment"
-        id="comment"
-        style="margin:15px 15px"
-      >
-        <div
-          v-for="(item, index) in remarksList"
-          :key="index"
-        >
+      <el-card v-show="showComment" id="comment" style="margin:15px 15px">
+        <div v-for="(item, index) in remarksList" :key="index">
           <el-row>
-            <el-avatar
-              style="float:left"
-              :src="item.avatarUrl"
-            />
+            <el-avatar style="float:left" :src="item.avatarUrl" />
             <p style="float: left;margin-left:5px">{{ item.nickname }}</p>
           </el-row>
           <p>{{ item.content }}</p>
@@ -113,11 +85,7 @@
           />
         </el-row>
         <el-row style="margin-top:15px">
-          <el-button
-            id="postButton"
-            type="primary"
-            @click="postComment"
-          >发表</el-button>
+          <el-button id="postButton" type="primary" @click="postComment">发表</el-button>
         </el-row>
       </el-card>
     </el-card>

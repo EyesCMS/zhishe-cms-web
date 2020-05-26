@@ -68,8 +68,8 @@
           </el-table-column>
           <el-table-column label="操作" width="220px">
             <template slot-scope="scope">
-              <el-button type="primary" :disabled="isDisabled(scope.row.state)" @click="joinAudit(scope.row.id, 1)">同意</el-button>
-              <el-button type="danger" :disabled="isDisabled(scope.row.state)" @click="joinAudit(scope.row.id, 2)">拒绝</el-button>
+              <el-button type="primary" size="medium" :disabled="isDisabled(scope.row.state)" @click="joinAudit(scope.row.id, 1)">同意</el-button>
+              <el-button type="danger" size="medium" :disabled="isDisabled(scope.row.state)" @click="joinAudit(scope.row.id, 2)">拒绝</el-button>
             </template>
           </el-table-column>
         </el-table>

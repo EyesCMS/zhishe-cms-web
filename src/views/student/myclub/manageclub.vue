@@ -8,7 +8,7 @@
         <template slot-scope="scope" width="40">
           <el-image
             :src="scope.row.avatarUrl"
-            style="width: 50px; height: 50px"
+            style="width: 50px; height: 50px;"
           />
         </template>
       </el-table-column>

@@ -6,21 +6,8 @@
         <div>
           <i class="el-icon-search" />
           <span>筛选搜索</span>
-          <el-button
-            style="float: right"
-            type="primary"
-            size="small"
-            @click="handleSearchList"
-          >
-            查询
-          </el-button>
-          <el-button
-            style="float: right;margin-right: 15px"
-            size="small"
-            @click="reset"
-          >
-            重置
-          </el-button>
+          <el-button style="float: right" type="primary" size="small" @click="handleSearchList">查询</el-button>
+          <el-button style="float: right;margin-right: 15px" size="small" @click="reset">重置</el-button>
         </div>
         <div style="margin-top: 15px">
           <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
@@ -37,13 +24,19 @@
       </el-card>
       <el-card>
         <p>共搜索到{{ total }}条相关公告</p>
-        <el-card v-for="(item, index) in bulletinsList" :key="index" style="margin: 50px auto;width: 800px">
+        <el-card
+          v-for="(item, index) in bulletinsList"
+          :key="index"
+          style="margin: 50px auto;width: 800px"
+        >
           <h2 class="title">{{ item.title }}</h2>
           <p>{{ item.body }}</p>
           <!-- <p class="createAt">{{ item.createAt }}  </p> -->
-          <p class="createAt">{{ item.updateAt }}  </p>
+          <p class="createAt">{{ item.updateAt }}</p>
           <div class="ww">
-            <el-link @click="openBulletinDetailDiaglog(item.id)"><i class="el-icon-view el-icon--right" />详情</el-link>
+            <el-link @click="openBulletinDetailDiaglog(item.id)">
+              <i class="el-icon-view el-icon--right" />详情
+            </el-link>
           </div>
         </el-card>
 
@@ -53,7 +46,7 @@
         <p>{{ item.content }}</p>
         <el-link type="primary" @click="openBulletinDetailDiaglog(item.id)">详情</el-link>
         <el-divider><i class="el-icon-message-solid" /></el-divider>
-      </div> -->
+        </div>-->
 
         <!-- 分页 -->
         <el-pagination
@@ -68,17 +61,13 @@
         />
       </el-card>
       <!-- 公告详情对话框 -->
-      <el-dialog
-        title="公告"
-        :visible.sync="bulletinDetailDialogVisible"
-        width="70%"
-        center
-        modal
-      >
-        <h2 style="text-align:center;margin-bottom:50px">{{ bulletin.title }}</h2>
-        <p>{{ bulletin.body }}</p>
-        <p>发布时间:{{ bulletin.createAt }}</p>
-        <p>上次修改:{{ bulletin.updateAt }}</p>
+      <el-dialog title="公告" :visible.sync="bulletinDetailDialogVisible" width="70%" center modal>
+        <el-card>
+          <h2 style="text-align:center;margin-bottom:50px;font-size:28px;">{{ bulletin.title }}</h2>
+          <p style="font-family:微软雅黑;font-size:24px;text-align:center;">{{ bulletin.body }}</p>
+          <p style="text-align:center;">发布时间:{{ bulletin.createAt }}</p>
+          <p style="text-align:center;">上次修改:{{ bulletin.updateAt }}</p>
+        </el-card>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="bulletinDetailDialogVisible = false">确 定</el-button>
         </span>
@@ -157,9 +146,9 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  font-family: "PingFang SC",sans-serif;
+  font-family: 'PingFang SC', sans-serif;
   text-align: center;
-  font-size: 12px
+  font-size: 12px;
 }
 .createAt {
   font-size: 14px;
@@ -169,8 +158,8 @@ export default {
   margin-top: 15px;
 }
 .ww {
-   text-align: center;
-   margin: 0 auto;
+  text-align: center;
+  margin: 0 auto;
 }
 .el-pagination {
   position: relative;

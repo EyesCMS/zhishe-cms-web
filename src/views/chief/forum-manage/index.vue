@@ -1,36 +1,26 @@
 <template>
   <div>
     <!-- 帖子部分 -->
-    <el-card style="margin-top:20px">
-      <p
-        style="margin-top:10px;color:blue;float:right;cursor:pointer"
+    <el-card style="margin-top:20px;">
+      <el-button
         type="primary"
+        style="margin-top:10px;float:right;cursor:pointer;"
         @click="myForum"
-      >我的帖子></p>
-      <div
-        v-for="(item, key) in forumsList"
-        :key="key"
-        class="forum"
-      >
+      >我的帖子></el-button>
+      <div v-for="(item, key) in forumsList" :key="key" class="forum">
         <!-- 头像标题啥的 -->
         <el-row style="align-items: center;display: flex;">
           <!-- 头像 -->
           <el-col :span="2">
-            <el-avatar
-              :src="item.avatarUrl"
-              style="float:left"
-            />
+            <el-avatar :src="item.avatarUrl" style="float:left;" />
           </el-col>
           <!-- 创建时间和发帖者 -->
           <el-col :span="4">
             <p style="font-size:16px">{{ item.posterName }}</p>
-            <p
-              v-time="item.createAt"
-              style=" font-size:12px"
-            />
+            <p v-time="item.createAt" style=" font-size:12px;" />
           </el-col>
           <!-- 帖子标题 -->
-          <h2 style="margin-top:0; padding: 0">{{ item.title }}</h2>
+          <h2 style="margin-top:0; padding: 0;">{{ item.title }}</h2>
         </el-row>
         <!-- 图片 -->
         <el-row v-show="item.imgUrl">
@@ -49,10 +39,7 @@
         <!-- 评论列表 -->
         <el-row>
           <!-- 发表评论 -->
-          <el-form
-            ref="remark"
-            :model="forumsList[key]"
-          >
+          <el-form ref="remark" :model="forumsList[key]">
             <el-form-item>
               <div style="margin-top: 15px;">
                 <el-input
@@ -61,10 +48,7 @@
                   class="input-with-select"
                   @focus="state(item.id)"
                 >
-                  <el-button
-                    slot="append"
-                    icon="el-icon-position"
-                  />
+                  <el-button slot="append" icon="el-icon-position" />
                 </el-input>
                 <el-input
                   v-if="remark.id===item.id"
@@ -73,102 +57,82 @@
                   class="input-with-select"
                   @keyup.enter.native="publishRemark(item)"
                 >
-                  <el-button
-                    slot="append"
-                    icon="el-icon-position"
-                    @click="publishRemark(item)"
-                  />
+                  <el-button slot="append" icon="el-icon-position" @click="publishRemark(item)" />
                 </el-input>
               </div>
             </el-form-item>
           </el-form>
-
         </el-row>
         <!-- 查看评论 -->
         <el-row>
           <el-badge
             v-show="!forumsList[key].remarkVisiable"
             :value="forumsList[key].remark.totalCount"
-            style="display: inline;float:right;cursor:pointer"
+            style="display: inline;float:right;cursor:pointer;"
             class="item"
           >
             <p @click="getRemarkList(item)">
               查看评论
-              <i
-                style="display: inline; float:right;cursor:pointer"
-                class="el-icon-s-comment"
-              />
+              <i style="display: inline; float:right;cursor:pointer;" class="el-icon-s-comment" />
             </p>
           </el-badge>
           <p
             v-show="forumsList[key].remarkVisiable"
-            style="display: inline;float:right;cursor:pointer"
+            style="display: inline;float:right;cursor:pointer;"
             @click="removeRemark(item)"
           >
             收起评论
-            <i
-              style="display: inline; float:right;cursor:pointer"
-              class="el-icon-s-comment"
-            />
+            <i style="display: inline; float:right;cursor:pointer;" class="el-icon-s-comment" />
           </p>
-          <el-badge
-            :value="item.likeCount"
-            :max="99"
-            class="item"
-          >
-            <p
-              v-show="!forumsList[key].status"
-              style="display: inline;float:right;cursor:pointer;background:#DCDFE6;padding:4px;border-radius:2px"
-            >
-              <i
-                style="display: inline; float:right;cursor:pointer; "
-                class="el-icon-star-on"
-                @click="likeForum(item)"
-              />
-            </p>
-            <p
-              v-show="forumsList[key].status"
-              style="display: inline;float:right;cursor:pointer;background:#E6A23C;padding:4px;border-radius:2px"
-            >
-              <i
-                style="display: inline; float:right;cursor:pointer;color:blue;"
-                class="el-icon-star-on"
-                @click="unlikeForum(item)"
-              />
-            </p>
-          </el-badge>
+          <el-tooltip class="item" effect="dark" content="点赞" placement="top">
+            <el-badge :value="item.likeCount" :max="99" class="item">
+              <p
+                v-show="!forumsList[key].status"
+                style="display: inline;float:right;cursor:pointer;background:#DCDFE6;padding:4px;border-radius:2px;"
+              >
+                <i
+                  style="display: inline; float:right;cursor:pointer;"
+                  class="el-icon-star-on"
+                  @click="likeForum(item)"
+                />
+              </p>
+              <p
+                v-show="forumsList[key].status"
+                style="display: inline;float:right;cursor:pointer;background:#E6A23C;padding:4px;border-radius:2px;"
+              >
+                <i
+                  style="display: inline; float:right;cursor:pointer;color:blue;"
+                  class="el-icon-star-on"
+                  @click="unlikeForum(item)"
+                />
+              </p>
+            </el-badge>
+          </el-tooltip>
         </el-row>
         <div v-show="forumsList[key].remarkVisiable">
           <div
             v-for="(index, I) in forumsList[key].remark.items"
             :key="I"
-            style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);border-radius: 5px; padding: 10px"
+            style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);border-radius: 5px; padding: 10px;"
           >
             <!-- 评论具体内容 -->
-            <el-row style="align-items: center;display: flex;background-color: #F2F6FC">
+            <el-row style="align-items: center;display: flex;background-color: #F2F6FC;">
               <!-- 评论头像 -->
               <el-col :span="2">
-                <el-avatar
-                  :src="index.avatarUrl"
-                  style="float:left"
-                />
+                <el-avatar :src="index.avatarUrl" style="float:left;" />
               </el-col>
               <!-- 评论时间和发评论者 -->
               <el-col :span="3">
-                <p style="font-size:18px">{{ index.nickname }}</p>
-                <p
-                  v-time="index.createAt"
-                  style=" font-size:10px"
-                />
+                <p style="font-size:18px;">{{ index.nickname }}</p>
+                <p v-time="index.createAt" style=" font-size:10px;" />
               </el-col>
               <el-col>
                 <!-- 评论内容 -->
                 <p style="margin-top:0; padding: 0; ">{{ index.content }}</p>
               </el-col>
-
             </el-row>
           </div>
-          <div style="text-align:center">
+          <div style="text-align:center;">
             <el-link
               v-if="item.query.limit < item.remark.totalCount"
               type="primary"
@@ -180,7 +144,7 @@
       </div>
 
       <!-- 分页区域 -->
-      <div style="text-align:center">
+      <div style="text-align:center;">
         <el-pagination
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 15, 20]"
@@ -196,7 +160,14 @@
 </template>
 
 <script>
-import { getRemarksList, getForumList, postComment, getUserLike, like, unlike } from '@/api/forum'
+import {
+  getRemarksList,
+  getForumList,
+  postComment,
+  getUserLike,
+  like,
+  unlike
+} from '@/api/forum'
 import '../../../../time.js'
 export default {
   data() {
@@ -206,7 +177,9 @@ export default {
       forumsList: [],
       forumDetile: {},
       remarklist: [],
-      clubId: window.sessionStorage.getItem('clubId') ? window.sessionStorage.getItem('clubId') : this.$store.getters.userId,
+      clubId: window.sessionStorage.getItem('clubId')
+        ? window.sessionStorage.getItem('clubId')
+        : this.$store.getters.userId,
       queryInfo: {
         keyword: '',
         page: 1,
@@ -223,7 +196,7 @@ export default {
       btnShow: true
     }
   },
-  created: function () {
+  created: function() {
     this.getForumsList()
   },
   methods: {
@@ -302,7 +275,8 @@ export default {
       element.remarkVisiable = false
       this.$forceUpdate()
     },
-    getUserLike(element) { // 获取当前用户是否对帖子点赞
+    getUserLike(element) {
+      // 获取当前用户是否对帖子点赞
       const data = { postId: element.id }
       getUserLike(data).then(response => {
         // console.log('@getUserLike response:')
