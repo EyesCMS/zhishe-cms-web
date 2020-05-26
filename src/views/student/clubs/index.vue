@@ -4,7 +4,7 @@
       <div>
         <i class="el-icon-search" />
         <span>筛选搜索</span>
-        <el-button style="float: right" type="primary" size="small" @click="handleSearchList">查询</el-button>
+        <el-button style="float: right" type="primary" size="small" @click="findClubsListData">查询</el-button>
         <el-button
           style="float: right;margin-right: 15px"
           size="small"
@@ -101,7 +101,7 @@
 }
 </style>
 <script>
-import { getClubsList } from '@/api/club'
+import { getClubsListData } from '@/api/club'
 export default {
   name: 'Clubs',
   filters: {
@@ -130,10 +130,10 @@ export default {
     }
   },
   created() {
-    this.getClubsList()
+    this.getClubsListData()
   },
   methods: {
-    getClubsList() {
+    getClubsListData() {
       this.listLoading = true
       const params = {
         keyword: this.form.keyword,
@@ -142,7 +142,7 @@ export default {
         page: this.queryInfo.page,
         limit: this.queryInfo.limit
       }
-      getClubsList(params).then(response => {
+      getClubsListData(params).then(response => {
         if (response.status === 200) {
           this.clubsList = response.data.items
           this.total = response.data.totalCount
@@ -157,12 +157,12 @@ export default {
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getClubsList()
+      this.getClubsListData()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getClubsList()
+      this.getClubsListData()
     },
     // 跳转到社团信息详细页面
     LookForDetail(id, name, chiefName, avatarUrl) {
@@ -183,9 +183,9 @@ export default {
     ApplyToJoin(id, name) {
       this.$router.push({ path: '/joinClub', query: { id: id, name: name }})
     },
-    handleSearchList() {
+    findClubsListData() {
       this.queryInfo.page = 1
-      this.getClubsList()
+      this.getClubsListData()
     },
     handleResetSearch() {
       this.form.keyword = ''

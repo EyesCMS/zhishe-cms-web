@@ -208,7 +208,7 @@ export function quitClub(data) {
   })
 }
 
-export function getJoinApplicationsList(query) {
+export function getJoinApplicationsListData(query) {
   return request({
     url: `/clubs/users/joins`,
     method: 'get',
@@ -216,7 +216,7 @@ export function getJoinApplicationsList(query) {
   })
 }
 
-export function getCreateApplicationsList(query) {
+export function getCreateApplicationsListData(query) {
   return request({
     url: `/clubs/users/creations`,
     method: 'get',
@@ -249,7 +249,7 @@ export function getQuitList(clubid, query) {
   })
 }
 
-export function getClubsList(params) {
+export function getClubsListData(params) {
   return request({
     url: `/clubs`,
     method: 'get',
@@ -275,7 +275,7 @@ export function joinAudit(data) {
   })
 }
 // 获取学生加入的社团列表
-export function getJoinclubsList(userid, query) {
+export function getJoinclubsListData(userid, query) {
   return request({
     url: `/clubs/users/${userid}/clubs?status=member`,
     method: 'get',
@@ -284,7 +284,7 @@ export function getJoinclubsList(userid, query) {
 }
 
 // 获取学生作为社长管理的社团列表
-export function getManageclubsList(userid, query) {
+export function getManageclubsListData(userid, query) {
   return request({
     url: `/clubs/users/${userid}/clubs?status=chief`,
     method: 'get',

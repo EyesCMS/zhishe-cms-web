@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import { getInvitationList } from '@/api/forum'
+import { getInvitationListData } from '@/api/forum'
 export default {
   name: 'ActivityForum',
   filters: {
@@ -153,22 +153,22 @@ export default {
     }
   },
   created() {
-    this.getInvitationsList()
+    this.getInvitationListData()
   },
   methods: {
-    getInvitationsList() {
-      getInvitationList(this.clubId, this.queryInfo).then(response => {
+    getInvitationListData() {
+      getInvitationListData(this.clubId, this.queryInfo).then(response => {
         this.invitationsList = response.data.items
         this.total = response.data.totalCount
       })
     },
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getInvitationsList()
+      this.getInvitationListData()
     },
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getInvitationsList()
+      this.getInvitationListData()
     },
 
     // 跳转到帖子详情页面
@@ -176,12 +176,12 @@ export default {
       this.$router.push({ path: 'detail', query: { id: id }})
     },
     queryInvitation() {
-      this.getInvitationsList()
+      this.getInvitationListData()
       this.queryInfo.keyword = ''
     },
     handleSearchList() {
       this.queryInfo.page = 1
-      this.getInvitationsList()
+      this.getInvitationListData()
     },
     reset() {
       this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt =

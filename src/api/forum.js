@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getAllInvitationList(query) {
+export function getAllInvitationListData(query) {
   return request({
     url: `/forum/posts`,
     method: 'get',
@@ -8,7 +8,7 @@ export function getAllInvitationList(query) {
   })
 }
 
-export function getInvitationList(clubid, query, originState) {
+export function getInvitationListData(clubid, query, originState) {
   return request({
     url: `/forum/${clubid}/posts`,
     method: 'get',

@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import { getAllInvitationList } from '@/api/forum'
+import { getAllInvitationListData } from '@/api/forum'
 export default {
   name: 'AllActivityForum',
   filters: {
@@ -125,11 +125,11 @@ export default {
     }
   },
   created() {
-    this.getAllInvitationList()
+    this.getAllInvitationListData()
   },
   methods: {
-    getAllInvitationList() {
-      getAllInvitationList(this.queryInfo).then(response => {
+    getAllInvitationListData() {
+      getAllInvitationListData(this.queryInfo).then(response => {
         // console.log(response)
         if (response.status === 200) {
           this.AllinvitationsList = response.data.items
@@ -142,11 +142,11 @@ export default {
     },
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getAllInvitationList()
+      this.getAllInvitationListData()
     },
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getAllInvitationList()
+      this.getAllInvitationListData()
     },
 
     // 跳转到帖子详情页面
@@ -155,7 +155,7 @@ export default {
     },
     searchInvitationList() {
       this.queryInfo.page = 1
-      this.getAllInvitationList()
+      this.getAllInvitationListData()
     },
     reset() {
       this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt =
@@ -165,5 +165,3 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-</style>

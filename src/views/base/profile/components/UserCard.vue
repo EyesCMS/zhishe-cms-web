@@ -34,19 +34,6 @@
           class="user-bio-section-body"
           style="text-align:center"
         >
-          <!--<el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
-            上传头像图片
-          </el-button>
-          <el-dialog title="上传头像图片" :visible.sync="imagecropperShow">
-            <el-upload
-              :show-file-list="false"
-              accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
-              :before-upload="beforeAvatarUpload"
-            >
-              <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon" />
-            </el-upload>
-          </el-dialog>-->
           <el-button
             size="small"
             type="primary"

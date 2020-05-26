@@ -43,8 +43,7 @@
 }
 </style>
 <script>
-import { getManageclubsList } from '@/api/club'
-import { switchRole } from '@/api/club'
+import { getManageclubsListData } from '@/api/club'
 export default {
   name: 'ManageClubs',
   data() {
@@ -61,12 +60,12 @@ export default {
     }
   },
   created() {
-    this.getManageclubsList()
+    this.getManageclubsListData()
   },
   methods: {
-    getManageclubsList() {
+    getManageclubsListData() {
       this.listLoading = true
-      getManageclubsList(this.userid, this.queryInfo).then(response => {
+      getManageclubsListData(this.userid, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.ManageclubsList = response.data.items
           this.total = response.data.totalCount
@@ -81,30 +80,17 @@ export default {
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getManageclubsList()
+      this.getManageclubsListData()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getManageclubsList()
+      this.getManageclubsListData()
     },
     // 跳转到社团风采页面
     EnterToClub(id) {
       this.$store.dispatch('user/changeRoles', 'chief')
       this.$router.push({ path: '/clubstyle/index', query: { id: id }})
-    },
-    switchRole() {
-      const input = {
-        clubId: this.id,
-        type: 0
-      }
-      switchRole(input).then(response => {
-        if (response.status === 204) {
-          return this.$message.success('切换角色成功')
-        } else {
-          return this.$message.error('切换角色失败')
-        }
-      })
     }
   }
 }

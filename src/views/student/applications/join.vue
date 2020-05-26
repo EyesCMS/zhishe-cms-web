@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { getJoinApplicationsList } from '@/api/club'
+import { getJoinApplicationsListData } from '@/api/club'
 export default {
   name: 'JoinApplications',
   filters: {
@@ -57,12 +57,12 @@ export default {
     }
   },
   created() {
-    this.getJoinApplicationsList()
+    this.getJoinApplicationsListData()
   },
   methods: {
-    getJoinApplicationsList() {
+    getJoinApplicationsListData() {
       this.listLoading = true
-      getJoinApplicationsList(this.queryInfo).then(response => {
+      getJoinApplicationsListData(this.queryInfo).then(response => {
         if (response.status === 200) {
           this.JoinApplicationsList = response.data.items
           this.total = response.data.totalCount
@@ -71,21 +71,19 @@ export default {
           this.listLoading = false
           return this.$message.error('获取申请加入社团列表失败')
         }
-        // console.log(this.JoinApplicationsList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getJoinApplicationsList()
+      this.getJoinApplicationsListData()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getJoinApplicationsList()
+      this.getJoinApplicationsListData()
     }
   }
 }
 </script>
 
-<style lang="stylus" scoped></style>

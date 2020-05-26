@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { getCreateApplicationsList } from '@/api/club'
+import { getCreateApplicationsListData } from '@/api/club'
 export default {
   name: 'CreateApplications',
   filters: {
@@ -101,12 +101,12 @@ export default {
     }
   },
   created() {
-    this.getCreateApplicationsList()
+    this.getCreateApplicationsListData()
   },
   methods: {
-    getCreateApplicationsList() {
+    getCreateApplicationsListData() {
       this.listLoading = true
-      getCreateApplicationsList(this.queryInfo).then(response => {
+      getCreateApplicationsListData(this.queryInfo).then(response => {
         if (response.status === 200) {
           this.CreateApplicationsList = response.data.items
           this.total = response.data.totalCount
@@ -115,19 +115,18 @@ export default {
           this.listLoading = false
           return this.$message.error('获取申请加入社团列表失败')
         }
-        // console.log(this.CreateApplicationsList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       console.log(newSize)
       this.queryInfo.limit = newSize
-      this.getCreateApplicationsList()
+      this.getCreateApplicationsListData()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getCreateApplicationsList()
+      this.getCreateApplicationsListData()
     },
     handleResetSearch() {
       this.form.name = ''
@@ -139,4 +138,3 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped></style>

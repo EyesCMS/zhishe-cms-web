@@ -8,22 +8,17 @@
         </el-row>
         <div style="text-align:center;">
           <p style="font-size:22px;font-weight:bold;">{{ detailInfo.title }}</p>
-          <p style="font-size:15px;text-align:center">
-            评论({{ detailInfo.commentCount }})
-          </p>
+          <p style="font-size:15px;text-align:center">评论({{ detailInfo.commentCount }})</p>
           <el-image :src="detailInfo.imgUrl" lazy />
-          <p style="text-indent: 2em; font-size: 20px;line-height: 37px;text-align:left">{{ detailInfo.content }}</p>
+          <p
+            style="text-indent: 2em; font-size: 20px;line-height: 37px;text-align:left"
+          >{{ detailInfo.content }}</p>
           <p>{{ detailInfo.createAt }}</p>
         </div>
         <div style="text-align:center;">
           <el-badge :value="detailInfo.likeCount" class="item" type="warning">
-            <el-button
-              v-if="unlikeShow"
-              type="info"
-              icon="el-icon-star-off"
-              @click="like()"
-            />
-            <el-button v-else type="danger" icon="el-icon-star-off" @click="unlike()" />
+            <el-button v-if="unlikeShow" type="info" icon="el-icon-star-off" @click="addLike()" />
+            <el-button v-else type="danger" icon="el-icon-star-off" @click="removeLike()" />
           </el-badge>
         </div>
         <!-- 折叠评论区 -->
@@ -36,10 +31,7 @@
           >
             <p @click="showComment=true">
               查看评论
-              <i
-                style="display: inline; float:right;cursor:pointer"
-                class="el-icon-s-comment"
-              />
+              <i style="display: inline; float:right;cursor:pointer" class="el-icon-s-comment" />
             </p>
           </el-badge>
           <p
@@ -48,10 +40,7 @@
             @click="showComment=false"
           >
             收起评论
-            <i
-              style="display: inline; float:right;cursor:pointer"
-              class="el-icon-s-comment"
-            />
+            <i style="display: inline; float:right;cursor:pointer" class="el-icon-s-comment" />
           </p>
         </el-row>
       </el-card>
@@ -133,18 +122,18 @@ export default {
     }
   },
   created() {
-    this.getInvitationDetail()
-    this.getRemarksList()
-    this.getUserLike()
+    this.getInvitationDetailData()
+    this.getRemarksListData()
+    this.getUserLikeData()
   },
   methods: {
     // 获取帖子详情
-    getInvitationDetail() {
+    getInvitationDetailData() {
       getInvitationDetail(this.id, this.detailQuery).then(response => {
         this.detailInfo = response.data
       })
     },
-    getRemarksList() {
+    getRemarksListData() {
       getRemarksList(this.id, this.queryInfo).then(response => {
         this.remarksList = response.data.items
         this.remarksTotal = response.data.totalCount
@@ -153,7 +142,7 @@ export default {
     },
     showMoreRemarks() {
       this.queryInfo.limit += 5
-      this.getRemarksList()
+      this.getRemarksListData()
     },
     async postComment() {
       const data = {
@@ -168,12 +157,12 @@ export default {
           this.$message.success('发表成功')
         })
         this.comment = ''
-        this.getRemarksList()
+        this.getRemarksListData()
         var element = document.getElementById('comment')
         element.scrollIntoView()
       }
     },
-    getUserLike() {
+    getUserLikeData() {
       getUserLike(this.getLikeInfo).then(response => {
         if (response.status === 200) {
           if (response.data.status === 1) {
@@ -187,12 +176,12 @@ export default {
       })
     },
     // 点赞
-    like() {
+    addLike() {
       like(this.likeInfo).then(response => {
         console.log(response)
         if (response.status === 204) {
           this.unlikeShow = false
-          this.getInvitationDetail()
+          this.getInvitationDetailData()
           return this.$message.success('点赞成功')
         } else {
           return this.$message.error('点赞失败')
@@ -200,12 +189,12 @@ export default {
       })
     },
     // 取消点赞
-    unlike() {
+    removeLike() {
       unlike(this.likeInfo).then(response => {
         console.log(response)
         if (response.status === 204) {
           this.unlikeShow = true
-          this.getInvitationDetail()
+          this.getInvitationDetailData()
           return this.$message.success('取消点赞成功')
         } else {
           return this.$message.error('取消点赞失败')
@@ -216,7 +205,7 @@ export default {
       this.$router.go(-1)
     },
     // shift+enter换行
-    lineFeed () {
+    lineFeed() {
       this.textContent = this.textContent + '\n'
     }
   }

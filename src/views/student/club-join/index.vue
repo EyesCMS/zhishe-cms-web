@@ -34,9 +34,9 @@
     <div v-show="successShow" style="text-align:center;margin-top:30px">
       <i class="el-icon-success" style="font-size:150px;color:#66CDAA" />
       <p />
-      <p style="font-size:22px;color:#707070">您已申请成功，请等待管理员审核!</p>
+      <p style="font-size:22px;color:#707070">您已申请成功，请等待社长审核!</p>
       <p />
-      <el-button type="primary" @click="lookForApplications">查看申请结果</el-button>
+      <el-button type="primary" @click="viewApplications">查看申请结果</el-button>
     </div>
   </div>
 </template>
@@ -90,7 +90,7 @@ export default {
     renew() {
       this.form.reason = ''
     },
-    lookForApplications() {
+    viewApplications() {
       this.$router.replace('/applications/join')
     }
   }

@@ -39,14 +39,7 @@
               </el-col>
               <el-col :span="14">
                 <div>
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    placement="top-start"
-                  >
-                    <div slot="content">多行信息<br>第二行信息</div>
-                    <el-link type="primary">积分规则</el-link>
-                  </el-tooltip>
+                  <el-link type="primary" @click="getClubScoreDetailData()">积分规则</el-link>
                   <p />
                   <div class="progress-item">
                     <span>积分：{{ clubInfo.score }}</span>
@@ -141,14 +134,32 @@
         </el-col>
       </el-row>
     </el-card>
+    <!-- 社团积分规则-->
+    <el-dialog :visible.sync="clubScoreShow" width="50%" center modal>
+      <h2
+        style="text-align:center;margin-bottom:30px;font-family:'微软雅黑',sans-serif;font-size:28px;font-weight:lighter;"
+      >社团积分规则</h2>
+      <el-card style="margin: 20px 15px 20px 20px;">
+        <div>
+          <el-table :data="ClubScoreDetailList" stripe border>
+            <el-table-column label="等级" prop="name" />
+            <el-table-column label="积分下限" prop="lowerLimit" />
+            <el-table-column label="积分上限" prop="upperLimit" />
+          </el-table>
+        </div>
+      </el-card>
+      <div style="text-align:center">
+        <el-button type="primary" @click="clubScoreShow = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { listClubImgs } from '@/api/club'
-import { getInvitationList } from '@/api/forum'
+import { getInvitationListData } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
-import { getClubScore } from '@/api/club'
+import { getClubScore, getClubScoreDetail } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
 import clubImg2 from '@/assets/images/club2.jpeg'
 import clubImg3 from '@/assets/images/club3.jpeg'
@@ -170,6 +181,8 @@ export default {
         score: 8,
         grade: 1
       },
+      clubScoreShow: false,
+      ClubScoreDetailList: [],
       clubId: 5000,
       queryInfo: {
         type: 1,
@@ -200,27 +213,27 @@ export default {
       this.clubId = sessionStorage.getItem('clubId')
     }
     this.$forceUpdate()
-    this.getClubImgs()
-    this.getInvitationsList()
-    this.getClubDetail()
-    this.getClubScore()
+    this.getClubImgsData()
+    this.getInvitationListData()
+    this.getClubDetailData()
+    this.getClubScoreData()
   },
   methods: {
-    async getClubImgs() {
+    async getClubImgsData() {
       await listClubImgs(this.clubId).then(response => {
         this.carouselImgList = response.data
         this.solveImgs(this.carouselImgList)
       })
       this.solveImgs(this.carouselImgList)
     },
-    getInvitationsList() {
-      getInvitationList(this.clubId, this.queryInfo).then(response => {
+    getInvitationListData() {
+      getInvitationListData(this.clubId, this.queryInfo).then(response => {
         this.invitationList = response.data.items
         this.total = response.data.totalCount
       })
     },
     // 获取社团详情
-    getClubDetail() {
+    getClubDetailData() {
       getClubDetail(this.clubId).then(response => {
         this.clubDetail = response.data
       })
@@ -228,7 +241,7 @@ export default {
     pushToActivityDetail(id) {
       this.$router.push({ path: '/forum/activityDetail', query: { id: id }})
     },
-    getClubScore() {
+    getClubScoreData() {
       getClubScore(this.$route.query.id).then(response => {
         if (response.status === 200) {
           console.log(response)
@@ -240,11 +253,11 @@ export default {
     },
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getInvitationsList()
+      this.getInvitationListData()
     },
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getInvitationsList()
+      this.getInvitationListData()
     },
     ApplyToJoin() {
       this.$router.push({
@@ -260,13 +273,12 @@ export default {
       // 清除数组中的null
       console.log(carouselImgList.length)
       for (var i = 0; i < carouselImgList.length; i++) {
-        console.log(i)
+        // console.log(i)
         if (carouselImgList[i] == null) {
           carouselImgList.splice(i, 1)
           i--
         }
       }
-
       // 如果长度小于3，则补至3
       if (carouselImgList.length === 0) {
         carouselImgList.push(clubImg1)
@@ -280,7 +292,17 @@ export default {
       if (carouselImgList.length === 2) {
         carouselImgList.push(clubImg1)
       }
-      console.log(carouselImgList)
+      // console.log(carouselImgList)
+    },
+    getClubScoreDetailData() {
+      this.clubScoreShow = true
+      getClubScoreDetail().then(response => {
+        if (response.status === 200) {
+          this.ClubScoreDetailList = response.data
+        } else {
+          return this.$message.error('获取社团积分规则失败')
+        }
+      })
     }
   }
 }

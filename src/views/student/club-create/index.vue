@@ -40,19 +40,6 @@
             show-word-limit
           />
         </el-form-item>
-        <!--社团上传头像组件
-      <el-form-item label="社团头像" prop="avatarUrl">
-        <el-upload
-          class="upload-demo"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :before-upload="beforeAvatarUpload"
-          list-type="picture"
-          :limit="1"
-        >
-          <el-button size="small" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-        </el-upload>
-        </el-form-item>-->
         <div style="text-align:center">
           <el-button type="primary" @click="postSubmit">立即创建</el-button>
           <el-button @click="renew">重置</el-button>
@@ -64,7 +51,7 @@
       <p />
       <p style="font-size:22px;color:#707070">您已申请成功，请等待管理员审核!</p>
       <p />
-      <el-button type="primary" @click="lookForApplications">查看申请结果</el-button>
+      <el-button type="primary" @click="viewApplications">查看申请结果</el-button>
     </div>
   </div>
 </template>
@@ -136,7 +123,7 @@ export default {
       }
       return isJPG && isLt2M
     },
-    lookForApplications() {
+    viewApplications() {
       this.$router.replace('/applications/creation')
     }
   }
