@@ -108,20 +108,23 @@
               </el-col>
             </el-row>
             <el-card style="margin-top:20px">
-              <el-divider>
-                <p style="font-family:'微软雅黑',sans-serif;font-size:22px;font-weight:lighter;">
-                  {{ clubDetail.name }}
-                  <i v-if="isMember()" class="el-icon-user" />
-                  <i v-else class="el-icon-edit" style="cursor:pointer" @click="edit()" />
-                </p>
-              </el-divider>
-              <h4>社 长：{{ clubDetail.chiefName }}</h4>
+              <p
+                style="font-family:'微软雅黑',sans-serif;font-size:22px;font-weight:lighter;text-align:center"
+              >
+                {{ clubDetail.name }}
+                <i v-if="isMember()" class="el-icon-user" />
+                <i v-else class="el-icon-edit" style="cursor:pointer" @click="edit()" />
+              </p>
               <el-divider />
-              <h4>成员数：{{ clubDetail.memberCount }}</h4>
-              <el-divider />
-              <h4>QQ 群：{{ clubDetail.qqGroup }}</h4>
-              <el-divider />
-              <h4>简 介：{{ clubDetail.slogan }}</h4>
+              <div>
+                <h4>社 长：{{ clubDetail.chiefName }}</h4>
+                <el-divider />
+                <h4>成员数：{{ clubDetail.memberCount }}</h4>
+                <el-divider />
+                <h4>QQ 群：{{ clubDetail.qqGroup }}</h4>
+                <el-divider />
+                <h4>简 介：{{ clubDetail.slogan }}</h4>
+              </div>
             </el-card>
           </el-card>
           <el-button
@@ -205,7 +208,7 @@
 import { listBulletins } from '@/api/club'
 import { listClubImgs } from '@/api/club'
 import { getBulletinDetail } from '@/api/club'
-import { getInvitationList } from '@/api/forum'
+import { getInvitationListData } from '@/api/forum'
 import { getClubDetail } from '@/api/club'
 import { getSignInInfo } from '@/api/club'
 import {
@@ -281,7 +284,7 @@ export default {
     // this.clubId = this.$route.query.cid
     this.getClubImgs()
     this.getBulletinsList()
-    this.getInvitationsList()
+    this.getInvitationListData()
     this.getClubDetail()
     this.getSignInInfo()
     this.getUserScore()
@@ -299,8 +302,8 @@ export default {
         this.bulletinsList = response.data.items
       })
     },
-    getInvitationsList() {
-      getInvitationList(this.clubId, this.queryInfo).then(response => {
+    getInvitationListData() {
+      getInvitationListData(this.clubId, this.queryInfo).then(response => {
         this.invitationList = response.data.items
       })
     },
