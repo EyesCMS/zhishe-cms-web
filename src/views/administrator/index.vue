@@ -79,20 +79,16 @@
       <div class="layout-title">各类别社团占比</div>
       <div style="text-align:center">
         <el-row>
-          <el-col :span="20">
-            <div style="padding: 10px;border-left:1px solid #DCDFE6">
-              <div style="text-align:center">
-                <div id="pieBox" style="width: 650%;height: 300px" />
-              </div>
+          <div style="padding: 10px;border-left:1px solid #DCDFE6">
+            <div style="text-align:center">
+              <div id="pieBox" style="width: 650%;height: 300px" />
             </div>
-          </el-col>
+          </div>
         </el-row>
         <el-row>
-          <el-col :span="20">
-            <div style="text-align:center">
-              <el-button type="primary" @click="newUsers()">注册人数统计</el-button>
-            </div>
-          </el-col>
+          <div style="text-align:center">
+            <el-button type="primary" @click="newUsers()">注册人数统计</el-button>
+          </div>
         </el-row>
       </div>
     </div>
