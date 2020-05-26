@@ -12,13 +12,14 @@
           :interval="4000"
           arrow="always"
           type="card"
+          height="400px"
         >
           <el-carousel-item
             v-for="item in carouselImgList"
             :key="item"
           >
             <img
-              style="width:100%;"
+              style="width:100%;height:100%;"
               :src="item"
               alt="item"
             >
