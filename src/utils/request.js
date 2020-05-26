@@ -85,6 +85,8 @@ service.interceptors.response.use(
           location.reload()// 为了重新实例化 vue-router 对象 避免 bug
         })
       })
+    } else if (error.response.status === 500) {
+      Message.error('serve error')
     } else {
       Message({
         message: error.response.data.message,
@@ -92,9 +94,8 @@ service.interceptors.response.use(
         duration: 3 * 1000
       })
     }
-
     console.log('err' + error) // for debug
-    return Promise.reject(error)
+    // return Promise.reject(error)
   }
 )
 

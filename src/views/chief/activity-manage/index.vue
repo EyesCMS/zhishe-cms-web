@@ -280,7 +280,6 @@ export default {
         content: '',
         location: '',
         state: '',
-        startDate: '',
         endDate: '',
         page: 1,
         limit: 5,
@@ -324,6 +323,28 @@ export default {
         // endDate: [
         //   { type: 'date', required: true, message: '请选择结束时间', trigger: 'change' }
         // ]
+      },
+      pickerOptions: {
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date())
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24)
+            picker.$emit('pick', date)
+          }
+        }, {
+          text: '一周前',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', date)
+          }
+        }]
       },
       startTimePickerOptions: {
         disabledDate(time) {
@@ -442,6 +463,8 @@ export default {
       this.getActivitiesList()
     },
     applyActivity() {
+      this.addForm.name = this.addForm.title = this.addForm.content = this.addForm.location = this.addForm.startDate = this.addForm.endDate = ''
+      this.addForm.memberCount = 1
       this.applyActivityDialogVisible = true
     },
     handleRemove(file, fileList) {
@@ -450,9 +473,11 @@ export default {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
-    publishApply() {
-      this.$refs.addFormRef.validate(valid => {
+    async publishApply() {
+      await this.$refs.addFormRef.validate(valid => {
         if (!valid) return
+        if (this.addForm.startDate === '') return this.$message.error('请填写开始日期')
+        if (this.addForm.endDate === '') return this.$message.error('请填写结束日期')
         publishApply(this.addForm).then(response => {
           this.$message.success('申请成功')
         })
@@ -463,7 +488,7 @@ export default {
     },
     applyActivityDialogClosed() {
       // this.$refs.addFormRef.resetFields()
-      this.addForm.startDate = this.addForm.endDate = ''
+      // this.addForm.startDate = this.addForm.endDate = ''
     },
     checkActivityApplyDetail(id) {
       getActivityApplyDetail(id).then(response => {

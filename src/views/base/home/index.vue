@@ -102,17 +102,17 @@ export default {
     },
     getRecommendedList() {
       recommended(this.queryInfo).then(response => {
-        console.log('@home-page RecommendedList response:')
-        console.log(response)
+        // console.log('@home-page RecommendedList response:')
+        // console.log(response)
         this.recommendedList = response.data.items
         // console.log(this.memberInfo)
       })
     },
     // 获取社团详情
     getClubDetail(id) {
-      console.log('@home-page getClubDetail id:' + id)
+      // console.log('@home-page getClubDetail id:' + id)
       getClubDetail(id).then(response => {
-        console.log(response)
+        // console.log(response)
         // this.$message.success('获取成员列表成功')
         this.clubDetail = response.data
         this.bulletinDetailDialogVisible = true
