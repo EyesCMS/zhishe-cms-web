@@ -41,6 +41,10 @@
 .input-with-select .el-input-group__prepend {
   background-color: #fff;
 }
+.el-pagination {
+  margin: 30px 15px;
+  text-align:center
+}
 </style>
 <script>
 import { getManageclubsListData } from '@/api/club'

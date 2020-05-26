@@ -7,6 +7,10 @@
         style="margin-top:10px;float:right;cursor:pointer;"
         @click="myForum"
       >我的帖子></el-button>
+      <div v-show="total === 0" align="center" style="margin-top:100px;">
+        <img src="../../../assets/images/noContent.png" alt="item" style="width:200px;height:180px;">
+        <h2 style="color:silver">暂无帖子</h2>
+      </div>
       <div v-for="(item, key) in forumsList" :key="key" class="forum">
         <!-- 头像标题啥的 -->
         <el-row style="align-items: center;display: flex;">
@@ -144,7 +148,7 @@
       </div>
 
       <!-- 分页区域 -->
-      <div style="text-align:center;">
+      <div v-show="total != 0" style="text-align:center;">
         <el-pagination
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 15, 20]"

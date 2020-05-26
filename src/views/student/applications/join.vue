@@ -15,7 +15,7 @@
     </el-table>
 
     <!-- 分页区域 -->
-    <div style="text-align: center;margin-top: 10px;">
+    <div style="text-align: center;margin-top: 30px;">
       <el-pagination
         :current-page="queryInfo.page"
         :page-sizes="[5, 10, 15, 20]"
@@ -86,4 +86,3 @@ export default {
   }
 }
 </script>
-
