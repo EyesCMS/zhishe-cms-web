@@ -35,7 +35,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .el-input {
   width: 600px;
 }

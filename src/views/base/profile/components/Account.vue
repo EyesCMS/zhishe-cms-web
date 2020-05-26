@@ -46,18 +46,18 @@ export default {
     }
   },
   created() {
-    this.getInfo()
+    this.getInfoData()
   },
   methods: {
     submitProfile() {
       submitProfile(this.form).then(response => {
         if (response.status === 204) {
           this.$message.success('修改成功')
-          this.getInfo()
+          this.getInfoData()
         }
       })
     },
-    getInfo() {
+    getInfoData() {
       getInfo().then(response => {
         // console.log(response)
         this.form.nickname = response.data.nickname
