@@ -45,7 +45,7 @@
                 </div>
                 <div style="margin-top:20px">
                   <p>已上传图片</p>
-                  <el-image v-for="(item, index) in carouselImgList" :key="index" :src="item" :fit="cover" style="width: 100px; height: 100px">
+                  <el-image v-for="(item, index) in carouselImgList" :key="index" :src="item" style="width: 100px; height: 100px">
                     <div slot="error" class="image-slot">
                       {{ item }}
                       <i class="el-icon-picture-outline" />
