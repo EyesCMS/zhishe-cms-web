@@ -48,8 +48,8 @@
     <div v-show="newUsersVisible==true" class="statistics-layout">
       <div class="layout-title">注册人数统计</div>
       <el-row>
-        <el-col :span="20">
-          <el-card>>
+        <el-card>
+          <el-col>
             <i class="el-icon-search" />
             <span>筛选搜索</span>
             <div style="padding: 5px;margin-top:10px">
@@ -63,16 +63,16 @@
                 <el-button type="primary" size="small" @click="check()">查询</el-button>
               </el-form>
             </div>
-          </el-card>
+          </el-col>
+        </el-card>
+        <el-col>
           <div id="chartLineBox" style="width: 100%;height: 70vh;margin-top: 10px;" />
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="20">
-          <div style="text-align:center">
-            <el-button type="primary" @click="clubSpecies()">各类别社团占比</el-button>
-          </div>
-        </el-col>
+        <div style="text-align:center">
+          <el-button type="primary" @click="clubSpecies()">各类别社团占比</el-button>
+        </div>
       </el-row>
     </div>
     <div v-show="clubSpeciesVisible==true" class="statistics-layout">
@@ -294,7 +294,7 @@ export default {
             name: '社团数目',
             type: 'pie',
             radius: '50%',
-            center: ['60%', '50%'],
+            center: ['60%', '60%'],
             data: [
               { value: this.clubSpecie.clubSpeciesNumber[0], name: this.clubSpecie.clubSpecies[0] },
               { value: this.clubSpecie.clubSpeciesNumber[1], name: this.clubSpecie.clubSpecies[1] },
