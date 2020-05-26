@@ -25,13 +25,13 @@
           <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
             <div>
               <el-form-item label="活动名称">
-                <el-input v-model="queryInfo.name" style="width: 203px" placeholder="请输入活动名称" />
+                <el-input v-model="queryInfo.name" style="width: 203px;" placeholder="请输入活动名称" />
               </el-form-item>
               <el-form-item label="活动内容">
-                <el-input v-model="queryInfo.content" style="width: 203px" placeholder="请输入活动内容" />
+                <el-input v-model="queryInfo.content" style="width: 203px;" placeholder="请输入活动内容" />
               </el-form-item>
               <el-form-item label="活动地点">
-                <el-select v-model="queryInfo.location" style="width: 203px" placeholder="请选择活动地点">
+                <el-select v-model="queryInfo.location" placeholder="请选择活动地点" style="width: 100%;" :clearable="true">
                   <el-option label="青春广场" value="青春广场" />
                   <el-option label="生活三区" value="生活三区" />
                   <el-option label="风雨操场" value="风雨操场" />
@@ -44,7 +44,7 @@
           <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
             <div>
               <el-form-item label="活动状态">
-                <el-select v-model="queryInfo.state" style="width: 203px" placeholder="请选择活动状态">
+                <el-select v-model="queryInfo.state" placeholder="请选择活动状态" :clearable="true">
                   <el-option label="未审核" value="0" />
                   <el-option label="审核通过" value="1" />
                   <el-option label="已发布" value="2" />

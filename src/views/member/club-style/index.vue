@@ -3,9 +3,9 @@
     <el-card>
       <!-- 社团风采走马灯 -->
       <div class="carousel">
-        <el-carousel :interval="4000" arrow="always" type="card">
+        <el-carousel :interval="4000" arrow="always" type="card" height="400px">
           <el-carousel-item v-for="item in carouselImgList" :key="item">
-            <img style="width:100%" :src="item" alt="item">
+            <img style="width:100%;height:100%;" :src="item" alt="item">
           </el-carousel-item>
         </el-carousel>
       </div>
