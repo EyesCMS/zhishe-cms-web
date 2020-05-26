@@ -1,16 +1,16 @@
 <template>
   <el-card style="margin-bottom:20px;">
-    <div
+    <!--<div
       slot="header"
       class="clearfix"
     >
       <span>关于社团</span>
-    </div>
+    </div>-->
 
     <div class="user-profile">
       <div class="box-center">
         <pan-thumb
-          :image="clubinfo.avatarUrl"
+          :image="form.avatarUrl"
           :height="'100px'"
           :width="'100px'"
           :hoverable="false"
@@ -173,7 +173,7 @@ export default {
       return false
     },
     submitProfile() {
-      console.log(this.form)
+      // console.log(this.form)
       this.dialogFormVisible = false
       submitPic(this.clubId, this.form).then(response => {
         // console.log(response)

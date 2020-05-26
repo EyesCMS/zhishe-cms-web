@@ -9,7 +9,9 @@
         >
           <el-card>
             <el-tabs v-model="leftActiveTab">
-              <el-tab-pane label="关于社团" name="about"><user-card :clubinfo="clubInfo" /></el-tab-pane>
+              <el-tab-pane label="关于社团" name="about">
+                <user-card :clubinfo="clubInfo" />
+              </el-tab-pane>
             </el-tabs>
           </el-card>
         </el-col>

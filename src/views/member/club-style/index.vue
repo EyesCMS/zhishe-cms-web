@@ -83,11 +83,6 @@
                     <span>积分：{{ userInfo.score }}</span>
                     <el-progress :percentage="userInfo.percentage" />
                   </div>
-                  <!--
-                  <div class="progress-item">
-                    <span>另一个测试样式</span>
-                    <el-progress :percentage="100" status="success" />
-                  </div>-->
                 </div>
                 <p />
                 <el-button v-if="SignInShow" style="width:80px" type="primary" @click="signIn()">签到</el-button>
@@ -145,7 +140,7 @@
       >成员积分规则</h2>
       <el-card style="margin: 20px 15px 20px 20px;">
         <div>
-          <el-table v-loading="listLoading" :data="UserScoreDetailList" stripe border>
+          <el-table :data="UserScoreDetailList" stripe border>
             <el-table-column label="等级" prop="name" />
             <el-table-column label="积分下限" prop="lowerLimit" />
             <el-table-column label="积分上限" prop="upperLimit" />
@@ -163,7 +158,7 @@
       >社团积分规则</h2>
       <el-card style="margin: 20px 15px 20px 20px;">
         <div>
-          <el-table v-loading="listLoading" :data="ClubScoreDetailList" stripe border>
+          <el-table :data="ClubScoreDetailList" stripe border>
             <el-table-column label="等级" prop="name" />
             <el-table-column label="积分下限" prop="lowerLimit" />
             <el-table-column label="积分上限" prop="upperLimit" />
@@ -366,7 +361,6 @@ export default {
       this.$router.replace('/Detailmanage/Detail')
     },
     signIn() {
-      // this.SignInShow = false
       signIn(this.clubId).then(response => {
         if (response.status === 201) {
           this.SignInShow = false
@@ -402,6 +396,7 @@ export default {
     getClubScore() {
       getClubScore(this.clubId).then(response => {
         if (response.status === 200) {
+          console.log('社团积分')
           console.log(response)
           this.clubInfo = response.data
         } else {
@@ -434,7 +429,6 @@ export default {
       // 清除数组中的null
       console.log(carouselImgList.length)
       for (var i = 0; i < carouselImgList.length; i++) {
-        console.log(i)
         if (carouselImgList[i] == null) {
           carouselImgList.splice(i, 1)
           i--
@@ -454,7 +448,7 @@ export default {
       if (carouselImgList.length === 2) {
         carouselImgList.push(clubImg1)
       }
-      console.log(carouselImgList)
+      // console.log(carouselImgList)
     }
   }
 }
