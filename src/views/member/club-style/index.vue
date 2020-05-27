@@ -183,7 +183,7 @@
                   :size="50"
                   :src="clubDetail.avatarUrl"
                 />
-                <el-tag>LV{{ clubInfo.grade }}</el-tag>
+                <el-tag>{{ clubInfo.grade }}</el-tag>
               </el-col>
               <el-col :span="14">
                 <div>
