@@ -203,7 +203,52 @@
         width="50%"
         center
       >
-        <el-form ref="addFormRef" :model="applyDetailForm" label-width="90px">
+        <el-row>
+          <h1 style="text-align: center;">{{ applyDetailForm.title }}</h1>
+        </el-row>
+        <p style="text-indent: 2em;">{{ applyDetailForm.body }}</p>
+        <br>
+        <br>
+        <label>
+          名称：
+          <el-tag
+            type="info"
+            style="font-size: 15px;"
+          >
+            {{ applyDetailForm.name }}
+          </el-tag>
+        </label>
+        <br>
+        <br>
+        <label>
+          地点：
+          <el-tag
+            type="success"
+            style="font-size: 15px;"
+          >
+            {{ applyDetailForm.location }}
+          </el-tag>
+        </label>
+        <br>
+        <br>
+        <label>
+          时间：
+          <el-tag type="warning" style="font-size: 15px;">{{ applyDetailForm.startDate }}</el-tag>
+          -
+          <el-tag type="warning" style="font-size: 15px;">{{ applyDetailForm.endDate }}</el-tag>
+        </label>
+        <br>
+        <br>
+        <label>人数：<el-tag style="font-size: 15px;">{{ applyDetailForm.memberCount }}</el-tag></label>
+        <br>
+        <br>
+        <div align="center">
+          <el-image
+            style="width: 600px; height: 500px"
+            :src="applyDetailForm.imgUrl"
+          />
+        </div>
+        <!-- <el-form ref="addFormRef" :model="applyDetailForm" label-width="90px">
           <el-form-item label="活动名称">
             <el-input v-model="applyDetailForm.name" disabled />
           </el-form-item>
@@ -236,7 +281,7 @@
             style="width: 600px; height: 500px"
             :src="applyDetailForm.imgUrl"
           />
-        </el-form>
+        </el-form> -->
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="applyDetailDialogVisible = false">确 定</el-button>
         </span>
@@ -305,6 +350,7 @@ export default {
         memberCount: 1,
         imgUrl: ''
       },
+      applyData: new FormData(),
       addFormRules: {
         name: [
           { required: true, message: '请输入活动名称', trigger: 'blur' }
@@ -479,7 +525,15 @@ export default {
         if (!valid) return
         if (this.addForm.startDate === '') return this.$message.error('请填写开始日期')
         if (this.addForm.endDate === '') return this.$message.error('请填写结束日期')
-        publishApply(this.addForm).then(response => {
+        this.applyData.append('clubId', this.addForm.clubId)
+        this.applyData.append('name', this.addForm.name)
+        this.applyData.append('title', this.addForm.title)
+        this.applyData.append('content', this.addForm.content)
+        this.applyData.append('startDate', this.addForm.startDate)
+        this.applyData.append('endDate', this.addForm.endDate)
+        this.applyData.append('location', this.addForm.location)
+        this.applyData.append('memberCount', this.addForm.memberCount)
+        publishApply(this.applyData).then(response => {
           this.$message.success('申请成功')
         })
         // console.log(this.addForm)
@@ -521,13 +575,8 @@ export default {
       //   image.append('image', file)
       //   this.addForm.imgUrl = image
       // }
-      const image = new FormData()
-      image.append('image', file)
-      this.addForm.imgUrl = image
-      console.log(image)
-      console.log(this.addForm.imgUrl)
-      console.log(this.addForm)
-      // 不自动上传
+      // this.applyData = new FormData()
+      this.applyData.append('imgUrl', file)
       return true
     }
   }
