@@ -184,12 +184,13 @@
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
+          :before-upload="beforeAvatarUpload"
           :limit="1"
         >
           <i class="el-icon-plus" />
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="addForm.imgUrl" alt="">
+          <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="publishApply">申请</el-button>
@@ -348,7 +349,7 @@ export default {
       },
       startTimePickerOptions: {
         disabledDate(time) {
-          return time.getTime() < Date.now() - 8.64e7
+          return time.getTime() < Date.now()
         },
         shortcuts: [{
           text: '今天',
@@ -503,6 +504,31 @@ export default {
     reset() {
       this.queryInfo.name = this.queryInfo.content = this.queryInfo.location = ''
       this.queryInfo.state = this.queryInfo.startDate = this.queryInfo.endDate = ''
+    },
+    beforeAvatarUpload(file) {
+      const isValid = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
+      // const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isValid) {
+        this.$message.error('上传图片只能是 JPG/JPEG/PNG 格式!')
+        return
+      }
+      // if (!isLt2M) {
+      //   this.$message.error('上传头像图片大小不能超过 2MB!')
+      // }
+      // if (isValid && isLt2M) {
+      //   const image = new FormData()
+      //   image.append('image', file)
+      //   this.addForm.imgUrl = image
+      // }
+      const image = new FormData()
+      image.append('image', file)
+      this.addForm.imgUrl = image
+      console.log(image)
+      console.log(this.addForm.imgUrl)
+      console.log(this.addForm)
+      // 不自动上传
+      return true
     }
   }
 }
