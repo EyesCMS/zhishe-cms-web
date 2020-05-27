@@ -1,26 +1,26 @@
 <template>
   <div>
-    <el-card style="margin: 15px 15px">
+    <el-card style="margin: 15px 15px;">
       <div>
         <i class="el-icon-search" />
         <span>筛选搜索</span>
         <el-button
-          style="float: right"
+          style="float: right;"
           type="primary"
           size="small"
-          @click="handleSearchList"
+          @click="searchInvitations"
         >
           查询
         </el-button>
         <el-button
-          style="float: right;margin-right: 15px"
+          style="float: right;margin-right: 15px;"
           size="small"
-          @click="reset"
+          @click="cleanSearchFiled"
         >
           重置
         </el-button>
       </div>
-      <div style="margin-top: 55px">
+      <div style="margin-top: 55px;">
         <el-form
           :inline="true"
           :model="queryInfo"
@@ -31,14 +31,14 @@
             <el-form-item label="帖子标题">
               <el-input
                 v-model="queryInfo.title"
-                style="width: 203px"
+                style="width: 203px;"
                 placeholder="请输入帖子标题"
               />
             </el-form-item>
             <el-form-item label="帖子内容">
               <el-input
                 v-model="queryInfo.content"
-                style="width: 203px"
+                style="width: 203px;"
                 placeholder="请输入帖子内容"
               />
             </el-form-item>
@@ -55,53 +55,61 @@
         </el-form>
       </div>
     </el-card>
-    <el-card style="margin: 15px 15px">
+    <el-card style="margin: 15px 15px;">
       <h4>共搜索到 {{ total }} 条帖子</h4>
-      <div v-show="total === 0" align="center" style="margin-top:100px;">
-        <img src="../../../assets/images/noContent.png" alt="item" style="width:200px;height:180px;">
-        <h2 style="color:silver">暂无帖子</h2>
+      <div
+        v-show="total === 0"
+        align="center"
+        style="margin-top: 100px;"
+      >
+        <img
+          src="../../../assets/images/noContent.png"
+          alt="item"
+          style="width: 200px; height: 180px;"
+        >
+        <h2 style="color: silver;">暂无帖子</h2>
       </div>
       <el-card
         v-for="(item, index) in invitationsList"
         :key="index"
-        style="margin:20px 100px"
+        style="margin: 20px 100px;"
       >
         <el-row>
           <el-avatar
-            style="float:left"
+            style="float: left;"
             :src="item.avatarUrl"
           />
-          <p style="float: left">{{ item.posterName }}</p>
+          <p style="float: left;">{{ item.posterName }}</p>
         </el-row>
         <div>
-          <h2 style="text-align:center;font-size: 25px">{{ item.title }}</h2>
-          <p style="font-size:15px;text-align:center">
+          <h2 style="text-align: center; font-size: 25px;">{{ item.title }}</h2>
+          <p style="font-size: 15px; text-align: center;">
             <i class="el-icon-date" />
             {{ item.createAt }}
           </p>
-          <p style="font-size:15px;text-align:center">
+          <p style="font-size: 15px; text-align: center;">
             点赞({{ item.likeCount }}) 评论({{ item.commentCount }})
           </p>
           <el-divider />
         </div>
         <el-row>
-          <div style="margin-left:20px">
+          <div style="margin-left: 20px;">
             <div v-show="item.imgUrl">
               <el-image
                 :src="item.imgUrl"
                 lazy
-                style="height:200px;width:300px;float:left;margin-right:40px;"
+                style="height: 200px; width: 300px; float: left; margin-right: 40px;"
               />
             </div>
-            <div style="margin-right:20px;">
-              <p style="float:none; text-indent: 2em; font-size: 20px;text-align:justify; margin-left:20px; line-height: 37px;">{{ item.content | interceptAbstract }}</p>
+            <div style="margin-right: 20px;">
+              <p style="float: none; text-indent: 2em; font-size: 20px; text-align: justify; margin-left: 20px; line-height: 37px;">{{ item.content | interceptAbstract }}</p>
             </div>
           </div>
         </el-row>
-        <div style="text-align:center;margin-top:20px">
+        <div style="text-align: center; margin-top: 20px;">
           <el-button
             type="primary"
-            @click="pushToDetail(item.id)"
+            @click="enterDetail(item.id)"
           >查看详情</el-button>
         </div>
       </el-card>
@@ -114,7 +122,7 @@
         :page-size="queryInfo.limit"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-        style="margin: 25px 15px;text-align:center"
+        style="margin: 25px 15px; text-align: center;"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -163,30 +171,29 @@ export default {
         this.total = response.data.totalCount
       })
     },
+
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
       this.getInvitationListData()
     },
+
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
       this.getInvitationListData()
     },
 
     // 跳转到帖子详情页面
-    pushToDetail(id) {
+    enterDetail(id) {
       this.$router.push({ path: 'detail', query: { id: id }})
     },
-    queryInvitation() {
-      this.getInvitationListData()
-      this.queryInfo.keyword = ''
-    },
-    handleSearchList() {
+
+    searchInvitations() {
       this.queryInfo.page = 1
       this.getInvitationListData()
     },
-    reset() {
-      this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt =
-        ''
+
+    cleanSearchFiled() {
+      this.queryInfo.posterName = this.queryInfo.title = this.queryInfo.content = this.queryInfo.createAt = ''
     }
   }
 }
