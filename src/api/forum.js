@@ -95,3 +95,9 @@ export function getUserLike(data) {
     params: data
   })
 }
+export function deleteRemark(id) {
+  return request({
+    url: `/forum/remarks/${id}`,
+    method: 'delete'
+  })
+}

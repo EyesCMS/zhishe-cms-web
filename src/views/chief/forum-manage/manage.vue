@@ -143,44 +143,73 @@
               class="el-icon-s-comment"
             />
           </p>
-
-        </el-row>
-        <div v-show="forumsList[key].remarkVisiable">
-          <div
-            v-for="(index, I) in forumsList[key].remark.items"
-            :key="I"
-            style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);border-radius: 5px; padding: 10px"
-          >
-            <!-- 评论具体内容 -->
-            <el-row style="align-items: center;display: flex;background-color: #F2F6FC">
-              <!-- 评论头像 -->
-              <el-col :span="2">
-                <el-avatar
-                  :src="index.avatarUrl"
-                  style="float:left"
-                />
-              </el-col>
-              <!-- 评论时间和发评论者 -->
-              <el-col :span="3">
-                <p style="font-size:18px">{{ index.nickname }}</p>
-                <p
-                  v-time="index.createAt"
-                  style=" font-size:10px"
-                />
-              </el-col>
-              <!-- 评论内容 -->
-              <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
-            </el-row>
-          </div>
-          <div style="text-align:center">
+          <div v-show="forumsList[key].remarkVisiable">
+            <div
+              v-for="(index, I) in forumsList[key].remark.items"
+              :key="I"
+              style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);border-radius: 5px; padding: 10px"
+            >
+              <!-- 评论具体内容 -->
+              <el-row style="align-items: center;display: flex;background-color: #F2F6FC">
+                <!-- 评论头像 -->
+                <el-col :span="3">
+                  <el-avatar
+                    :src="index.avatarUrl"
+                    style="float:left"
+                  />
+                </el-col>
+                <!-- 评论时间和发评论者 -->
+                <el-col :span="3">
+                  <p style="font-size:18px">{{ index.nickname }}</p>
+                  <p
+                    v-time="index.createAt"
+                    style=" font-size:10px"
+                  />
+                </el-col>
+                <!-- 评论内容 -->
+                <el-col :span="17">
+                  <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
+                </el-col>
+                <el-col
+                  v-show="index.userId===uid"
+                  :span="2"
+                >
+                  <div
+                    style="display:inline;float:right;margin:10px;"
+                    @click="showDeletRemark(index)"
+                  >
+                    <i
+                      style="cursor:pointer"
+                      class="el-icon-delete icon"
+                    />
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+            <!-- <div style="text-align:center">
             <el-link
               v-if="item.query.limit < item.remark.totalCount"
               type="primary"
               @click="showMoreRemarks(item)"
             >查看更多评论</el-link>
             <p v-else>已加载全部评论</p>
+          </div> -->
+            <el-col>
+              <div style="text-align:center;">
+                <el-pagination
+                  :ref="item.content"
+                  :current-page="item.query.page"
+                  :page-sizes="[5, 10, 15, 20]"
+                  :page-count="5"
+                  :page-size="item.query.limit"
+                  layout="total, prev, pager, next"
+                  :total="item.remark.totalCount"
+                  @current-change="remarkCurrentChange(item)"
+                />
+              </div>
+            </el-col>
           </div>
-        </div>
+        </el-row>
       </div>
 
       <!-- 分页区域 -->
@@ -230,10 +259,23 @@
           />
         </el-form-item>
         <el-form-item label="添加图片">
-          <el-input
-            v-model="forumForm.imgUrl"
-            placeholder="请输入图片地址"
-          />
+          <el-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            list-type="picture"
+          >
+            <el-button
+              size="small"
+              type="primary"
+            >点击上传</el-button>
+            <div
+              slot="tip"
+              class="el-upload__tip"
+            >只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
         </el-form-item>
       </el-form>
       <span
@@ -289,16 +331,37 @@
         >Handle Change</el-button>
       </span>
     </el-dialog>
+    <!-- 删除评论 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="deletRemarkVisible"
+      width="30%"
+    >
+      <p>{{ deletRemark.content }}</p>
+      <span style="float:right">确认删除该评论吗？</span>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="deletRemarkVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="deletRemarks(deletRemark.id)"
+        >确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getMyForums, getRemarksList, getInvitationDetail, changeForum, publishForum, deleteForum } from '@/api/forum'
+import { getMyForums, getRemarksList, getInvitationDetail, changeForum, publishForum, deleteForum, deleteRemark } from '@/api/forum'
 import '../../../../time.js'
 export default {
   data() {
     return {
+      uid: this.$store.getters.userId,
       dialogVisible: false,
+      deletRemarkVisible: false,
       length: 0,
       forumsList: [],
       forumDetile: {},
@@ -307,6 +370,10 @@ export default {
         id: '',
         title: '',
         content: ''
+      },
+      remarkQuery: {
+        page: 1,
+        limit: 5
       },
       queryInfo: {
         keyword: '',
@@ -329,7 +396,9 @@ export default {
       rules: {
         title: [{ required: true, trigger: 'blur', message: '请输入标题' }],
         content: [{ required: true, trigger: 'blur', message: '请输入具体内容' }]
-      }
+      },
+      deletRemark: { content: '', id: '' },
+      fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }]
     }
   },
   created: function () {
@@ -346,6 +415,18 @@ export default {
       // console.log(newPage)
       this.queryInfo.page = newPage
       this.getForumsList()
+    },
+    remarkCurrentChange(item) {
+      // console.log(newPage)
+      // console.log(item.query)
+      // console.log(this.$refs[item.content][0].internalCurrentPage)
+      item.query.page = this.$refs[item.content][0].internalCurrentPage
+      this.$forceUpdate
+      // console.log(item.query)
+      this.getRemarkList(item)
+      // console.log(this.remarkQuery)
+      // this.queryInfo.page = newPage
+      // this.getForumsList()
     },
     getForumsList() {
       getMyForums(this.queryInfo, this.originState).then(response => {
@@ -403,7 +484,6 @@ export default {
       })
     },
     deleteForum(id) {
-      console.log(id)
       deleteForum(id).then(response => {
         if (response.status === 204) {
           this.getForumsList()
@@ -455,6 +535,23 @@ export default {
       item.query.limit += 5
       this.$forceUpdate()
       this.getRemarkList(item)
+    },
+    showDeletRemark(index) {
+      console.log(index)
+      this.deletRemark = index
+      this.deletRemarkVisible = true
+    },
+    deletRemarks(id) {
+      this.deletRemarkVisible = false
+      deleteRemark(id).then(response => {
+        this.$message.success(response)
+      })
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      console.log(file)
     }
   }
 }
