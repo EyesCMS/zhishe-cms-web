@@ -16,7 +16,7 @@
           <p>{{ detailInfo.createAt }}</p>
         </div>
         <div style="text-align:center;">
-          <el-tooltip class="item" effect="dark" content="点赞" placement="top">
+          <el-tooltip class="item" effect="dark" :content="content" placement="top">
             <el-badge :value="detailInfo.likeCount" class="item" type="warning">
               <el-button v-if="unlikeShow" type="info" icon="el-icon-star-off" @click="addLike()" />
               <el-button v-else type="danger" icon="el-icon-star-off" @click="removeLike()" />
@@ -95,6 +95,7 @@ export default {
   name: 'ActivityDetail',
   data() {
     return {
+      content: '',
       id: this.$route.query.id,
       userId: this.$store.getters.userId,
       queryInfo: {
@@ -168,8 +169,10 @@ export default {
       getUserLike(this.getLikeInfo).then(response => {
         if (response.status === 200) {
           if (response.data.status === 1) {
+            this.content = '取消点赞'
             this.unlikeShow = false
           } else {
+            this.content = '点赞'
             this.unlikeShow = true
           }
         } else {
@@ -184,6 +187,7 @@ export default {
         if (response.status === 204) {
           this.unlikeShow = false
           this.getInvitationDetailData()
+          this.content = '取消点赞'
           return this.$message.success('点赞成功')
         } else {
           return this.$message.error('点赞失败')
@@ -197,6 +201,7 @@ export default {
         if (response.status === 204) {
           this.unlikeShow = true
           this.getInvitationDetailData()
+          this.content = '点赞'
           return this.$message.success('取消点赞成功')
         } else {
           return this.$message.error('取消点赞失败')
