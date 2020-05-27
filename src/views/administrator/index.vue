@@ -69,11 +69,6 @@
           <div id="chartLineBox" style="width: 100%;height: 70vh;margin-top: 10px;" />
         </el-col>
       </el-row>
-      <el-row>
-        <div style="text-align:center">
-          <el-button type="primary" @click="clubSpecies()">各类别社团占比</el-button>
-        </div>
-      </el-row>
     </div>
     <div v-show="clubSpeciesVisible==true" class="statistics-layout">
       <div class="layout-title">各类别社团占比</div>
@@ -83,11 +78,6 @@
             <div style="text-align:center">
               <div id="pieBox" style="width: 650%;height: 300px" />
             </div>
-          </div>
-        </el-row>
-        <el-row>
-          <div style="text-align:center">
-            <el-button type="primary" @click="newUsers()">注册人数统计</el-button>
           </div>
         </el-row>
       </div>
@@ -182,6 +172,8 @@ export default {
   watch: {
     'option.xAxis.data': function() {
       this.showChartLine()
+      this.clubSpeciesVisible = true
+      this.showPie()
     }
   },
   created() {
@@ -290,7 +282,7 @@ export default {
             name: '社团数目',
             type: 'pie',
             radius: '50%',
-            center: ['60%', '60%'],
+            center: ['50%', '50%'],
             data: [
               { value: this.clubSpecie.clubSpeciesNumber[0], name: this.clubSpecie.clubSpecies[0] },
               { value: this.clubSpecie.clubSpeciesNumber[1], name: this.clubSpecie.clubSpecies[1] },
@@ -308,19 +300,6 @@ export default {
           }
         ]
       })
-    },
-    // 切换显示统计图表
-    clubSpecies() {
-      this.newUsersVisible = false
-      this.clubSpeciesVisible = true
-      this.getClubSpecie()
-      this.showPie()
-    },
-    newUsers() {
-      this.clubSpeciesVisible = false
-      this.newUsersVisible = true
-      this.getNewUser()
-      this.showChartLine()
     },
     // 切换折线图日期
     check() {
