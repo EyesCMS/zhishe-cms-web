@@ -203,7 +203,7 @@ export default {
       total: 0,
       // 社团详情
       clubDetail: {},
-      id: this.$store.getters.id
+      id: this.$route.query.id
     }
   },
   created() {
@@ -263,7 +263,7 @@ export default {
     ApplyToJoin() {
       this.$router.push({
         path: '/joinClub',
-        query: { id: this.id, name: this.clubDetail.name }
+        query: { id: this.clubId, name: this.clubDetail.name }
       })
     },
     back() {
