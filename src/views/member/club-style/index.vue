@@ -24,7 +24,11 @@
                 <i class="el-icon-arrow-right" />
               </el-button>
             </div>
-            <div v-for="(item, i) in bulletinsList" id="bulletin" :key="i">
+            <div v-if="bulletinsList.length==0" align="center">
+              <img src="../../../assets/images/notFound.png" alt="item">
+              <h2 style="color:silver">暂无公告</h2>
+            </div>
+            <div v-for="(item, i) in bulletinsList" v-else id="bulletin" :key="i">
               <div style="display:flex;justify-content: space-between">
                 <div>
                   <el-tag v-if="i <= 2" type="danger">{{ i + 1 }}</el-tag>
@@ -53,7 +57,11 @@
                 <i class="el-icon-arrow-right" />
               </el-button>
             </div>
-            <div v-for="(item, i) in invitationList" id="bulletin" :key="i">
+            <div v-if="invitationList.length==0" align="center">
+              <img src="../../../assets/images/notFound.png" alt="item">
+              <h2 style="color:silver">暂无帖子</h2>
+            </div>
+            <div v-for="(item, i) in invitationList" v-else id="bulletin" :key="i">
               <div style="display:flex;justify-content: space-between">
                 <div>
                   <el-tag v-if="i <= 2" type="warning">{{ i + 1 }}</el-tag>
@@ -112,8 +120,9 @@
                 style="font-family:'微软雅黑',sans-serif;font-size:22px;font-weight:lighter;text-align:center"
               >
                 {{ clubDetail.name }}
-                <i v-if="isMember()" class="el-icon-user" />
-                <i v-else class="el-icon-edit" style="cursor:pointer" @click="edit()" />
+                <el-tooltip class="item" effect="dark" content="修改信息" placement="top">
+                  <i v-if="!isMember()" class="el-icon-edit" style="cursor:pointer" @click="edit()" />
+                </el-tooltip>
               </p>
               <el-divider />
               <div>

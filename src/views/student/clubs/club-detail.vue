@@ -12,13 +12,14 @@
           :interval="4000"
           arrow="always"
           type="card"
+          height="400px"
         >
           <el-carousel-item
             v-for="item in carouselImgList"
             :key="item"
           >
             <img
-              style="width:100%"
+              style="width:100%;height:100%;"
               :src="item"
               alt="item"
             >
@@ -27,7 +28,7 @@
       </div>
       <el-row :gutter="25">
         <el-col :span="6">
-          <el-card style="margin-top:20px">
+          <el-card style="margin-top:20px;">
             <!-- 社团等级显示 -->
             <el-row>
               <el-col :span="6">
@@ -63,7 +64,7 @@
               <el-divider />
               <h4>简 介：{{ clubDetail.slogan }}</h4>
             </el-card>
-            <p style="color:#9E9E9E;font-family:'微软雅黑',sans-serif;font-size:14px">
+            <p style="color:#9E9E9E;font-family:'微软雅黑',sans-serif;font-size:14px;">
               如果你感兴趣的话就
               <el-link
                 type="primary"
@@ -73,45 +74,45 @@
           </el-card>
         </el-col>
         <el-col :span="18">
-          <el-card style="margin: 15px 15px">
+          <el-card style="margin: 15px 15px;">
             <h4>共搜索到 {{ total }} 条帖子</h4>
             <p
               v-show="total === 0"
-              style="text-align: center"
+              style="text-align: center;"
             >暂无帖子</p>
             <el-card
               v-for="(item, index) in invitationList"
               :key="index"
-              style="margin:20px 100px"
+              style="margin:20px 100px;"
             >
               <el-row>
                 <el-avatar
-                  style="float:left"
+                  style="float:left;"
                   :src="item.avatarUrl"
                 />
                 <p style="float: left">{{ item.posterName }}</p>
               </el-row>
               <div>
-                <h2 style="text-align:center;font-size: 25px">{{ item.title }}</h2>
-                <p style="font-size:15px;text-align:center">
+                <h2 style="text-align:center;font-size: 25px;">{{ item.title }}</h2>
+                <p style="font-size:15px;text-align:center;">
                   <i class="el-icon-date" />
                   {{ item.createAt }}
                 </p>
                 <el-divider />
               </div>
               <el-row>
-                <div style="margin-left:20px">
+                <div style="margin-left:20px;">
                   <el-image
                     :src="item.imgUrl"
                     lazy
                     style="height:200px;width:300px;float:left;"
                   />
-                  <div style="margin-right:20px">
-                    <p style="float:none; text-indent: 2em; font-size: 20px;text-align:justify">{{ item.content | interceptAbstract }}</p>
+                  <div style="margin-right:20px;">
+                    <p style="float:none; text-indent: 2em; font-size: 20px;text-align:justify;">{{ item.content | interceptAbstract }}</p>
                   </div>
                 </div>
               </el-row>
-              <div style="text-align:center;margin-top:20px">
+              <div style="text-align:center;margin-top:20px;">
                 <el-button
                   type="primary"
                   @click="pushToActivityDetail(item.id)"
@@ -126,7 +127,7 @@
               :page-size="queryInfo.limit"
               layout="total, sizes, prev, pager, next, jumper"
               :total="total"
-              style="margin: 25px 15px;text-align:center"
+              style="margin: 25px 15px;text-align:center;"
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
             />
@@ -202,7 +203,7 @@ export default {
       total: 0,
       // 社团详情
       clubDetail: {},
-      id: this.$store.getters.id
+      id: this.$route.query.id
     }
   },
   created() {
@@ -262,7 +263,7 @@ export default {
     ApplyToJoin() {
       this.$router.push({
         path: '/joinClub',
-        query: { id: this.id, name: this.clubDetail.name }
+        query: { id: this.clubId, name: this.clubDetail.name }
       })
     },
     back() {

@@ -7,6 +7,10 @@
           @click="publishAnnouncement()"
         >发布公告</el-button>
       </el-row>
+      <div v-show="total === 0" align="center" style="margin-top:100px;">
+        <img src="../../../assets/images/noContent.png" alt="item" style="width:200px;height:180px;">
+        <h2 style="color:silver">暂无公告</h2>
+      </div>
       <!-- 公告列表 -->
       <div
         v-for="(item, index) in bulletinsList"
@@ -29,7 +33,7 @@
       </div>
 
       <!-- 分页 -->
-      <div style="text-align:center;margin-top: 10px;">
+      <div v-show="total != 0" style="text-align:center;margin-top: 10px;">
         <el-pagination
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 15, 20]"

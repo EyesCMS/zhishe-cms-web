@@ -4,12 +4,12 @@
       <el-image style="width: 350px; height: 350px;" :src="avatarUrl" />
     </div>
     <div style="width:650px;display:inline-block;vertical-align: top;">
-      <el-card style="margin: 30px 15px 30px 30px">
+      <el-card style="margin: 30px 15px 30px 30px;">
         <h2 style="font-family:'微软雅黑',sans-serif;font-size:32px;font-weight:lighter;">
           <!--<el-avatar shape="circle" :size="60" :src="avatarUrl" />-->
           {{ name }}资料
         </h2>
-        <p style="color:#9E9E9E;font-family:'微软雅黑',sans-serif;font-size:14px">
+        <p style="color:#9E9E9E;font-family:'微软雅黑',sans-serif;font-size:14px;">
           如果你感兴趣的话就
           <el-link type="primary" @click="ApplyToJoin()">加入我们</el-link> 吧！
         </p>
@@ -30,7 +30,7 @@
         </div>
       </el-card>
     </div>
-    <div style="text-align:center">
+    <div style="text-align:center;">
       <el-button type="primary" @click="backToClub">确定</el-button>
     </div>
   </div>

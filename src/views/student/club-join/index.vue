@@ -6,7 +6,7 @@
         <el-step title="等待社长审核" />
       </el-steps>
     </el-card>
-    <div v-show="formShow" style="margin-top:30px">
+    <div v-show="formShow" style="margin-top:30px;">
       <el-form ref="form" :model="form" :rules="formRules" label-width="450px">
         <el-form-item label="申请人姓名">
           <el-input v-model="username" style="width:400px;" :disabled="true" />
@@ -25,16 +25,16 @@
             show-word-limit
           />
         </el-form-item>
-        <div style="text-align:center">
+        <div style="text-align:center;">
           <el-button type="primary" @click="ApplyToJoin">申请</el-button>
           <el-button @click="renew">重置</el-button>
         </div>
       </el-form>
     </div>
-    <div v-show="successShow" style="text-align:center;margin-top:30px">
-      <i class="el-icon-success" style="font-size:150px;color:#66CDAA" />
+    <div v-show="successShow" style="text-align:center;margin-top:30px;">
+      <i class="el-icon-success" style="font-size:150px;color:#66CDAA;" />
       <p />
-      <p style="font-size:22px;color:#707070">您已申请成功，请等待社长审核!</p>
+      <p style="font-size:22px;color:#707070;">您已申请成功，请等待社长审核!</p>
       <p />
       <el-button type="primary" @click="viewApplications">查看申请结果</el-button>
     </div>

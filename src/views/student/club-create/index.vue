@@ -40,16 +40,16 @@
             show-word-limit
           />
         </el-form-item>
-        <div style="text-align:center">
+        <div style="text-align:center;">
           <el-button type="primary" @click="postSubmit">立即创建</el-button>
           <el-button @click="renew">重置</el-button>
         </div>
       </el-form>
     </div>
-    <div v-show="successShow" style="text-align:center;margin-top:30px">
-      <i class="el-icon-success" style="font-size:150px;color:#66CDAA" />
+    <div v-show="successShow" style="text-align:center;margin-top:30px;">
+      <i class="el-icon-success" style="font-size:150px;color:#66CDAA;" />
       <p />
-      <p style="font-size:22px;color:#707070">您已申请成功，请等待管理员审核!</p>
+      <p style="font-size:22px;color:#707070;">您已申请成功，请等待管理员审核!</p>
       <p />
       <el-button type="primary" @click="viewApplications">查看申请结果</el-button>
     </div>

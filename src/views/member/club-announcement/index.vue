@@ -37,6 +37,10 @@
       </el-card>
       <el-card>
         <p>共搜索到{{ total }}条相关公告</p>
+        <div v-show="total === 0" align="center" style="margin-top:100px;">
+          <img src="../../../assets/images/noContent.png" alt="item" style="width:200px;height:180px;">
+          <h2 style="color:silver">暂无帖子</h2>
+        </div>
         <el-card v-for="(item, index) in bulletinsList" :key="index" style="margin: 50px auto;width: 800px">
           <h2 class="title">{{ item.title }}</h2>
           <p>{{ item.body }}</p>
@@ -47,16 +51,9 @@
           </div>
         </el-card>
 
-        <!-- <div >
-        <h2>{{ item.title }}</h2>
-        <p>{{ item.create_at }}  </p>
-        <p>{{ item.content }}</p>
-        <el-link type="primary" @click="openBulletinDetailDiaglog(item.id)">详情</el-link>
-        <el-divider><i class="el-icon-message-solid" /></el-divider>
-      </div> -->
-
         <!-- 分页 -->
         <el-pagination
+          v-show="total != 0"
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 15, 20]"
           :page-size="queryInfo.limit"

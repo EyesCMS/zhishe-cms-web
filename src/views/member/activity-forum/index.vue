@@ -57,10 +57,10 @@
     </el-card>
     <el-card style="margin: 15px 15px">
       <h4>共搜索到 {{ total }} 条帖子</h4>
-      <p
-        v-show="total === 0"
-        style="text-align: center"
-      >暂无帖子</p>
+      <div v-show="total === 0" align="center" style="margin-top:100px;">
+        <img src="../../../assets/images/noContent.png" alt="item" style="width:200px;height:180px;">
+        <h2 style="color:silver">暂无帖子</h2>
+      </div>
       <el-card
         v-for="(item, index) in invitationsList"
         :key="index"
@@ -108,6 +108,7 @@
 
       <!-- 分页区域 -->
       <el-pagination
+        v-show="total != 0"
         :current-page="queryInfo.page"
         :page-sizes="[5, 10, 15, 20]"
         :page-size="queryInfo.limit"

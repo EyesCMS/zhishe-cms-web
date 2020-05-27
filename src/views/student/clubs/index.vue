@@ -6,14 +6,14 @@
         <span>筛选搜索</span>
         <el-button style="float: right" type="primary" size="small" @click="findClubsListData">查询</el-button>
         <el-button
-          style="float: right;margin-right: 15px"
+          style="float: right;margin-right: 15px;"
           size="small"
           @click="handleResetSearch"
         >重置</el-button>
       </div>
-      <div style="margin-top: 15px">
+      <div style="margin-top: 15px;">
         <el-form :inline="true" :model="form" size="small" label-width="140px">
-          <div style="text-align:center">
+          <div style="text-align:center;">
             <el-form-item label="输入搜索：">
               <el-input v-model="form.keyword" style="width: 203px" placeholder="请输入社团名称" />
             </el-form-item>
@@ -48,7 +48,7 @@
         <el-table-column label="社团ID" prop="id" />
         <el-table-column label="社团头像" prop="avatarUrl">
           <template slot-scope="scope" width="40">
-            <el-image :src="scope.row.avatarUrl" style="width: 50px; height: 50px" />
+            <el-image :src="scope.row.avatarUrl" style="width: 50px; height: 50px;" />
           </template>
         </el-table-column>
         <el-table-column label="社团名称" prop="name" />
@@ -78,7 +78,7 @@
     </div>
 
     <!-- 分页区域 -->
-    <div style="text-align:center;margin-top: 10px;">
+    <div style="text-align:center;margin-top: 30px;">
       <el-pagination
         :current-page="queryInfo.page"
         :page-sizes="[5, 10, 15, 20]"
