@@ -110,7 +110,7 @@ export function pushToCreateApply(data) {
     data
   })
 }
-export function getCreateApplyList(params) {
+export function getCreateApplyListData(params) {
   return request({
     url: `/clubs/creations`,
     method: 'get',
@@ -125,7 +125,7 @@ export function pushToDismissApply(data) {
     data
   })
 }
-export function getDismissApplyList(params) {
+export function getDismissApplyListData(params) {
   return request({
     url: '/clubs/dissolution',
     method: 'get',
@@ -140,7 +140,7 @@ export function pushToChangeApply(data) {
     data
   })
 }
-export function getChangeApplyList(params) {
+export function getChangeApplyListData(params) {
   return request({
     url: `/clubs/leader/changes`,
     method: 'get',
@@ -148,7 +148,7 @@ export function getChangeApplyList(params) {
   })
 }
 // 社团认证申请
-export function getMyIdentifyApplyList(clubid, query) {
+export function getMyIdentifyApplyListData(clubid, query) {
   return request({
     url: `/clubs/${clubid}/certifications`,
     method: 'get',
@@ -162,7 +162,7 @@ export function pushToIdentifyApply(data) {
     data
   })
 }
-export function getIdentifyApplyList(params) {
+export function getIdentifyApplyListData(params) {
   return request({
     url: `/clubs/certifications`,
     method: 'get',
@@ -177,7 +177,7 @@ export function pushToActivityApply(data) {
     data
   })
 }
-export function getActivityApplyList(params) {
+export function getActivityApplyListData(params) {
   return request({
     url: `/clubs/activities`,
     method: 'get',
@@ -241,7 +241,7 @@ export function postIdentifyApply(data) {
 }
 
 // 获取退社通知
-export function getQuitList(clubid, query) {
+export function getQuitListData(clubid, query) {
   return request({
     url: `/clubs/${clubid}/quit`,
     method: 'get',

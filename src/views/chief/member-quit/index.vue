@@ -4,11 +4,29 @@
     <el-card>
 
       <!-- 社员退社通知列表 -->
-      <el-table v-loading="listLoading" :data="quitList" stripe border>
-        <el-table-column type="index" label="#" />
-        <el-table-column label="社员名" prop="username" />
-        <el-table-column label="退社原因" prop="reason" />
-        <el-table-column label="退社时间" prop="createAt" :formatter="formatDate" />
+      <el-table
+        v-loading="listLoading"
+        :data="quitList"
+        stripe
+        border
+      >
+        <el-table-column
+          type="index"
+          label="#"
+        />
+        <el-table-column
+          label="社员名"
+          prop="username"
+        />
+        <el-table-column
+          label="退社原因"
+          prop="reason"
+        />
+        <el-table-column
+          label="退社时间"
+          prop="createAt"
+          :formatter="formatDate"
+        />
       </el-table>
 
       <!-- 分页区域 -->
@@ -26,7 +44,7 @@
 </template>
 
 <script>
-import { getQuitList } from '@/api/club'
+import { getQuitListData } from '@/api/club'
 export default {
   name: 'QuitList',
   data() {
@@ -41,13 +59,15 @@ export default {
       quitList: []
     }
   },
+
   created() {
-    this.getQuitList()
+    this.getQuitListData()
   },
+
   methods: {
-    getQuitList() {
+    getQuitListData() {
       this.listLoading = true
-      getQuitList(this.clubId, this.queryInfo).then(response => {
+      getQuitListData(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取成员退出通知成功')
           this.quitList = response.data.items
@@ -59,16 +79,19 @@ export default {
         }
       })
     },
+
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getQuitList()
+      this.getQuitListData()
     },
+
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getQuitList()
+      this.getQuitListData()
     },
+
     // 设置时间格式
     formatDate(row, column) {
       // 获取单元格数据
@@ -87,9 +110,11 @@ export default {
 .el-card {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
 }
+
 .el-table {
   margin-top: 20px;
 }
+
 .el-pagination {
   margin-top: 20px;
   text-align:center;

@@ -14,7 +14,7 @@
           查询
         </el-button>
         <el-button
-          style="float: right;margin-right: 15px"
+          style="float: right; margin-right: 15px"
           size="small"
           @click="renew"
         >
@@ -22,17 +22,45 @@
         </el-button>
       </div>
       <div style="margin-top: 30px">
-        <el-form :inline="true" :model="form" label-width="100px">
+        <el-form
+          :inline="true"
+          :model="form"
+          label-width="100px"
+        >
           <el-form-item label="社团名称">
-            <el-input v-model="form.clubName" placeholder="" />
+            <el-input
+              v-model="form.clubName"
+              placeholder=""
+            />
           </el-form-item>
-          <el-form-item label="申请状态" prop="state">
-            <el-select v-model="form.state" placeholder="请选择">
-              <el-option label="待审核" value="0" />
-              <el-option label="已批准" value="1" />
-              <el-option label="已发布" value="2" />
-              <el-option label="已退回" value="3" />
-              <el-option label="已结束" value="4" />
+          <el-form-item
+            label="申请状态"
+            prop="state"
+          >
+            <el-select
+              v-model="form.state"
+              placeholder="请选择"
+            >
+              <el-option
+                label="待审核"
+                value="0"
+              />
+              <el-option
+                label="已批准"
+                value="1"
+              />
+              <el-option
+                label="已发布"
+                value="2"
+              />
+              <el-option
+                label="已退回"
+                value="3"
+              />
+              <el-option
+                label="已结束"
+                value="4"
+              />
             </el-select>
           </el-form-item>
         </el-form>
@@ -40,28 +68,101 @@
     </el-card>
     <el-card>
       <!-- 社团活动申请列表 -->
-      <el-table :data="activityApplyList" stripe border>
-        <el-table-column type="index" label="#" />
-        <el-table-column label="社团名称" prop="clubName" />
-        <el-table-column label="活动名称" prop="name" />
-        <el-table-column label="活动标题" prop="title" />
-        <el-table-column label="活动内容" width="350px" prop="content" />
-        <el-table-column label="开始时间" prop="startDate" />
-        <el-table-column label="结束时间" prop="endDate" />
-        <el-table-column label="活动场地" prop="location" />
-        <el-table-column label="申请状态" prop="state">
+      <el-table
+        :data="activityApplyList"
+        stripe
+        border
+      >
+        <el-table-column
+          type="index"
+          label="#"
+        />
+        <el-table-column
+          label="社团名称"
+          prop="clubName"
+        />
+        <el-table-column
+          label="活动名称"
+          prop="name"
+        />
+        <el-table-column
+          label="活动标题"
+          prop="title"
+        />
+        <el-table-column
+          label="活动内容"
+          width="350px"
+          prop="content"
+        />
+        <el-table-column
+          label="开始时间"
+          prop="startDate"
+        />
+        <el-table-column
+          label="结束时间"
+          prop="endDate"
+        />
+        <el-table-column
+          label="活动场地"
+          prop="location"
+        />
+        <el-table-column
+          label="申请状态"
+          prop="state"
+        >
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
-            <el-tag v-else-if="scope.row.state === 1" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
-            <el-tag v-else-if="scope.row.state === 2" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
-            <el-tag v-else-if="scope.row.state === 3" style="text-align:center" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
-            <el-tag v-else style="text-align:center" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag
+              v-if="scope.row.state === 0"
+              style="text-align: center"
+              type="warning"
+              :disable-transitions="true"
+              effect="dark"
+            >{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag
+              v-else-if="scope.row.state === 1"
+              style="text-align: center"
+              type="success"
+              :disable-transitions="true"
+              effect="dark"
+            >{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag
+              v-else-if="scope.row.state === 2"
+              style="text-align: center"
+              type="success"
+              :disable-transitions="true"
+              effect="dark"
+            >{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag
+              v-else-if="scope.row.state === 3"
+              style="text-align: center"
+              type="success"
+              :disable-transitions="true"
+              effect="dark"
+            >{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag
+              v-else
+              style="text-align: center"
+              type="danger"
+              :disable-transitions="true"
+              effect="dark"
+            >{{ scope.row.state | statusFilter }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200px">
+        <el-table-column
+          label="操作"
+          width="200px"
+        >
           <template slot-scope="scope">
-            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToAgree(scope)">批准</el-button>
-            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToRefuse(scope)">退回</el-button>
+            <el-button
+              v-if="scope.row.state === 0"
+              type="primary"
+              @click="pushToAgree(scope)"
+            >批准</el-button>
+            <el-button
+              v-if="scope.row.state === 0"
+              type="primary"
+              @click="pushToRefuse(scope)"
+            >退回</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -81,7 +182,7 @@
 </template>
 
 <script>
-import { getActivityApplyList, pushToActivityApply } from '@/api/club'
+import { getActivityApplyListData, pushToActivityApply } from '@/api/club'
 export default {
   name: 'ActivityApply',
   filters: {
@@ -115,11 +216,13 @@ export default {
       }
     }
   },
+
   created() {
-    this.getActivityApplyList()
+    this.getActivityApplyListData()
   },
+
   methods: {
-    getActivityApplyList() {
+    getActivityApplyListData() {
       this.listLoading = true
       const param = {
         clubName: this.form.clubName,
@@ -127,7 +230,7 @@ export default {
         page: this.queryInfo.page,
         limit: this.queryInfo.limit
       }
-      getActivityApplyList(param).then(response => {
+      getActivityApplyListData(param).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团活动申请成功')
           this.activityApplyList = response.data.items
@@ -137,16 +240,19 @@ export default {
         }
       })
     },
+
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getActivityApplyList()
+      this.getActivityApplyListData()
     },
+
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getActivityApplyList()
+      this.getActivityApplyListData()
     },
+
     // 修改申请状态
     pushToAgree({ $index, row }) {
       const data = {
@@ -162,6 +268,7 @@ export default {
       })
       row.state = 1
     },
+
     pushToRefuse({ $index, row }) {
       const data = {
         id: row.id,
@@ -176,14 +283,16 @@ export default {
       })
       row.state = 3
     },
+
     // 组合查询
     renew() {
       this.form.clubName = ''
       this.form.state = ''
     },
+
     check() {
       this.queryInfo.page = 1
-      this.getActivityApplyList()
+      this.getActivityApplyListData()
     }
   }
 }
@@ -193,9 +302,11 @@ export default {
 .el-card {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
 }
+
 .el-table {
   margin-top: 20px;
 }
+
 .el-pagination {
   margin-top: 20px;
   text-align:center;

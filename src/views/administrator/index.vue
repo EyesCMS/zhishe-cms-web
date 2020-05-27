@@ -6,21 +6,30 @@
       <div class="un-handle-content">
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-badge :value="unaudited.createNumber" class="item">
+            <el-badge
+              :value="unaudited.createNumber"
+              class="item"
+            >
               <div class="un-handle-item">
                 <span class="font-medium">社团创建申请</span>
               </div>
             </el-badge>
           </el-col>
           <el-col :span="8">
-            <el-badge :value="unaudited.dismissNumber" class="item">
+            <el-badge
+              :value="unaudited.dismissNumber"
+              class="item"
+            >
               <div class="un-handle-item">
                 <span class="font-medium">社团解散申请</span>
               </div>
             </el-badge>
           </el-col>
           <el-col :span="8">
-            <el-badge :value="unaudited.activityNumber" class="item">
+            <el-badge
+              :value="unaudited.activityNumber"
+              class="item"
+            >
               <div class="un-handle-item">
                 <span class="font-medium">社团活动申请</span>
               </div>
@@ -29,14 +38,20 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-badge :value="unaudited.changeNumber" class="item">
+            <el-badge
+              :value="unaudited.changeNumber"
+              class="item"
+            >
               <div class="un-handle-item">
                 <span class="font-medium">社长换届申请</span>
               </div>
             </el-badge>
           </el-col>
           <el-col :span="8">
-            <el-badge :value="unaudited.identifyNumber" class="item">
+            <el-badge
+              :value="unaudited.identifyNumber"
+              class="item"
+            >
               <div class="un-handle-item">
                 <span class="font-medium">社团认证申请</span>
               </div>
@@ -45,38 +60,74 @@
         </el-row>
       </div>
     </div>
-    <div v-show="newUsersVisible==true" class="statistics-layout">
+    <div
+      v-show="newUsersVisible==true"
+      class="statistics-layout"
+    >
       <div class="layout-title">注册人数统计</div>
       <el-row>
         <el-card>
           <el-col>
             <i class="el-icon-search" />
             <span>筛选搜索</span>
-            <div style="padding: 5px;margin-top:10px">
-              <el-form :inline="true" :model="form" label-width="500px">
+            <div
+              style="padding: 5px; margin-top: 10px"
+            >
+              <el-form
+                :inline="true"
+                :model="form"
+                label-width="500px"
+              >
                 <el-form-item prop="startDate">
-                  <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date" placeholder="开始日期" style="width: 90%;" />
+                  <el-date-picker
+                    v-model="form.startDate"
+                    format="yyyy-MM-dd"
+                    value-format="yyyy-MM-dd"
+                    type="date"
+                    placeholder="开始日期"
+                    style="width: 90%;"
+                  />
                 </el-form-item>
                 <el-form-item prop="endDate">
-                  <el-date-picker v-model="form.endDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date" placeholder="结束日期" style="width: 90%;" />
+                  <el-date-picker
+                    v-model="form.endDate"
+                    format="yyyy-MM-dd"
+                    value-format="yyyy-MM-dd"
+                    type="date"
+                    placeholder="结束日期"
+                    style="width: 90%;"
+                  />
                 </el-form-item>
-                <el-button type="primary" size="small" @click="check()">查询</el-button>
+                <el-button
+                  type="primary"
+                  size="small"
+                  @click="check()"
+                >查询</el-button>
               </el-form>
             </div>
           </el-col>
         </el-card>
         <el-col>
-          <div id="chartLineBox" style="width: 100%;height: 70vh;margin-top: 10px;" />
+          <div
+            id="chartLineBox"
+            style="width: 100%; height: 70vh; margin-top: 10px;"
+          />
         </el-col>
       </el-row>
     </div>
-    <div v-show="clubSpeciesVisible==true" class="statistics-layout">
+    <div
+      v-show="clubSpeciesVisible==true"
+      class="statistics-layout"
+    >
       <div class="layout-title">各类别社团占比</div>
-      <div style="text-align:center">
+      <div style="text-align: center">
         <el-row>
-          <div style="padding: 10px;border-left:1px solid #DCDFE6">
-            <div style="text-align:center">
-              <div id="pieBox" style="width: 650%;height: 300px" />
+          <div style="padding: 10px; border-left: 1px solid #DCDFE6">
+            <div style="text-align: center">
+              <div
+                id="pieBox"
+                style="width: 650%; height: 300px"
+              />
             </div>
           </div>
         </el-row>
@@ -87,7 +138,7 @@
 
 <script>
 import echarts from 'echarts'
-import { getUnaudited, getNewUser, getClubSpecie } from '@/api/admin'
+import { getUnauditedData, getNewUserData, getClubSpecieData } from '@/api/admin'
 export default {
   name: 'AdminHome',
   data() {
@@ -169,15 +220,19 @@ export default {
       }
     }
   },
+
   watch: {
     'option.xAxis.data': function() {
       this.showChartLine()
-      this.clubSpeciesVisible = true
-      this.showPie()
+      if (this.clubSpeciesVisible === false) {
+        this.clubSpeciesVisible = true
+        this.showPie()
+      }
     }
   },
+
   created() {
-    this.getUnaudited()
+    this.getUnauditedData()
     var nowD1 = new Date()
     var nowD2 = {
       year: nowD1.getFullYear(),
@@ -198,18 +253,20 @@ export default {
     startD = nowD4.year + '-' + nowD4.month + '-' + nowD4.date1
     this.tolerationSD = startD
     this.tolerationED = endD
-    this.getNewUser()
-    this.getClubSpecie()
+    this.getNewUserData()
+    this.getClubSpecieData()
   },
+
   updated() {
     this.showChartLine()
     this.showPie()
   },
+
   methods: {
     // 获取未审核申请数
-    getUnaudited() {
+    getUnauditedData() {
       this.Loading = true
-      getUnaudited(this.loading).then(response => {
+      getUnauditedData(this.loading).then(response => {
         if (response.status === 200) {
           this.unaudited.createNumber = response.data.createNumber
           this.unaudited.changeNumber = response.data.changeNumber
@@ -219,8 +276,9 @@ export default {
         }
       })
     },
+
     // 获取每日新注册用户数
-    getNewUser() {
+    getNewUserData() {
       this.Loading = true
       var sD = ''
       var eD = ''
@@ -238,29 +296,32 @@ export default {
         startDate: sD,
         endDate: eD
       }
-      getNewUser(param).then(response => {
+      getNewUserData(param).then(response => {
         if (response.status === 200) {
           this.option.xAxis.data = response.data.date
           this.option.series[0].data = response.data.newUsers
         }
       })
     },
+
     // 获取各类别社团占比
-    getClubSpecie() {
+    getClubSpecieData() {
       this.Loading = true
-      getClubSpecie(this.loading).then(response => {
+      getClubSpecieData(this.loading).then(response => {
         if (response.status === 200) {
           this.clubSpecie.clubSpecies = response.data.clubSpecies
           this.clubSpecie.clubSpeciesNumber = response.data.clubSpeciesNumber
         }
       })
     },
+
     // 生成折线图
     showChartLine() {
       this.chartLine = echarts.init(document.getElementById('chartLineBox'))
       this.chartLine.setOption(this.option)
       // 指定图表的配置项和数据
     },
+
     // 生成饼图
     showPie() {
       this.pie = echarts.init(document.getElementById('pieBox'))
@@ -301,9 +362,10 @@ export default {
         ]
       })
     },
+
     // 切换折线图日期
     check() {
-      this.getNewUser()
+      this.getNewUserData()
     }
   }
 }
@@ -315,6 +377,7 @@ export default {
     margin-left: 30px;
     margin-right: 30px;
   }
+
   .total-layout {
     margin-top: 20px;
   }
@@ -346,6 +409,7 @@ export default {
     left: 70px;
     top: -40px;
   }
+
   .un-handle-layout {
     margin-top: 20px;
     border: 1px solid #DCDFE6;

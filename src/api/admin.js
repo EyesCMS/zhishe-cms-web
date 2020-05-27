@@ -1,13 +1,13 @@
 import request from '@/utils/request'
 
-export function getUnaudited(params) {
+export function getUnauditedData(params) {
   return request({
     url: `/admin/unaudited`,
     method: 'get'
   })
 }
 
-export function getNewUser(params) {
+export function getNewUserData(params) {
   return request({
     url: `/admin/newusers`,
     method: 'get',
@@ -15,7 +15,7 @@ export function getNewUser(params) {
   })
 }
 
-export function getClubSpecie(params) {
+export function getClubSpecieData(params) {
   return request({
     url: `/admin/clubspecies`,
     method: 'get'
