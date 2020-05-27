@@ -1,25 +1,17 @@
 <template>
   <div>
-    <!-- 发布活动的button -->
-    <!-- <div
-      v-show="btnShow"
-      style="text-align:center"
-    >
-      <p
-        style="margin-top:20px;color:blue;float:left;"
-        type="primary"
-        @click="back"
-      >&lt;返回</p>
-      <p
-        style="margin-top:20px;color:blue;float:right;"
-        type="primary"
-        @click="addForum"
-      >发布动态</p>
-    </div> -->
     <!-- 帖子部分 -->
     <el-card style="margin-top:20px">
-      <el-button type="primary" style="margin-top:10px;float:left;cursor:pointer;" @click="back">&lt;返回</el-button>
-      <el-button type="primary" style="margin-top:10px;float:right;cursor:pointer;" @click="addForum">发布动态</el-button>
+      <el-button
+        type="primary"
+        style="margin-top:10px;float:left;cursor:pointer;"
+        @click="back"
+      >返回</el-button>
+      <el-button
+        type="primary"
+        style="margin-top:10px;float:right;cursor:pointer;"
+        @click="addForum"
+      >发布动态</el-button>
       <div
         v-for="(item, key) in forumsList"
         :key="key"
@@ -51,7 +43,12 @@
             style="display:inline;float:right;margin:10px;"
             @click="changeForum(item.id)"
           >
-            <el-tooltip class="item" effect="dark" content="编辑" placement="top">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="编辑"
+              placement="top"
+            >
               <i
                 style="cursor:pointer"
                 class="el-icon-edit icon"
@@ -62,32 +59,18 @@
             style="display:inline;float:right;margin:10px;"
             @click="showDeleteForum(item);dialogVisible = true"
           >
-            <el-tooltip class="item" effect="dark" content="删除" placement="top">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="删除"
+              placement="top"
+            >
               <i
                 style="cursor:pointer"
                 class="el-icon-delete icon"
               />
             </el-tooltip>
           </div>
-          <el-dialog
-            title="提示"
-            :visible.sync="dialogVisible"
-            width="30%"
-          >
-            <h3>{{ DeleteForum.title }}</h3>
-            <p>{{ DeleteForum.content }}</p>
-            <span style="float:right">确认删除该帖子吗？</span>
-            <span
-              slot="footer"
-              class="dialog-footer"
-            >
-              <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button
-                type="primary"
-                @click="deleteForum(DeleteForum.id)"
-              >确 定</el-button>
-            </span>
-          </el-dialog>
         </el-row>
         <el-row v-show="item.imgUrl">
           <!--cursor:pointer,鼠标滑过变成手指-->
@@ -106,13 +89,19 @@
             :value="item.likeCount"
             class="item"
           >
-            <p style="display: inline;float:right;cursor:pointer">
-              赞
-              <i
-                style="display: inline; float:right;cursor:pointer;"
-                class="el-icon-star-on"
-              />
-            </p>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="点赞数"
+              placement="top"
+            >
+              <p style="display: inline;float:right;cursor:pointer">
+                <i
+                  style="display: inline; float:right;cursor:pointer;"
+                  class="el-icon-star-on"
+                />
+              </p>
+            </el-tooltip>
           </el-badge>
           <el-badge
             v-show="!forumsList[key].remarkVisiable"
@@ -120,25 +109,38 @@
             :value="item.remark.totalCount"
             class="item"
           >
-            <p @click="getRemarkList(item)">
-              查看评论
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="查看评论"
+              placement="top"
+            >
+              <p @click="getRemarkList(item)">
+                <i
+                  style="display: inline; float:right;cursor:pointer"
+                  class="el-icon-s-comment"
+                />
+              </p>
+            </el-tooltip>
+          </el-badge>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="收起评论"
+            placement="top"
+          >
+            <p
+              v-show="forumsList[key].remarkVisiable"
+              style="display: inline;float:right;cursor:pointer"
+              @click="removeRemark(item)"
+            >
+
               <i
                 style="display: inline; float:right;cursor:pointer"
                 class="el-icon-s-comment"
               />
             </p>
-          </el-badge>
-          <p
-            v-show="forumsList[key].remarkVisiable"
-            style="display: inline;float:right;cursor:pointer"
-            @click="removeRemark(item)"
-          >
-            收起评论
-            <i
-              style="display: inline; float:right;cursor:pointer"
-              class="el-icon-s-comment"
-            />
-          </p>
+          </el-tooltip>
           <div v-show="forumsList[key].remarkVisiable">
             <div
               v-for="(index, I) in forumsList[key].remark.items"
@@ -174,22 +176,21 @@
                     style="display:inline;float:right;margin:10px;"
                     @click="showDeletRemark(index)"
                   >
-                    <i
-                      style="cursor:pointer"
-                      class="el-icon-delete icon"
-                    />
+                    <el-tooltip
+                      class="item"
+                      effect="dark"
+                      content="删除评论"
+                      placement="top"
+                    >
+                      <i
+                        style="cursor:pointer"
+                        class="el-icon-delete icon"
+                      />
+                    </el-tooltip>
                   </div>
                 </el-col>
               </el-row>
             </div>
-            <!-- <div style="text-align:center">
-            <el-link
-              v-if="item.query.limit < item.remark.totalCount"
-              type="primary"
-              @click="showMoreRemarks(item)"
-            >查看更多评论</el-link>
-            <p v-else>已加载全部评论</p>
-          </div> -->
             <el-col>
               <div style="text-align:center;">
                 <el-pagination
@@ -342,7 +343,27 @@
         <el-button @click="deletRemarkVisible = false">取 消</el-button>
         <el-button
           type="primary"
-          @click="deletRemarks(deletRemark.id)"
+          @click="deletRemarks(deletRemark)"
+        >确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 删除帖子 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <h3>{{ DeleteForum.title }}</h3>
+      <p>{{ DeleteForum.content }}</p>
+      <span style="float:right">确认删除该帖子吗？</span>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="deleteForum(DeleteForum.id)"
         >确 定</el-button>
       </span>
     </el-dialog>
@@ -366,10 +387,6 @@ export default {
         id: '',
         title: '',
         content: ''
-      },
-      remarkQuery: {
-        page: 1,
-        limit: 5
       },
       queryInfo: {
         keyword: '',
@@ -533,14 +550,15 @@ export default {
       this.getRemarkList(item)
     },
     showDeletRemark(index) {
-      console.log(index)
+      // console.log(index)
       this.deletRemark = index
       this.deletRemarkVisible = true
     },
-    deletRemarks(id) {
+    deletRemarks(item) {
       this.deletRemarkVisible = false
-      deleteRemark(id).then(response => {
-        this.$message.success(response)
+      deleteRemark(item.id).then(response => {
+        this.getForumsList()
+        this.$forceUpdate()
       })
     },
     handleRemove(file, fileList) {
