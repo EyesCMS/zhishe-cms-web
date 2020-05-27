@@ -20,6 +20,10 @@ npm install --registry=https://registry.npm.taobao.org
 # 安装echarts依赖
 npm install --save echarts
 
+# 安装导出excel相关依赖
+npm install file-saver --save
+npm install xlsx --save
+
 # 启动服务
 npm run dev
 ```
