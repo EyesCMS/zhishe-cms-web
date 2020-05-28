@@ -1,48 +1,27 @@
 <template>
   <div>
     <div class="carousel">
-      <el-carousel
-        :interval="4000"
-        arrow="always"
-        type="card"
-        height="400px"
-      >
-        <el-carousel-item
-          v-for="item in carouselImgList"
-          :key="item"
-        >
-          <img
-            style="width:100%;height:100%;"
-            :src="item"
-            alt="item"
-          >
+      <el-carousel :interval="4000" arrow="always" type="card" height="400px">
+        <el-carousel-item v-for="item in carouselImgList" :key="item">
+          <img style="width: 100%; height: 100%;" :src="item" alt="item">
         </el-carousel-item>
       </el-carousel>
     </div>
 
     <!-- 推荐社团 -->
-
     <div class="recommend">
       <el-row>
         <el-col>
           <el-divider />
-          <h3 style="text-align:center;">推荐社团</h3>
+          <h3 style="text-align: center;">推荐社团</h3>
           <el-divider />
-          <div
-            v-for="(item, i) in recommendedList"
-            :key="i"
-            class="card"
-          >
+          <div v-for="(item, i) in recommendedList" :key="i" class="card">
             <div class="image">
               <img :src="item.avatarUrl">
             </div>
             <div class="content">
-              <div class="title">
-                {{ item.name }}
-              </div>
-              <div class="sub-title">
-                社长：{{ item.chiefName }}
-              </div>
+              <div class="title">{{ item.name }}</div>
+              <div class="sub-title">社长：{{ item.chiefName }}</div>
               <div class="bottom">
                 <button @click="LookForDetail(item.id,item.name,item.chiefName,item.avatarUrl)">查看详情</button>
               </div>
@@ -55,7 +34,6 @@
 </template>
 
 <script>
-
 import { recommended, getClubDetail } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
 import clubImg2 from '@/assets/images/club2.jpeg'
@@ -70,11 +48,7 @@ export default {
         sort: 'update_at',
         order: 'desc'
       },
-      carouselImgList: [
-        clubImg1,
-        clubImg2,
-        clubImg3
-      ],
+      carouselImgList: [clubImg1, clubImg2, clubImg3],
       // 公告列表
       recommendedList: [],
       clubDetail: {},
@@ -86,19 +60,19 @@ export default {
     const clubid = 112
     localStorage.setItem('clubid', clubid)
     this.getRecommendedList()
-    console.log(this.$store.getters)
+    // console.log(this.$store.getters)
   },
   methods: {
-    chief: function () {
+    chief: function() {
       this.$store.dispatch('user/changeRoles', 'chief')
     },
-    admin: function () {
+    admin: function() {
       this.$store.dispatch('user/changeRoles', 'admin')
     },
-    student: function () {
+    student: function() {
       this.$store.dispatch('user/changeRoles', 'student')
     },
-    member: function () {
+    member: function() {
       this.$store.dispatch('user/changeRoles', 'member')
     },
     getRecommendedList() {
@@ -154,6 +128,7 @@ export default {
   padding: 20px;
   width: 90%;
 }
+
 .el-carousel__item h3 {
   color: #475669;
   font-size: 18px;

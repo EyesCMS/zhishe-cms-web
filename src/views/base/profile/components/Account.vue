@@ -18,12 +18,9 @@
     <el-form-item label="联系方式">
       <el-input v-model.trim="form.phone" />
     </el-form-item>
-    <div style="text-align:center">
+    <div style="text-align: center;">
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="submitProfile"
-        >修改</el-button>
+        <el-button type="primary" @click="submitProfile">修改</el-button>
       </el-form-item>
     </div>
   </el-form>
@@ -59,7 +56,6 @@ export default {
     },
     getInfoData() {
       getInfo().then(response => {
-        // console.log(response)
         this.form.nickname = response.data.nickname
         this.form.email = response.data.email
         this.form.address = response.data.address

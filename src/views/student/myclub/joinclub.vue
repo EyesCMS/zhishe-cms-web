@@ -1,15 +1,11 @@
 <template>
-  <div style="margin-top: 15px;text-align:center;">
-
+  <div style="margin-top: 15px; text-align: center;">
     <!-- 社团列表 -->
     <el-table v-loading="listLoading" :data="JoinclubsList" stripe border>
       <el-table-column label="社团ID" prop="id" />
       <el-table-column label="社团头像" prop="avatarUrl">
         <template slot-scope="scope" width="40">
-          <el-image
-            :src="scope.row.avatarUrl"
-            style="width: 50px; height: 50px;"
-          />
+          <el-image :src="scope.row.avatarUrl" style="width: 50px; height: 50px;" />
         </template>
       </el-table-column>
       <el-table-column label="社团名称" prop="name" />
@@ -35,18 +31,6 @@
   </div>
 </template>
 
-<style scoped>
-.el-input {
-  width: 600px;
-}
-.input-with-select .el-input-group__prepend {
-  background-color: #fff;
-}
-.el-pagination {
-  margin: 30px 15px;
-  text-align:center
-}
-</style>
 <script>
 import { getJoinclubsListData } from '@/api/club'
 export default {
@@ -78,7 +62,6 @@ export default {
           this.listLoading = false
           return this.$message.error('获取社团列表失败')
         }
-        // console.log(this.JoinclubsList)
       })
     },
     // 监听pagesize改变的事件
@@ -99,3 +82,19 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.el-input {
+  width: 600px;
+}
+
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+
+.el-pagination {
+  margin: 30px 15px;
+  text-align: center;
+}
+</style>
+

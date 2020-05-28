@@ -4,7 +4,7 @@
       <div>
         <i class="el-icon-search" />
         <span>筛选搜索</span>
-        <el-button style="float: right" type="primary" size="small" @click="findClubsListData">查询</el-button>
+        <el-button style="float: right;" type="primary" size="small" @click="findClubsListData">查询</el-button>
         <el-button
           style="float: right;margin-right: 15px;"
           size="small"
@@ -13,12 +13,12 @@
       </div>
       <div style="margin-top: 15px;">
         <el-form :inline="true" :model="form" size="small" label-width="140px">
-          <div style="text-align:center;">
+          <div style="text-align: center;">
             <el-form-item label="输入搜索：">
-              <el-input v-model="form.keyword" style="width: 203px" placeholder="请输入社团名称" />
+              <el-input v-model="form.keyword" style="width: 203px;" placeholder="请输入社团名称" />
             </el-form-item>
             <el-form-item label="社团类别：">
-              <el-select v-model="form.type" placeholder="请选择分类" clearable style="width: 203px">
+              <el-select v-model="form.type" placeholder="请选择分类" clearable style="width: 203px;">
                 <el-option label="艺术" value="艺术" />
                 <el-option label="运动" value="运动" />
                 <el-option label="学习" value="学习" />
@@ -27,7 +27,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="官方状态：">
-              <el-select v-model="form.state" placeholder="请选择分类" clearable style="width: 203px">
+              <el-select v-model="form.state" placeholder="请选择分类" clearable style="width: 203px;">
                 <el-option label="非官方" value="0" />
                 <el-option label="官方" value="1" />
               </el-select>
@@ -36,11 +36,6 @@
         </el-form>
       </div>
     </el-card>
-    <!--    <el-card style="margin-top: 20px;" shadow="never">-->
-    <!--      <i class="el-icon-tickets" />-->
-    <!--      <span>创建社团</span>-->
-    <!--      <el-button style="float:right" size="small" type="primary" @click="ApplyToCreate()">创建</el-button>-->
-    <!--    </el-card>-->
 
     <!-- 社团列表 -->
     <div style="margin-top: 20px;">
@@ -78,7 +73,7 @@
     </div>
 
     <!-- 分页区域 -->
-    <div style="text-align:center;margin-top: 30px;">
+    <div style="text-align: center; margin-top: 30px;">
       <el-pagination
         :current-page="queryInfo.page"
         :page-sizes="[5, 10, 15, 20]"
@@ -151,7 +146,6 @@ export default {
           this.listLoading = false
           return this.$message.error('获取社团列表失败')
         }
-        // console.log(this.clubsList)
       })
     },
     // 监听pagesize改变的事件
@@ -175,9 +169,6 @@ export default {
           avatarUrl: avatarUrl
         }
       })
-    },
-    ApplyToCreate() {
-      this.$router.replace('/createClub')
     },
     // 申请加入社团
     ApplyToJoin(id, name) {

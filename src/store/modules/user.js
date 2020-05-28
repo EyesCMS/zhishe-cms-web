@@ -111,8 +111,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token)
         .then(response => {
-          console.log('@store user logout:')
-          console.log(response)
+          // console.log('@store user logout:')
+          // console.log(response)
           removeToken() // must remove  token  first
           window.sessionStorage.clear()
           resetRouter()

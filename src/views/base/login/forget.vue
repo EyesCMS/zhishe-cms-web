@@ -127,16 +127,16 @@ export default {
       if (i === 2) {
         this.$refs.form1.validate(valid => {
           if (valid) {
-            console.log(this.form1)
+            // console.log(this.form1)
             const data = { username: this.form1.username }
             question(data).then(response => {
-              console.log('@forget getQuestion response:')
-              console.log(response)
+              // console.log('@forget getQuestion response:')
+              // console.log(response)
               this.form2.login_question = response.data.loginProblem
               this.activeName = i.toString()
               this.name = i - 1
             }).catch((e) => {
-              console.log(e)
+              // console.log(e)
               this.$message.error('获取问题失败！')
             })
           } else {
@@ -151,12 +151,12 @@ export default {
               answer: this.form2.login_aswer
             }
             answer(data).then(response => {
-              console.log('@forget answer response:')
-              console.log(response)
+              // console.log('@forget answer response:')
+              // console.log(response)
               this.activeName = i.toString()
               this.name = i - 1
             }).catch((e) => {
-              console.log(e)
+              // console.log(e)
               this.$message.error('回答错误！')
             })
           } else {
@@ -172,12 +172,12 @@ export default {
               password: this.form3.newpassword
             }
             newpassword(data).then(response => {
-              console.log('@forget newpassword response:')
-              console.log(response)
+              // console.log('@forget newpassword response:')
+              // console.log(response)
               this.$message.success('修改成功！')
               this.$router.push('/login')
             }).catch((e) => {
-              console.log(e)
+              // console.log(e)
               this.$message.error('修改失败')
             })
           } else {
@@ -206,10 +206,12 @@ export default {
   background: url(../../../assets/images/bg.png) no-repeat;
   background-size: 100% 100%;
 }
+
 .form-title {
   text-align: center;
   margin-bottom: 30px;
 }
+
 .Form {
   width: 45%;
   padding: 20px;

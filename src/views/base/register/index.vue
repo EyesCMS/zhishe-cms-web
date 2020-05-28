@@ -191,8 +191,8 @@ export default {
           }
           register(data)
             .then(response => {
-              console.log('@register result:')
-              console.log(response)
+              // console.log('@register result:')
+              // console.log(response)
               this.$message.success('注册成功')
               this.$router.push('/login')
             })
@@ -236,10 +236,12 @@ export default {
   background-size: 100% 100%;
   /*overflow: hidden;*/
 }
+
 .form-title {
   text-align: center;
   margin-bottom: 30px;
 }
+
 .Form {
   width: 45%;
   padding: 20px;

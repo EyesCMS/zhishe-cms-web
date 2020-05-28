@@ -45,10 +45,7 @@
             auto-complete="on"
             @keyup.enter.native="handleLogin"
           />
-          <span
-            class="show-pwd"
-            @click="showPwd"
-          >
+          <span class="show-pwd" @click="showPwd">
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
           </span>
         </el-form-item>
@@ -56,23 +53,15 @@
         <el-button
           :loading="loading"
           type="primary"
-          style="width:100%;margin-bottom:30px;"
+          style="width: 100%; margin-bottom: 30px;"
           @click.native.prevent="handleLogin"
         >登录</el-button>
 
         <div class="tips">
-          <router-link
-            to="/forget"
-            style="float:left"
-          >
+          <router-link to="/forget" style="float: left;">
             <span>忘记密码?</span>
           </router-link>
-          <!--          <span style="margin-right:20px;">username: admin</span>-->
-          <!--          <span> password: any</span>-->
-          <router-link
-            to="/register"
-            style="float:right"
-          >
+          <router-link to="/register" style="float: right;">
             <span>注册</span>
           </router-link>
         </div>
@@ -89,14 +78,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的用户名'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码不能少于6位'))
       } else {
         callback()
       }
@@ -121,7 +110,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -149,11 +138,10 @@ export default {
               this.loading = false
             })
             .catch(e => {
-              console.log(e)
+              // console.log(e)
               this.loading = false
             })
         } else {
-          console.log('error submit!!')
           return false
         }
       })
@@ -170,6 +158,7 @@ export default {
   background: url(../../../assets/images/bg.png) no-repeat;
   background-size: 100% 100%;
 }
+
 .leftimg {
   width: 50%;
   height: 100%;
@@ -178,10 +167,12 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .leftimg img {
   width: 75%;
   margin-left: 3rem;
 }
+
 .login-container section {
   border-radius: 15px;
   width: 50%;
@@ -195,9 +186,11 @@ export default {
   left: 25%;
   top: 27%;
 }
+
 .el-input {
   width: 92%;
 }
+
 .show-pwd {
   position: absolute;
   right: 25px;
@@ -206,28 +199,33 @@ export default {
   cursor: pointer;
   user-select: none;
 }
+
 .login-page {
   width: 50%;
   float: right;
   padding: 1rem 3rem;
   box-sizing: border-box;
 }
+
 label.el-checkbox.rememberme {
   margin: 0px 0px 15px;
   text-align: left;
 }
+
 .title {
   color: #333333;
   font-weight: normal;
   font-size: 1.675rem;
   margin-bottom: 0.4rem;
 }
+
 .tname {
   font-size: 1rem;
   color: #a9a9a9;
   margin: 0;
   margin-bottom: 1.875rem;
 }
+
 .el-button {
   width: 100% !important;
   display: block;
@@ -235,9 +233,11 @@ label.el-checkbox.rememberme {
   margin-top: 1rem;
   height: 2.5rem;
 }
+
 .el-checkbox {
   color: #666666;
 }
+
 @media only screen and (min-width: 1920px) {
   .login-page {
     padding: 3rem;

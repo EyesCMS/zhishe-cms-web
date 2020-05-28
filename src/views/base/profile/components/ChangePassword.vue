@@ -39,7 +39,6 @@ export default {
   },
   methods: {
     updatePassword() {
-      // console.log(this.form)
       this.$refs.form.validate(valid => {
         if (!valid) return
         updatePassword(this.form).then(response => {
