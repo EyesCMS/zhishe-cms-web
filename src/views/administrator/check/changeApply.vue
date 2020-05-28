@@ -5,25 +5,62 @@
       <div>
         <i class="el-icon-search" />
         <span>筛选搜索</span>
-        <el-button style="float: right" type="primary" size="small" @click="check">查询</el-button>
-        <el-button style="float: right; margin-right: 15px" size="small" @click="renew">重置</el-button>
+        <el-button
+          style="float: right"
+          type="primary"
+          size="small"
+          @click="check"
+        >查询</el-button>
+        <el-button
+          style="float: right; margin-right: 15px"
+          size="small"
+          @click="renew"
+        >重置</el-button>
       </div>
       <div style="margin-top: 30px">
-        <el-form :inline="true" :model="form" label-width="100px">
+        <el-form
+          :inline="true"
+          :model="form"
+          label-width="100px"
+        >
           <el-form-item label="社团名称">
-            <el-input v-model="form.clubName" placeholder />
+            <el-input
+              v-model="form.clubName"
+              placeholder
+            />
           </el-form-item>
           <el-form-item label="现任社长">
-            <el-input v-model="form.oldChiefName" placeholder />
+            <el-input
+              v-model="form.oldChiefName"
+              placeholder
+            />
           </el-form-item>
           <el-form-item label="新任社长">
-            <el-input v-model="form.newChiefName" placeholder />
+            <el-input
+              v-model="form.newChiefName"
+              placeholder
+            />
           </el-form-item>
-          <el-form-item label="申请状态" prop="state">
-            <el-select v-model="form.state" placeholder="请选择">
-              <el-option label="待审核" value="0" />
-              <el-option label="已批准" value="1" />
-              <el-option label="已退回" value="2" />
+          <el-form-item
+            label="申请状态"
+            prop="state"
+          >
+            <el-select
+              v-model="form.state"
+              placeholder="请选择"
+            >
+              <el-option
+                label="待审核"
+                value="0"
+              />
+              <el-option
+                label="已批准"
+                value="1"
+              />
+              <el-option
+                label="已退回"
+                value="2"
+              />
             </el-select>
           </el-form-item>
           <el-form-item label="申请时间">
@@ -50,12 +87,30 @@
       >导出Excel</el-button>
       <!-- 社长换届申请列表 -->
       <el-table :data="changeApplyList" stripe border>
-        <el-table-column type="index" label="#" />
-        <el-table-column label="社团名称" prop="clubName" />
-        <el-table-column label="现任社长" prop="oldChiefName" />
-        <el-table-column label="新任社长" prop="newChiefName" />
-        <el-table-column label="申请时间" prop="createAt" />
-        <el-table-column label="申请状态" prop="state">
+        <el-table-column
+          type="index"
+          label="#"
+        />
+        <el-table-column
+          label="社团名称"
+          prop="clubName"
+        />
+        <el-table-column
+          label="现任社长"
+          prop="oldChiefName"
+        />
+        <el-table-column
+          label="新任社长"
+          prop="newChiefName"
+        />
+        <el-table-column
+          label="申请时间"
+          prop="createAt"
+        />
+        <el-table-column
+          label="申请状态"
+          prop="state"
+        >
           <template slot-scope="scope">
             <el-tag
               v-if="scope.row.state === 0"
@@ -82,8 +137,16 @@
         </el-table-column>
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToAgree(scope)">批准</el-button>
-            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToRefuse(scope)">退回</el-button>
+            <el-button
+              v-if="scope.row.state === 0"
+              type="primary"
+              @click="pushToAgree(scope)"
+            >批准</el-button>
+            <el-button
+              v-if="scope.row.state === 0"
+              type="primary"
+              @click="pushToRefuse(scope)"
+            >退回</el-button>
           </template>
         </el-table-column>
       </el-table>
