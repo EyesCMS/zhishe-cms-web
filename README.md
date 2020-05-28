@@ -17,13 +17,6 @@ npm install
 # 建议不要直接使用 cnpm 安装以来，会有各种诡异的 bug。可以通过如下操作解决 npm 下载速度慢的问题
 npm install --registry=https://registry.npm.taobao.org
 
-# 安装echarts依赖
-npm install --save echarts
-
-# 安装导出excel相关依赖
-npm install file-saver --save
-npm install xlsx --save
-
 # 启动服务
 npm run dev
 ```
@@ -55,3 +48,4 @@ npm run lint
 # 代码格式检查并自动修复
 npm run lint -- --fix
 ```
+
