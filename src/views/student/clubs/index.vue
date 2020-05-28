@@ -63,10 +63,17 @@
               @click="LookForDetail(scope.row.id,scope.row.name,scope.row.chiefName,scope.row.avatarUrl)"
             >查看详情</el-button>
             <el-button
+              v-if="scope.row.joinState === '未加入'"
               type="primary"
               size="mini"
               @click="ApplyToJoin(scope.row.id,scope.row.name)"
             >申请加入</el-button>
+            <el-button
+              v-else
+              type="success"
+              size="mini"
+              @click="EnterToClub(scope.row.id)"
+            >进入社团</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -91,6 +98,7 @@
 .el-select .el-input {
   width: 130px;
 }
+
 .input-with-select .el-input-group__prepend {
   background-color: #fff;
 }
@@ -139,6 +147,7 @@ export default {
       }
       getClubsListData(params).then(response => {
         if (response.status === 200) {
+          // console.log(response)
           this.clubsList = response.data.items
           this.total = response.data.totalCount
           this.listLoading = false
@@ -173,6 +182,10 @@ export default {
     // 申请加入社团
     ApplyToJoin(id, name) {
       this.$router.push({ path: '/joinClub', query: { id: id, name: name }})
+    },
+    EnterToClub(id) {
+      this.$store.dispatch('user/changeRoles', 'member')
+      this.$router.push({ path: '/clubstyle/index', query: { id: id }})
     },
     findClubsListData() {
       this.queryInfo.page = 1
