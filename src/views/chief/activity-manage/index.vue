@@ -508,10 +508,10 @@ export default {
         this.applyData.append('memberCount', this.addForm.memberCount)
         publishApply(this.applyData).then(response => {
           this.$message.success('申请成功')
+          this.applyActivityDialogVisible = false
+          this.getActivitiesList()
         })
         // console.log(this.addForm)
-        this.applyActivityDialogVisible = false
-        this.getActivitiesList()
       })
     },
     applyActivityDialogClosed() {
