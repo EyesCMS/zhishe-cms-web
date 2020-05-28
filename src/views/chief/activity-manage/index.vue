@@ -201,7 +201,8 @@
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="publishApply">申请</el-button>
+          <p v-show="!canApply" style="color: red;">图片上传中，不可申请</p>
+          <el-button type="primary" :disabled="!canApply" @click="publishApply">申请</el-button>
         </span>
       </el-dialog>
 
@@ -314,6 +315,7 @@ export default {
       applyDetailDialogVisible: false,
       dialogImageUrl: '',
       hasImage: false,
+      canApply: true,
       addForm: {
         clubId: sessionStorage.getItem('clubId'),
         name: '',
@@ -484,6 +486,7 @@ export default {
       this.applyActivityDialogVisible = true
     },
     handleRemove(file, fileList) {
+      this.canApply = true
       this.hasImage = false
     },
     handlePictureCardPreview(file) {
@@ -491,6 +494,7 @@ export default {
       this.dialogVisible = true
     },
     handleSuccess(response, file, fileList) {
+      this.canApply = true
       this.hasImage = true
     },
     async publishApply() {
@@ -533,6 +537,7 @@ export default {
       this.queryInfo.state = this.queryInfo.startDate = this.queryInfo.endDate = ''
     },
     beforeAvatarUpload(file) {
+      this.canApply = false
       const isValid = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
 
       if (!isValid) {
