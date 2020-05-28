@@ -185,7 +185,7 @@ export default {
     // 点赞
     addLike() {
       like(this.likeInfo).then(response => {
-        console.log(response)
+        // console.log(response)
         if (response.status === 204) {
           this.unlikeShow = false
           this.getInvitationDetailData()
@@ -199,7 +199,7 @@ export default {
     // 取消点赞
     removeLike() {
       unlike(this.likeInfo).then(response => {
-        console.log(response)
+        // console.log(response)
         if (response.status === 204) {
           this.unlikeShow = true
           this.getInvitationDetailData()
@@ -209,9 +209,6 @@ export default {
           return this.$message.error('取消点赞失败')
         }
       })
-    },
-    back() {
-      this.$router.go(-1)
     },
     // shift+enter换行
     lineFeed() {

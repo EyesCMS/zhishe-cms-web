@@ -17,7 +17,7 @@
             <el-row>
               <el-col :span="6">
                 <el-avatar :size="50" :src="clubDetail.avatarUrl" />
-                <el-tag>LV{{ clubInfo.grade }}</el-tag>
+                <el-tag>{{ clubInfo.grade }}</el-tag>
               </el-col>
               <el-col :span="14">
                 <div>
@@ -33,11 +33,10 @@
 
             <!-- 社团详情简介 -->
             <el-card style="margin-top: 20px;">
-              <el-divider>
-                <p
-                  style="font-family: '微软雅黑',sans-serif; font-size: 17px; font-weight: lighter;"
-                >{{ clubDetail.name }}</p>
-              </el-divider>
+              <p style="font-family: '微软雅黑', sans-serif; font-size: 20px; font-weight: lighter; text-align: center;">
+                {{ clubDetail.name }}
+              </p>
+              <el-divider />
               <h4>社 长：{{ clubDetail.chiefName }}</h4>
               <el-divider />
               <h4>成员数：{{ clubDetail.memberCount }}</h4>
@@ -55,7 +54,16 @@
         <el-col :span="18">
           <el-card style="margin: 15px 15px;">
             <h4>共搜索到 {{ total }} 条帖子</h4>
-            <p v-show="total === 0" style="text-align: center;">暂无帖子</p>
+            <div
+              v-if="total === 0"
+              align="center"
+            >
+              <img
+                src="../../../assets/images/notFound.png"
+                alt="item"
+              >
+              <h2 style="color: silver;">暂无帖子</h2>
+            </div>
             <el-card
               v-for="(item, index) in invitationList"
               :key="index"

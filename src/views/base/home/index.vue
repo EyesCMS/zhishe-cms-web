@@ -124,8 +124,8 @@ export default {
 
 <style lang="scss" scoped>
 .carousel {
-  margin: 20px auto;
-  padding: 20px;
+  margin: 0px auto;
+  padding: 10px;
   width: 90%;
 }
 
