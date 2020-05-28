@@ -506,11 +506,11 @@ export default {
           const formData = new FormData()
           // formData.append('data', postParam)
           // console.log(this.forumForm)
-          formData.append('image', this.forumForm.image)
-          formData.append('content', this.forumForm.content)
           formData.append('title', this.forumForm.title)
+          formData.append('content', this.forumForm.content)
+          formData.append('image', this.forumForm.image)
           // console.log(data)
-          publishForum(this.forumForm).then(response => {
+          publishForum(formData).then(response => {
             this.$message.success('发布成功！')
             this.getForumsList()
             this.addForumDialogVisible = false

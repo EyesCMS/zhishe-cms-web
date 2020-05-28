@@ -72,10 +72,17 @@
         <el-row>
           <div style="margin-left: 20px;">
             <el-image
+              v-if="item.imgUrl !== ''"
               :src="item.imgUrl"
               lazy
               style="height: 200px; width: 300px; float: left; margin-right: 40px;"
             />
+            <img
+              v-else
+              src="../../../assets/images/activity.png"
+              lazy
+              style="height: 200px; width: 300px; float: left; margin-right: 40px;"
+            >
             <div style="margin-right: 20px">
               <p
                 style="float: none; text-indent: 2em; font-size: 20px;text-align: justify; margin-left: 20px; line-height: 37px;"
