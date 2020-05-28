@@ -202,7 +202,7 @@
                   <p style="margin-top:0; padding: 0; ">{{ index.content }}</p>
                 </el-col>
                 <el-col
-                  v-show="index.userId===uid"
+                  v-show="index.userId===userId"
                   :span="2"
                 >
                   <div
@@ -294,7 +294,7 @@ import '../../../../time.js'
 export default {
   data() {
     return {
-      uid: this.$store.getters.userId,
+      userId: this.$store.getters.userId,
       dialogVisible: false,
       deletRemarkVisible: false,
       length: {},

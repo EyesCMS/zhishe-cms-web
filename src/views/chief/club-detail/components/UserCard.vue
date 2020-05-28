@@ -1,12 +1,5 @@
 <template>
   <el-card style="margin-bottom:20px;">
-    <!--<div
-      slot="header"
-      class="clearfix"
-    >
-      <span>关于社团</span>
-    </div>-->
-
     <div class="user-profile">
       <div class="box-center">
         <pan-thumb

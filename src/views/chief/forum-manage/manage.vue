@@ -169,7 +169,7 @@
                   <p style="margin-top:0 padding: 0; ">{{ index.content }}</p>
                 </el-col>
                 <el-col
-                  v-show="index.userId===uid"
+                  v-show="index.userId===userId"
                   :span="2"
                 >
                   <div
@@ -259,12 +259,14 @@
           <el-upload
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
+            :before-upload="beforeImgUpload"
             :on-remove="handleRemove"
+            :on-preview="handlePreview"
             :file-list="fileList"
             list-type="picture"
           >
             <el-button
+              v-show="fileList.length !== 1"
               size="small"
               type="primary"
             >点击上传</el-button>
@@ -313,9 +315,6 @@
             type="textarea"
             :rows="5"
           />
-        </el-form-item>
-        <el-form-item label="imgUrl">
-          <el-input v-model="forumDetile.imgUrl" />
         </el-form-item>
       </el-form>
       <span
@@ -376,7 +375,7 @@ import '../../../../time.js'
 export default {
   data() {
     return {
-      uid: this.$store.getters.userId,
+      userId: this.$store.getters.userId,
       dialogVisible: false,
       deletRemarkVisible: false,
       length: 0,
@@ -404,14 +403,14 @@ export default {
       forumForm: {
         title: '',
         content: '',
-        imgUrl: ''
+        image: ''
       },
       rules: {
         title: [{ required: true, trigger: 'blur', message: '请输入标题' }],
         content: [{ required: true, trigger: 'blur', message: '请输入具体内容' }]
       },
       deletRemark: { content: '', id: '' },
-      fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }]
+      fileList: []
     }
   },
   created: function () {
@@ -473,10 +472,12 @@ export default {
       getRemarksList(element.id, element.query).then(response => {
         // console.log('@forum index getRemarkList response')
         // console.log(response)
-        element.remark = response.data
-        // console.log(element)
-        this.$forceUpdate()
-        // console.log(element.remark.items)
+        if (response.status === 200) {
+          element.remark = response.data
+          // console.log(element)
+          this.$forceUpdate()
+          // console.log(element.remark.items)
+        }
       })
     },
     addForum() {
@@ -485,6 +486,13 @@ export default {
     handleForm() {
       this.$refs.publish.validate(valid => {
         if (valid) {
+          const formData = new FormData()
+          // formData.append('data', postParam)
+          // console.log(this.forumForm)
+          formData.append('image', this.forumForm.image)
+          formData.append('content', this.forumForm.content)
+          formData.append('title', this.forumForm.title)
+          // console.log(data)
           publishForum(this.forumForm).then(response => {
             this.$message.success('发布成功！')
             this.getForumsList()
@@ -562,10 +570,31 @@ export default {
       })
     },
     handleRemove(file, fileList) {
+      this.fileList.splice(file)
       console.log(file, fileList)
     },
     handlePreview(file) {
-      console.log(file)
+      console.log(this.fileList)
+      // console.log(file)
+    },
+    beforeImgUpload(file) {
+      const isJPG = file.type === 'image/jpeg' || file.type === 'image/jpg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      if (isJPG && isLt2M) {
+        this.fileList.push(file.file)
+        // const image = new FormData()
+        // image.append('image', file)
+        this.forumForm.image = file
+        // console.log(image)
+        // console.log(this.forumForm)
+      }
     }
   }
 }
