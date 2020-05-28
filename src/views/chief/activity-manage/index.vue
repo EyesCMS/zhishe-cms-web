@@ -6,50 +6,102 @@
           <i class="el-icon-search" />
           <span>筛选搜索</span>
           <el-button
-            style="float: right"
+            style="float: right;"
             type="primary"
             size="small"
-            @click="handleSearchList"
+            @click="searchActivityApplies"
           >
             查询
           </el-button>
           <el-button
-            style="float: right;margin-right: 15px"
+            style="float: right; margin-right: 15px;"
             size="small"
-            @click="reset"
+            @click="cleanSearchField"
           >
             重置
           </el-button>
         </div>
-        <div style="margin-top: 55px">
-          <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+        <div style="margin-top: 55px;">
+          <el-form
+            :inline="true"
+            :model="queryInfo"
+            size="small"
+            label-width="140px"
+          >
             <div>
               <el-form-item label="活动名称">
-                <el-input v-model="queryInfo.name" style="width: 203px;" placeholder="请输入活动名称" />
+                <el-input
+                  v-model="queryInfo.name"
+                  style="width: 203px;"
+                  placeholder="请输入活动名称"
+                />
               </el-form-item>
               <el-form-item label="活动内容">
-                <el-input v-model="queryInfo.content" style="width: 203px;" placeholder="请输入活动内容" />
+                <el-input
+                  v-model="queryInfo.content"
+                  style="width: 203px;"
+                  placeholder="请输入活动内容"
+                />
               </el-form-item>
               <el-form-item label="活动地点">
-                <el-select v-model="queryInfo.location" placeholder="请选择活动地点" style="width: 203px;" :clearable="true">
-                  <el-option label="青春广场" value="青春广场" />
-                  <el-option label="生活三区" value="生活三区" />
-                  <el-option label="风雨操场" value="风雨操场" />
+                <el-select
+                  v-model="queryInfo.location"
+                  placeholder="请选择活动地点"
+                  style="width: 203px;"
+                  :clearable="true"
+                >
+                  <el-option
+                    label="青春广场"
+                    value="青春广场"
+                  />
+                  <el-option
+                    label="生活三区"
+                    value="生活三区"
+                  />
+                  <el-option
+                    label="风雨操场"
+                    value="风雨操场"
+                  />
                 </el-select>
               </el-form-item>
             </div>
           </el-form>
         </div>
-        <div style="margin-top: 15px">
-          <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+        <div style="margin-top: 15px;">
+          <el-form
+            :inline="true"
+            :model="queryInfo"
+            size="small"
+            label-width="140px"
+          >
             <div>
               <el-form-item label="活动状态">
-                <el-select v-model="queryInfo.state" placeholder="请选择活动状态" style="width: 203px;" :clearable="true">
-                  <el-option label="未审核" value="0" />
-                  <el-option label="审核通过" value="1" />
-                  <el-option label="已发布" value="2" />
-                  <el-option label="审核未通过" value="3" />
-                  <el-option label="已结束" value="4" />
+                <el-select
+                  v-model="queryInfo.state"
+                  placeholder="请选择活动状态"
+                  style="width: 203px;"
+                  :clearable="true"
+                >
+                  <el-option
+                    label="未审核"
+                    value="0"
+                  />
+                  <el-option
+                    label="审核通过"
+                    value="1"
+                  />
+                  <el-option
+                    label="已发布"
+                    value="2"
+                  />
+                  <el-option
+                    label="审核未通过"
+                    value="3"
+                  />
+                  <el-option
+                    label="已结束"
+                    value="4"
+                  />
                 </el-select>
               </el-form-item>
               <el-form-item label="开始时间">
@@ -58,7 +110,7 @@
                   type="datetime"
                   placeholder="选择开始时间"
                   align="right"
-                  style="width: 203px"
+                  style="width: 203px;"
                   value-format="yyyy-MM-dd HH:mm:ss"
                   :picker-options="pickerOptions"
                 />
@@ -69,7 +121,7 @@
                   type="datetime"
                   placeholder="选择结束时间"
                   align="right"
-                  style="width: 203px"
+                  style="width: 203px;"
                   value-format="yyyy-MM-dd HH:mm:ss"
                   :picker-options="pickerOptions"
                 />
@@ -78,39 +130,123 @@
           </el-form>
         </div>
       </el-card>
-      <el-row style="margin-top:20px">
-        <el-button type="primary" @click="applyActivity()">申请活动</el-button>
+      <el-row style="margin-top: 20px;">
+        <el-button
+          type="primary"
+          @click="applyActivity()"
+        >
+          申请活动
+        </el-button>
       </el-row>
       <!-- 活动申请列表 -->
-      <el-table v-loading="listLoading" :data="activitiesList" stripe border>
-        <el-table-column type="index" label="#" />
-        <el-table-column label="活动名称" prop="name" />
-        <el-table-column label="活动时间" width="300px">
+      <el-table
+        v-loading="listLoading"
+        :data="activitiesList"
+        stripe
+        border
+      >
+        <el-table-column
+          type="index"
+          label="#"
+        />
+        <el-table-column
+          label="活动名称"
+          prop="name"
+        />
+        <el-table-column
+          label="活动时间"
+          width="300px"
+        >
           <template slot-scope="scope">
             {{ scope.row.startDate }} - {{ scope.row.endDate }}
           </template>
         </el-table-column>
-        <el-table-column label="活动地点" prop="location" />
+        <el-table-column
+          label="活动地点"
+          prop="location"
+        />
         <el-table-column label="活动内容">
           <template slot-scope="scope">
             {{ scope.row.content | interceptAbstract }}
           </template>
         </el-table-column>
-        <el-table-column label="参与人数" prop="memberCount" />
-        <el-table-column label="状态" prop="state">
+        <el-table-column
+          label="参与人数"
+          prop="memberCount"
+        />
+        <el-table-column
+          label="状态"
+          prop="state"
+        >
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
-            <el-tag v-else-if="scope.row.state === 1" type="primary" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
-            <el-tag v-else-if="scope.row.state === 2" type="success" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
-            <el-tag v-else-if="scope.row.state === 3" type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
-            <el-tag v-else type="info" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
+            <el-tag
+              v-if="scope.row.state === 0"
+              style="text-align: center;"
+              type="warning"
+              :disable-transitions="true"
+              effect="dark"
+            >
+              {{ scope.row.state | verifyStatusFilter }}
+            </el-tag>
+            <el-tag
+              v-else-if="scope.row.state === 1"
+              type="primary"
+              :disable-transitions="true"
+              effect="dark"
+            >
+              {{ scope.row.state | verifyStatusFilter }}
+            </el-tag>
+            <el-tag
+              v-else-if="scope.row.state === 2"
+              type="success"
+              :disable-transitions="true"
+              effect="dark"
+            >
+              {{ scope.row.state | verifyStatusFilter }}
+            </el-tag>
+            <el-tag
+              v-else-if="scope.row.state === 3"
+              type="danger"
+              :disable-transitions="true"
+              effect="dark"
+            >
+              {{ scope.row.state | verifyStatusFilter }}
+            </el-tag>
+            <el-tag
+              v-else
+              type="info"
+              :disable-transitions="true"
+              effect="dark"
+            >
+              {{ scope.row.state | verifyStatusFilter }}
+            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200px">
+        <el-table-column
+          label="操作"
+          width="200px"
+        >
           <template slot-scope="scope">
-            <el-button type="primary" @click="checkActivityApplyDetail(scope.row.id)">查看</el-button>
-            <el-button v-if="scope.row.state === 0" type="danger" @click="deleteActivity(scope.row.id)">撤销</el-button>
-            <el-button v-else-if="scope.row.state === 1" type="success" @click="publishActivity(scope.row.id, 2)">发布</el-button>
+            <el-button
+              type="primary"
+              @click="viewActivityApplyDetail(scope.row.id)"
+            >
+              查看
+            </el-button>
+            <el-button
+              v-if="scope.row.state === 0"
+              type="danger"
+              @click="undoActivity(scope.row.id)"
+            >
+              撤销
+            </el-button>
+            <el-button
+              v-else-if="scope.row.state === 1"
+              type="success"
+              @click="publishActivity(scope.row.id, 2)"
+            >
+              发布
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -192,7 +328,7 @@
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-success="handleSuccess"
-          :before-upload="beforeAvatarUpload"
+          :before-upload="beforeImageUpload"
           :limit="1"
         >
           <i class="el-icon-plus" />
@@ -425,10 +561,10 @@ export default {
   },
   created() {
     // this.clubId = sessionStorage.getItem('clubId')
-    this.getActivitiesList()
+    this.getActivitiesListData()
   },
   methods: {
-    getActivitiesList() {
+    getActivitiesListData() {
       this.listLoading = true
       getActivitiesList(this.clubId, this.queryInfo).then(response => {
         this.activitiesList = response.data.items
@@ -436,6 +572,7 @@ export default {
         this.listLoading = false
       })
     },
+
     async publishActivity(id, state) {
       const confirmResult = await this.$confirm('此操作将发布活动, 是否继续?', '发布确认', {
         confirmButtonText: '确定',
@@ -446,16 +583,20 @@ export default {
       if (confirmResult !== 'confirm') {
         return this.$message.info('已取消发布')
       }
+
       const input = {
         id: id,
         state: state
       }
+
       reviseActivityState(input).then(response => {
         this.$message.success('发布成功')
       })
-      this.getActivitiesList()
+      this.getActivitiesListData()
     },
-    async deleteActivity(id) {
+
+    // 撤销活动点击事件
+    async undoActivity(id) {
       const confirmResult = await this.$confirm('此操作将撤销活动, 是否继续?', '撤销确认', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -467,41 +608,54 @@ export default {
       }
       deleteActivity(id).then(response => {
         this.$message.success('撤销成功')
-        this.getActivitiesList()
+        this.getActivitiesListData()
       })
     },
+
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getActivitiesList()
+      this.getActivitiesListData()
     },
+
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getActivitiesList()
+      this.getActivitiesListData()
     },
+
+    // 申请活动点击事件
     applyActivity() {
       this.addForm.name = this.addForm.title = this.addForm.content = this.addForm.location = this.addForm.startDate = this.addForm.endDate = ''
       this.addForm.memberCount = 1
       this.applyActivityDialogVisible = true
     },
+
+    // 监听移除活动事件
     handleRemove(file, fileList) {
       this.canApply = true
       this.hasImage = false
     },
+
+    // 监听图片预览事件
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
+
+    // 监听上传图片成功事件
     handleSuccess(response, file, fileList) {
       this.canApply = true
       this.hasImage = true
     },
+
+    // 对话框中申请按钮点击事件
     async publishApply() {
       await this.$refs.addFormRef.validate(valid => {
         if (!valid) return
         if (this.addForm.startDate === '') return this.$message.error('请填写开始日期')
         if (this.addForm.endDate === '') return this.$message.error('请填写结束日期')
+
         this.applyData.append('clubId', this.addForm.clubId)
         this.applyData.append('name', this.addForm.name)
         this.applyData.append('title', this.addForm.title)
@@ -510,33 +664,44 @@ export default {
         this.applyData.append('endDate', this.addForm.endDate)
         this.applyData.append('location', this.addForm.location)
         this.applyData.append('memberCount', this.addForm.memberCount)
+
         publishApply(this.applyData).then(response => {
           this.$message.success('申请成功')
           this.applyActivityDialogVisible = false
-          this.getActivitiesList()
+          this.getActivitiesListData()
         })
         // console.log(this.addForm)
       })
     },
+
+    // 监听申请对话框关闭事件
     applyActivityDialogClosed() {
       // this.$refs.addFormRef.resetFields()
       // this.addForm.startDate = this.addForm.endDate = ''
     },
-    checkActivityApplyDetail(id) {
+
+    // 查看活动申请详情
+    viewActivityApplyDetail(id) {
       getActivityApplyDetail(id).then(response => {
         this.applyDetailForm = response.data
         this.applyDetailDialogVisible = true
       })
     },
-    handleSearchList() {
+
+    // 搜索活动申请列表
+    searchActivityApplies() {
       this.queryInfo.page = 1
-      this.getActivitiesList()
+      this.getActivitiesListData()
     },
-    reset() {
+
+    // 重置搜索区
+    cleanSearchField() {
       this.queryInfo.name = this.queryInfo.content = this.queryInfo.location = ''
       this.queryInfo.state = this.queryInfo.startDate = this.queryInfo.endDate = ''
     },
-    beforeAvatarUpload(file) {
+
+    // 监听图片上传前事件
+    beforeImageUpload(file) {
       this.canApply = false
       const isValid = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
 
@@ -555,9 +720,10 @@ export default {
 .el-table {
   margin-top: 20px;
 }
+
 .el-pagination {
   // margin-top: 20px;
   margin: 30px 15px;
-  text-align:center
+  text-align:center;
 }
 </style>

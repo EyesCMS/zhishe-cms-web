@@ -6,35 +6,61 @@
           <i class="el-icon-search" />
           <span>筛选搜索</span>
           <el-button
-            style="float: right"
+            style="float: right;"
             type="primary"
             size="small"
-            @click="handleSearchList"
+            @click="searchJoinApplies"
           >
             查询
           </el-button>
           <el-button
-            style="float: right;margin-right: 15px"
+            style="float: right; margin-right: 15px;"
             size="small"
-            @click="reset"
+            @click="cleanSearchField"
           >
             重置
           </el-button>
         </div>
-        <div style="margin-top: 55px">
-          <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
+        <div style="margin-top: 55px;">
+          <el-form
+            :inline="true"
+            :model="queryInfo"
+            size="small"
+            label-width="140px"
+          >
             <div>
               <el-form-item label="申请人">
-                <el-input v-model="queryInfo.applicant" style="width: 200px" placeholder="请输入申请人" />
+                <el-input
+                  v-model="queryInfo.applicant"
+                  style="width: 200px;"
+                  placeholder="请输入申请人"
+                />
               </el-form-item>
               <el-form-item label="申请理由">
-                <el-input v-model="queryInfo.reason" style="width: 200px" placeholder="请输入申请理由" />
+                <el-input
+                  v-model="queryInfo.reason"
+                  style="width: 200px;"
+                  placeholder="请输入申请理由"
+                />
               </el-form-item>
               <el-form-item label="申请状态">
-                <el-select v-model="queryInfo.state" style="width: 203px" placeholder="请选择申请状态">
-                  <el-option label="未审核" value="0" />
-                  <el-option label="审核通过" value="1" />
-                  <el-option label="审核未通过" value="2" />
+                <el-select
+                  v-model="queryInfo.state"
+                  style="width: 203px;"
+                  placeholder="请选择申请状态"
+                >
+                  <el-option
+                    label="未审核"
+                    value="0"
+                  />
+                  <el-option
+                    label="审核通过"
+                    value="1"
+                  />
+                  <el-option
+                    label="审核未通过"
+                    value="2"
+                  />
                 </el-select>
               </el-form-item>
               <!-- <el-form-item label="申请时间">
@@ -52,24 +78,85 @@
           </el-form>
         </div>
       </el-card>
-      <el-card style="margin-top: 15px">
+      <el-card style="margin-top: 15px;">
         <!-- 用户列表 -->
-        <el-table v-loading="listLoading" :data="addList" stripe border>
-          <el-table-column type="index" label="#" />
-          <el-table-column label="昵称" prop="applicant" width="150px" />
-          <el-table-column label="申请理由" prop="reason" />
-          <el-table-column label="申请时间" prop="createAt" width="200px" />
-          <el-table-column label="状态" width="150px">
+        <el-table
+          v-loading="listLoading"
+          :data="addList"
+          stripe
+          border
+        >
+          <el-table-column
+            type="index"
+            label="#"
+          />
+          <el-table-column
+            label="昵称"
+            prop="applicant"
+            width="150px"
+          />
+          <el-table-column
+            label="申请理由"
+            prop="reason"
+          />
+          <el-table-column
+            label="申请时间"
+            prop="createAt"
+            width="200px"
+          />
+          <el-table-column
+            label="状态"
+            width="150px"
+          >
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.state === 0" style="text-align:center" type="warning" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
-              <el-tag v-else-if="scope.row.state === 1" type="primary" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
-              <el-tag v-else type="danger" :disable-transitions="true" effect="dark">{{ scope.row.state | verifyStatusFilter }}</el-tag>
+              <el-tag
+                v-if="scope.row.state === 0"
+                style="text-align: center;"
+                type="warning"
+                :disable-transitions="true"
+                effect="dark"
+              >
+                {{ scope.row.state | verifyStatusFilter }}
+              </el-tag>
+              <el-tag
+                v-else-if="scope.row.state === 1"
+                type="primary"
+                :disable-transitions="true"
+                effect="dark"
+              >
+                {{ scope.row.state | verifyStatusFilter }}
+              </el-tag>
+              <el-tag
+                v-else
+                type="danger"
+                :disable-transitions="true"
+                effect="dark"
+              >
+                {{ scope.row.state | verifyStatusFilter }}
+              </el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="220px">
+          <el-table-column
+            label="操作"
+            width="220px"
+          >
             <template slot-scope="scope">
-              <el-button type="primary" size="medium" :disabled="isDisabled(scope.row.state)" @click="joinAudit(scope.row.id, 1)">同意</el-button>
-              <el-button type="danger" size="medium" :disabled="isDisabled(scope.row.state)" @click="joinAudit(scope.row.id, 2)">拒绝</el-button>
+              <el-button
+                type="primary"
+                size="medium"
+                :disabled="judgeDisabled(scope.row.state)"
+                @click="approveJoinApply(scope.row.id, 1)"
+              >
+                同意
+              </el-button>
+              <el-button
+                type="danger"
+                size="medium"
+                :disabled="judgeDisabled(scope.row.state)"
+                @click="approveJoinApply(scope.row.id, 2)"
+              >
+                拒绝
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -158,10 +245,11 @@ export default {
   },
   created() {
     // this.userId = this.$store.getters.userid
-    this.getAddsList()
+    this.getAddsListData()
   },
   methods: {
-    getAddsList() {
+    // 获取申请加入列表数据
+    getAddsListData() {
       this.listLoading = true
       getAddList(this.clubId, this.queryInfo).then(response => {
         this.addList = response.data.items
@@ -169,46 +257,59 @@ export default {
         this.listLoading = false
       })
     },
-    isDisabled(state) {
+
+    // 判断是否禁用按钮
+    judgeDisabled(state) {
       if (state === 0) {
         return false
       }
       return true
     },
+
+    // 监听页值变化
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getAddsList()
+      this.getAddsListData()
     },
+
+    // 监听页码变化
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getAddsList()
+      this.getAddsListData()
     },
-    async joinAudit(id, state) {
+
+    // 审批加入申请
+    async approveJoinApply(id, state) {
       const input = {
         id: id,
         state: state
       }
+
       await joinAudit(input).then(response => {
         this.$message.success('已审批')
       })
-      this.getAddsList()
+      this.getAddsListData()
     },
-    handleSearchList() {
+
+    // 搜索加入申请
+    searchJoinApplies() {
       this.queryInfo.page = 1
-      this.getAddsList()
+      this.getAddsListData()
     },
-    reset() {
+
+    // 重置搜索区
+    cleanSearchField() {
       this.queryInfo.applicant = this.queryInfo.reason = this.queryInfo.state = this.queryInfo.createAt = ''
     }
   }
 }
 </script>
-<style>
-.el-tag td{
-  text-align: center !important
-}
-</style>
+
 <style scoped lang="scss">
+.el-tag td{
+  text-align: center !important;
+}
+
 .el-pagination{
   margin-top: 30px;
   text-align: center;
