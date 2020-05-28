@@ -125,6 +125,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
+
       <!-- 申请活动对话框 -->
       <el-dialog
         title="申请活动"
@@ -179,11 +180,18 @@
             />
           </el-form-item>
         </el-form>
+        <p
+          v-show="hasImage === true"
+          style="color: red;"
+        >
+          最多上传1张图片
+        </p>
         <el-upload
           action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
+          :on-success="handleSuccess"
           :before-upload="beforeAvatarUpload"
           :limit="1"
         >
@@ -248,40 +256,6 @@
             :src="applyDetailForm.imgUrl"
           />
         </div>
-        <!-- <el-form ref="addFormRef" :model="applyDetailForm" label-width="90px">
-          <el-form-item label="活动名称">
-            <el-input v-model="applyDetailForm.name" disabled />
-          </el-form-item>
-          <el-form-item label="活动标题">
-            <el-input v-model="applyDetailForm.title" disabled />
-          </el-form-item>
-          <el-form-item label="活动内容">
-            <el-input v-model="applyDetailForm.body" type="textarea" disabled />
-          </el-form-item>
-          <el-form-item label="活动地点">
-            <el-input v-model="applyDetailForm.location" disabled />
-          </el-form-item>
-          <el-form-item label="参与人数">
-            <el-input-number v-model="applyDetailForm.memberCount" :min="1" disabled />
-          </el-form-item>
-          <el-form-item label="活动时间">
-            <el-col :span="11">
-              <el-form-item>
-                <el-date-picker v-model="applyDetailForm.startDate" type="date" placeholder="选择日期" style="width: 90%;" disabled />
-              </el-form-item>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-form-item>
-                <el-date-picker v-model="applyDetailForm.endDate" type="date" placeholder="选择日期" style="width: 90%;" disabled />
-              </el-form-item>
-            </el-col>
-          </el-form-item>
-          <el-image
-            style="width: 600px; height: 500px"
-            :src="applyDetailForm.imgUrl"
-          />
-        </el-form> -->
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="applyDetailDialogVisible = false">确 定</el-button>
         </span>
@@ -339,6 +313,7 @@ export default {
       dialogVisible: false,
       applyDetailDialogVisible: false,
       dialogImageUrl: '',
+      hasImage: false,
       addForm: {
         clubId: sessionStorage.getItem('clubId'),
         name: '',
@@ -364,12 +339,6 @@ export default {
         location: [
           { required: true, message: '请输入活动地点', trigger: 'blur' }
         ]
-        // startDate: [
-        //   { type: 'date', required: true, message: '请选择开始时间', trigger: 'change' }
-        // ],
-        // endDate: [
-        //   { type: 'date', required: true, message: '请选择结束时间', trigger: 'change' }
-        // ]
       },
       pickerOptions: {
         shortcuts: [{
@@ -515,10 +484,14 @@ export default {
       this.applyActivityDialogVisible = true
     },
     handleRemove(file, fileList) {
+      this.hasImage = false
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
+    },
+    handleSuccess(response, file, fileList) {
+      this.hasImage = true
     },
     async publishApply() {
       await this.$refs.addFormRef.validate(valid => {
@@ -561,21 +534,11 @@ export default {
     },
     beforeAvatarUpload(file) {
       const isValid = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
-      // const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isValid) {
         this.$message.error('上传图片只能是 JPG/JPEG/PNG 格式!')
         return
       }
-      // if (!isLt2M) {
-      //   this.$message.error('上传头像图片大小不能超过 2MB!')
-      // }
-      // if (isValid && isLt2M) {
-      //   const image = new FormData()
-      //   image.append('image', file)
-      //   this.addForm.imgUrl = image
-      // }
-      // this.applyData = new FormData()
       this.applyData.append('imgUrl', file)
       return true
     }
