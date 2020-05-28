@@ -7,8 +7,16 @@
           @click="publishAnnouncement()"
         >发布公告</el-button>
       </el-row>
-      <div v-show="total === 0" align="center" style="margin-top:100px;">
-        <img src="../../../assets/images/noContent.png" alt="item" style="width:200px;height:180px;">
+      <div
+        v-show="total === 0"
+        align="center"
+        style="margin-top:100px;"
+      >
+        <img
+          src="../../../assets/images/noContent.png"
+          alt="item"
+          style="width:200px;height:180px;"
+        >
         <h2 style="color:silver">暂无公告</h2>
       </div>
       <!-- 公告列表 -->
@@ -33,7 +41,10 @@
       </div>
 
       <!-- 分页 -->
-      <div v-show="total != 0" style="text-align:center;margin-top: 10px;">
+      <div
+        v-show="total != 0"
+        style="text-align:center;margin-top: 10px;"
+      >
         <el-pagination
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 15, 20]"
@@ -207,9 +218,9 @@ export default {
     publishBulletin() {
       this.$refs.publishFormRef.validate(valid => {
         if (valid) {
-          console.log('@publishBulletin clubId ' + this.clubId)
+          // console.log('@publishBulletin clubId ' + this.clubId)
           publishBulletin(this.clubId, this.publishForm).then(response => {
-            console.log(response)
+            // console.log(response)
             this.$message.success('发布成功')
             this.getBulletinsList()
             this.publishAnnouncementDialogVisible = false
@@ -219,6 +230,8 @@ export default {
         }
       })
     },
+
+    // 删除公告展示
     showDelete(item) {
       this.delteAnnouncementDialogVisible = true
       this.DeleteBulletin.title = item.title
@@ -226,6 +239,7 @@ export default {
       this.DeleteBulletin.createAt = item.createAt
       this.DeleteBulletin.id = item.id
     },
+
     // 删除公告
     deleteBulletin(id) {
       deleteBulletin(id).then(response => {
@@ -234,42 +248,40 @@ export default {
       })
       this.delteAnnouncementDialogVisible = false
     },
+
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       console.log(newSize)
       this.queryInfo.limit = newSize
       this.getBulletinsList()
     },
+
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       console.log(newPage)
       this.queryInfo.page = newPage
       this.getBulletinsList()
     },
+
     // 显示出发布公告界面
     publishAnnouncement() {
       this.publishAnnouncementDialogVisible = true
     },
-    // 获取共公告列表
+
+    // 获取公告列表
     getBulletinsList() {
       listBulletins(this.clubId, this.queryInfo).then(response => {
-        console.log('@announcement-mamage getBulletinList:')
-        console.log(response)
         this.bulletinsList = response.data.items
         this.total = response.data.totalCount
       })
     },
+
     // 点击详情
     openBulletinDetailDiaglog(id) {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
-        console.log('@announcement-mamage openBulletinDetailDiaglog:')
-        console.log(response)
         this.bulletin = response.data
         this.bulletin['id'] = id
-        // console.log('123' + response.data)
-        // console.log('公告是' + this.bulletin)
-        // console.log(this.memberInfo)
       })
       this.bulletinDetailDialogVisible = true
     },

@@ -133,7 +133,7 @@ export default {
   data() {
     return {
       leaderChange: {
-        club_id: window.sessionStorage.getItem('clubId'),
+        clubId: window.sessionStorage.getItem('clubId'),
         clubname: '这是社团名称',
         oldChiefName: '老社长',
         oldChiefId: 'oldId',
@@ -153,37 +153,34 @@ export default {
     }
   },
   created() {
-    getLeaderChangeApply(window.sessionStorage.getItem('clubId')).then(response => {
-      console.log('@ getLeaderChangeApply response')
-      console.log(response)
+    // 获取社长换届申请
+    getLeaderChangeApply(this.leaderChange.clubId).then(response => {
       if (response.data.totalCount === 0) this.formVisiable = true
       else if (response.data.items[0].state !== 0) this.formVisiable = true
       this.leaderChangeApply = response.data.items
     })
-    getClubDetail(window.sessionStorage.getItem('clubId')).then(response => {
-      console.log('@chief-change created reaponse:')
-      console.log(response)
+
+    // 获取社团信息
+    getClubDetail(this.leaderChange.clubId).then(response => {
       if (response.data) {
         this.leaderChange.clubname = response.data.name
         this.leaderChange.oldChiefName = response.data.chiefName
-        // console.log('detile=' + this.clubInfo)
       } else {
         return this.$message.error('获取社团信息失败')
       }
     })
   },
   methods: {
+    // 提交表单
     submitForm() {
       this.$refs.Form.validate(async valid => {
         if (valid) {
           const data = {
-            clubId: this.leaderChange.club_id,
+            clubId: this.leaderChange.clubId,
             oldChiefId: this.leaderChange.oldChiefId,
             newChiefName: this.leaderChange.newChiefName,
             reason: this.leaderChange.reason
           }
-          // const result = await leaderchange(data)
-          // console.log(result)
           leaderchange(data).then(response => {
             if (response.status === 201) {
               this.$message.success('提交成功！')
@@ -196,8 +193,10 @@ export default {
         } else this.$message.error('error submit!!')
       })
     },
+
+    // 获取表单
     getApply() {
-      getLeaderChangeApply(window.sessionStorage.getItem('clubId')).then(response => {
+      getLeaderChangeApply(this.leaderChange.clubId).then(response => {
         this.leaderChangeApply = response.data.items
       })
     }

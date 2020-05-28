@@ -3,6 +3,7 @@
     <!-- 卡片视图 -->
     <el-card>
       <el-card>
+        <!-- 组合搜索 -->
         <div>
           <i class="el-icon-search" />
           <span>筛选搜索</span>
@@ -50,6 +51,7 @@
       </el-card>
       <el-card>
         <p>共搜索到{{ total }}条相关公告</p>
+        <!-- 无公告 -->
         <div
           v-show="total === 0"
           align="center"
@@ -62,6 +64,7 @@
           >
           <h2 style="color: silver;">暂无公告</h2>
         </div>
+        <!-- 公告列表 -->
         <el-card
           v-for="(item, index) in bulletinsList"
           :key="index"
@@ -70,7 +73,7 @@
           <h2 class="title">{{ item.title }}</h2>
           <p>{{ item.body }}</p>
           <!-- <p class="createAt">{{ item.createAt }}  </p> -->
-          <p class="createAt">{{ item.updateAt }}  </p>
+          <p class="createAt">{{ item.updateAt }} </p>
           <div class="openDetailLink">
             <el-link @click="openBulletinDetailDiaglog(item.id)">
               <i class="el-icon-view el-icon--right" />详情
@@ -103,7 +106,10 @@
         <p>{{ bulletin.body }}</p>
         <p>发布时间:{{ bulletin.createAt }}</p>
         <p>上次修改:{{ bulletin.updateAt }}</p>
-        <span slot="footer" class="dialog-footer">
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
           <el-button
             type="primary"
             @click="bulletinDetailDialogVisible = false"
@@ -185,9 +191,9 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  font-family: "PingFang SC",sans-serif;
+  font-family: 'PingFang SC', sans-serif;
   text-align: center;
-  font-size: 12px
+  font-size: 12px;
 }
 .createAt {
   font-size: 14px;
@@ -197,8 +203,8 @@ export default {
   margin-top: 15px;
 }
 .openDetailLink {
-   text-align: center;
-   margin: 0 auto;
+  text-align: center;
+  margin: 0 auto;
 }
 .el-pagination {
   position: relative;

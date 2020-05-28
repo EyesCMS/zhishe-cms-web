@@ -17,6 +17,7 @@
         :key="key"
         class="forum"
       >
+        <!-- 帖子主体 -->
         <el-row style="align-items: center;display: flex;">
           <!-- 头像 -->
           <el-col :span="2">
@@ -81,10 +82,12 @@
             lazy
           />
         </el-row>
+        <!-- 帖子内容 -->
         <el-row>
           <p>{{ item.content }}</p>
         </el-row>
         <el-row>
+          <!-- 点赞数 -->
           <el-badge
             :value="item.likeCount"
             class="item"
@@ -103,6 +106,7 @@
               </p>
             </el-tooltip>
           </el-badge>
+          <!-- 查看评论 -->
           <el-badge
             v-show="!forumsList[key].remarkVisiable"
             style="display: inline;float:right;cursor:pointer"
@@ -123,6 +127,7 @@
               </p>
             </el-tooltip>
           </el-badge>
+          <!-- 收起评论 -->
           <el-tooltip
             class="item"
             effect="dark"
@@ -141,6 +146,7 @@
               />
             </p>
           </el-tooltip>
+          <!-- 评论列表 -->
           <div v-show="forumsList[key].remarkVisiable">
             <div
               v-for="(index, I) in forumsList[key].remark.items"
@@ -191,6 +197,7 @@
                 </el-col>
               </el-row>
             </div>
+            <!-- 评论分页 -->
             <el-col>
               <div style="text-align:center;">
                 <el-pagination
@@ -418,16 +425,21 @@ export default {
     // console.log(this.remarklist)
   },
   methods: {
+    // 页面limit改变
     handleSizeChange(newSize) {
       // console.log(newSize)
       this.queryInfo.limit = newSize
       this.getForumsList()
     },
+
+    // 页面page改变
     handleCurrentChange(newPage) {
-      // console.log(newPage)
+      console.log(newPage)
       this.queryInfo.page = newPage
       this.getForumsList()
     },
+
+    // 评论page改变
     remarkCurrentChange(item) {
       // console.log(newPage)
       // console.log(item.query)
@@ -440,10 +452,13 @@ export default {
       // this.queryInfo.page = newPage
       // this.getForumsList()
     },
+
+    // 获取帖子列表
     getForumsList() {
       getMyForums(this.queryInfo, this.originState).then(response => {
         // console.log('@club forum-mamage getForumsList response')
         // console.log(response)
+        // console.log(this.queryInfo)
         this.forumsList = response.data.items
         this.total = response.data.totalCount
         this.forumsList.forEach(element => {
@@ -458,11 +473,9 @@ export default {
           element['remarkVisiable'] = true
           this.getRemarkList(element)
         })
-        // console.log(this.remark)
-        // this.total = response.data.totalCount
-        // return response.data.items
       })
     },
+
     // 获取评论列表
     getRemarkList(element) {
       // console.log('@getRemarkList element')
@@ -480,9 +493,13 @@ export default {
         }
       })
     },
+
+    // 显示发布帖子
     addForum() {
       this.addForumDialogVisible = true
     },
+
+    // 提交发布帖子
     handleForm() {
       this.$refs.publish.validate(valid => {
         if (valid) {
@@ -496,14 +513,17 @@ export default {
           publishForum(this.forumForm).then(response => {
             this.$message.success('发布成功！')
             this.getForumsList()
-            // console.log(this.forumsList)
             this.addForumDialogVisible = false
+          }).catch(e => {
+            console.log(e)
           })
         } else {
           this.$message.error('发布失败！')
         }
       })
     },
+
+    // 删除帖子
     deleteForum(id) {
       deleteForum(id).then(response => {
         if (response.status === 204) {
@@ -516,8 +536,10 @@ export default {
       })
       this.dialogVisible = false
     },
+
+    // 修改帖子
     changeForum(id) { // 显示修改界面
-      console.log(id)
+      // console.log(id)
       this.changeForumDialogVisible = true
       var puery = {
         type: window.sessionStorage.getItem('roles') === 'chief' ? 1 : 0
@@ -528,6 +550,8 @@ export default {
         this.forumDetile = response.data
       })
     },
+
+    // 提交修改
     handleChange(id) {
       this.$refs.change.validate(valid => {
         if (valid) {
@@ -539,29 +563,34 @@ export default {
         }
       })
     },
+
+    // 隐藏评论
     removeRemark(element) {
       element.remarkVisiable = false
       this.$forceUpdate()
     },
+
+    // 跳转到个人贴
     back() {
       this.$router.push('/forum/personalPost')
     },
+
+    // 显示删除帖子
     showDeleteForum(item) {
       this.dialogVisible = true
       this.DeleteForum.id = item.id
       this.DeleteForum.title = item.title
       this.DeleteForum.content = item.content
     },
-    showMoreRemarks(item) {
-      item.query.limit += 5
-      this.$forceUpdate()
-      this.getRemarkList(item)
-    },
+
+    // 显示删除评论对话框
     showDeletRemark(index) {
       // console.log(index)
       this.deletRemark = index
       this.deletRemarkVisible = true
     },
+
+    // 删除评论
     deletRemarks(item) {
       this.deletRemarkVisible = false
       deleteRemark(item.id).then(response => {
@@ -569,14 +598,20 @@ export default {
         this.$forceUpdate()
       })
     },
+
+    // 删除图片
     handleRemove(file, fileList) {
       this.fileList.splice(file)
       console.log(file, fileList)
     },
+
+    // 点击图片
     handlePreview(file) {
       console.log(this.fileList)
       // console.log(file)
     },
+
+    // 上传图片之前
     beforeImgUpload(file) {
       const isJPG = file.type === 'image/jpeg' || file.type === 'image/jpg'
       const isLt2M = file.size / 1024 / 1024 < 2

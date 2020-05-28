@@ -45,7 +45,10 @@
             auto-complete="on"
             @keyup.enter.native="handleLogin"
           />
-          <span class="show-pwd" @click="showPwd">
+          <span
+            class="show-pwd"
+            @click="showPwd"
+          >
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
           </span>
         </el-form-item>
@@ -58,10 +61,16 @@
         >登录</el-button>
 
         <div class="tips">
-          <router-link to="/forget" style="float: left;">
+          <router-link
+            to="/forget"
+            style="float: left;"
+          >
             <span>忘记密码?</span>
           </router-link>
-          <router-link to="/register" style="float: right;">
+          <router-link
+            to="/register"
+            style="float: right;"
+          >
             <span>注册</span>
           </router-link>
         </div>
@@ -110,13 +119,14 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
     }
   },
   methods: {
+    // 展示密码
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -127,6 +137,8 @@ export default {
         this.$refs.password.focus()
       })
     },
+
+    // 提交登录表单
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {

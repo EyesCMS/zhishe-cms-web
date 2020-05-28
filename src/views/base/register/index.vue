@@ -110,6 +110,7 @@
 import { register } from '@/api/user'
 export default {
   data() {
+    // 密码不一样
     var validatePass2 = (rule, value, callback) => {
       if (value !== this.ruleForm.password) {
         callback(new Error('两次输入密码不一致!'))
@@ -117,6 +118,7 @@ export default {
         callback()
       }
     }
+    // 邮箱正确性检测
     var validateEmail = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请正确填写邮箱'))
@@ -176,6 +178,7 @@ export default {
     }
   },
   methods: {
+    // 提交注册表单
     submitForm(formName) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
@@ -206,9 +209,13 @@ export default {
         }
       })
     },
+
+    // 重置表单
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
+
+    // 显示密码
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -219,6 +226,8 @@ export default {
         this.$refs.password.focus()
       })
     },
+
+    // 返回
     async back() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
@@ -229,7 +238,7 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-    width: 100%;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
   background: url(../../../assets/images/bg.png) no-repeat;

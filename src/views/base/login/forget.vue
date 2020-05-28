@@ -32,6 +32,7 @@
               <el-input
                 v-model="form1.username"
                 placeholder="请输入用户名"
+                @keyup.enter.native="handleClick(2)"
               />
             </el-form-item>
             <el-form-item>
@@ -46,15 +47,16 @@
             :rules="form2Rules"
           >
             <el-form-item label="保密问题">
-              <el-input v-model="form2.login_question" />
+              <el-input v-model="form2.loginQuestion" />
             </el-form-item>
             <el-form-item
               label="保密回答"
-              prop="login_aswer"
+              prop="loginAswer"
             >
               <el-input
-                v-model="form2.login_aswer"
+                v-model="form2.loginAswer"
                 placeholder="请输入回答"
+                @keyup.enter.native="handleClick(3)"
               />
             </el-form-item>
             <el-form-item>
@@ -77,6 +79,7 @@
                 v-model="form3.newpassword"
                 placeholder="请输入新密码"
                 type="password"
+                @keyup.enter.native="handleClick"
               />
             </el-form-item>
             <el-form-item>
@@ -103,8 +106,8 @@ export default {
         username: ''
       },
       form2: {
-        login_question: '',
-        login_aswer: ''
+        loginQuestion: '',
+        loginAswer: ''
       },
       form3: {
         newpassword: ''
@@ -115,7 +118,7 @@ export default {
         username: [{ required: true, trigger: 'blur', message: '请输入用户名' }]
       },
       form2Rules: {
-        login_aswer: [{ required: true, trigger: 'blur', message: '请输入回答' }]
+        loginAswer: [{ required: true, trigger: 'blur', message: '请输入回答' }]
       },
       form3Rules: {
         newpassword: [{ required: true, trigger: 'blur', message: '请输入密码' }]
@@ -123,20 +126,17 @@ export default {
     }
   },
   methods: {
+    // 提交表单控制器
     async handleClick(i) {
       if (i === 2) {
         this.$refs.form1.validate(valid => {
           if (valid) {
-            // console.log(this.form1)
             const data = { username: this.form1.username }
             question(data).then(response => {
-              // console.log('@forget getQuestion response:')
-              // console.log(response)
-              this.form2.login_question = response.data.loginProblem
+              this.form2.loginQuestion = response.data.loginProblem
               this.activeName = i.toString()
               this.name = i - 1
             }).catch((e) => {
-              // console.log(e)
               this.$message.error('获取问题失败！')
             })
           } else {
@@ -148,11 +148,9 @@ export default {
           if (valid) {
             const data = {
               username: this.form1.username,
-              answer: this.form2.login_aswer
+              answer: this.form2.loginAwer
             }
             answer(data).then(response => {
-              // console.log('@forget answer response:')
-              // console.log(response)
               this.activeName = i.toString()
               this.name = i - 1
             }).catch((e) => {
@@ -164,11 +162,11 @@ export default {
           }
         })
       } else {
-        this.$refs.form2.validate(valid => {
+        this.$refs.form3.validate(valid => {
           if (valid) {
             const data = {
               username: this.form1.username,
-              answer: this.form2.login_aswer,
+              answer: this.form2.loginAswer,
               password: this.form3.newpassword
             }
             newpassword(data).then(response => {
@@ -186,10 +184,14 @@ export default {
         })
       }
     },
+
+    // 返回登录界面
     async backToLogin() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
+
+    // 返回上一级
     back(i) {
       this.activeName = i.toString()
       this.name = i - 1
@@ -200,7 +202,7 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-    width: 100%;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
   background: url(../../../assets/images/bg.png) no-repeat;

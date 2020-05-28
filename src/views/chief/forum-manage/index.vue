@@ -2,11 +2,13 @@
   <div>
     <!-- 帖子部分 -->
     <el-card style="margin-top:20px;">
+      <!-- 跳转到我的帖子 -->
       <el-button
         type="primary"
         style="margin-top:10px;float:right;cursor:pointer;"
         @click="myForum"
       >我的帖子></el-button>
+      <!-- 无帖子显示 -->
       <div
         v-show="total === 0"
         align="center"
@@ -19,12 +21,13 @@
         >
         <h2 style="color:silver">暂无帖子</h2>
       </div>
+      <!-- 帖子列表 -->
       <div
         v-for="(item, key) in forumsList"
         :key="key"
         class="forum"
       >
-        <!-- 头像标题啥的 -->
+        <!-- 头像标题 -->
         <el-row style="align-items: center;display: flex;">
           <!-- 头像 -->
           <el-col :span="3">
@@ -97,6 +100,7 @@
         </el-row>
         <!-- 查看评论 -->
         <el-row>
+          <!-- 查看评论 -->
           <el-badge
             v-show="!forumsList[key].remarkVisiable"
             :value="forumsList[key].remark.totalCount"
@@ -117,6 +121,7 @@
               </p>
             </el-tooltip>
           </el-badge>
+          <!-- 收起评论 -->
           <el-tooltip
             class="item"
             effect="dark"
@@ -134,6 +139,7 @@
               />
             </p>
           </el-tooltip>
+          <!-- 点赞 -->
           <el-badge
             :value="item.likeCount"
             :max="99"
@@ -174,6 +180,7 @@
               </p>
             </el-tooltip>
           </el-badge>
+          <!-- 评论列表 -->
           <div v-show="forumsList[key].remarkVisiable">
             <div
               v-for="(index, I) in forumsList[key].remark.items"
@@ -197,10 +204,12 @@
                     style=" font-size:10px;"
                   />
                 </el-col>
+                <!-- 评论内容 -->
                 <el-col :span="17">
                   <!-- 评论内容 -->
                   <p style="margin-top:0; padding: 0; ">{{ index.content }}</p>
                 </el-col>
+                <!-- 删除评论 -->
                 <el-col
                   v-show="index.userId===userId"
                   :span="2"
@@ -224,6 +233,7 @@
                 </el-col>
               </el-row>
             </div>
+            <!-- 评论分页 -->
             <el-col>
               <div style="text-align:center;">
                 <el-pagination
@@ -301,14 +311,11 @@ export default {
       forumsList: [],
       forumDetile: {},
       remarklist: [],
-      clubId: window.sessionStorage.getItem('clubId')
-        ? window.sessionStorage.getItem('clubId')
-        : this.$store.getters.userId,
       queryInfo: {
         keyword: '',
         page: 1,
         limit: 5,
-        type: window.sessionStorage.getItem('roles') === 'chief' ? 1 : 0,
+        type: 0,
         sort: 'created_at',
         order: 'desc'
       },
@@ -325,28 +332,27 @@ export default {
     this.getForumsList()
   },
   methods: {
+    // 分页limit变化
     handleSizeChange(newSize) {
       // console.log(newSize)
       this.queryInfo.limit = newSize
       this.getForumsList()
     },
+
+    // 分页page变化
     handleCurrentChange(newPage) {
       // console.log(newPage)
       this.queryInfo.page = newPage
       this.getForumsList()
     },
+
+    // 评论page改变
     remarkCurrentChange(item) {
-      // console.log(newPage)
-      // console.log(item.query)
-      // console.log(this.$refs[item.content][0].internalCurrentPage)
       item.query.page = this.$refs[item.content][0].internalCurrentPage
       this.$forceUpdate
-      // console.log(item.query)
       this.getRemarkList(item)
-      // console.log(this.remarkQuery)
-      // this.queryInfo.page = newPage
-      // this.getForumsList()
     },
+
     // 获取帖子列表
     getForumsList() {
       getForumList(this.queryInfo, this.originState).then(response => {
@@ -367,27 +373,21 @@ export default {
           this.getUserLike(element)
           this.getRemarkList(element)
         })
-        // console.log(this.forumsList)
-        // this.total = response.data.totalCount
-        // return response.data.items
       })
     },
+
     // 获取评论列表
     getRemarkList(element) {
-      // console.log('@getRemarkList element')
-      // console.log(element.remark.items)
       element.remarkVisiable = true
       this.$forceUpdate()
       getRemarksList(element.id, element.query).then(response => {
-        // console.log('@forum index getRemarkList response')
-        // console.log(response)
         element.remark = response.data
         this.$forceUpdate()
       })
     },
+
     // 发表评论
     publishRemark(element) {
-      // console.log(element)
       if (this.remark.content !== '') {
         this.remark['postId'] = element.id
         postComment(this.remark).then(response => {
@@ -401,17 +401,25 @@ export default {
         })
       }
     },
+
+    // 切换评论框
     state(id) {
       this.remark.content = ''
       this.remark.id = id
     },
+
+    // 切换到我的帖子界面
     myForum() {
       this.$router.push('/forum/postManage')
     },
+
+    // 收起评论
     removeRemark(element) {
       element.remarkVisiable = false
       this.$forceUpdate()
     },
+
+    // 获取当前用户点赞情况
     getUserLike(element) {
       // 获取当前用户是否对帖子点赞
       const data = { postId: element.id }
@@ -421,6 +429,8 @@ export default {
         element['status'] = response.data.status
       })
     },
+
+    // 点赞
     likeForum(element) {
       element.likeCount++
       this.$forceUpdate()
@@ -432,6 +442,8 @@ export default {
         this.$forceUpdate()
       })
     },
+
+    // 取消点赞
     unlikeForum(element) {
       element.likeCount--
       this.$forceUpdate()
@@ -443,16 +455,15 @@ export default {
         this.$forceUpdate()
       })
     },
-    showMoreRemarks(item) {
-      item.query.limit += 5
-      this.$forceUpdate()
-      this.getRemarkList(item)
-    },
+
+    // 显示删除评论对话框
     showDeletRemark(index) {
-      console.log(index)
+      // console.log(index)
       this.deletRemark = index
       this.deletRemarkVisible = true
     },
+
+    // 删除评论
     deletRemarks(id) {
       this.deletRemarkVisible = false
       deleteRemark(id).then(response => {

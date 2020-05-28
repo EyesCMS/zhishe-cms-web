@@ -1,9 +1,22 @@
 <template>
+  <!-- 走马灯 -->
   <div>
     <div class="carousel">
-      <el-carousel :interval="4000" arrow="always" type="card" height="400px">
-        <el-carousel-item v-for="item in carouselImgList" :key="item">
-          <img style="width: 100%; height: 100%;" :src="item" alt="item">
+      <el-carousel
+        :interval="4000"
+        arrow="always"
+        type="card"
+        height="400px"
+      >
+        <el-carousel-item
+          v-for="item in carouselImgList"
+          :key="item"
+        >
+          <img
+            style="width: 100%; height: 100%;"
+            :src="item"
+            alt="item"
+          >
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -15,7 +28,11 @@
           <el-divider />
           <h3 style="text-align: center;">推荐社团</h3>
           <el-divider />
-          <div v-for="(item, i) in recommendedList" :key="i" class="card">
+          <div
+            v-for="(item, i) in recommendedList"
+            :key="i"
+            class="card"
+          >
             <div class="image">
               <img :src="item.avatarUrl">
             </div>
@@ -34,7 +51,7 @@
 </template>
 
 <script>
-import { recommended, getClubDetail } from '@/api/club'
+import { recommended } from '@/api/club'
 import clubImg1 from '@/assets/images/club1.jpg'
 import clubImg2 from '@/assets/images/club2.jpeg'
 import clubImg3 from '@/assets/images/club3.jpeg'
@@ -42,60 +59,38 @@ import { getInfo } from '@/api/user'
 export default {
   data() {
     return {
+      // 获取推荐列表参数
       queryInfo: {
         page: 1,
         limit: 6,
         sort: 'update_at',
         order: 'desc'
       },
+      // 走马灯图片列表
       carouselImgList: [clubImg1, clubImg2, clubImg3],
       // 公告列表
       recommendedList: [],
-      clubDetail: {},
-      bulletinDetailDialogVisible: false
+      clubDetail: {}
     }
   },
   created() {
     this.getInfo()
-    const clubid = 112
-    localStorage.setItem('clubid', clubid)
     this.getRecommendedList()
-    // console.log(this.$store.getters)
   },
   methods: {
-    chief: function() {
-      this.$store.dispatch('user/changeRoles', 'chief')
-    },
-    admin: function() {
-      this.$store.dispatch('user/changeRoles', 'admin')
-    },
-    student: function() {
-      this.$store.dispatch('user/changeRoles', 'student')
-    },
-    member: function() {
-      this.$store.dispatch('user/changeRoles', 'member')
-    },
+    // 获取推荐列表
     getRecommendedList() {
       recommended(this.queryInfo).then(response => {
-        // console.log('@home-page RecommendedList response:')
-        // console.log(response)
         this.recommendedList = response.data.items
-        // console.log(this.memberInfo)
       })
     },
-    // 获取社团详情
-    getClubDetail(id) {
-      // console.log('@home-page getClubDetail id:' + id)
-      getClubDetail(id).then(response => {
-        // console.log(response)
-        // this.$message.success('获取成员列表成功')
-        this.clubDetail = response.data
-        this.bulletinDetailDialogVisible = true
-      })
-    },
+
+    // 跳转到主页
     pushToHomePage() {
       this.$store.dispatch('user/changeRoles', 'student')
     },
+
+    // 获取用户信息
     getInfo() {
       getInfo().then(response => {
         if (response.data.roles[0] === 'student') {
@@ -106,6 +101,7 @@ export default {
         // console.log(response.data.roles[0])
       })
     },
+
     // 跳转到社团信息详细页面
     LookForDetail(id, name, chiefName, avatarUrl) {
       this.$router.push({
