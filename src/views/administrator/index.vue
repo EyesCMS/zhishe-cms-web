@@ -228,6 +228,10 @@ export default {
         this.clubSpeciesVisible = true
         this.showPie()
       }
+    },
+    'clubSpecie.clubSpecies': function() {
+      this.clubSpeciesVisible = true
+      this.showPie()
     }
   },
 
@@ -259,7 +263,10 @@ export default {
 
   updated() {
     this.showChartLine()
-    this.showPie()
+    if (this.clubSpeciesVisible === false) {
+      this.clubSpeciesVisible = true
+      this.showPie()
+    }
   },
 
   methods: {
