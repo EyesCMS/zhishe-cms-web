@@ -5,21 +5,58 @@
       <div>
         <i class="el-icon-search" />
         <span>筛选搜索</span>
-        <el-button style="float: right" type="primary" size="small" @click="check">查询</el-button>
-        <el-button style="float: right; margin-right: 15px" size="small" @click="renew">重置</el-button>
+        <el-button
+          style="float: right"
+          type="primary"
+          size="small"
+          @click="check"
+        >查询</el-button>
+        <el-button
+          style="float: right; margin-right: 15px"
+          size="small"
+          @click="renew"
+        >重置</el-button>
       </div>
       <div style="margin-top: 30px">
-        <el-form :inline="true" :model="form" label-width="100px">
+        <el-form
+          :inline="true"
+          :model="form"
+          label-width="100px"
+        >
           <el-form-item label="社团名称">
-            <el-input v-model="form.clubName" placeholder />
+            <el-input
+              v-model="form.clubName"
+              placeholder
+            />
           </el-form-item>
-          <el-form-item label="申请状态" prop="state">
-            <el-select v-model="form.state" placeholder="请选择">
-              <el-option label="待审核" value="0" />
-              <el-option label="已批准" value="1" />
-              <el-option label="已发布" value="2" />
-              <el-option label="已退回" value="3" />
-              <el-option label="已结束" value="4" />
+          <el-form-item
+            label="申请状态"
+            prop="state"
+          >
+            <el-select
+              v-model="form.state"
+              placeholder="请选择"
+            >
+              <el-option
+                label="待审核"
+                value="0"
+              />
+              <el-option
+                label="已批准"
+                value="1"
+              />
+              <el-option
+                label="已发布"
+                value="2"
+              />
+              <el-option
+                label="已退回"
+                value="3"
+              />
+              <el-option
+                label="已结束"
+                value="4"
+              />
             </el-select>
           </el-form-item>
         </el-form>
@@ -33,16 +70,48 @@
         @click="handleDownload"
       >导出Excel</el-button>
       <!-- 社团活动申请列表 -->
-      <el-table :data="activityApplyList" stripe border>
-        <el-table-column type="index" label="#" />
-        <el-table-column label="社团名称" prop="clubName" />
-        <el-table-column label="活动名称" prop="name" />
-        <el-table-column label="活动标题" prop="title" />
-        <el-table-column label="活动内容" width="350px" prop="content" />
-        <el-table-column label="开始时间" prop="startDate" />
-        <el-table-column label="结束时间" prop="endDate" />
-        <el-table-column label="活动场地" prop="location" />
-        <el-table-column label="申请状态" prop="state">
+      <el-table
+        :data="activityApplyList"
+        stripe
+        border
+      >
+        <el-table-column
+          type="index"
+          label="#"
+        />
+        <el-table-column
+          label="社团名称"
+          prop="clubName"
+        />
+        <el-table-column
+          label="活动名称"
+          prop="name"
+        />
+        <el-table-column
+          label="活动标题"
+          prop="title"
+        />
+        <el-table-column
+          label="活动内容"
+          width="350px"
+          prop="content"
+        />
+        <el-table-column
+          label="开始时间"
+          prop="startDate"
+        />
+        <el-table-column
+          label="结束时间"
+          prop="endDate"
+        />
+        <el-table-column
+          label="活动场地"
+          prop="location"
+        />
+        <el-table-column
+          label="申请状态"
+          prop="state"
+        >
           <template slot-scope="scope">
             <el-tag
               v-if="scope.row.state === 0"
@@ -83,8 +152,16 @@
         </el-table-column>
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToAgree(scope)">批准</el-button>
-            <el-button v-if="scope.row.state === 0" type="primary" @click="pushToRefuse(scope)">退回</el-button>
+            <el-button
+              v-if="scope.row.state === 0"
+              type="primary"
+              @click="pushToAgree(scope)"
+            >批准</el-button>
+            <el-button
+              v-if="scope.row.state === 0"
+              type="primary"
+              @click="pushToRefuse(scope)"
+            >退回</el-button>
           </template>
         </el-table-column>
       </el-table>
