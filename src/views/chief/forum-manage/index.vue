@@ -469,6 +469,7 @@ export default {
       deleteRemark(id).then(response => {
         this.getForumsList()
         // this.$message.success(response)
+        this.$message.success('删除成功')
       })
     }
   }

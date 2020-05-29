@@ -52,7 +52,7 @@ export default {
     getMemberDetailsData() {
       getMemberDetail(this.clubId, this.userId).then(response => {
         this.memberInfo = response.data
-        console.log(this.memberInfo)
+        // console.log(this.memberInfo)
       })
     }
   }

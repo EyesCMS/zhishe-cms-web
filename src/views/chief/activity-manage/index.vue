@@ -337,6 +337,7 @@
               placeholder="选择开始时间"
               align="right"
               value-format="yyyy-MM-dd HH:mm:ss"
+              :default-value="startDateDefaultTime"
               :picker-options="startTimePickerOptions"
             />
           </el-form-item>
@@ -350,6 +351,7 @@
               placeholder="选择结束时间"
               align="right"
               value-format="yyyy-MM-dd HH:mm:ss"
+              :default-value="endDateDefaultTime"
               :picker-options="endTimePickerOptions"
               :disabled="hasStartTime"
             />
@@ -448,6 +450,7 @@
         <br>
         <div align="center">
           <el-image
+            v-show="applyDetailForm.imgUrl !== '' && applyDetailForm.imgUrl !== null"
             style="width: 600px; height: 500px"
             :src="applyDetailForm.imgUrl"
           />
@@ -508,6 +511,8 @@ export default {
         sort: '',
         order: ''
       },
+      startDateDefaultTime: '',
+      endDateDefaultTime: '',
       applyDetailForm: {},
       total: 0,
       date: [],
@@ -568,27 +573,7 @@ export default {
       startTimePickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now()
-        },
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            picker.$emit('pick', new Date())
-          }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24)
-            picker.$emit('pick', date)
-          }
-        }, {
-          text: '一周前',
-          onClick(picker) {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', date)
-          }
-        }]
+        }
       },
       endTimePickerOptions: {
         disabledDate: (time) => {
@@ -627,6 +612,12 @@ export default {
   created() {
     // this.clubId = sessionStorage.getItem('clubId')
     this.getActivitiesListData()
+    var currentTime = new Date()
+    var nextTime = new Date()
+    currentTime.setDate(currentTime.getDate() + 1)
+    this.startDateDefaultTime = currentTime
+    nextTime.setDate(currentTime.getDate() + 1)
+    this.endDateDefaultTime = nextTime
   },
   methods: {
     getActivitiesListData() {
@@ -790,5 +781,11 @@ export default {
   // margin-top: 20px;
   margin: 30px 15px;
   text-align: center;
+}
+// .__web-inspector-hide-shortcut__, .__web-inspector-hide-shortcut__ *, .__web-inspector-hidebefore-shortcut__::before, .__web-inspector-hideafter-shortcut__::after {
+//     visibility: hidden !important;
+// }
+.el-date-picker span{
+  display: none;
 }
 </style>

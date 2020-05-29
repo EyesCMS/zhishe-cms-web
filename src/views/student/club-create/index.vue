@@ -6,8 +6,8 @@
         <el-step title="等待管理员审核" />
       </el-steps>
     </el-card>
-    <div v-show="formShow" style="margin-top: 30px;">
-      <el-form ref="form" :model="form" :rules="formRules" label-width="450px">
+    <div v-show="formShow" style="margin-left :auto; margin-right: auto; width: 700px ;margin-top: 30px;">
+      <el-form ref="form" :model="form" :rules="formRules" label-width="150px">
         <el-form-item label="社团名称" prop="clubName">
           <el-input
             v-model="form.clubName"

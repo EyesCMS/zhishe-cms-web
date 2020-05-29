@@ -24,14 +24,19 @@
       <el-row :gutter="25">
         <el-col :span="6">
           <el-card style="margin-top: 20px;">
-
             <!-- 社团等级显示 -->
             <el-row>
               <el-col :span="6">
-                <el-avatar
-                  :size="50"
+                <el-image
+                  v-if="clubDetail.avatarUrl !== null"
+                  style="width: 50px; height: 50px; border-radius:50%;"
                   :src="clubDetail.avatarUrl"
                 />
+                <img
+                  v-else
+                  src="../../../assets/images/default.jpg"
+                  style="width: 50px; height: 50px; border-radius:50%;"
+                >
                 <el-tag>{{ clubInfo.grade }}</el-tag>
               </el-col>
               <el-col :span="14">
@@ -51,9 +56,7 @@
 
             <!-- 社团详情简介 -->
             <el-card style="margin-top: 20px;">
-              <p style="font-family: '微软雅黑', sans-serif; font-size: 20px; font-weight: lighter; text-align: center;">
-                {{ clubDetail.name }}
-              </p>
+              <p style="font-family: '微软雅黑', sans-serif; font-size: 20px; font-weight: lighter; text-align: center;">{{ clubDetail.name }}</p>
               <el-divider />
               <h4>社 长：{{ clubDetail.chiefName }}</h4>
               <el-divider />
@@ -63,12 +66,35 @@
               <el-divider />
               <h4>简 介：{{ clubDetail.slogan }}</h4>
             </el-card>
-            <p style="color: #9E9E9E; font-family: '微软雅黑',sans-serif; font-size: 14px;">
+            <p
+              v-if="clubDetail.joinState === '未加入'"
+              style="color: #9E9E9E; font-family: '微软雅黑',sans-serif; font-size: 14px;"
+            >
               如果你感兴趣的话就
               <el-link
                 type="primary"
                 @click="ApplyToJoin()"
               >加入我们</el-link>吧！
+            </p>
+            <p
+              v-else-if="clubDetail.joinState === '已加入' && clubDetail.role === '社员'"
+              style="color: #9E9E9E; font-family: '微软雅黑',sans-serif; font-size: 14px;"
+            >
+              查看更多详情请
+              <el-link
+                type="primary"
+                @click="EnterToJoinClub()"
+              > 进入社团 </el-link>吧！
+            </p>
+            <p
+              v-else
+              style="color: #9E9E9E; font-family: '微软雅黑',sans-serif; font-size: 14px;"
+            >
+              查看更多详情请
+              <el-link
+                type="primary"
+                @click="EnterToManageClub()"
+              > 进入社团 </el-link>吧！
             </p>
           </el-card>
         </el-col>
@@ -91,10 +117,16 @@
               style="margin: 20px 100px;"
             >
               <el-row>
-                <el-avatar
-                  style="float: left;"
+                <el-image
+                  v-if="item.avatarUrl !== null"
+                  style="width: 40px; height: 40px; border-radius: 50%; float: left;"
                   :src="item.avatarUrl"
                 />
+                <img
+                  v-else
+                  src="../../../assets/images/default.jpg"
+                  style="width: 40px; height: 40px; border-radius: 50%; float: left;"
+                >
                 <p style="float: left;">{{ item.posterName }}</p>
               </el-row>
               <div>
@@ -320,6 +352,14 @@ export default {
           return this.$message.error('获取社团积分规则失败')
         }
       })
+    },
+    EnterToJoinClub() {
+      this.$store.dispatch('user/changeRoles', 'member')
+      this.$router.push({ path: '/clubstyle/index', query: { id: this.clubId } })
+    },
+    EnterToManageClub() {
+      this.$store.dispatch('user/changeRoles', 'chief')
+      this.$router.push({ path: '/clubstyle/index', query: { id: this.clubId } })
     }
   }
 }

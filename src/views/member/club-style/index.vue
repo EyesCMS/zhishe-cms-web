@@ -57,21 +57,15 @@
                   <el-tag
                     v-if="i <= 2"
                     type="danger"
-                  >
-                    {{ i + 1 }}
-                  </el-tag>
+                  >{{ i + 1 }}</el-tag>
                   <el-tag
                     v-else
                     type="info"
-                  >
-                    {{ i + 1 }}
-                  </el-tag>
+                  >{{ i + 1 }}</el-tag>
                   <el-link
                     style="display: inline;"
                     @click="openBulletinDetailDiaglog(item.id)"
-                  >
-                    {{ item.title }}
-                  </el-link>
+                  >{{ item.title }}</el-link>
                 </div>
                 <p style="font-size: 10px;">{{ item.updateAt }}</p>
               </div>
@@ -113,21 +107,15 @@
                   <el-tag
                     v-if="i <= 2"
                     type="warning"
-                  >
-                    {{ i + 1 }}
-                  </el-tag>
+                  >{{ i + 1 }}</el-tag>
                   <el-tag
                     v-else
                     type="info"
-                  >
-                    {{ i + 1 }}
-                  </el-tag>
+                  >{{ i + 1 }}</el-tag>
                   <el-link
                     style="display: inline;"
                     @click="enterActivityDetail(item.id)"
-                  >
-                    {{ item.title | interceptAbstract }}
-                  </el-link>
+                  >{{ item.title | interceptAbstract }}</el-link>
                 </div>
                 <p style="font-size: 10px;">{{ item.createAt }}</p>
               </div>
@@ -149,9 +137,7 @@
                   <el-link
                     type="primary"
                     @click="getUserScoreDetailData()"
-                  >
-                    积分规则
-                  </el-link>
+                  >积分规则</el-link>
                   <p />
                   <div class="progress-item">
                     <span>积分：{{ userInfo.score }}</span>
@@ -170,19 +156,23 @@
                   style="width: 80px;"
                   type="primary"
                   disabled
-                >
-                  已签到
-                </el-button>
+                >已签到</el-button>
               </el-col>
             </el-row>
           </el-card>
           <el-card style="margin-top: 20px;">
             <el-row>
               <el-col :span="6">
-                <el-avatar
-                  :size="50"
+                <el-image
+                  v-if="clubDetail.avatarUrl !== null"
+                  style="width: 50px; height: 50px; border-radius:50%;"
                   :src="clubDetail.avatarUrl"
                 />
+                <img
+                  v-else
+                  src="../../../assets/images/default.jpg"
+                  style="width: 50px; height: 50px; border-radius:50%;"
+                >
                 <el-tag>{{ clubInfo.grade }}</el-tag>
               </el-col>
               <el-col :span="14">
@@ -308,9 +298,7 @@
         <el-button
           type="primary"
           @click="clubScoreShow = false"
-        >
-          确 定
-        </el-button>
+        >确 定</el-button>
       </div>
     </el-dialog>
 
@@ -333,9 +321,7 @@
         <el-button
           type="primary"
           @click="bulletinDetailDialogVisible = false"
-        >
-          确 定
-        </el-button>
+        >确 定</el-button>
       </span>
     </el-dialog>
 
@@ -352,7 +338,7 @@
         <el-form-item label="退社理由">
           <el-input
             v-model="quitReason"
-            style=" margin-top: 30px;"
+            style="width: 400px;"
             type="textarea"
           />
         </el-form-item>
@@ -364,9 +350,7 @@
         <el-button
           type="primary"
           @click="exitClub"
-        >
-          确 定
-        </el-button>
+        >确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -581,8 +565,8 @@ export default {
     getClubScore() {
       getClubScore(this.clubId).then(response => {
         if (response.status === 200) {
-          console.log('社团积分')
-          console.log(response)
+          // console.log('社团积分')
+          // console.log(response)
           this.clubInfo = response.data
         } else {
           return this.$message.error('获取社团积分信息失败')

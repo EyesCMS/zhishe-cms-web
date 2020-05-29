@@ -173,7 +173,7 @@ export default {
     openBulletinDetailDiaglog(id) {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
-        console.log(response)
+        // console.log(response)
         this.bulletin = response.data
       })
       this.bulletinDetailDialogVisible = true

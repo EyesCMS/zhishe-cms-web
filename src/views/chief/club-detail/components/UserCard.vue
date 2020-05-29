@@ -36,7 +36,10 @@
             :visible.sync="dialogFormVisible"
           >
             <el-card>
-              <el-tabs v-model="activeTab">
+              <el-tabs
+                v-model="activeTab"
+                @tab-click="changeTab"
+              >
                 <el-tab-pane
                   label="上传网络照片"
                   name="uploadWeb"
@@ -77,6 +80,7 @@
               </el-tabs>
             </el-card>
             <div
+              v-show="showButtonGroup"
               slot="footer"
               class="dialog-footer"
             >
@@ -123,7 +127,8 @@ export default {
       form: {
         avatarUrl: ''
       },
-      dialogFormVisible: false
+      dialogFormVisible: false,
+      showButtonGroup: true
     }
   },
   created() {
@@ -172,6 +177,15 @@ export default {
       getClubDetail(this.clubId).then(response => {
         this.form.avatarUrl = response.data.avatarUrl
       })
+    },
+
+    // 处理Tab切换
+    changeTab(tab, event) {
+      if (tab.name === 'uploadLocal') {
+        this.showButtonGroup = false
+      } else {
+        this.showButtonGroup = true
+      }
     }
   }
 }

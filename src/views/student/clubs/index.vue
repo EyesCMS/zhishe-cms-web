@@ -106,9 +106,17 @@
             width="40"
           >
             <el-image
+              v-if="scope.row.avatarUrl !== null"
               :src="scope.row.avatarUrl"
+              lazy
               style="width: 50px; height: 50px;"
             />
+            <img
+              v-else
+              src="../../../assets/images/default.jpg"
+              lazy
+              style="width: 50px; height: 50px;"
+            >
           </template>
         </el-table-column>
         <el-table-column
@@ -155,10 +163,16 @@
               @click="ApplyToJoin(scope.row.id,scope.row.name)"
             >申请加入</el-button>
             <el-button
+              v-else-if="scope.row.joinState === '已加入' && scope.row.role === '社员'"
+              type="success"
+              size="mini"
+              @click="EnterToJoinClub(scope.row.id)"
+            >进入社团</el-button>
+            <el-button
               v-else
               type="success"
               size="mini"
-              @click="EnterToClub(scope.row.id)"
+              @click="EnterToManageClub(scope.row.id)"
             >进入社团</el-button>
           </template>
         </el-table-column>
@@ -269,8 +283,12 @@ export default {
     ApplyToJoin(id, name) {
       this.$router.push({ path: '/joinClub', query: { id: id, name: name } })
     },
-    EnterToClub(id) {
+    EnterToJoinClub(id) {
       this.$store.dispatch('user/changeRoles', 'member')
+      this.$router.push({ path: '/clubstyle/index', query: { id: id } })
+    },
+    EnterToManageClub(id) {
+      this.$store.dispatch('user/changeRoles', 'chief')
       this.$router.push({ path: '/clubstyle/index', query: { id: id } })
     },
     findClubsListData() {
