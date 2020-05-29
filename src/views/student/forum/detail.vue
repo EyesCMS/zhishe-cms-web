@@ -46,7 +46,10 @@
             @click="showComment=false"
           >
             收起评论
-            <i style="display: inline; float: right; cursor: pointer;" class="el-icon-s-comment" />
+            <i
+              style="display: inline; float: right; cursor: pointer;"
+              class="el-icon-s-comment"
+            />
           </p>
         </el-row>
       </el-card>
@@ -58,8 +61,20 @@
             <el-avatar style="float: left;" :src="item.avatarUrl" />
             <p style="float: left; margin-left: 5px;">{{ item.nickname }}</p>
           </el-row>
-          <p>{{ item.content }}</p>
-          <p>{{ item.createAt }}</p>
+          <el-row>
+            <el-col :span="22">
+              <p>{{ item.content }}</p>
+              <p>{{ item.createAt }}</p>
+            </el-col>
+            <!-- 删除评论 -->
+            <el-col v-show="item.userId===userId" :span="1">
+              <div style="display: inline; float: right; margin: 10px;" @click="showDeletRemark(item)">
+                <el-tooltip class="item" effect="dark" content="删除评论" placement="top">
+                  <i style="cursor:pointer" class="el-icon-delete icon" />
+                </el-tooltip>
+              </div>
+            </el-col>
+          </el-row>
           <el-divider />
         </div>
         <div style="text-align: center;">
@@ -85,13 +100,32 @@
         </el-row>
       </el-card>
     </el-card>
+    <!-- 删除评论 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="deletRemarkVisible"
+      width="30%"
+    >
+      <p>{{ deletRemark.content }}</p>
+      <span style="float:right">确认删除该评论吗？</span>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="deletRemarkVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="deletRemarks(deletRemark.id)"
+        >确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getInvitationDetail } from '@/api/forum'
 import { getRemarksList } from '@/api/forum'
-import { postComment } from '@/api/forum'
+import { postComment, deleteRemark } from '@/api/forum'
 import { getUserLike } from '@/api/forum'
 import { like } from '@/api/forum'
 import { unlike } from '@/api/forum'
@@ -125,7 +159,9 @@ export default {
       clubAvator:
         'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       comment: '',
-      showComment: false
+      showComment: false,
+      deletRemark: { content: '', id: '' },
+      deletRemarkVisible: false
     }
   },
   created() {
@@ -213,6 +249,19 @@ export default {
     // shift+enter换行
     lineFeed() {
       this.textContent = this.textContent + '\n'
+    },
+    // 显示删除评论对话框
+    showDeletRemark(item) {
+      this.deletRemark = item
+      this.deletRemarkVisible = true
+    },
+    // 删除评论
+    deletRemarks(id) {
+      this.deletRemarkVisible = false
+      deleteRemark(id).then(response => {
+        this.$message.success('删除成功')
+        this.getRemarksListData()
+      })
     }
   }
 }
