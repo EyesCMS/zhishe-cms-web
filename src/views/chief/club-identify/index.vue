@@ -1,14 +1,16 @@
 <template>
   <div>
-    <el-card>
-      <h2 align="center" />
-      <el-row style="margin-top: 20px">
-        <el-button
-          type="primary"
-          @click="applyIdentify()"
-        >申请认证</el-button>
-      </el-row>
-    </el-card>
+    <div v-if="buttonVisiable">
+      <el-card>
+        <h2 align="center" />
+        <el-row style="margin-top: 20px">
+          <el-button
+            type="primary"
+            @click="applyIdentify()"
+          >申请认证</el-button>
+        </el-row>
+      </el-card>
+    </div>
     <el-card>
       <!-- 社团认证申请列表 -->
       <el-table
@@ -121,6 +123,7 @@ export default {
   data() {
     return {
       listLoading: true,
+      buttonVisiable: false,
       clubId: sessionStorage.getItem('clubId'),
       queryInfo: {
         page: 1,
@@ -146,6 +149,8 @@ export default {
       getMyIdentifyApplyListData(this.clubId, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.$message.success('获取社团认证申请成功')
+          if (response.data.totalCount === 0) this.buttonVisiable = true
+          else if (response.data.items[0].state !== 0) this.buttonVisiable = true
           this.identifyApplyList = response.data.items
           this.total = response.data.totalCount
           this.listLoading = false
@@ -187,6 +192,7 @@ export default {
               }
             })
             this.applyIdentifyDialogVisible = false
+            this.buttonVisiable = false
             this.queryInfo.page = 1
             this.getMyIdentifyApplyListData()
             // this.form.reason = ''
