@@ -167,9 +167,9 @@ export default {
         // console.log(response)
         if (response.status === 204) {
           this.$message.success('修改成功')
-          this.getClubDetail()
         }
       })
+      this.getClubDetail()
     },
 
     // 获取社团信息
