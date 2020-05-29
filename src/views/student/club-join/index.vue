@@ -6,7 +6,7 @@
         <el-step title="等待社长审核" />
       </el-steps>
     </el-card>
-    <div v-show="formShow" style="margin: 30px 400px 200px 400px;">
+    <div v-show="formShow" style="margin-left :auto; margin-right: auto; width: 700px ;margin-top: 30px;">
       <el-form ref="form" :model="form" :rules="formRules" label-width="150px">
         <el-form-item label="申请人姓名">
           <el-input v-model="username" style="width: 400px;" :disabled="true" />
