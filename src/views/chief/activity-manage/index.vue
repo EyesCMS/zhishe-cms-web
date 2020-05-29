@@ -391,6 +391,7 @@
         <br>
         <div align="center">
           <el-image
+            v-show="applyDetailForm.imgUrl !== '' && applyDetailForm.imgUrl !== null"
             style="width: 600px; height: 500px"
             :src="applyDetailForm.imgUrl"
           />
