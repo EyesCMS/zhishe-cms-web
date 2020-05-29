@@ -39,6 +39,8 @@
                       <el-input v-model="form.avatarUrl" autocomplete="off" style="width:500px;" />
                     </el-form-item>
                   </el-form>
+                  <el-button @click="dialogFormVisible = false">取 消</el-button>
+                  <el-button type="primary" dialog-form-visible="false" @click="submitProfile()">确 定</el-button>
                 </el-tab-pane>
                 <el-tab-pane label="上传本地照片" name="uploadLocal">
                   <el-upload
@@ -50,13 +52,15 @@
                     <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon" />
                   </el-upload>
+                  <el-button style="margin-top: 15px;" type="primary" @click="dialogFormVisible = false">确 定</el-button>
                 </el-tab-pane>
               </el-tabs>
             </el-card>
+            <!--
             <div slot="footer" class="dialog-footer">
               <el-button @click="dialogFormVisible = false">取 消</el-button>
               <el-button type="primary" dialog-form-visible="false" @click="submitProfile()">确 定</el-button>
-            </div>
+            </div>-->
           </el-dialog>
         </div>
       </div>

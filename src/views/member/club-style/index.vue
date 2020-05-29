@@ -433,8 +433,6 @@ export default {
     } else {
       this.clubId = sessionStorage.getItem('clubId')
     }
-
-    // this.clubId = this.$route.query.cid
     this.getClubImgsData()
     this.getBulletinsListData()
     this.getInvitationListData()
@@ -503,7 +501,7 @@ export default {
     },
 
     enterActivityDetail(id) {
-      this.$router.push({ path: '/activityforum/detail', query: { id: id } })
+      this.$router.push({ path: '/activityforum/detail', query: { id: id }})
     },
 
     enterBulletins() {
@@ -565,8 +563,6 @@ export default {
     getClubScore() {
       getClubScore(this.clubId).then(response => {
         if (response.status === 200) {
-          // console.log('社团积分')
-          // console.log(response)
           this.clubInfo = response.data
         } else {
           return this.$message.error('获取社团积分信息失败')
@@ -595,7 +591,6 @@ export default {
         }
       })
     },
-
     handleImgs(carouselImgList) {
       // const tmp = []
       // 清除数组中的null
