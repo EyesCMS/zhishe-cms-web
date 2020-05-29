@@ -136,6 +136,7 @@ export default {
               this.form2.loginQuestion = response.data.loginProblem
               this.activeName = i.toString()
               this.name = i - 1
+              console.log(response)
             }).catch((e) => {
               this.$message.error('获取问题失败！')
             })
@@ -148,11 +149,14 @@ export default {
           if (valid) {
             const data = {
               username: this.form1.username,
-              answer: this.form2.loginAwer
+              answer: this.form2.loginAswer
             }
             answer(data).then(response => {
+              // if (response) {
               this.activeName = i.toString()
               this.name = i - 1
+              console.log(response)
+              // }
             }).catch((e) => {
               // console.log(e)
               this.$message.error('回答错误！')

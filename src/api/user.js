@@ -79,3 +79,11 @@ export function updatePassword(data) {
     data
   })
 }
+// GET /auth/authCode
+export function getAuthCode(data) {
+  return request({
+    url: '/auth/authCode',
+    method: 'get',
+    params: data
+  })
+}

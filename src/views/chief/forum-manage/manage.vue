@@ -509,7 +509,7 @@ export default {
           // console.log(this.forumForm)
           formData.append('title', this.forumForm.title)
           formData.append('content', this.forumForm.content)
-          formData.append('image', this.forumForm.image)
+          if (!this.forumForm.image === '') formData.append('image', this.forumForm.image)
           this.forumForm.title = ''
           this.forumForm.content = ''
           this.forumForm.image = ''

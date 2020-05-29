@@ -22,15 +22,6 @@
         />
       </el-form-item>
       <el-form-item
-        label="昵称"
-        prop="nickname"
-      >
-        <el-input
-          v-model="ruleForm.nickname"
-          style="width:75%;"
-        />
-      </el-form-item>
-      <el-form-item
         label="密码"
         prop="password"
       >
@@ -52,48 +43,29 @@
         />
       </el-form-item>
       <el-form-item
-        label="密保问题"
-        prop="question"
-      >
-        <el-input
-          v-model="ruleForm.question"
-          style="width:75%;"
-        />
-      </el-form-item>
-      <el-form-item
-        label="密保回答"
-        prop="answer"
-      >
-        <el-input
-          v-model="ruleForm.answer"
-          style="width:75%;"
-        />
-      </el-form-item>
-      <el-form-item
-        label="专业"
-        prop="major"
-      >
-        <el-input
-          v-model="ruleForm.major"
-          style="width:75%;"
-        />
-      </el-form-item>
-      <el-form-item
-        label="电话"
-        prop="phone"
-      >
-        <el-input
-          v-model="ruleForm.phone"
-          style="width:75%;"
-        />
-      </el-form-item>
-      <el-form-item
         label="邮箱"
         prop="email"
       >
         <el-input
           v-model="ruleForm.email"
+          style="width:50%;"
+          @keyup.enter.native="countDown"
+        />
+        <el-button
+          type="primary"
+          @click="countDown"
+        >
+          {{ content }}
+        </el-button>
+      </el-form-item>
+      <el-form-item
+        label="验证码"
+        prop="authCode"
+      >
+        <el-input
+          v-model="ruleForm.authCode"
           style="width:75%;"
+          @keyup.enter.native="submitForm('ruleForm')"
         />
       </el-form-item>
       <div style="text-align:center">
@@ -107,7 +79,7 @@
   </div>
 </template>
 <script>
-import { register } from '@/api/user'
+import { register, getAuthCode } from '@/api/user'
 export default {
   data() {
     // 密码不一样
@@ -137,20 +109,12 @@ export default {
         username: '',
         password: '',
         password2: '',
-        major: '',
-        slogan: '',
-        phone: '',
-        nickname: '',
-        answer: '',
-        question: '',
+        authCode: '',
         email: ''
       },
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
-        ],
-        nickname: [
           { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
         password: [
@@ -162,19 +126,12 @@ export default {
           { min: 6, max: 12, message: '长度为6-12个字符', trigger: 'blur' },
           { validator: validatePass2, trigger: 'blur' }
         ],
-        major: [{ max: 30, message: '请保持在30字符内', trigger: 'blur' }],
-        phone: [{ min: 11, max: 11, message: '请正确输入', trigger: 'blur' }],
-        question: [
-          {
-            required: true,
-            message: '请输入保密问题用以找回密码',
-            trigger: 'blur'
-          }
-        ],
-        email: [{ trigger: 'blur', validator: validateEmail }],
-        answer: [{ required: true, message: '请输入回答', trigger: 'blur' }]
+        email: [{ required: true, trigger: 'blur', validator: validateEmail }],
+        authCode: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
-      passwordType: 'password'
+      passwordType: 'password',
+      content: '发送验证码', // 按钮里显示的内容
+      totalTime: 60 // 记录具体倒计时时间
     }
   },
   methods: {
@@ -184,13 +141,9 @@ export default {
         if (valid) {
           var data = {
             username: this.ruleForm.username,
-            nickname: this.ruleForm.nickname,
             password: this.ruleForm.password,
-            major: this.ruleForm.major,
             email: this.ruleForm.email,
-            phone: this.ruleForm.phone,
-            answer: this.ruleForm.answer,
-            question: this.ruleForm.question
+            authCode: this.ruleForm.authCode
           }
           register(data)
             .then(response => {
@@ -231,6 +184,40 @@ export default {
     async back() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+
+    countDown() {
+      var value = this.ruleForm.email
+      if (value === '') {
+        this.$message.error('请正确填写邮箱')
+        return
+      } else {
+        if (value !== '') {
+          var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+          if (!reg.test(value)) {
+            this.$message.error('请输入有效的邮箱')
+            return
+          } else {
+            getAuthCode({ email: value }).then(response => {
+              if (typeof (response) !== 'undefined') {
+                this.$message.success('获取验证码成功！')
+                this.content = this.totalTime + 's后重新发送' // 这里解决60秒不见了的问题
+                const clock = window.setInterval(() => {
+                  this.totalTime--
+                  this.content = this.totalTime + 's后重新发送'
+                  if (this.totalTime < 0) { // 当倒计时小于0时清除定时器
+                    window.clearInterval(clock)
+                    this.content = '重新发送验证码'
+                    this.totalTime = 60
+                  }
+                }, 1000)
+              } else {
+                return
+              }
+            })
+          }
+        }
+      }
     }
   }
 }
@@ -254,7 +241,7 @@ export default {
 .Form {
   width: 45%;
   padding: 20px;
-  margin: 20px auto;
+  margin: 150px auto;
   border-radius: 20px;
   background: white;
   box-shadow: 0 0 20px #dcdfe6;
