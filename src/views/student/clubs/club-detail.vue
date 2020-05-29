@@ -53,9 +53,26 @@
               <el-divider />
               <h4>简 介：{{ clubDetail.slogan }}</h4>
             </el-card>
-            <p style="color: #9E9E9E; font-family: '微软雅黑',sans-serif; font-size: 14px;">
+            <p
+              v-if="clubDetail.joinState === '未加入'"
+              style="color: #9E9E9E; font-family: '微软雅黑',sans-serif; font-size: 14px;"
+            >
               如果你感兴趣的话就
               <el-link type="primary" @click="ApplyToJoin()">加入我们</el-link>吧！
+            </p>
+            <p
+              v-else-if="clubDetail.joinState === '已加入' && clubDetail.role === '社员'"
+              style="color: #9E9E9E; font-family: '微软雅黑',sans-serif; font-size: 14px;"
+            >
+              查看更多详情请
+              <el-link type="primary" @click="EnterToJoinClub()"> 进入社团 </el-link>吧！
+            </p>
+            <p
+              v-else
+              style="color: #9E9E9E; font-family: '微软雅黑',sans-serif; font-size: 14px;"
+            >
+              查看更多详情请
+              <el-link type="primary" @click="EnterToManageClub()"> 进入社团 </el-link>吧！
             </p>
           </el-card>
         </el-col>
@@ -287,6 +304,14 @@ export default {
           return this.$message.error('获取社团积分规则失败')
         }
       })
+    },
+    EnterToJoinClub() {
+      this.$store.dispatch('user/changeRoles', 'member')
+      this.$router.push({ path: '/clubstyle/index', query: { id: this.clubId }})
+    },
+    EnterToManageClub() {
+      this.$store.dispatch('user/changeRoles', 'chief')
+      this.$router.push({ path: '/clubstyle/index', query: { id: this.clubId }})
     }
   }
 }

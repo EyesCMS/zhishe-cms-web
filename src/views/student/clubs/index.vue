@@ -79,8 +79,18 @@
               size="mini"
               @click="ApplyToJoin(scope.row.id,scope.row.name)"
             >申请加入</el-button>
-            <el-button v-else-if="scope.row.joinState === '已加入' && scope.row.role === '社员'" type="success" size="mini" @click="EnterToJoinClub(scope.row.id)">进入社团</el-button>
-            <el-button v-else type="success" size="mini" @click="EnterToManageClub(scope.row.id)">进入社团</el-button>
+            <el-button
+              v-else-if="scope.row.joinState === '已加入' && scope.row.role === '社员'"
+              type="success"
+              size="mini"
+              @click="EnterToJoinClub(scope.row.id)"
+            >进入社团</el-button>
+            <el-button
+              v-else
+              type="success"
+              size="mini"
+              @click="EnterToManageClub(scope.row.id)"
+            >进入社团</el-button>
           </template>
         </el-table-column>
       </el-table>
