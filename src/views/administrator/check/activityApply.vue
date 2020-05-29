@@ -27,6 +27,7 @@
             <el-input
               v-model="form.clubName"
               placeholder
+              @keyup.enter.native="check"
             />
           </el-form-item>
           <el-form-item
@@ -36,6 +37,7 @@
             <el-select
               v-model="form.state"
               placeholder="请选择"
+              @change="check"
             >
               <el-option
                 label="待审核"
@@ -150,7 +152,10 @@
             >{{ scope.row.state | statusFilter }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200px">
+        <el-table-column
+          label="操作"
+          width="200px"
+        >
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.state === 0"

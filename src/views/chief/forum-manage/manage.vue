@@ -235,6 +235,7 @@
       width="70%"
       center
       modal
+      @close="closeDialog"
     >
       <h2 style="text-align:center;margin-bottom:50px">发布动态</h2>
       <el-form
@@ -280,7 +281,7 @@
             <div
               slot="tip"
               class="el-upload__tip"
-            >只能上传jpg/png文件，且不超过500kb</div>
+            >只能上传jpg/jpeg文件，且不超过2M</div>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -434,7 +435,7 @@ export default {
 
     // 页面page改变
     handleCurrentChange(newPage) {
-      console.log(newPage)
+      // console.log(newPage)
       this.queryInfo.page = newPage
       this.getForumsList()
     },
@@ -509,7 +510,10 @@ export default {
           formData.append('title', this.forumForm.title)
           formData.append('content', this.forumForm.content)
           formData.append('image', this.forumForm.image)
-          // console.log(data)
+          this.forumForm.title = ''
+          this.forumForm.content = ''
+          this.forumForm.image = ''
+          this.fileList = []
           publishForum(formData).then(response => {
             this.$message.success('发布成功！')
             this.getForumsList()
@@ -618,9 +622,11 @@ export default {
 
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 格式!')
+        return false
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!')
+        return false
       }
       if (isJPG && isLt2M) {
         this.fileList.push(file.file)
@@ -630,6 +636,13 @@ export default {
         // console.log(image)
         // console.log(this.forumForm)
       }
+    },
+
+    // 关闭对话框
+    closeDialog() {
+      this.forumForm.content = ''
+      this.forumForm.title = ''
+      this.fileList = []
     }
   }
 }

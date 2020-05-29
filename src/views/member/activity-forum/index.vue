@@ -33,6 +33,7 @@
                 v-model="queryInfo.title"
                 style="width: 203px;"
                 placeholder="请输入帖子标题"
+                @keyup.enter.native="searchInvitations"
               />
             </el-form-item>
             <el-form-item label="帖子内容">
@@ -40,6 +41,7 @@
                 v-model="queryInfo.content"
                 style="width: 203px;"
                 placeholder="请输入帖子内容"
+                @keyup.enter.native="searchInvitations"
               />
             </el-form-item>
             <el-form-item label="发布日期">
@@ -191,7 +193,7 @@ export default {
 
     // 跳转到帖子详情页面
     enterDetail(id) {
-      this.$router.push({ path: 'detail', query: { id: id }})
+      this.$router.push({ path: 'detail', query: { id: id } })
     },
 
     searchInvitations() {

@@ -26,7 +26,8 @@
         class="bulletions"
       >
         <h2>{{ item.title }}</h2>
-        <p>{{ item.createAt }}</p>
+        <!-- <p v-show="!item.updateAt">{{ item.createAt }}</p> -->
+        <p>{{ item.updateAt }}</p>
         <p>{{ item.body }}</p>
         <el-link
           type="primary"

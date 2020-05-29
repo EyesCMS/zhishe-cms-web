@@ -467,7 +467,8 @@ export default {
     deletRemarks(id) {
       this.deletRemarkVisible = false
       deleteRemark(id).then(response => {
-        this.$message.success(response)
+        this.getForumsList()
+        // this.$message.success(response)
       })
     }
   }

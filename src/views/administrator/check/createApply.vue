@@ -30,14 +30,14 @@
             <el-input
               v-model="form.applicant"
               placeholder
+              @keyup.enter.native="check"
             />
           </el-form-item>
-          <el-form-item
-            label="社团名称"
-          >
+          <el-form-item label="社团名称">
             <el-input
               v-model="form.clubName"
               placeholder
+              @keyup.enter.native="check"
             />
           </el-form-item>
           <el-form-item
@@ -47,6 +47,7 @@
             <el-select
               v-model="form.officialState"
               placeholder="请选择"
+              @change="check"
             >
               <el-option
                 label="非官方"
@@ -65,6 +66,7 @@
             <el-select
               v-model="form.state"
               placeholder="请选择"
+              @change="check"
             >
               <el-option
                 label="待审核"
@@ -145,8 +147,14 @@
             >{{ scope.row.officialState | officialStatusFilter }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="申请原因" prop="reason" />
-        <el-table-column label="申请状态" prop="state">
+        <el-table-column
+          label="申请原因"
+          prop="reason"
+        />
+        <el-table-column
+          label="申请状态"
+          prop="state"
+        >
           <template slot-scope="scope">
             <el-tag
               v-if="scope.row.state === 0"
@@ -171,7 +179,10 @@
             >{{ scope.row.state | statusFilter }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200px">
+        <el-table-column
+          label="操作"
+          width="200px"
+        >
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.state === 0"

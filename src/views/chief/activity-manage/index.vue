@@ -34,6 +34,7 @@
                   v-model="queryInfo.name"
                   style="width: 203px;"
                   placeholder="请输入活动名称"
+                  @keyup.enter.native="searchActivityApplies"
                 />
               </el-form-item>
               <el-form-item label="活动内容">
@@ -41,6 +42,7 @@
                   v-model="queryInfo.content"
                   style="width: 203px;"
                   placeholder="请输入活动内容"
+                  @keyup.enter.native="searchActivityApplies"
                 />
               </el-form-item>
               <el-form-item label="活动地点">
@@ -49,6 +51,7 @@
                   placeholder="请选择活动地点"
                   style="width: 203px;"
                   :clearable="true"
+                  @change="searchActivityApplies"
                 >
                   <el-option
                     label="青春广场"
@@ -81,6 +84,7 @@
                   placeholder="请选择活动状态"
                   style="width: 203px;"
                   :clearable="true"
+                  @change="searchActivityApplies"
                 >
                   <el-option
                     label="未审核"
@@ -271,18 +275,41 @@
         modal
         @close="applyActivityDialogClosed"
       >
-        <el-form ref="addFormRef" :model="addForm" :rules="addFormRules" label-width="90px">
-          <el-form-item label="活动名称" prop="name">
+        <el-form
+          ref="addFormRef"
+          :model="addForm"
+          :rules="addFormRules"
+          label-width="90px"
+        >
+          <el-form-item
+            label="活动名称"
+            prop="name"
+          >
             <el-input v-model="addForm.name" />
           </el-form-item>
-          <el-form-item label="活动标题" prop="title">
+          <el-form-item
+            label="活动标题"
+            prop="title"
+          >
             <el-input v-model="addForm.title" />
           </el-form-item>
-          <el-form-item label="活动内容" prop="content">
-            <el-input v-model="addForm.content" type="textarea" />
+          <el-form-item
+            label="活动内容"
+            prop="content"
+          >
+            <el-input
+              v-model="addForm.content"
+              type="textarea"
+            />
           </el-form-item>
-          <el-form-item label="活动地点" prop="location">
-            <el-select v-model="addForm.location" placeholder="请选择活动地点">
+          <el-form-item
+            label="活动地点"
+            prop="location"
+          >
+            <el-select
+              v-model="addForm.location"
+              placeholder="请选择活动地点"
+            >
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -292,9 +319,18 @@
             </el-select>
           </el-form-item>
           <el-form-item label="参与人数">
-            <el-input-number v-model="addForm.memberCount" style="width:200px" :min="1" size="small" label="添加参与人数" />
+            <el-input-number
+              v-model="addForm.memberCount"
+              style="width:200px"
+              :min="1"
+              size="small"
+              label="添加参与人数"
+            />
           </el-form-item>
-          <el-form-item label="开始时间" required>
+          <el-form-item
+            label="开始时间"
+            required
+          >
             <el-date-picker
               v-model="addForm.startDate"
               type="datetime"
@@ -304,7 +340,10 @@
               :picker-options="startTimePickerOptions"
             />
           </el-form-item>
-          <el-form-item label="结束时间" required>
+          <el-form-item
+            label="结束时间"
+            required
+          >
             <el-date-picker
               v-model="addForm.endDate"
               type="datetime"
@@ -334,11 +373,25 @@
           <i class="el-icon-plus" />
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt="">
+          <img
+            width="100%"
+            :src="dialogImageUrl"
+            alt=""
+          >
         </el-dialog>
-        <span slot="footer" class="dialog-footer">
-          <p v-show="!canApply" style="color: red;">图片上传中，不可申请</p>
-          <el-button type="primary" :disabled="!canApply" @click="publishApply">申请</el-button>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <p
+            v-show="!canApply"
+            style="color: red;"
+          >图片上传中，不可申请</p>
+          <el-button
+            type="primary"
+            :disabled="!canApply"
+            @click="publishApply"
+          >申请</el-button>
         </span>
       </el-dialog>
 
@@ -378,9 +431,15 @@
         <br>
         <label>
           时间：
-          <el-tag type="warning" style="font-size: 15px;">{{ applyDetailForm.startDate }}</el-tag>
+          <el-tag
+            type="warning"
+            style="font-size: 15px;"
+          >{{ applyDetailForm.startDate }}</el-tag>
           -
-          <el-tag type="warning" style="font-size: 15px;">{{ applyDetailForm.endDate }}</el-tag>
+          <el-tag
+            type="warning"
+            style="font-size: 15px;"
+          >{{ applyDetailForm.endDate }}</el-tag>
         </label>
         <br>
         <br>
@@ -393,8 +452,14 @@
             :src="applyDetailForm.imgUrl"
           />
         </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="applyDetailDialogVisible = false">确 定</el-button>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button
+            type="primary"
+            @click="applyDetailDialogVisible = false"
+          >确 定</el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -554,7 +619,7 @@ export default {
     }
   },
   computed: {
-    hasStartTime: function() {
+    hasStartTime: function () {
       if (this.addForm.startDate !== '') { return false }
       return true
     }
@@ -724,6 +789,6 @@ export default {
 .el-pagination {
   // margin-top: 20px;
   margin: 30px 15px;
-  text-align:center;
+  text-align: center;
 }
 </style>

@@ -73,7 +73,7 @@
                     {{ item.title }}
                   </el-link>
                 </div>
-                <p style="font-size: 10px;">{{ item.createAt }}</p>
+                <p style="font-size: 10px;">{{ item.updateAt }}</p>
               </div>
             </div>
           </el-card>
@@ -281,9 +281,7 @@
       center
       modal
     >
-      <h2
-        style="text-align: center; margin-bottom: 30px; font-family: '微软雅黑', sans-serif; font-size: 28px; font-weight: lighter;"
-      >社团积分规则</h2>
+      <h2 style="text-align: center; margin-bottom: 30px; font-family: '微软雅黑', sans-serif; font-size: 28px; font-weight: lighter;">社团积分规则</h2>
       <el-card style="margin: 20px 15px 20px 20px;">
         <div>
           <el-table
@@ -354,7 +352,7 @@
         <el-form-item label="退社理由">
           <el-input
             v-model="quitReason"
-            style="width: 400px; margin-top: 30px;"
+            style=" margin-top: 30px;"
             type="textarea"
           />
         </el-form-item>
@@ -521,7 +519,7 @@ export default {
     },
 
     enterActivityDetail(id) {
-      this.$router.push({ path: '/activityforum/detail', query: { id: id }})
+      this.$router.push({ path: '/activityforum/detail', query: { id: id } })
     },
 
     enterBulletins() {

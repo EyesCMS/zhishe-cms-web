@@ -4,7 +4,12 @@
       <div>
         <i class="el-icon-search" />
         <span>筛选搜索</span>
-        <el-button style="float: right;" type="primary" size="small" @click="findClubsListData">查询</el-button>
+        <el-button
+          style="float: right;"
+          type="primary"
+          size="small"
+          @click="findClubsListData"
+        >查询</el-button>
         <el-button
           style="float: right;margin-right: 15px;"
           size="small"
@@ -12,24 +17,67 @@
         >重置</el-button>
       </div>
       <div style="margin-top: 15px;">
-        <el-form :inline="true" :model="form" size="small" label-width="140px">
+        <el-form
+          :inline="true"
+          :model="form"
+          size="small"
+          label-width="140px"
+        >
           <div style="text-align: center;">
             <el-form-item label="输入搜索：">
-              <el-input v-model="form.keyword" style="width: 203px;" placeholder="请输入社团名称" />
+              <el-input
+                v-model="form.keyword"
+                style="width: 203px;"
+                placeholder="请输入社团名称"
+                @keyup.enter.native="findClubsListData"
+              />
             </el-form-item>
             <el-form-item label="社团类别：">
-              <el-select v-model="form.type" placeholder="请选择分类" clearable style="width: 203px;">
-                <el-option label="艺术" value="艺术" />
-                <el-option label="运动" value="运动" />
-                <el-option label="学习" value="学习" />
-                <el-option label="休闲" value="休闲" />
-                <el-option label="其他" value="其他" />
+              <el-select
+                v-model="form.type"
+                placeholder="请选择分类"
+                clearable
+                style="width: 203px;"
+                @change="findClubsListData"
+              >
+                <el-option
+                  label="艺术"
+                  value="艺术"
+                />
+                <el-option
+                  label="运动"
+                  value="运动"
+                />
+                <el-option
+                  label="学习"
+                  value="学习"
+                />
+                <el-option
+                  label="休闲"
+                  value="休闲"
+                />
+                <el-option
+                  label="其他"
+                  value="其他"
+                />
               </el-select>
             </el-form-item>
             <el-form-item label="官方状态：">
-              <el-select v-model="form.state" placeholder="请选择分类" clearable style="width: 203px;">
-                <el-option label="非官方" value="0" />
-                <el-option label="官方" value="1" />
+              <el-select
+                v-model="form.state"
+                placeholder="请选择分类"
+                clearable
+                style="width: 203px;"
+                @change="findClubsListData"
+              >
+                <el-option
+                  label="非官方"
+                  value="0"
+                />
+                <el-option
+                  label="官方"
+                  value="1"
+                />
               </el-select>
             </el-form-item>
           </div>
@@ -39,23 +87,61 @@
 
     <!-- 社团列表 -->
     <div style="margin-top: 20px;">
-      <el-table v-loading="listLoading" :data="clubsList" stripe border>
-        <el-table-column label="社团ID" prop="id" />
-        <el-table-column label="社团头像" prop="avatarUrl">
-          <template slot-scope="scope" width="40">
-            <el-image :src="scope.row.avatarUrl" style="width: 50px; height: 50px;" />
+      <el-table
+        v-loading="listLoading"
+        :data="clubsList"
+        stripe
+        border
+      >
+        <el-table-column
+          label="社团ID"
+          prop="id"
+        />
+        <el-table-column
+          label="社团头像"
+          prop="avatarUrl"
+        >
+          <template
+            slot-scope="scope"
+            width="40"
+          >
+            <el-image
+              :src="scope.row.avatarUrl"
+              style="width: 50px; height: 50px;"
+            />
           </template>
         </el-table-column>
-        <el-table-column label="社团名称" prop="name" />
-        <el-table-column label="社长名称" prop="chiefName" />
-        <el-table-column label="社团类别" prop="type" />
-        <el-table-column label="官方状态" prop="state">
+        <el-table-column
+          label="社团名称"
+          prop="name"
+        />
+        <el-table-column
+          label="社长名称"
+          prop="chiefName"
+        />
+        <el-table-column
+          label="社团类别"
+          prop="type"
+        />
+        <el-table-column
+          label="官方状态"
+          prop="state"
+        >
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.state === 0" type="info">{{ scope.row.state | statusFilter }}</el-tag>
-            <el-tag v-else type="success">{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag
+              v-if="scope.row.state === 0"
+              type="info"
+            >{{ scope.row.state | statusFilter }}</el-tag>
+            <el-tag
+              v-else
+              type="success"
+            >{{ scope.row.state | statusFilter }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200px">
+        <el-table-column
+          label="操作"
+          width="200px"
+        >
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -181,11 +267,11 @@ export default {
     },
     // 申请加入社团
     ApplyToJoin(id, name) {
-      this.$router.push({ path: '/joinClub', query: { id: id, name: name }})
+      this.$router.push({ path: '/joinClub', query: { id: id, name: name } })
     },
     EnterToClub(id) {
       this.$store.dispatch('user/changeRoles', 'member')
-      this.$router.push({ path: '/clubstyle/index', query: { id: id }})
+      this.$router.push({ path: '/clubstyle/index', query: { id: id } })
     },
     findClubsListData() {
       this.queryInfo.page = 1

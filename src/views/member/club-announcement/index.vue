@@ -36,6 +36,7 @@
                   v-model="queryInfo.title"
                   style="width: 203px;"
                   placeholder="请输入公告标题"
+                  @keyup.enter.native="searchBulletins"
                 />
               </el-form-item>
               <el-form-item label="公告内容">
@@ -43,6 +44,7 @@
                   v-model="queryInfo.body"
                   style="width: 203px;"
                   placeholder="请输入公告内容"
+                  @keyup.enter.native="searchBulletins"
                 />
               </el-form-item>
             </div>

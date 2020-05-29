@@ -4,25 +4,48 @@
       <el-row>
         <i class="el-icon-search">筛选结果</i>
       </el-row>
-      <el-row style="margin-top: 25px;" :gutter="20">
-        <el-form ref="form" :model="queryInfo" label-width="80px">
+      <el-row
+        style="margin-top: 25px;"
+        :gutter="20"
+      >
+        <el-form
+          ref="form"
+          :model="queryInfo"
+          label-width="80px"
+        >
           <el-col :span="10">
             <el-form-item label="社团名">
-              <el-input v-model="queryInfo.posterName" placeholder="请输入社团名" />
+              <el-input
+                v-model="queryInfo.posterName"
+                placeholder="请输入社团名"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label="标题">
-              <el-input v-model="queryInfo.title" placeholder="请输入标题" />
+              <el-input
+                v-model="queryInfo.title"
+                placeholder="请输入标题"
+              />
             </el-form-item>
           </el-col>
         </el-form>
       </el-row>
-      <el-row style="margin-top: 15px;" :gutter="20">
-        <el-form ref="form" :model="queryInfo" label-width="80px">
+      <el-row
+        style="margin-top: 15px;"
+        :gutter="20"
+      >
+        <el-form
+          ref="form"
+          :model="queryInfo"
+          label-width="80px"
+        >
           <el-col :span="10">
             <el-form-item label="内容">
-              <el-input v-model="queryInfo.content" placeholder="请输入内容" />
+              <el-input
+                v-model="queryInfo.content"
+                placeholder="请输入内容"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="10">
@@ -39,13 +62,23 @@
         </el-form>
       </el-row>
       <el-row style="text-align: center; margin-top: 15px;">
-        <el-button type="primary" @click="searchInvitationList">查询</el-button>
-        <el-button type="info" @click="reset">重置</el-button>
+        <el-button
+          type="primary"
+          @click="searchInvitationList"
+        >查询</el-button>
+        <el-button
+          type="info"
+          @click="reset"
+        >重置</el-button>
       </el-row>
     </el-card>
     <el-card style="margin: 15px 15px;">
-      <h4>共搜索到 {{ total }} 条帖子</h4>
-      <div v-show="total === 0" align="center" style="margin-top: 100px;">
+      <h4>共 {{ total }} 条帖子</h4>
+      <div
+        v-show="total === 0"
+        align="center"
+        style="margin-top: 100px;"
+      >
         <img
           src="../../../assets/images/noContent.png"
           alt="item"
@@ -53,9 +86,16 @@
         >
         <h2 style="color:silver">暂无帖子</h2>
       </div>
-      <el-card v-for="(item, index) in AllinvitationsList" :key="index" style="margin: 20px 100px;">
+      <el-card
+        v-for="(item, index) in AllinvitationsList"
+        :key="index"
+        style="margin: 20px 100px;"
+      >
         <el-row>
-          <el-avatar style="float: left;" :src="item.avatarUrl" />
+          <el-avatar
+            style="float: left;"
+            :src="item.avatarUrl"
+          />
           <p style="float: left;">{{ item.posterName }}</p>
         </el-row>
         <div>
@@ -64,9 +104,7 @@
             <i class="el-icon-date" />
             {{ item.createAt }}
           </p>
-          <p
-            style="font-size: 15px; text-align: center;"
-          >点赞({{ item.likeCount }}) 评论({{ item.commentCount }})</p>
+          <p style="font-size: 15px; text-align: center;">点赞({{ item.likeCount }}) 评论({{ item.commentCount }})</p>
           <el-divider />
         </div>
         <el-row>
@@ -84,14 +122,15 @@
               style="height: 200px; width: 300px; float: left; margin-right: 40px;"
             >
             <div style="margin-right: 20px">
-              <p
-                style="float: none; text-indent: 2em; font-size: 20px;text-align: justify; margin-left: 20px; line-height: 37px;"
-              >{{ item.content | interceptAbstract }}</p>
+              <p style="float: none; text-indent: 2em; font-size: 20px;text-align: justify; margin-left: 20px; line-height: 37px;">{{ item.content | interceptAbstract }}</p>
             </div>
           </div>
         </el-row>
         <div style="text-align: center; margin-top: 20px;">
-          <el-button type="primary" @click="pushToDetail(item.id)">查看详情</el-button>
+          <el-button
+            type="primary"
+            @click="pushToDetail(item.id)"
+          >查看详情</el-button>
         </div>
       </el-card>
 
@@ -168,7 +207,7 @@ export default {
     },
     // 跳转到帖子详情页面
     pushToDetail(id) {
-      this.$router.push({ path: 'activityDetail', query: { id: id }})
+      this.$router.push({ path: 'activityDetail', query: { id: id } })
     },
     searchInvitationList() {
       this.queryInfo.page = 1

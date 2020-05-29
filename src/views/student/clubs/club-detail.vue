@@ -3,9 +3,21 @@
     <el-card>
       <!-- 社团风采走马灯 -->
       <div class="carousel">
-        <el-carousel :interval="4000" arrow="always" type="card" height="400px">
-          <el-carousel-item v-for="item in carouselImgList" :key="item">
-            <img style="width: 100%; height: 100%;" :src="item" alt="item">
+        <el-carousel
+          :interval="4000"
+          arrow="always"
+          type="card"
+          height="400px"
+        >
+          <el-carousel-item
+            v-for="item in carouselImgList"
+            :key="item"
+          >
+            <img
+              style="width: 100%; height: 100%;"
+              :src="item"
+              alt="item"
+            >
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -16,12 +28,18 @@
             <!-- 社团等级显示 -->
             <el-row>
               <el-col :span="6">
-                <el-avatar :size="50" :src="clubDetail.avatarUrl" />
+                <el-avatar
+                  :size="50"
+                  :src="clubDetail.avatarUrl"
+                />
                 <el-tag>{{ clubInfo.grade }}</el-tag>
               </el-col>
               <el-col :span="14">
                 <div>
-                  <el-link type="primary" @click="getClubScoreDetailData()">积分规则</el-link>
+                  <el-link
+                    type="primary"
+                    @click="getClubScoreDetailData()"
+                  >积分规则</el-link>
                   <p />
                   <div class="progress-item">
                     <span>积分：{{ clubInfo.score }}</span>
@@ -47,7 +65,10 @@
             </el-card>
             <p style="color: #9E9E9E; font-family: '微软雅黑',sans-serif; font-size: 14px;">
               如果你感兴趣的话就
-              <el-link type="primary" @click="ApplyToJoin()">加入我们</el-link>吧！
+              <el-link
+                type="primary"
+                @click="ApplyToJoin()"
+              >加入我们</el-link>吧！
             </p>
           </el-card>
         </el-col>
@@ -70,7 +91,10 @@
               style="margin: 20px 100px;"
             >
               <el-row>
-                <el-avatar style="float: left;" :src="item.avatarUrl" />
+                <el-avatar
+                  style="float: left;"
+                  :src="item.avatarUrl"
+                />
                 <p style="float: left;">{{ item.posterName }}</p>
               </el-row>
               <div>
@@ -83,16 +107,21 @@
               </div>
               <el-row>
                 <div style="margin-left: 20px;">
-                  <el-image :src="item.imgUrl" lazy style="height: 200px; width: 300px; float: left;" />
+                  <el-image
+                    :src="item.imgUrl"
+                    lazy
+                    style="height: 200px; width: 300px; float: left;"
+                  />
                   <div style="margin-right:20px;">
-                    <p
-                      style="float: none; text-indent: 2em; font-size: 20px; text-align: justify;"
-                    >{{ item.content | interceptAbstract }}</p>
+                    <p style="float: none; text-indent: 2em; font-size: 20px; text-align: justify;">{{ item.content | interceptAbstract }}</p>
                   </div>
                 </div>
               </el-row>
               <div style="text-align: center; margin-top: 20px;">
-                <el-button type="primary" @click="pushToActivityDetail(item.id)">查看详情</el-button>
+                <el-button
+                  type="primary"
+                  @click="pushToActivityDetail(item.id)"
+                >查看详情</el-button>
               </div>
             </el-card>
 
@@ -113,21 +142,40 @@
     </el-card>
 
     <!-- 社团积分规则-->
-    <el-dialog :visible.sync="clubScoreShow" width="50%" center modal>
-      <h2
-        style="text-align: center; margin-bottom: 30px; font-family: '微软雅黑',sans-serif; font-size: 28px; font-weight: lighter;"
-      >社团积分规则</h2>
+    <el-dialog
+      :visible.sync="clubScoreShow"
+      width="50%"
+      center
+      modal
+    >
+      <h2 style="text-align: center; margin-bottom: 30px; font-family: '微软雅黑',sans-serif; font-size: 28px; font-weight: lighter;">社团积分规则</h2>
       <el-card style="margin: 20px 15px 20px 20px;">
         <div>
-          <el-table :data="ClubScoreDetailList" stripe border>
-            <el-table-column label="等级" prop="name" />
-            <el-table-column label="积分下限" prop="lowerLimit" />
-            <el-table-column label="积分上限" prop="upperLimit" />
+          <el-table
+            :data="ClubScoreDetailList"
+            stripe
+            border
+          >
+            <el-table-column
+              label="等级"
+              prop="name"
+            />
+            <el-table-column
+              label="积分下限"
+              prop="lowerLimit"
+            />
+            <el-table-column
+              label="积分上限"
+              prop="upperLimit"
+            />
           </el-table>
         </div>
       </el-card>
       <div style="text-align: center;">
-        <el-button type="primary" @click="clubScoreShow = false">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="clubScoreShow = false"
+        >确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -213,7 +261,7 @@ export default {
       })
     },
     pushToActivityDetail(id) {
-      this.$router.push({ path: '/forum/activityDetail', query: { id: id }})
+      this.$router.push({ path: '/forum/activityDetail', query: { id: id } })
     },
     getClubScoreData() {
       getClubScore(this.$route.query.id).then(response => {

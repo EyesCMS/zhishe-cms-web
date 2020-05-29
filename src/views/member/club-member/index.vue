@@ -33,6 +33,7 @@
                 v-model="queryInfo.name"
                 style="width: 300px;"
                 placeholder="请输入昵称/用户名"
+                @keyup.enter.native="searchMembers"
               />
             </el-form-item>
             <el-form-item label="头衔：">
@@ -41,6 +42,7 @@
                 placeholder="请选择分类"
                 clearable
                 style="width: 300px;"
+                @change="searchMembers"
               >
                 <el-option
                   label="潜水"
@@ -180,7 +182,7 @@ export default {
 
     // 跳转到成员信息详细页面
     enterMemberDetail(userId) {
-      this.$router.push({ path: 'detail', query: { userId: userId }})
+      this.$router.push({ path: 'detail', query: { userId: userId } })
     },
 
     searchMembers() {
