@@ -108,6 +108,10 @@
           prop="createAt"
         />
         <el-table-column
+          label="申请原因"
+          prop="reason"
+        />
+        <el-table-column
           label="申请状态"
           prop="state"
         >
