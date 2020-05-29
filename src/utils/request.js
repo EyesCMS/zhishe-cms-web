@@ -84,8 +84,10 @@ service.interceptors.response.use(
           console.log('push to login')
           location.reload()// 为了重新实例化 vue-router 对象 避免 bug
         })
+        })
       */
       // to re-login
+      /*
       MessageBox.alert('你已被登出请重新登录', '确定登出', {
         confirmButtonText: '确定',
         callback: action => {
@@ -94,7 +96,21 @@ service.interceptors.response.use(
             location.reload()// 为了重新实例化 vue-router 对象 避免 bug
           })
         }
+      })*/
+      MessageBox.alert('你已被登出，请重新登录', '确定登出', {
+        confirmButtonText: '确认'
+      }).then(() => {
+        store.dispatch('user/resetToken').then(() => {
+          console.log('push to login')
+          location.reload()// 为了重新实例化 vue-router 对象 避免 bug
+        })
       })
+        .catch(action => {
+          store.dispatch('user/resetToken').then(() => {
+            console.log('push to login')
+            location.reload()// 为了重新实例化 vue-router 对象 避免 bug
+          })
+        })
     } else if (error.response.status === 500) {
       Message.error('serve error')
     } else {
