@@ -109,7 +109,7 @@
               />
               <img
                 v-else
-                src="../../../assets/images/activity.png"
+                src="../../../assets/images/404.jpg"
                 lazy
                 style="height: 200px; width: 300px; float: left; margin-right: 40px;"
               >

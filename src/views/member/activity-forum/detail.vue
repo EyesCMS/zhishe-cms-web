@@ -14,7 +14,6 @@
           <div v-show="detailInfo.imgUrl">
             <el-image
               :src="detailInfo.imgUrl"
-              lazy
             />
           </div>
           <p style="text-indent: 2em; font-size: 20px;line-height: 37px;text-align:left;">{{ detailInfo.content }}</p>
@@ -229,7 +228,7 @@ export default {
     // 点赞
     like() {
       like(this.likeInfo).then(response => {
-        console.log(response)
+        // console.log(response)
         if (response.status === 204) {
           this.unlikeShow = false
           this.getInvitationDetailData()

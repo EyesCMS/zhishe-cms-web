@@ -223,7 +223,7 @@
     >
       <el-form>
         <el-form-item label="退社理由">
-          <el-input v-model="quitReason" style="width: 400px; margin-top: 30px;" type="textarea" />
+          <el-input v-model="quitReason" style="width: 400px;" type="textarea" />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">

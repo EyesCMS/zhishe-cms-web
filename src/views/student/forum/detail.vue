@@ -9,7 +9,7 @@
         <div style="text-align: center;">
           <p style="font-size: 22px; font-weight: bold;">{{ detailInfo.title }}</p>
           <p style="font-size: 15px; text-align: center;">评论({{ detailInfo.commentCount }})</p>
-          <el-image v-show="detailInfo.imgUrl" :src="detailInfo.imgUrl" lazy />
+          <el-image v-show="detailInfo.imgUrl" :src="detailInfo.imgUrl" />
           <p
             style="text-indent: 2em; font-size: 20px; line-height: 37px; text-align: left;"
           >{{ detailInfo.content }}</p>
