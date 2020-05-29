@@ -126,7 +126,7 @@
             <div style="text-align: center">
               <div
                 id="pieBox"
-                style="width: 650%; height: 300px"
+                style="width: 900%; height: 300px"
               />
             </div>
           </div>
@@ -349,7 +349,7 @@ export default {
           {
             name: '社团数目',
             type: 'pie',
-            radius: '50%',
+            radius: '70%',
             center: ['50%', '50%'],
             data: [
               { value: this.clubSpecie.clubSpeciesNumber[0], name: this.clubSpecie.clubSpecies[0] },
