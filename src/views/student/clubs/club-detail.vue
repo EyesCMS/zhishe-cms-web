@@ -12,11 +12,19 @@
       <el-row :gutter="25">
         <el-col :span="6">
           <el-card style="margin-top: 20px;">
-
             <!-- 社团等级显示 -->
             <el-row>
               <el-col :span="6">
-                <el-avatar :size="50" :src="clubDetail.avatarUrl" />
+                <el-image
+                  v-if="clubDetail.avatarUrl !== null"
+                  style="width: 50px; height: 50px; border-radius:50%;"
+                  :src="clubDetail.avatarUrl"
+                />
+                <img
+                  v-else
+                  src="../../../assets/images/default.jpg"
+                  style="width: 50px; height: 50px; border-radius:50%;"
+                >
                 <el-tag>{{ clubInfo.grade }}</el-tag>
               </el-col>
               <el-col :span="14">
@@ -33,9 +41,9 @@
 
             <!-- 社团详情简介 -->
             <el-card style="margin-top: 20px;">
-              <p style="font-family: '微软雅黑', sans-serif; font-size: 20px; font-weight: lighter; text-align: center;">
-                {{ clubDetail.name }}
-              </p>
+              <p
+                style="font-family: '微软雅黑', sans-serif; font-size: 20px; font-weight: lighter; text-align: center;"
+              >{{ clubDetail.name }}</p>
               <el-divider />
               <h4>社 长：{{ clubDetail.chiefName }}</h4>
               <el-divider />
@@ -54,14 +62,8 @@
         <el-col :span="18">
           <el-card style="margin: 15px 15px;">
             <h4>共搜索到 {{ total }} 条帖子</h4>
-            <div
-              v-if="total === 0"
-              align="center"
-            >
-              <img
-                src="../../../assets/images/notFound.png"
-                alt="item"
-              >
+            <div v-if="total === 0" align="center">
+              <img src="../../../assets/images/notFound.png" alt="item">
               <h2 style="color: silver;">暂无帖子</h2>
             </div>
             <el-card
@@ -70,7 +72,16 @@
               style="margin: 20px 100px;"
             >
               <el-row>
-                <el-avatar style="float: left;" :src="item.avatarUrl" />
+                <el-image
+                  v-if="item.avatarUrl !== null"
+                  style="width: 40px; height: 40px; border-radius: 50%; float: left;"
+                  :src="item.avatarUrl"
+                />
+                <img
+                  v-else
+                  src="../../../assets/images/default.jpg"
+                  style="width: 40px; height: 40px; border-radius: 50%; float: left;"
+                >
                 <p style="float: left;">{{ item.posterName }}</p>
               </el-row>
               <div>
@@ -83,7 +94,11 @@
               </div>
               <el-row>
                 <div style="margin-left: 20px;">
-                  <el-image :src="item.imgUrl" lazy style="height: 200px; width: 300px; float: left;" />
+                  <el-image
+                    :src="item.imgUrl"
+                    lazy
+                    style="height: 200px; width: 300px; float: left;"
+                  />
                   <div style="margin-right:20px;">
                     <p
                       style="float: none; text-indent: 2em; font-size: 20px; text-align: justify;"

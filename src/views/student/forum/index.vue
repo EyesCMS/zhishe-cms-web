@@ -55,7 +55,16 @@
       </div>
       <el-card v-for="(item, index) in AllinvitationsList" :key="index" style="margin: 20px 100px;">
         <el-row>
-          <el-avatar style="float: left;" :src="item.avatarUrl" />
+          <el-image
+            v-if="item.avatarUrl !== null"
+            style="width: 40px; height: 40px; border-radius: 50%; float: left;"
+            :src="item.avatarUrl"
+          />
+          <img
+            v-else
+            src="../../../assets/images/default.jpg"
+            style="width: 40px; height: 40px; border-radius: 50%; float: left;"
+          >
           <p style="float: left;">{{ item.posterName }}</p>
         </el-row>
         <div>

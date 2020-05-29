@@ -43,7 +43,18 @@
         <el-table-column label="社团ID" prop="id" />
         <el-table-column label="社团头像" prop="avatarUrl">
           <template slot-scope="scope" width="40">
-            <el-image :src="scope.row.avatarUrl" style="width: 50px; height: 50px;" />
+            <el-image
+              v-if="scope.row.avatarUrl !== null"
+              :src="scope.row.avatarUrl"
+              lazy
+              style="width: 50px; height: 50px;"
+            />
+            <img
+              v-else
+              src="../../../assets/images/default.jpg"
+              lazy
+              style="width: 50px; height: 50px;"
+            >
           </template>
         </el-table-column>
         <el-table-column label="社团名称" prop="name" />
@@ -68,12 +79,7 @@
               size="mini"
               @click="ApplyToJoin(scope.row.id,scope.row.name)"
             >申请加入</el-button>
-            <el-button
-              v-else
-              type="success"
-              size="mini"
-              @click="EnterToClub(scope.row.id)"
-            >进入社团</el-button>
+            <el-button v-else type="success" size="mini" @click="EnterToClub(scope.row.id)">进入社团</el-button>
           </template>
         </el-table-column>
       </el-table>
