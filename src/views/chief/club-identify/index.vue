@@ -150,7 +150,7 @@ export default {
         if (response.status === 200) {
           this.$message.success('获取社团认证申请成功')
           if (response.data.totalCount === 0) this.buttonVisiable = true
-          else if (response.data.items[0].state !== 0) this.buttonVisiable = true
+          else if ((response.data.items[0].state !== 0) && (response.data.items[0].state !== 1)) this.buttonVisiable = true
           this.identifyApplyList = response.data.items
           this.total = response.data.totalCount
           this.listLoading = false
