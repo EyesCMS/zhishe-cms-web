@@ -96,11 +96,13 @@
             v-if="item.avatarUrl !== null"
             style="width: 40px; height: 40px; border-radius: 50%; float: left;"
             :src="item.avatarUrl"
+            lazy
           />
           <img
             v-else
             src="../../../assets/images/default.jpg"
             style="width: 40px; height: 40px; border-radius: 50%; float: left;"
+            lazy
           >
           <p style="float: left;">{{ item.posterName }}</p>
         </el-row>
@@ -123,7 +125,7 @@
             />
             <img
               v-else
-              src="../../../assets/images/activity.png"
+              src="../../../assets/images/404.jpg"
               lazy
               style="height: 200px; width: 300px; float: left; margin-right: 40px;"
             >
@@ -213,7 +215,7 @@ export default {
     },
     // 跳转到帖子详情页面
     pushToDetail(id) {
-      this.$router.push({ path: 'activityDetail', query: { id: id } })
+      this.$router.push({ path: 'activityDetail', query: { id: id }})
     },
     searchInvitationList() {
       this.queryInfo.page = 1

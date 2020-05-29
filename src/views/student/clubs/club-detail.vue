@@ -140,10 +140,17 @@
               <el-row>
                 <div style="margin-left: 20px;">
                   <el-image
+                    v-if="item.imgUrl !== ''"
                     :src="item.imgUrl"
                     lazy
-                    style="height: 200px; width: 300px; float: left;"
+                    style="height: 200px; width: 300px; float: left; margin-right: 40px;"
                   />
+                  <img
+                    v-else
+                    src="../../../assets/images/404.jpg"
+                    lazy
+                    style="height: 200px; width: 300px; float: left; margin-right: 40px;"
+                  >
                   <div style="margin-right:20px;">
                     <p style="float: none; text-indent: 2em; font-size: 20px; text-align: justify;">{{ item.content | interceptAbstract }}</p>
                   </div>
@@ -293,7 +300,7 @@ export default {
       })
     },
     pushToActivityDetail(id) {
-      this.$router.push({ path: '/forum/activityDetail', query: { id: id } })
+      this.$router.push({ path: '/forum/activityDetail', query: { id: id }})
     },
     getClubScoreData() {
       getClubScore(this.$route.query.id).then(response => {
@@ -355,11 +362,11 @@ export default {
     },
     EnterToJoinClub() {
       this.$store.dispatch('user/changeRoles', 'member')
-      this.$router.push({ path: '/clubstyle/index', query: { id: this.clubId } })
+      this.$router.push({ path: '/clubstyle/index', query: { id: this.clubId }})
     },
     EnterToManageClub() {
       this.$store.dispatch('user/changeRoles', 'chief')
-      this.$router.push({ path: '/clubstyle/index', query: { id: this.clubId } })
+      this.$router.push({ path: '/clubstyle/index', query: { id: this.clubId }})
     }
   }
 }

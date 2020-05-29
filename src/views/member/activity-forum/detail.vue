@@ -3,10 +3,18 @@
     <el-card>
       <el-card style="margin: 15px 15px;">
         <el-row>
-          <el-avatar
-            style="float: left;"
+          <el-image
+            v-if="detailInfo.avatarUrl !== null"
+            style="width: 40px; height: 40px; border-radius: 50%; float: left;"
             :src="detailInfo.avatarUrl"
+            lazy
           />
+          <img
+            v-else
+            src="../../../assets/images/default.jpg"
+            style="width: 40px; height: 40px; border-radius: 50%; float: left;"
+            lazy
+          >
           <p style="float: left;">{{ detailInfo.posterName }}</p>
         </el-row>
         <div style="text-align: center;">
@@ -53,11 +61,11 @@
         <el-row>
           <el-badge
             v-show="!showComment"
-            :value="remarksTotal"
+            :value="detailInfo.commentCount"
             style="display: inline; float: right; cursor: pointer;"
             class="item"
           >
-            <p @click="showComment=true">
+            <p @click="showComment=true;getRemarksListData()">
               查看评论
               <i
                 style="display: inline; float: right; cursor: pointer;"
@@ -205,7 +213,6 @@ export default {
   created() {
     this.id = this.$route.query.id
     this.getInvitationDetailData()
-    this.getRemarksListData()
     this.getUserLikeData()
   },
   methods: {
