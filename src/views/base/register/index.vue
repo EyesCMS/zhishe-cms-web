@@ -147,10 +147,10 @@ export default {
           }
           register(data)
             .then(response => {
-              // console.log('@register result:')
-              // console.log(response)
-              this.$message.success('注册成功')
+              // if (typeof (response) !== 'undefined' && response.status === 204) {
+              // this.$message.success('注册成功')
               this.$router.push('/login')
+              // }
             })
             .catch(e => {
               console.log(e)

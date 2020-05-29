@@ -25,7 +25,6 @@ export function question(data) {
 }
 
 export function answer(data) {
-  console.log(data)
   return request({
     url: '/users/answer',
     method: 'post',
