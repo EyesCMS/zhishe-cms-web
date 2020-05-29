@@ -44,6 +44,7 @@
                   ref="upload"
                   action="https://jsonplaceholder.typicode.com/posts/"
                   list-type="picture-card"
+                  accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
                   :http-request="uploadFile"
                   :on-preview="handlePictureCardPreview"
                   :on-remove="handleRemove"
@@ -162,11 +163,12 @@ export default {
 
     // 上传图片前调用
     beforeAvatarUpload(file) {
-      const isValidStyle = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
+      const isValidStyle = file.type === 'image/jpeg' || file.type === 'image/jpg' ||
+       file.type === 'image/png' || file.type === 'image/svg' || file.type === 'image/gif'
       const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isValidStyle) {
-        this.$message.error('上传头像图片只能是 JPG/JPEG/PNG 格式!')
+        this.$message.error('上传图片格式不正确!')
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!')
