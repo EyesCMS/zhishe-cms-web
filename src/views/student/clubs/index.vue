@@ -79,7 +79,8 @@
               size="mini"
               @click="ApplyToJoin(scope.row.id,scope.row.name)"
             >申请加入</el-button>
-            <el-button v-else type="success" size="mini" @click="EnterToClub(scope.row.id)">进入社团</el-button>
+            <el-button v-else-if="scope.row.joinState === '已加入' && scope.row.role === '社员'" type="success" size="mini" @click="EnterToJoinClub(scope.row.id)">进入社团</el-button>
+            <el-button v-else type="success" size="mini" @click="EnterToManageClub(scope.row.id)">进入社团</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -189,8 +190,12 @@ export default {
     ApplyToJoin(id, name) {
       this.$router.push({ path: '/joinClub', query: { id: id, name: name }})
     },
-    EnterToClub(id) {
+    EnterToJoinClub(id) {
       this.$store.dispatch('user/changeRoles', 'member')
+      this.$router.push({ path: '/clubstyle/index', query: { id: id }})
+    },
+    EnterToManageClub(id) {
+      this.$store.dispatch('user/changeRoles', 'chief')
       this.$router.push({ path: '/clubstyle/index', query: { id: id }})
     },
     findClubsListData() {
