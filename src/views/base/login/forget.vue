@@ -35,8 +35,8 @@
                 @keyup.enter.native="handleClick(2)"
               />
             </el-form-item>
-            <el-form-item>
-              <el-button @click="handleClick(2)">下一步</el-button>
+            <el-form-item style="text-align: center;">
+              <el-button type="primary" @click="handleClick(2)">下一步</el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -59,9 +59,9 @@
                 @keyup.enter.native="handleClick(3)"
               />
             </el-form-item>
-            <el-form-item>
-              <el-button @click="handleClick(3)">下一步</el-button>
+            <el-form-item style="text-align: center;">
               <el-button @click="back(1)">上一步</el-button>
+              <el-button type="primary" @click="handleClick(3)">下一步</el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -79,12 +79,21 @@
                 v-model="form3.newpassword"
                 placeholder="请输入新密码"
                 type="password"
-                @keyup.enter.native="handleClick"
               />
             </el-form-item>
-            <el-form-item>
-              <el-button @click="handleClick()">提交</el-button>
+            <el-form-item
+              label="确认新密码"
+              prop="checkpassword"
+            >
+              <el-input
+                v-model="form3.checkpassword"
+                placeholder="请输入新密码"
+                type="password"
+              />
+            </el-form-item>
+            <el-form-item style="text-align: center;">
               <el-button @click="back(2)">上一步</el-button>
+              <el-button type="primary" @click="handleClick()">提交</el-button>
 
             </el-form-item>
           </el-form>
@@ -110,7 +119,8 @@ export default {
         loginAswer: ''
       },
       form3: {
-        newpassword: ''
+        newpassword: '',
+        checkpassword: ''
       },
       activeName: '1',
       name: 0,
@@ -121,7 +131,8 @@ export default {
         loginAswer: [{ required: true, trigger: 'blur', message: '请输入回答' }]
       },
       form3Rules: {
-        newpassword: [{ required: true, trigger: 'blur', message: '请输入密码' }]
+        newpassword: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+        checkpassword: [{ required: true, trigger: 'blur', message: '请输入密码' }]
       }
     }
   },
@@ -176,17 +187,19 @@ export default {
               answer: this.form2.loginAswer,
               password: this.form3.newpassword
             }
-            newpassword(data).then(response => {
+            if (this.form3.checkpassword === this.form3.newpassword) {
+              newpassword(data).then(response => {
               // console.log('@forget newpassword response:')
               // console.log(response)
-              this.$message.success('修改成功！')
-              this.$router.push('/login')
-            }).catch((e) => {
+                this.$message.success('修改成功！')
+                this.$router.push('/login')
+              }).catch((e) => {
               // console.log(e)
-              this.$message.error('修改失败')
-            })
-          } else {
-            this.$message.error('提交失败')
+                this.$message.error('修改失败')
+              })
+            } else {
+              this.$message.error('密码不一致！')
+            }
           }
         })
       }
