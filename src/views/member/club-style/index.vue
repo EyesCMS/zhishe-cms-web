@@ -423,7 +423,8 @@ export default {
       clubDetail: {},
       bulletinDetailDialogVisible: false,
       quitClubDialogVisible: false,
-      quitReason: ''
+      quitReason: '',
+      check: this.$route.query.check
     }
   },
   created() {
@@ -441,7 +442,21 @@ export default {
     this.getUserScoreData()
     this.getClubScore()
   },
+  mounted () {
+    if (window.history) {
+      window.addEventListener('popstate', this.goBack, false)
+    }
+  },
+  destroyed () {
+    window.removeEventListener('popstate', this.goBack, false)
+  },
   methods: {
+    goBack () {
+      if (this.check === '1') {
+        this.$store.dispatch('user/changeRoles', 'student')
+        window.history.back()
+      }
+    },
     async getClubImgsData() {
       await listClubImgs(this.clubId).then(response => {
         this.carouselImgList = response.data

@@ -88,7 +88,7 @@ export default {
     // 跳转到社团风采页面
     EnterToClub(id) {
       this.$store.dispatch('user/changeRoles', 'chief')
-      this.$router.push({ path: '/clubstyle/index', query: { id: id }})
+      this.$router.push({ path: '/clubstyle/index', query: { id: id, check: 1 }})
     }
   }
 }
