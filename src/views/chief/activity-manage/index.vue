@@ -364,6 +364,7 @@
           最多上传1张图片
         </p>
         <el-upload
+          ref="upload"
           action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
@@ -385,13 +386,12 @@
           slot="footer"
           class="dialog-footer"
         >
-          <p
+          <!-- <p
             v-show="!canApply"
             style="color: red;"
-          >图片上传中，不可申请</p>
+          >图片上传中，不可申请</p> -->
           <el-button
             type="primary"
-            :disabled="!canApply"
             @click="publishApply"
           >申请</el-button>
         </span>
@@ -732,6 +732,8 @@ export default {
 
     // 监听申请对话框关闭事件
     applyActivityDialogClosed() {
+      this.$refs.upload.clearFiles()
+      this.hasImage = false
       // this.$refs.addFormRef.resetFields()
       // this.addForm.startDate = this.addForm.endDate = ''
     },
@@ -758,6 +760,7 @@ export default {
 
     // 监听图片上传前事件
     beforeImageUpload(file) {
+      this.hasImage = true
       this.canApply = false
       const isValid = file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png'
 
