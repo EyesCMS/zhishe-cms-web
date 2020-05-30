@@ -58,28 +58,42 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { getInfo } from '@/api/user'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger
   },
+
   computed: {
     ...mapGetters([
       'sidebar',
       'avatar'
     ])
   },
+
   methods: {
+
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
+
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
+
     pushToHomePage() {
-      this.$store.dispatch('user/changeRoles', 'student')
+      // 获取用户信息
+      getInfo().then(response => {
+        if (response.data.roles[0] === 'admin') {
+          this.$router.push({ path: 'adminHome' })
+        } else {
+          this.$store.dispatch('user/changeRoles', 'student')
+        }
+        // console.log(response.data.roles[0])
+      })
       // this.$router.replace('/homeage/index')
       // this.switchRole(this.$route.query.cid)
     }
