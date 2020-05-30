@@ -516,7 +516,11 @@ export default {
           // console.log(this.forumForm)
           formData.append('title', this.forumForm.title)
           formData.append('content', this.forumForm.content)
+<<<<<<< HEAD
           if (typeof (this.forumForm.image) !== 'string') formData.append('image', this.forumForm.image)
+=======
+          formData.append('image', this.forumForm.image)
+>>>>>>> ad2cac0e15c912238cc674ca7283cbc4e4419cd7
           this.forumForm.title = ''
           this.forumForm.content = ''
           this.forumForm.image = ''
