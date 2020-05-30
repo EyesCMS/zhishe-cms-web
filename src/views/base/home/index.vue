@@ -9,13 +9,20 @@
         height="400px"
       >
         <el-carousel-item
-          v-for="item in carouselImgList"
-          :key="item"
+          v-for="item in recommendCarouselList"
+          :key="item.id"
         >
           <img
+            v-if="item.imgUrl !== ''"
             style="width: 100%; height: 100%;"
-            :src="item"
-            alt="item"
+            :src="item.imgUrl"
+            @click="EnterToForum(item.id)"
+          >
+          <img
+            v-else
+            src="../../../assets/images/404.jpg"
+            style="width: 100%; height: 100%;"
+            @click="EnterToForum(item.id)"
           >
         </el-carousel-item>
       </el-carousel>
@@ -52,6 +59,7 @@
 
 <script>
 import { recommended } from '@/api/club'
+import { getRecommendActivities } from '@/api/forum'
 import clubImg1 from '@/assets/images/club1.jpg'
 import clubImg2 from '@/assets/images/club2.jpeg'
 import clubImg3 from '@/assets/images/club3.jpeg'
@@ -68,6 +76,10 @@ export default {
       },
       // 走马灯图片列表
       carouselImgList: [clubImg1, clubImg2, clubImg3],
+      recommendNum: {
+        number: 3
+      },
+      recommendCarouselList: [],
       // 公告列表
       recommendedList: [],
       clubDetail: {}
@@ -76,12 +88,24 @@ export default {
   created() {
     this.getInfo()
     this.getRecommendedList()
+    this.getRecommendActivities()
   },
   methods: {
     // 获取推荐列表
     getRecommendedList() {
       recommended(this.queryInfo).then(response => {
         this.recommendedList = response.data.items
+      })
+    },
+
+    // 获取推荐活动走马灯图片
+    getRecommendActivities() {
+      getRecommendActivities(this.recommendNum).then(response => {
+        if (response.status === 200) {
+          this.recommendCarouselList = response.data
+        } else {
+          return this.$message.error('获取走马灯失败')
+        }
       })
     },
 
@@ -113,6 +137,9 @@ export default {
           avatarUrl: avatarUrl
         }
       })
+    },
+    EnterToForum(id) {
+      this.$router.push({ path: '/forum/activityDetail', query: { id: id }})
     }
   }
 }

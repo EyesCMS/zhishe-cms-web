@@ -101,3 +101,10 @@ export function deleteRemark(id) {
     method: 'delete'
   })
 }
+export function getRecommendActivities(data) {
+  return request({
+    url: `/clubs/activities/recommended`,
+    method: 'get',
+    params: data
+  })
+}
