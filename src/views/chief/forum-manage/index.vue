@@ -378,7 +378,9 @@ export default {
           // element['remarkVisiable'] = true
           this.getUserLike(element)
           // this.getRemarkList(element)
+          this.$forceUpdate()
         })
+        this.$forceUpdate()
       })
     },
 
@@ -431,8 +433,9 @@ export default {
       const data = { postId: element.id }
       getUserLike(data).then(response => {
         // console.log('@getUserLike response:')
-        // console.log(response)
+        // console.log(response.data.status)
         element['status'] = response.data.status
+        this.$forceUpdate()
       })
     },
 
