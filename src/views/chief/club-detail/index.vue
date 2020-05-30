@@ -62,6 +62,7 @@
                   <p>已上传图片</p>
                   <el-image
                     v-for="(item, index) in carouselImgList"
+                    v-show="item !== null && item !== ''"
                     :key="index"
                     :src="item"
                     style="width: 100px; height: 100px"
@@ -74,7 +75,7 @@
                       <i class="el-icon-picture-outline" />
                     </div>
                   </el-image>
-                  <!-- <img   width="100%"  alt="社团图片"> -->
+
                 </div>
               </el-tab-pane>
             </el-tabs>
