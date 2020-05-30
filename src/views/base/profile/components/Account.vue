@@ -1,6 +1,6 @@
 <template>
   <el-form>
-    <el-form-item label="姓名">
+    <el-form-item label="昵称">
       <el-input v-model.trim="form.nickname" />
     </el-form-item>
     <el-form-item label="专业">

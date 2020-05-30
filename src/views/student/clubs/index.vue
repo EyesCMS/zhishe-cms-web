@@ -247,7 +247,6 @@ export default {
       }
       getClubsListData(params).then(response => {
         if (response.status === 200) {
-          // console.log(response)
           this.clubsList = response.data.items
           this.total = response.data.totalCount
           this.listLoading = false
@@ -281,15 +280,15 @@ export default {
     },
     // 申请加入社团
     ApplyToJoin(id, name) {
-      this.$router.push({ path: '/joinClub', query: { id: id, name: name } })
+      this.$router.push({ path: '/joinClub', query: { id: id, name: name }})
     },
     EnterToJoinClub(id) {
       this.$store.dispatch('user/changeRoles', 'member')
-      this.$router.push({ path: '/clubstyle/index', query: { id: id } })
+      this.$router.push({ path: '/clubstyle/index', query: { id: id }})
     },
     EnterToManageClub(id) {
       this.$store.dispatch('user/changeRoles', 'chief')
-      this.$router.push({ path: '/clubstyle/index', query: { id: id } })
+      this.$router.push({ path: '/clubstyle/index', query: { id: id }})
     },
     findClubsListData() {
       this.queryInfo.page = 1

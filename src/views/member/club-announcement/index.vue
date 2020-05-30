@@ -104,10 +104,10 @@
         center
         modal
       >
-        <h2 style="text-align: center; margin-bottom: 50px;">{{ bulletin.title }}</h2>
-        <p>{{ bulletin.body }}</p>
-        <p>发布时间:{{ bulletin.createAt }}</p>
-        <p>上次修改:{{ bulletin.updateAt }}</p>
+        <h2 style="text-align: center; margin-bottom: 50px;font-size: 32px;">{{ bulletin.title }}</h2>
+        <p style="font-size: 28px; text-align: center;">{{ bulletin.body }}</p>
+        <p style="font-size: 16px; text-align: center;">发布时间:{{ bulletin.createAt }}</p>
+        <p style="font-size: 16px; text-align: center;">上次修改:{{ bulletin.updateAt }}</p>
         <span
           slot="footer"
           class="dialog-footer"
