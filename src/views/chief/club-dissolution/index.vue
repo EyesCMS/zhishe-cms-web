@@ -88,10 +88,6 @@
                 :disabled="true"
               />
             </el-form-item>
-            <!-- 附件 -->
-            <el-form-item label="附件">
-              <el-input v-model="dissolution.accessoryUrl" />
-            </el-form-item>
             <!-- 换届原因 -->
             <el-form-item label="原因">
               <el-input
@@ -153,10 +149,6 @@ export default {
       rules: {
         clubName: [
           { required: true, message: '社团名字不为空', trigger: 'blur' }
-        ],
-        applicant: [
-          { required: true, message: '请输入申请人', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ]
       }
     }
@@ -168,7 +160,7 @@ export default {
       // console.log(response)
       this.dissolutionApply = response.data.items
       if (response.data.totalCount === 0 || response.data.items[0].state !== 0) {
-        console.log(response.data.items[0])
+        // console.log(response.data.items[0])
         this.dissolutionVisiable = true
       } else this.dissolutionVisiable = false
     })

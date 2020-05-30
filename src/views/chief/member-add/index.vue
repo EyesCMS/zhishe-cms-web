@@ -91,7 +91,7 @@
             label="#"
           />
           <el-table-column
-            label="昵称"
+            label="用户名"
             prop="applicant"
             width="150px"
           />

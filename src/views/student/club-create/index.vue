@@ -64,7 +64,7 @@ export default {
       formShow: true,
       successShow: false,
       active: 0,
-      username: this.$store.getters.nickname,
+      username: this.$store.getters.name,
       form: {
         clubName: '',
         type: '',
