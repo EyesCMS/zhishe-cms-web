@@ -110,7 +110,7 @@
           <el-badge
             v-show="!forumsList[key].remarkVisiable"
             style="display: inline;float:right;cursor:pointer"
-            :value="item.remark.totalCount"
+            :value="forumsList[key].commentCount"
             class="item"
           >
             <el-tooltip
@@ -119,7 +119,7 @@
               content="查看评论"
               placement="top"
             >
-              <p @click="getRemarkList(item)">
+              <p @click="getRemarkList(item);item.remarkVisiable = true">
                 <i
                   style="display: inline; float:right;cursor:pointer"
                   class="el-icon-s-comment"
@@ -148,6 +148,12 @@
           </el-tooltip>
           <!-- 评论列表 -->
           <div v-show="forumsList[key].remarkVisiable">
+            <el-row style="align-items: center;display: flex;">
+              <p
+                v-show="!forumsList[key].remark.totalCount"
+                style="margin:0 auto"
+              >暂无评论</p>
+            </el-row>
             <div
               v-for="(index, I) in forumsList[key].remark.items"
               :key="I"
@@ -198,7 +204,7 @@
               </el-row>
             </div>
             <!-- 评论分页 -->
-            <el-col>
+            <el-col v-show="forumsList[key].remark.totalCount">
               <div style="text-align:center;">
                 <el-pagination
                   :ref="item.content"
@@ -471,8 +477,8 @@ export default {
             items: null,
             totalCount: 0
           }
-          element['remarkVisiable'] = true
-          this.getRemarkList(element)
+          // element['remarkVisiable'] = true
+          // this.getRemarkList(element)
         })
       })
     },
@@ -481,7 +487,7 @@ export default {
     getRemarkList(element) {
       // console.log('@getRemarkList element')
       // console.log(element.remark.items)
-      element.remarkVisiable = true
+      // element.remarkVisiable = true
       this.$forceUpdate()
       getRemarksList(element.id, element.query).then(response => {
         // console.log('@forum index getRemarkList response')
