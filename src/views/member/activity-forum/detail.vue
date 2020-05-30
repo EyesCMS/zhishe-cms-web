@@ -97,13 +97,15 @@
           v-for="(item, index) in remarksList"
           :key="index"
         >
-          <el-row>
-            <el-avatar
-              style="float: left;"
-              :src="item.avatarUrl"
-            />
-            <p style="float: left; margin-left: 5px;">{{ item.nickname }}</p>
-          </el-row>
+          <div @click="viewUserDetail(item.userId)">
+            <el-row>
+              <el-avatar
+                style="float: left;"
+                :src="item.avatarUrl"
+              />
+              <p style="float: left; margin-left: 5px;">{{ item.nickname }}</p>
+            </el-row>
+          </div>
           <el-row>
             <el-col :span="22">
               <p>{{ item.content }}</p>
@@ -182,6 +184,7 @@ export default {
     return {
       content: '',
       id: this.$route.query.id,
+      clubId: sessionStorage.getItem('clubId'),
       userId: this.$store.getters.userId,
       queryInfo: {
         page: 1,
@@ -206,6 +209,7 @@ export default {
       clubAvator: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       comment: '',
       showComment: false,
+      memberInfo: {},
       deletRemark: { content: '', id: '' },
       deletRemarkVisible: false
     }
@@ -308,6 +312,9 @@ export default {
         this.$message.success('删除成功')
         this.getRemarksListData()
       })
+    },
+    viewUserDetail(userId) {
+      this.$router.push({ path: '/clubmember/detail', query: { userId: userId }})
     }
   }
 }
