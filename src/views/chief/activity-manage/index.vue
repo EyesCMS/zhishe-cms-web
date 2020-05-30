@@ -647,8 +647,8 @@ export default {
 
       reviseActivityState(input).then(response => {
         this.$message.success('发布成功')
+        this.getActivitiesListData()
       })
-      this.getActivitiesListData()
     },
 
     // 撤销活动点击事件
