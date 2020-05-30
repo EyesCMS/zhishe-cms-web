@@ -2,6 +2,7 @@
   <div>
     <el-card>
       <el-row>
+        <!-- 解散社团列表 -->
         <el-table
           :data="dissolutionApply"
           stripe
@@ -50,6 +51,7 @@
         </el-table>
       </el-row>
     </el-card>
+    <!-- 解散社团表格 -->
     <div
       v-show="dissolutionVisiable"
       class="dissolution"
@@ -85,10 +87,6 @@
                 :readonly="readonly"
                 :disabled="true"
               />
-            </el-form-item>
-            <!-- 附件 -->
-            <el-form-item label="附件">
-              <el-input v-model="dissolution.accessoryUrl" />
             </el-form-item>
             <!-- 换届原因 -->
             <el-form-item label="原因">
@@ -151,37 +149,36 @@ export default {
       rules: {
         clubName: [
           { required: true, message: '社团名字不为空', trigger: 'blur' }
-        ],
-        applicant: [
-          { required: true, message: '请输入申请人', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ]
       }
     }
   },
   created() {
+    // 获取解散社团列表
     getDissolutionApply(this.dissolution.clubId).then(response => {
-      console.log('@getDissolutionApply response')
-      console.log(response)
+      // console.log('@getDissolutionApply response')
+      // console.log(response)
       this.dissolutionApply = response.data.items
       if (response.data.totalCount === 0 || response.data.items[0].state !== 0) {
-        console.log(response.data.items[0])
+        // console.log(response.data.items[0])
         this.dissolutionVisiable = true
       } else this.dissolutionVisiable = false
     })
+
+    // 获取社团详情
     getClubDetail(window.sessionStorage.getItem('clubId')).then(response => {
-      console.log('@club-dissolution getClubDetial reaponse:')
-      console.log(response)
+      // console.log('@club-dissolution getClubDetial reaponse:')
+      // console.log(response)
       if (response.data) {
         this.dissolution.clubName = response.data.name
         this.dissolution.applicant = response.data.chiefName
-        // console.log('detile=' + this.clubInfo)
       } else {
         return this.$message.error('获取社团信息失败')
       }
     })
   },
   methods: {
+    // 提交换届申请表单
     submitForm() {
       this.$refs.Form.validate(async valid => {
         if (valid) {
@@ -192,8 +189,8 @@ export default {
             reason: this.dissolution.reason
           }
           dissolution(data).then(response => {
-            console.log('@ clubDissolution submitForm')
-            console.log(response)
+            // console.log('@ clubDissolution submitForm')
+            // console.log(response)
             if (response.status === 201) {
               this.$message.success('申请已提交')
               this.getDissolutionApply()
@@ -205,10 +202,12 @@ export default {
         } else this.$message.error('error submit!!')
       })
     },
+
+    // 获取解散社团的历史申请记录
     getDissolutionApply() {
       getDissolutionApply(this.dissolution.clubId).then(response => {
-        console.log('@getDissolutionApply response')
-        console.log(response)
+        // console.log('@getDissolutionApply response')
+        // console.log(response)
         this.dissolutionApply = response.data.items
       })
     }

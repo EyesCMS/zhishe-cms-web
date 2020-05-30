@@ -71,8 +71,10 @@ service.interceptors.response.use(
     }
   },
   error => {
-    if (error.response.status === 401) {
-      // to re-login
+    if (error.response.status === 400) {
+      Message.error(error.response.data.message)
+    } else if (error.response.status === 401) {
+      /* 原来的处理
       MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
         confirmButtonText: '重新登录',
         cancelButtonText: '取消',
@@ -82,16 +84,44 @@ service.interceptors.response.use(
           console.log('push to login')
           location.reload()// 为了重新实例化 vue-router 对象 避免 bug
         })
+        })
+      */
+      // to re-login
+      /*
+      MessageBox.alert('你已被登出请重新登录', '确定登出', {
+        confirmButtonText: '确定',
+        callback: action => {
+          store.dispatch('user/resetToken').then(() => {
+            console.log('push to login')
+            location.reload()// 为了重新实例化 vue-router 对象 避免 bug
+          })
+        }
+      })*/
+      MessageBox.alert('你已被登出，请重新登录', '确定登出', {
+        confirmButtonText: '确认'
+      }).then(() => {
+        store.dispatch('user/resetToken').then(() => {
+          console.log('push to login')
+          location.reload()// 为了重新实例化 vue-router 对象 避免 bug
+        })
+      })
+        .catch(action => {
+          store.dispatch('user/resetToken').then(() => {
+            console.log('push to login')
+            location.reload()// 为了重新实例化 vue-router 对象 避免 bug
+          })
+        })
+    } else if (error.response.status === 500) {
+      Message.error('serve error')
+    } else {
+      Message({
+        message: error.response.data.message,
+        type: 'error',
+        duration: 3 * 1000
       })
     }
-
     console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 3 * 1000
-    })
-    return Promise.reject(error)
+    // return Promise.reject(error)
   }
 )
 

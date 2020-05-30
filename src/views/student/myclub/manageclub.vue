@@ -1,15 +1,22 @@
 <template>
-  <div style="margin-top: 15px;text-align:center;">
-
+  <div style="margin-top: 15px; text-align: center;">
     <!-- 社团列表 -->
     <el-table v-loading="listLoading" :data="ManageclubsList" stripe border>
       <el-table-column label="社团ID" prop="id" />
       <el-table-column label="社团头像" prop="avatarUrl">
         <template slot-scope="scope" width="40">
           <el-image
+            v-if="scope.row.avatarUrl !== null"
             :src="scope.row.avatarUrl"
-            style="width: 50px; height: 50px"
+            lazy
+            style="width: 50px; height: 50px;"
           />
+          <img
+            v-else
+            src="../../../assets/images/default.jpg"
+            lazy
+            style="width: 50px; height: 50px;"
+          >
         </template>
       </el-table-column>
       <el-table-column label="社团名称" prop="name" />
@@ -34,17 +41,8 @@
   </div>
 </template>
 
-<style>
-.el-input {
-  width: 600px;
-}
-.input-with-select .el-input-group__prepend {
-  background-color: #fff;
-}
-</style>
 <script>
-import { getManageclubsList } from '@/api/club'
-import { switchRole } from '@/api/club'
+import { getManageclubsListData } from '@/api/club'
 export default {
   name: 'ManageClubs',
   data() {
@@ -61,12 +59,12 @@ export default {
     }
   },
   created() {
-    this.getManageclubsList()
+    this.getManageclubsListData()
   },
   methods: {
-    getManageclubsList() {
+    getManageclubsListData() {
       this.listLoading = true
-      getManageclubsList(this.userid, this.queryInfo).then(response => {
+      getManageclubsListData(this.userid, this.queryInfo).then(response => {
         if (response.status === 200) {
           this.ManageclubsList = response.data.items
           this.total = response.data.totalCount
@@ -75,37 +73,38 @@ export default {
           this.listLoading = false
           return this.$message.error('获取社团列表失败')
         }
-        // console.log(this.ManageclubsList)
       })
     },
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getManageclubsList()
+      this.getManageclubsListData()
     },
     // 监听页码值改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getManageclubsList()
+      this.getManageclubsListData()
     },
     // 跳转到社团风采页面
     EnterToClub(id) {
       this.$store.dispatch('user/changeRoles', 'chief')
-      this.$router.push({ path: '/clubstyle/index', query: { id: id }})
-    },
-    switchRole() {
-      const input = {
-        clubId: this.id,
-        type: 0
-      }
-      switchRole(input).then(response => {
-        if (response.status === 204) {
-          return this.$message.success('切换角色成功')
-        } else {
-          return this.$message.error('切换角色失败')
-        }
-      })
+      this.$router.push({ path: '/clubstyle/index', query: { id: id, check: 1 }})
     }
   }
 }
 </script>
+
+<style scoped>
+.el-input {
+  width: 600px;
+}
+
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+
+.el-pagination {
+  margin: 30px 15px;
+  text-align: center;
+}
+</style>

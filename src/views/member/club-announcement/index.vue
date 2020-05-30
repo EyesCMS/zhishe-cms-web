@@ -3,33 +3,49 @@
     <!-- 卡片视图 -->
     <el-card>
       <el-card>
+        <!-- 组合搜索 -->
         <div>
           <i class="el-icon-search" />
           <span>筛选搜索</span>
           <el-button
-            style="float: right"
+            style="float: right;"
             type="primary"
             size="small"
-            @click="handleSearchList"
+            @click="searchBulletins"
           >
             查询
           </el-button>
           <el-button
-            style="float: right;margin-right: 15px"
+            style="float: right; margin-right: 15px;"
             size="small"
-            @click="reset"
+            @click="cleanSearchFiled"
           >
             重置
           </el-button>
         </div>
-        <div style="margin-top: 15px">
-          <el-form :inline="true" :model="queryInfo" size="small" label-width="140px">
-            <div style="text-align:center">
+        <div style="margin-top: 15px;">
+          <el-form
+            :inline="true"
+            :model="queryInfo"
+            size="small"
+            label-width="140px"
+          >
+            <div style="text-align: center;">
               <el-form-item label="公告标题">
-                <el-input v-model="queryInfo.title" style="width: 203px" placeholder="请输入公告标题" />
+                <el-input
+                  v-model="queryInfo.title"
+                  style="width: 203px;"
+                  placeholder="请输入公告标题"
+                  @keyup.enter.native="searchBulletins"
+                />
               </el-form-item>
               <el-form-item label="公告内容">
-                <el-input v-model="queryInfo.body" style="width: 203px" placeholder="请输入公告内容" />
+                <el-input
+                  v-model="queryInfo.body"
+                  style="width: 203px;"
+                  placeholder="请输入公告内容"
+                  @keyup.enter.native="searchBulletins"
+                />
               </el-form-item>
             </div>
           </el-form>
@@ -37,32 +53,45 @@
       </el-card>
       <el-card>
         <p>共搜索到{{ total }}条相关公告</p>
-        <el-card v-for="(item, index) in bulletinsList" :key="index" style="margin: 50px auto;width: 800px">
+        <!-- 无公告 -->
+        <div
+          v-show="total === 0"
+          align="center"
+          style="margin-top: 100px;"
+        >
+          <img
+            src="../../../assets/images/noContent.png"
+            alt="item"
+            style="width: 200px; height: 180px;"
+          >
+          <h2 style="color: silver;">暂无公告</h2>
+        </div>
+        <!-- 公告列表 -->
+        <el-card
+          v-for="(item, index) in bulletinsList"
+          :key="index"
+          style="margin: 50px auto; width: 800px;"
+        >
           <h2 class="title">{{ item.title }}</h2>
           <p>{{ item.body }}</p>
           <!-- <p class="createAt">{{ item.createAt }}  </p> -->
-          <p class="createAt">{{ item.updateAt }}  </p>
-          <div class="ww">
-            <el-link @click="openBulletinDetailDiaglog(item.id)"><i class="el-icon-view el-icon--right" />详情</el-link>
+          <p class="createAt">{{ item.updateAt }} </p>
+          <div class="openDetailLink">
+            <el-link @click="openBulletinDetailDiaglog(item.id)">
+              <i class="el-icon-view el-icon--right" />详情
+            </el-link>
           </div>
         </el-card>
 
-        <!-- <div >
-        <h2>{{ item.title }}</h2>
-        <p>{{ item.create_at }}  </p>
-        <p>{{ item.content }}</p>
-        <el-link type="primary" @click="openBulletinDetailDiaglog(item.id)">详情</el-link>
-        <el-divider><i class="el-icon-message-solid" /></el-divider>
-      </div> -->
-
         <!-- 分页 -->
         <el-pagination
+          v-show="total != 0"
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 15, 20]"
           :page-size="queryInfo.limit"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
-          style="margin: 25px 15px;text-align:center"
+          style="margin: 25px 15px; text-align: center;"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         />
@@ -75,12 +104,20 @@
         center
         modal
       >
-        <h2 style="text-align:center;margin-bottom:50px">{{ bulletin.title }}</h2>
-        <p>{{ bulletin.body }}</p>
-        <p>发布时间:{{ bulletin.createAt }}</p>
-        <p>上次修改:{{ bulletin.updateAt }}</p>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="bulletinDetailDialogVisible = false">确 定</el-button>
+        <h2 style="text-align: center; margin-bottom: 50px;font-size: 32px;">{{ bulletin.title }}</h2>
+        <p style="font-size: 28px; text-align: center;">{{ bulletin.body }}</p>
+        <p style="font-size: 16px; text-align: center;">发布时间:{{ bulletin.createAt }}</p>
+        <p style="font-size: 16px; text-align: center;">上次修改:{{ bulletin.updateAt }}</p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button
+            type="primary"
+            @click="bulletinDetailDialogVisible = false"
+          >
+            确 定
+          </el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -110,45 +147,44 @@ export default {
     }
   },
   created() {
-    this.getBulletinsList()
+    this.getBulletinsListData()
   },
   methods: {
-    getBulletinsList() {
+    getBulletinsListData() {
       listBulletins(this.clubId, this.queryInfo).then(response => {
         this.bulletinsList = response.data.items
         this.total = response.data.totalCount
       })
     },
+
     // 监听页值变化
     handleSizeChange(newSize) {
       this.queryInfo.limit = newSize
-      this.getBulletinsList()
+      this.getBulletinsListData()
     },
+
     // 监听页码变化
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getBulletinsList()
+      this.getBulletinsListData()
     },
+
     // 弹出公告详情对话框
     openBulletinDetailDiaglog(id) {
       // 发起查询公告详情请求
       getBulletinDetail(this.clubId, id).then(response => {
-        console.log(response)
+        // console.log(response)
         this.bulletin = response.data
       })
       this.bulletinDetailDialogVisible = true
     },
 
-    // 根据公告标题关键字搜索公告
-    queryAnnouncementList() {
-      this.getBulletinsList()
-      this.queryInfo.keyword = ''
-    },
-    handleSearchList() {
+    searchBulletins() {
       this.queryInfo.page = 1
-      this.getBulletinsList()
+      this.getBulletinsListData()
     },
-    reset() {
+
+    cleanSearchFiled() {
       this.queryInfo.title = this.queryInfo.body = ''
     }
   }
@@ -157,9 +193,9 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  font-family: "PingFang SC";
+  font-family: 'PingFang SC', sans-serif;
   text-align: center;
-  font-size: 12px Extra Small
+  font-size: 12px;
 }
 .createAt {
   font-size: 14px;
@@ -168,9 +204,9 @@ export default {
 .el-card {
   margin-top: 15px;
 }
-.ww {
-   text-align: center;
-   margin: 0 auto;
+.openDetailLink {
+  text-align: center;
+  margin: 0 auto;
 }
 .el-pagination {
   position: relative;

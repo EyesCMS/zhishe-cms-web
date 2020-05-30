@@ -32,19 +32,19 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   // homepage
-  {
-    path: '',
-    redirect: '/home',
-    component: Layout,
-    children: [
-      {
-        path: 'home',
-        name: 'home',
-        component: () => import('@/views/base/home/index'),
-        meta: { title: '首页', icon: 'home' }
-      }
-    ]
-  },
+  // {
+  //   path: '',
+  //   redirect: '/home',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'home',
+  //       name: 'home',
+  //       component: () => import('@/views/base/home/index'),
+  //       meta: { title: '首页', icon: 'home' }
+  //     }
+  //   ]
+  // },
   // 个人中心
   {
     path: '/profile',
@@ -110,6 +110,34 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  {
+    path: '',
+    redirect: '/home',
+    component: Layout,
+    children: [
+      {
+        path: 'home',
+        name: 'home',
+        component: () => import('@/views/base/home/index'),
+        meta: {
+          title: '首页',
+          icon: 'home',
+          roles: ['student', 'chief', 'member']
+        }
+      },
+      {
+        path: 'home',
+        name: 'home',
+        component: () => import('@/views/administrator/index'),
+        meta: {
+          title: '首页',
+          icon: 'home',
+          breadcrumb: false,
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
   // clbus
   {
     path: '/student',
@@ -127,7 +155,7 @@ export const asyncRoutes = [
       {
         path: '/clubDetail',
         name: 'ClubDetail',
-        component: () => import('@/views/student/club-detail/index'),
+        component: () => import('@/views/student/clubs/club-detail'),
         meta: { title: '社团详情', noCache: true, roles: ['student'] },
         hidden: true
       },
@@ -202,7 +230,7 @@ export const asyncRoutes = [
         path: 'activity',
         name: 'activity',
         component: () => import('@/views/student/forum/index'),
-        meta: { title: '活动帖', icon: 'message' }
+        meta: { title: '活动帖', noCache: true }
       },
       {
         path: 'activityDetail',
@@ -215,7 +243,7 @@ export const asyncRoutes = [
         path: 'personalPost',
         name: 'personalPost',
         component: () => import('@/views/chief/forum-manage/index'),
-        meta: { title: '个人帖', icon: 'people', roles: ['chief', 'student'] }
+        meta: { title: '个人帖', noCache: true, roles: ['chief', 'student'] }
       },
       {
         path: 'postManage',
@@ -242,6 +270,19 @@ export const asyncRoutes = [
           icon: 'fengcai',
           roles: ['member', 'chief']
         }
+      }
+    ]
+  },
+  // 社团简介管理
+  {
+    path: '/Detailmanage',
+    component: Layout,
+    children: [
+      {
+        path: 'Detail',
+        name: 'Detailmanage',
+        component: () => import('@/views/chief/club-detail/index'),
+        meta: { title: '社团信息', icon: 'edit', roles: ['chief'] }
       }
     ]
   },
@@ -343,7 +384,7 @@ export const asyncRoutes = [
         path: 'list',
         name: 'activityList',
         component: () => import('@/views/chief/activity-manage/index.vue'),
-        meta: { title: '社团活动管理', icon: 'people', roles: ['chief'] }
+        meta: { title: '社团活动管理', icon: 'list', roles: ['chief'] }
       }
     ]
   },
@@ -367,20 +408,6 @@ export const asyncRoutes = [
   //     }
   //   ]
   // },
-  // 社团简介管理
-  {
-    path: '/Detailmanage',
-    component: Layout,
-    name: 'Detail',
-    children: [
-      {
-        path: 'Detail',
-        name: 'Detailmanage',
-        component: () => import('@/views/chief/club-detail/index'),
-        meta: { title: '社团信息', icon: 'message', roles: ['chief'] }
-      }
-    ]
-  },
   // 社团公告管理
   {
     path: '/Announcement',
@@ -403,31 +430,16 @@ export const asyncRoutes = [
       }
     ]
   },
-  // 社团解散管理
-  {
-    path: '/dissolution',
-    component: Layout,
-    name: 'Dissolution',
-    children: [
-      {
-        path: 'dissolution',
-        name: 'dissolution',
-        component: () => import('@/views/chief/club-dissolution/index'),
-        meta: { title: '解散社团', icon: 'message', roles: ['chief'] }
-      }
-    ]
-  },
   // 社团换届管理
   {
     path: '/chiefChange',
     component: Layout,
-    name: 'chiefChange',
     children: [
       {
         path: 'Change',
         name: 'chiefchange',
         component: () => import('@/views/chief/chief-change/index'),
-        meta: { title: '换届管理', icon: 'message', roles: ['chief'] }
+        meta: { title: '换届管理', icon: 'peoples', roles: ['chief'] }
       }
     ]
   },
@@ -435,7 +447,6 @@ export const asyncRoutes = [
   {
     path: '/chief',
     component: Layout,
-    name: 'chiefChange',
     children: [
       {
         path: 'list',
@@ -445,7 +456,39 @@ export const asyncRoutes = [
       }
     ]
   },
+  // 社团解散管理
+  {
+    path: '/dissolution',
+    component: Layout,
+    children: [
+      {
+        path: 'dissolution',
+        name: 'dissolution',
+        component: () => import('@/views/chief/club-dissolution/index'),
+        meta: { title: '解散社团', icon: 'message', roles: ['chief'] }
+      }
+    ]
+  },
   // 管理员菜单
+  {
+    path: '',
+    redirect: '/home',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'adminHome',
+        name: 'adminHome',
+        component: () => import('@/views/administrator/index'),
+        meta: {
+          // title: '首页',
+          // icon: 'home',
+          breadcrumb: false,
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
   {
     path: '/administrator/check',
     component: Layout,

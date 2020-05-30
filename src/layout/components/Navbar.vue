@@ -1,14 +1,27 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
     <breadcrumb class="breadcrumb-container" />
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
+      <el-dropdown
+        class="avatar-container"
+        trigger="click"
+      >
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img
+            :src="avatar+'?imageView2/1/w/80/h/80'"
+            class="user-avatar"
+          >
           <i class="el-icon-caret-bottom" />
         </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
+        <el-dropdown-menu
+          slot="dropdown"
+          class="user-dropdown"
+        >
           <router-link to="/home">
             <el-dropdown-item @click.native="pushToHomePage">
               首页
@@ -17,13 +30,22 @@
           <router-link to="/profile/index">
             <el-dropdown-item>个人中心</el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/EyesCMS/zhishe-cms-web">
+          <a
+            target="_blank"
+            href="https://github.com/EyesCMS/zhishe-cms-web"
+          >
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
-          <a target="_blank" href="https://github.com/EyesCMS/zhishe-cms-doc">
+          <a
+            target="_blank"
+            href="https://github.com/EyesCMS/zhishe-cms-doc"
+          >
             <el-dropdown-item>文档</el-dropdown-item>
           </a>
-          <el-dropdown-item divided @click.native="logout">
+          <el-dropdown-item
+            divided
+            @click.native="logout"
+          >
             <span style="display:block;">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -36,30 +58,43 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-// import { switchRole } from '@/api/club'
+import { getInfo } from '@/api/user'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger
   },
+
   computed: {
     ...mapGetters([
       'sidebar',
       'avatar'
     ])
   },
+
   methods: {
+
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
+
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
+
     pushToHomePage() {
-      this.$store.dispatch('user/changeRoles', 'student')
-      this.$router.replace('/home-page/index')
+      // 获取用户信息
+      getInfo().then(response => {
+        if (response.data.roles[0] === 'admin') {
+          this.$router.push({ path: 'adminHome' })
+        } else {
+          this.$store.dispatch('user/changeRoles', 'student')
+        }
+        // console.log(response.data.roles[0])
+      })
+      // this.$router.replace('/homeage/index')
       // this.switchRole(this.$route.query.cid)
     }
     // switchRole() {
@@ -85,18 +120,18 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
     line-height: 46px;
     height: 100%;
     float: left;
     cursor: pointer;
-    transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, 0.025);
     }
   }
 
@@ -123,10 +158,10 @@ export default {
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        transition: background 0.3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, 0.025);
         }
       }
     }

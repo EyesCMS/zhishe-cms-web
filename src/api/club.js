@@ -110,7 +110,7 @@ export function pushToCreateApply(data) {
     data
   })
 }
-export function getCreateApplyList(params) {
+export function getCreateApplyListData(params) {
   return request({
     url: `/clubs/creations`,
     method: 'get',
@@ -125,7 +125,7 @@ export function pushToDismissApply(data) {
     data
   })
 }
-export function getDismissApplyList(params) {
+export function getDismissApplyListData(params) {
   return request({
     url: '/clubs/dissolution',
     method: 'get',
@@ -140,7 +140,7 @@ export function pushToChangeApply(data) {
     data
   })
 }
-export function getChangeApplyList(params) {
+export function getChangeApplyListData(params) {
   return request({
     url: `/clubs/leader/changes`,
     method: 'get',
@@ -148,7 +148,7 @@ export function getChangeApplyList(params) {
   })
 }
 // 社团认证申请
-export function getMyIdentifyApplyList(clubid, query) {
+export function getMyIdentifyApplyListData(clubid, query) {
   return request({
     url: `/clubs/${clubid}/certifications`,
     method: 'get',
@@ -162,7 +162,7 @@ export function pushToIdentifyApply(data) {
     data
   })
 }
-export function getIdentifyApplyList(params) {
+export function getIdentifyApplyListData(params) {
   return request({
     url: `/clubs/certifications`,
     method: 'get',
@@ -177,7 +177,7 @@ export function pushToActivityApply(data) {
     data
   })
 }
-export function getActivityApplyList(params) {
+export function getActivityApplyListData(params) {
   return request({
     url: `/clubs/activities`,
     method: 'get',
@@ -208,7 +208,7 @@ export function quitClub(data) {
   })
 }
 
-export function getJoinApplicationsList(query) {
+export function getJoinApplicationsListData(query) {
   return request({
     url: `/clubs/users/joins`,
     method: 'get',
@@ -216,7 +216,7 @@ export function getJoinApplicationsList(query) {
   })
 }
 
-export function getCreateApplicationsList(query) {
+export function getCreateApplicationsListData(query) {
   return request({
     url: `/clubs/users/creations`,
     method: 'get',
@@ -241,7 +241,7 @@ export function postIdentifyApply(data) {
 }
 
 // 获取退社通知
-export function getQuitList(clubid, query) {
+export function getQuitListData(clubid, query) {
   return request({
     url: `/clubs/${clubid}/quit`,
     method: 'get',
@@ -249,7 +249,7 @@ export function getQuitList(clubid, query) {
   })
 }
 
-export function getClubsList(params) {
+export function getClubsListData(params) {
   return request({
     url: `/clubs`,
     method: 'get',
@@ -275,7 +275,7 @@ export function joinAudit(data) {
   })
 }
 // 获取学生加入的社团列表
-export function getJoinclubsList(userid, query) {
+export function getJoinclubsListData(userid, query) {
   return request({
     url: `/clubs/users/${userid}/clubs?status=member`,
     method: 'get',
@@ -284,7 +284,7 @@ export function getJoinclubsList(userid, query) {
 }
 
 // 获取学生作为社长管理的社团列表
-export function getManageclubsList(userid, query) {
+export function getManageclubsListData(userid, query) {
   return request({
     url: `/clubs/users/${userid}/clubs?status=chief`,
     method: 'get',
@@ -345,3 +345,76 @@ export function uploadLocalAvatar(clubId, data) {
     data
   })
 }
+
+export function uploadLocalImages(clubId, data) {
+  return request({
+    url: `/clubs/${clubId}/pictures`,
+    method: 'post',
+    data
+  })
+}
+
+// GET /clubs/:clubId/pictures
+export function listClubImgs(clubId) {
+  return request({
+    url: `/clubs/${clubId}/pictures`,
+    method: 'get'
+  })
+}
+
+// 签到获取积分
+export function signIn(clubId) {
+  return request({
+    url: `/credit/${clubId}/checkin`,
+    method: 'post'
+  })
+}
+// 获取签到信息
+export function getSignInInfo(clubId) {
+  return request({
+    url: `/credit/${clubId}/ischeckin`,
+    method: 'get'
+  })
+}
+
+// 获取用户积分信息
+export function getUserScore(clubId) {
+  return request({
+    url: `/credit/${clubId}/userhonor`,
+    method: 'get'
+  })
+}
+
+// 获取社团积分信息
+export function getClubScore(clubId) {
+  return request({
+    url: `/credit/${clubId}/clubhonor`,
+    method: 'get'
+  })
+}
+
+// 获取用户积分规则
+export function getUserScoreDetail() {
+  return request({
+    url: `/credit/userhonor`,
+    method: 'get'
+  })
+}
+
+// 获取社团积分规则
+export function getClubScoreDetail() {
+  return request({
+    url: `/credit/clubhonor`,
+    method: 'get'
+  })
+}
+
+// POST /clubs/:clubId/pictures
+export function postCarousel(clubId, data) {
+  return request({
+    url: `/clubs/${clubId}/pictureUrls`,
+    method: 'post',
+    data
+  })
+}
+

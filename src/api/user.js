@@ -25,7 +25,6 @@ export function question(data) {
 }
 
 export function answer(data) {
-  console.log(data)
   return request({
     url: '/users/answer',
     method: 'post',
@@ -77,5 +76,13 @@ export function updatePassword(data) {
     url: '/auth/password',
     method: 'post',
     data
+  })
+}
+// GET /auth/authCode
+export function getAuthCode(data) {
+  return request({
+    url: '/auth/authCode',
+    method: 'get',
+    params: data
   })
 }

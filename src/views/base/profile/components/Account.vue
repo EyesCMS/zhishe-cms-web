@@ -1,6 +1,6 @@
 <template>
   <el-form>
-    <el-form-item label="姓名">
+    <el-form-item label="昵称">
       <el-input v-model.trim="form.nickname" />
     </el-form-item>
     <el-form-item label="专业">
@@ -18,12 +18,9 @@
     <el-form-item label="联系方式">
       <el-input v-model.trim="form.phone" />
     </el-form-item>
-    <div style="text-align:center">
+    <div style="text-align: center;">
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="submitProfile"
-        >修改</el-button>
+        <el-button type="primary" @click="submitProfile">修改</el-button>
       </el-form-item>
     </div>
   </el-form>
@@ -46,20 +43,19 @@ export default {
     }
   },
   created() {
-    this.getInfo()
+    this.getInfoData()
   },
   methods: {
     submitProfile() {
       submitProfile(this.form).then(response => {
         if (response.status === 204) {
           this.$message.success('修改成功')
-          this.getInfo()
+          this.getInfoData()
         }
       })
     },
-    getInfo() {
+    getInfoData() {
       getInfo().then(response => {
-        // console.log(response)
         this.form.nickname = response.data.nickname
         this.form.email = response.data.email
         this.form.address = response.data.address

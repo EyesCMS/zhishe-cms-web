@@ -32,10 +32,11 @@
               <el-input
                 v-model="form1.username"
                 placeholder="请输入用户名"
+                @keyup.enter.native="handleClick(2)"
               />
             </el-form-item>
-            <el-form-item>
-              <el-button @click="handleClick(2)">下一步</el-button>
+            <el-form-item style="text-align: center;">
+              <el-button type="primary" @click="handleClick(2)">下一步</el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -46,20 +47,21 @@
             :rules="form2Rules"
           >
             <el-form-item label="保密问题">
-              <el-input v-model="form2.login_question" />
+              <el-input v-model="form2.loginQuestion" />
             </el-form-item>
             <el-form-item
               label="保密回答"
-              prop="login_aswer"
+              prop="loginAswer"
             >
               <el-input
-                v-model="form2.login_aswer"
+                v-model="form2.loginAswer"
                 placeholder="请输入回答"
+                @keyup.enter.native="handleClick(3)"
               />
             </el-form-item>
-            <el-form-item>
-              <el-button @click="handleClick(3)">下一步</el-button>
+            <el-form-item style="text-align: center;">
               <el-button @click="back(1)">上一步</el-button>
+              <el-button type="primary" @click="handleClick(3)">下一步</el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -79,9 +81,19 @@
                 type="password"
               />
             </el-form-item>
-            <el-form-item>
-              <el-button @click="handleClick()">提交</el-button>
+            <el-form-item
+              label="确认新密码"
+              prop="checkpassword"
+            >
+              <el-input
+                v-model="form3.checkpassword"
+                placeholder="请输入新密码"
+                type="password"
+              />
+            </el-form-item>
+            <el-form-item style="text-align: center;">
               <el-button @click="back(2)">上一步</el-button>
+              <el-button type="primary" @click="handleClick()">提交</el-button>
 
             </el-form-item>
           </el-form>
@@ -103,11 +115,12 @@ export default {
         username: ''
       },
       form2: {
-        login_question: '',
-        login_aswer: ''
+        loginQuestion: '',
+        loginAswer: ''
       },
       form3: {
-        newpassword: ''
+        newpassword: '',
+        checkpassword: ''
       },
       activeName: '1',
       name: 0,
@@ -115,29 +128,27 @@ export default {
         username: [{ required: true, trigger: 'blur', message: '请输入用户名' }]
       },
       form2Rules: {
-        login_aswer: [{ required: true, trigger: 'blur', message: '请输入回答' }]
+        loginAswer: [{ required: true, trigger: 'blur', message: '请输入回答' }]
       },
       form3Rules: {
-        newpassword: [{ required: true, trigger: 'blur', message: '请输入密码' }]
+        newpassword: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+        checkpassword: [{ required: true, trigger: 'blur', message: '请输入密码' }]
       }
     }
   },
   methods: {
+    // 提交表单控制器
     async handleClick(i) {
       if (i === 2) {
         this.$refs.form1.validate(valid => {
           if (valid) {
-            console.log(this.form1)
             const data = { username: this.form1.username }
             question(data).then(response => {
-              console.log('@forget getQuestion response:')
-              console.log(response)
-              this.form2.login_question = response.data.loginProblem
+              this.form2.loginQuestion = response.data.loginProblem
               this.activeName = i.toString()
               this.name = i - 1
             }).catch((e) => {
-              console.log(e)
-              this.$message.error('获取问题失败！')
+              // this.$message.error('获取问题失败！')
             })
           } else {
             this.$message.error('提交失败')
@@ -148,15 +159,20 @@ export default {
           if (valid) {
             const data = {
               username: this.form1.username,
-              answer: this.form2.login_aswer
+              answer: this.form2.loginAswer
             }
             answer(data).then(response => {
-              console.log('@forget answer response:')
-              console.log(response)
-              this.activeName = i.toString()
-              this.name = i - 1
+              if (typeof (response) === 'undefined') {
+                this.$message.error('回答错误！')
+              } else {
+                // console.log(response)
+                if (response.status === 204) {
+                  this.activeName = i.toString()
+                  this.name = i - 1
+                }
+              }
             }).catch((e) => {
-              console.log(e)
+              // console.log(e)
               this.$message.error('回答错误！')
             })
           } else {
@@ -164,32 +180,38 @@ export default {
           }
         })
       } else {
-        this.$refs.form2.validate(valid => {
+        this.$refs.form3.validate(valid => {
           if (valid) {
             const data = {
               username: this.form1.username,
-              answer: this.form2.login_aswer,
+              answer: this.form2.loginAswer,
               password: this.form3.newpassword
             }
-            newpassword(data).then(response => {
-              console.log('@forget newpassword response:')
-              console.log(response)
-              this.$message.success('修改成功！')
-              this.$router.push('/login')
-            }).catch((e) => {
-              console.log(e)
-              this.$message.error('修改失败')
-            })
-          } else {
-            this.$message.error('提交失败')
+            if (this.form3.checkpassword === this.form3.newpassword) {
+              newpassword(data).then(response => {
+              // console.log('@forget newpassword response:')
+              // console.log(response)
+                this.$message.success('修改成功！')
+                this.$router.push('/login')
+              }).catch((e) => {
+              // console.log(e)
+                this.$message.error('修改失败')
+              })
+            } else {
+              this.$message.error('密码不一致！')
+            }
           }
         })
       }
     },
+
+    // 返回登录界面
     async backToLogin() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
+
+    // 返回上一级
     back(i) {
       this.activeName = i.toString()
       this.name = i - 1
@@ -200,19 +222,24 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-  margin: 150px auto;
-  padding: 0;
-  /*overflow: hidden;*/
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: url(../../../assets/images/bg.png) no-repeat;
+  background-size: 100% 100%;
 }
+
 .form-title {
   text-align: center;
   margin-bottom: 30px;
 }
+
 .Form {
   width: 45%;
   padding: 20px;
-  margin: 20px auto;
+  margin: 150px auto;
   border-radius: 20px;
+  background: white;
   box-shadow: 0 0 20px #dcdfe6;
 }
 </style>

@@ -2,24 +2,13 @@
   <div class="app-container">
     <div v-if="user">
       <el-row :gutter="20">
-
-        <el-col
-          :span="6"
-          :xs="24"
-        >
+        <el-col :span="6" :xs="24">
           <user-card :user="user" />
         </el-col>
-
-        <el-col
-          :span="18"
-          :xs="24"
-        >
+        <el-col :span="18" :xs="24">
           <el-card>
             <el-tabs v-model="activeTab">
-              <el-tab-pane
-                label="个人信息"
-                name="account"
-              >
+              <el-tab-pane label="个人信息" name="account">
                 <account :user="user" />
               </el-tab-pane>
               <el-tab-pane label="修改密码" name="changePassword">
@@ -28,7 +17,6 @@
             </el-tabs>
           </el-card>
         </el-col>
-
       </el-row>
     </div>
   </div>
@@ -50,14 +38,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'nickname',
-      'avatar',
-      'major',
-      'slogan',
-      'phone',
-      'role'
-    ])
+    ...mapGetters(['nickname', 'avatar', 'major', 'slogan', 'phone', 'role'])
   },
   created() {
     this.getUser()

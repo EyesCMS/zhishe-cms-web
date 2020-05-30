@@ -1,16 +1,9 @@
 <template>
   <el-card style="margin-bottom:20px;">
-    <div
-      slot="header"
-      class="clearfix"
-    >
-      <span>关于社团</span>
-    </div>
-
     <div class="user-profile">
       <div class="box-center">
         <pan-thumb
-          :image="clubinfo.avatarUrl"
+          :image="form.avatarUrl"
           :height="'100px'"
           :width="'100px'"
           :hoverable="false"
@@ -32,19 +25,6 @@
           class="user-bio-section-body"
           style="text-align:center"
         >
-          <!--<el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
-            上传头像图片
-          </el-button>
-          <el-dialog title="上传头像图片" :visible.sync="imagecropperShow">
-            <el-upload
-              :show-file-list="false"
-              accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
-              :before-upload="beforeAvatarUpload"
-            >
-              <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon" />
-            </el-upload>
-          </el-dialog>-->
           <el-button
             size="small"
             type="primary"
@@ -56,7 +36,10 @@
             :visible.sync="dialogFormVisible"
           >
             <el-card>
-              <el-tabs v-model="activeTab">
+              <el-tabs
+                v-model="activeTab"
+                @tab-click="changeTab"
+              >
                 <el-tab-pane
                   label="上传网络照片"
                   name="uploadWeb"
@@ -97,6 +80,7 @@
               </el-tabs>
             </el-card>
             <div
+              v-show="showButtonGroup"
               slot="footer"
               class="dialog-footer"
             >
@@ -141,15 +125,17 @@ export default {
       imagecropperShow: false,
       imagecropperKey: 0,
       form: {
-        avatarUrl: this.clubinfo.avatarUrl
+        avatarUrl: ''
       },
-      dialogFormVisible: false
+      dialogFormVisible: false,
+      showButtonGroup: true
     }
   },
   created() {
     this.getClubDetail()
   },
   methods: {
+    // 上传头像
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg' || file.type === 'image/jpg'
       const isLt2M = file.size / 1024 / 1024 < 2
@@ -172,20 +158,34 @@ export default {
       // 不自动上传
       return false
     },
+
+    // 提交表单
     submitProfile() {
+      // console.log(this.form)
       this.dialogFormVisible = false
       submitPic(this.clubId, this.form).then(response => {
         // console.log(response)
         if (response.status === 204) {
           this.$message.success('修改成功')
+          this.getClubDetail()
         }
       })
-      this.getClubDetail()
     },
+
+    // 获取社团信息
     getClubDetail() {
       getClubDetail(this.clubId).then(response => {
         this.form.avatarUrl = response.data.avatarUrl
       })
+    },
+
+    // 处理Tab切换
+    changeTab(tab, event) {
+      if (tab.name === 'uploadLocal') {
+        this.showButtonGroup = false
+      } else {
+        this.showButtonGroup = true
+      }
     }
   }
 }

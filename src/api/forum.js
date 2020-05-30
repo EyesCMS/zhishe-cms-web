@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getAllInvitationList(query) {
+export function getAllInvitationListData(query) {
   return request({
     url: `/forum/posts`,
     method: 'get',
@@ -8,7 +8,7 @@ export function getAllInvitationList(query) {
   })
 }
 
-export function getInvitationList(clubid, query, originState) {
+export function getInvitationListData(clubid, query, originState) {
   return request({
     url: `/forum/${clubid}/posts`,
     method: 'get',
@@ -72,5 +72,39 @@ export function deleteForum(id) {
   return request({
     url: `forum/posts/${id}`,
     method: 'delete'
+  })
+}
+export function like(data) {
+  return request({
+    url: `/forum/like`,
+    method: 'post',
+    params: data
+  })
+}
+export function unlike(data) {
+  return request({
+    url: `/forum/unlike`,
+    method: 'post',
+    params: data
+  })
+}
+export function getUserLike(data) {
+  return request({
+    url: `/forum/like`,
+    method: 'get',
+    params: data
+  })
+}
+export function deleteRemark(id) {
+  return request({
+    url: `/forum/posts/remarks/${id}`,
+    method: 'delete'
+  })
+}
+export function getRecommendActivities(data) {
+  return request({
+    url: `/clubs/activities/recommended`,
+    method: 'get',
+    params: data
   })
 }

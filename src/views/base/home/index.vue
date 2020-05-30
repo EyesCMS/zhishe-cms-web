@@ -1,48 +1,39 @@
 <template>
+  <!-- 走马灯 -->
   <div>
-    <!--    <el-button-->
-    <!--      type="primary"-->
-    <!--      @click="chief"-->
-    <!--    >切换到chief</el-button>-->
-    <!--    <el-button-->
-    <!--      type="primary"-->
-    <!--      @click="member"-->
-    <!--    >切换到clubMember</el-button>-->
-    <!--    <el-button-->
-    <!--      type="primary"-->
-    <!--      @click="student"-->
-    <!--    >切换到student</el-button>-->
-    <!--    <el-button-->
-    <!--      type="primary"-->
-    <!--      @click="admin"-->
-    <!--    >切换到admin</el-button>-->
-    <!-- 社团风采走马灯 -->
     <div class="carousel">
       <el-carousel
         :interval="4000"
         arrow="always"
         type="card"
+        height="400px"
       >
         <el-carousel-item
-          v-for="item in carouselImgList"
-          :key="item"
+          v-for="item in recommendCarouselList"
+          :key="item.id"
         >
           <img
-            style="width:100%"
-            :src="item"
-            alt="item"
+            v-if="item.imgUrl !== ''"
+            style="width: 100%; height: 100%;"
+            :src="item.imgUrl"
+            @click="EnterToForum(item.id)"
+          >
+          <img
+            v-else
+            src="../../../assets/images/404.jpg"
+            style="width: 100%; height: 100%;"
+            @click="EnterToForum(item.id)"
           >
         </el-carousel-item>
       </el-carousel>
     </div>
 
     <!-- 推荐社团 -->
-
     <div class="recommend">
       <el-row>
         <el-col>
           <el-divider />
-          <h3 style="text-align:center;">推荐社团</h3>
+          <h3 style="text-align: center;">推荐社团</h3>
           <el-divider />
           <div
             v-for="(item, i) in recommendedList"
@@ -53,59 +44,22 @@
               <img :src="item.avatarUrl">
             </div>
             <div class="content">
-              <div class="title">
-                {{ item.name }}
-              </div>
-              <div class="sub-title">
-                社长：{{ item.chiefName }}
-              </div>
+              <div class="title">{{ item.name }}</div>
+              <div class="sub-title">社长：{{ item.chiefName }}</div>
               <div class="bottom">
-                <button @click="getClubDetail(item.id)">查看详情</button>
+                <button @click="LookForDetail(item.id,item.name,item.chiefName,item.avatarUrl)">查看详情</button>
               </div>
             </div>
           </div>
         </el-col>
       </el-row>
     </div>
-    <el-dialog
-      :visible.sync="bulletinDetailDialogVisible"
-      width="50%"
-      center
-      modal
-    >
-      <h2 style="text-align:center;margin-bottom:50px;font-family:'微软雅黑';font-size:32px;font-weight:lighter;">
-        {{ clubDetail.name }}
-      </h2>
-      <el-card style="margin: 30px 15px 30px 30px">
-        <div>
-          <el-form
-            :model="clubDetail"
-            label-position="left"
-            label-width="300px"
-          >
-            <el-form-item label="社长">{{ clubDetail.chiefName }}</el-form-item>
-            <el-divider />
-            <el-form-item label="社团人数">{{ clubDetail.memberCount }}</el-form-item>
-            <el-divider />
-            <el-form-item label="社团Q群">{{ clubDetail.qqGroup }}</el-form-item>
-            <el-divider />
-            <el-form-item label="社团简介">{{ clubDetail.slogan }}</el-form-item>
-          </el-form>
-        </div>
-      </el-card>
-      <div style="text-align:center">
-        <el-button
-          type="primary"
-          @click="bulletinDetailDialogVisible = false"
-        >确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-
-import { recommended, getClubDetail } from '@/api/club'
+import { recommended } from '@/api/club'
+import { getRecommendActivities } from '@/api/forum'
 import clubImg1 from '@/assets/images/club1.jpg'
 import clubImg2 from '@/assets/images/club2.jpeg'
 import clubImg3 from '@/assets/images/club3.jpeg'
@@ -113,71 +67,79 @@ import { getInfo } from '@/api/user'
 export default {
   data() {
     return {
+      // 获取推荐列表参数
       queryInfo: {
         page: 1,
         limit: 6,
         sort: 'update_at',
         order: 'desc'
       },
-      carouselImgList: [
-        clubImg1,
-        clubImg2,
-        clubImg3
-      ],
+      // 走马灯图片列表
+      carouselImgList: [clubImg1, clubImg2, clubImg3],
+      recommendNum: {
+        number: 3
+      },
+      recommendCarouselList: [],
       // 公告列表
       recommendedList: [],
-      clubDetail: {},
-      bulletinDetailDialogVisible: false
+      clubDetail: {}
     }
   },
   created() {
     this.getInfo()
-    const clubid = 112
-    localStorage.setItem('clubid', clubid)
     this.getRecommendedList()
-    console.log(this.$store.getters)
+    this.getRecommendActivities()
   },
   methods: {
-    chief: function () {
-      this.$store.dispatch('user/changeRoles', 'chief')
-    },
-    admin: function () {
-      this.$store.dispatch('user/changeRoles', 'admin')
-    },
-    student: function () {
-      this.$store.dispatch('user/changeRoles', 'student')
-    },
-    member: function () {
-      this.$store.dispatch('user/changeRoles', 'member')
-    },
+    // 获取推荐列表
     getRecommendedList() {
       recommended(this.queryInfo).then(response => {
-        console.log('@home-page RecommendedList response:')
-        console.log(response)
         this.recommendedList = response.data.items
-        // console.log(this.memberInfo)
       })
     },
-    // 获取社团详情
-    getClubDetail(id) {
-      console.log('@home-page getClubDetail id:' + id)
-      getClubDetail(id).then(response => {
-        console.log(response)
-        // this.$message.success('获取成员列表成功')
-        this.clubDetail = response.data
-        this.bulletinDetailDialogVisible = true
+
+    // 获取推荐活动走马灯图片
+    getRecommendActivities() {
+      getRecommendActivities(this.recommendNum).then(response => {
+        if (response.status === 200) {
+          this.recommendCarouselList = response.data
+        } else {
+          return this.$message.error('获取走马灯失败')
+        }
       })
     },
+
+    // 跳转到主页
     pushToHomePage() {
       this.$store.dispatch('user/changeRoles', 'student')
     },
+
+    // 获取用户信息
     getInfo() {
       getInfo().then(response => {
         if (response.data.roles[0] === 'student') {
           this.pushToHomePage()
+        } else if (response.data.roles[0] === 'admin') {
+          this.$router.push({ path: 'adminHome' })
         }
         // console.log(response.data.roles[0])
       })
+    },
+
+    // 跳转到社团信息详细页面
+    LookForDetail(id, name, chiefName, avatarUrl) {
+      this.$router.push({
+        path: '/clubDetail',
+        query: {
+          id: id,
+          name: name,
+          chiefName: chiefName,
+          avatarUrl: avatarUrl
+        }
+      })
+    },
+    EnterToForum(id) {
+      this.$router.push({ path: '/forum/activityDetail', query: { id: id }})
     }
   }
 }
@@ -185,10 +147,11 @@ export default {
 
 <style lang="scss" scoped>
 .carousel {
-  margin: 20px auto;
-  padding: 20px;
+  margin: 0px auto;
+  padding: 10px;
   width: 90%;
 }
+
 .el-carousel__item h3 {
   color: #475669;
   font-size: 18px;

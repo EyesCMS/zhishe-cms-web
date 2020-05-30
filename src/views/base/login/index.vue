@@ -1,72 +1,81 @@
 <template>
   <div class="login-container">
-    <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-page"
-      auto-complete="on"
-      label-position="left"
-    >
-
-      <h3 class="login-title">Zhishe 社团管理系统</h3>
-
-      <el-form-item label="Username" prop="username">
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="请输入用户名"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-
-      <el-form-item label="Password" prop="password">
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="请输入密码"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span
-          class="show-pwd"
-          @click="showPwd"
-        >
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
-      </el-form-item>
-
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
-      >Login</el-button>
-
-      <div class="tips">
-        <router-link
-          to="/forget"
-          style="float:left"
-        >
-          <span style="color:#104E8B">忘记密码?</span>
-        </router-link>
-        <!--          <span style="margin-right:20px;">username: admin</span>-->
-        <!--          <span> password: any</span>-->
-        <router-link
-          to="/register"
-          style="float:right"
-        >
-          <span style="color:#104E8B"> 注册</span>
-        </router-link>
+    <section>
+      <div class="leftimg">
+        <img src="../../../assets/images/loginLeftImg.png">
       </div>
-    </el-form>
+      <el-form
+        ref="loginForm"
+        :model="loginForm"
+        :rules="loginRules"
+        class="login-page"
+        auto-complete="on"
+        label-position="left"
+      >
+        <h3 class="title">Zhishe 社团管理系统</h3>
+        <p class="tname">基于 vue-element-template 的后台系统</p>
+
+        <el-form-item prop="username">
+          <span class="svg-container">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input
+            ref="username"
+            v-model="loginForm.username"
+            placeholder="Username"
+            name="username"
+            type="text"
+            tabindex="1"
+            auto-complete="on"
+          />
+        </el-form-item>
+
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            placeholder="Password"
+            name="password"
+            tabindex="2"
+            auto-complete="on"
+            @keyup.enter.native="handleLogin"
+          />
+          <span
+            class="show-pwd"
+            @click="showPwd"
+          >
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          </span>
+        </el-form-item>
+
+        <el-button
+          :loading="loading"
+          type="primary"
+          style="width: 100%; margin-bottom: 30px;"
+          @click.native.prevent="handleLogin"
+        >登录</el-button>
+
+        <div class="tips">
+          <router-link
+            to="/forget"
+            style="float: left;"
+          >
+            <span>忘记密码?</span>
+          </router-link>
+          <router-link
+            to="/register"
+            style="float: right;"
+          >
+            <span>注册</span>
+          </router-link>
+        </div>
+      </el-form>
+    </section>
   </div>
 </template>
 
@@ -78,26 +87,30 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的用户名'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码不能少于6位'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: 'test',
+        password: '123456'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, trigger: 'blur', validator: validateUsername }
+        ],
+        password: [
+          { required: true, trigger: 'blur', validator: validatePassword }
+        ]
       },
       loading: false,
       passwordType: 'password',
@@ -113,6 +126,7 @@ export default {
     }
   },
   methods: {
+    // 展示密码
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -123,19 +137,23 @@ export default {
         this.$refs.password.focus()
       })
     },
+
+    // 提交登录表单
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch((e) => {
-            console.log(e)
-            this.loading = false
-          })
+          this.$store
+            .dispatch('user/login', this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || '/' })
+              this.loading = false
+            })
+            .catch(e => {
+              // console.log(e)
+              this.loading = false
+            })
         } else {
-          console.log('error submit!!')
           return false
         }
       })
@@ -146,28 +164,105 @@ export default {
 
 <style scoped>
 .login-container {
-  min-height: 100%;
   width: 100%;
+  height: 100vh;
   overflow: hidden;
+  background: url(../../../assets/images/bg.png) no-repeat;
+  background-size: 100% 100%;
 }
-.login-page {
-  width: 400px;
-  margin: 150px auto;
-  border: #DCDFE6 solid 1px;
-  padding:30px 40px 20px 20px;
-  border-radius:20px;
-  box-shadow: 0 0 20px #DCDFE6;
+
+.leftimg {
+  width: 50%;
+  height: 100%;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.login-title{
-  text-align: center;
-  margin-bottom:30px;
+
+.leftimg img {
+  width: 75%;
+  margin-left: 3rem;
 }
+
+.login-container section {
+  border-radius: 15px;
+  width: 50%;
+  height: 52%;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  left: 25%;
+  top: 27%;
+}
+
+.el-input {
+  width: 92%;
+}
+
 .show-pwd {
   position: absolute;
-  right: 10px;
-  top: 7px;
+  right: 25px;
+  top: 4px;
   font-size: 16px;
   cursor: pointer;
   user-select: none;
+}
+
+.login-page {
+  width: 50%;
+  float: right;
+  padding: 1rem 3rem;
+  box-sizing: border-box;
+}
+
+label.el-checkbox.rememberme {
+  margin: 0px 0px 15px;
+  text-align: left;
+}
+
+.title {
+  color: #333333;
+  font-weight: normal;
+  font-size: 1.675rem;
+  margin-bottom: 0.4rem;
+}
+
+.tname {
+  font-size: 1rem;
+  color: #a9a9a9;
+  margin: 0;
+  margin-bottom: 1.875rem;
+}
+
+.el-button {
+  width: 100% !important;
+  display: block;
+  border-radius: 25px;
+  margin-top: 1rem;
+  height: 2.5rem;
+}
+
+.el-checkbox {
+  color: #666666;
+}
+
+@media only screen and (min-width: 1920px) {
+  .login-page {
+    padding: 3rem;
+  }
+  .title {
+    font-size: 1.5625rem;
+  }
+  .tname {
+    margin-bottom: 4.375rem;
+  }
+  .el-button {
+    height: 3.125rem;
+    margin-top: 3rem;
+  }
 }
 </style>
