@@ -276,6 +276,7 @@
             :before-upload="beforeImgUpload"
             :on-remove="handleRemove"
             :on-preview="handlePreview"
+            :http-request="UploadImage"
             :file-list="fileList"
             list-type="picture"
           >
@@ -515,7 +516,7 @@ export default {
           // console.log(this.forumForm)
           formData.append('title', this.forumForm.title)
           formData.append('content', this.forumForm.content)
-          if (!this.forumForm.image === '') formData.append('image', this.forumForm.image)
+          if (typeof (this.forumForm.image) !== 'string') formData.append('image', this.forumForm.image)
           this.forumForm.title = ''
           this.forumForm.content = ''
           this.forumForm.image = ''
@@ -642,6 +643,8 @@ export default {
         // console.log(image)
         // console.log(this.forumForm)
       }
+
+      console.log('beforeImgUpload')
     },
 
     // 关闭对话框
@@ -649,6 +652,9 @@ export default {
       this.forumForm.content = ''
       this.forumForm.title = ''
       this.fileList = []
+    },
+    UploadImage(param) {
+      param.onSuccess()
     }
   }
 }
